@@ -251,6 +251,33 @@ function Home() {
         </div>
       </section>
 
+      <section className="border-t border-border py-16">
+        <div className="mx-auto max-w-4xl px-4">
+          <div className="mb-10 text-center">
+            <span className="inline-flex items-center gap-2 rounded-full bg-brand-soft px-4 py-1.5 text-sm font-semibold text-brand-ink">
+              FAQ
+            </span>
+            <h2 className="mt-4 text-3xl font-extrabold tracking-tight">
+              Vos questions, nos réponses
+            </h2>
+          </div>
+
+          <div className="grid gap-4 md:grid-cols-2">
+            {faq.map((item) => (
+              <div
+                key={item.question}
+                className="rounded-3xl border border-border bg-card p-6 shadow-[var(--shadow-soft)]"
+              >
+                <h3 className="font-bold leading-snug">{item.question}</h3>
+                <p className="mt-3 text-sm leading-relaxed text-muted-foreground">
+                  {item.answer}
+                </p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
       <section className="pb-20">
         <div className="mx-auto max-w-6xl px-4">
           <div className="rounded-[2rem] bg-brand-ink px-8 py-14 text-center text-primary-foreground">
