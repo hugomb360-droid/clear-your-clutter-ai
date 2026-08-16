@@ -197,14 +197,15 @@ function EstimationPage() {
         .from("quotes")
         .insert({
           client_id: session.user.id,
-          property_type: PROPERTY_LABELS[propertyType],
-          surface_m2: Number.isFinite(surfaceValue) && surfaceValue > 0 ? surfaceValue : null,
-          floor: Number.parseInt(floor, 10) || 0,
-          has_elevator: hasElevator,
+          property_type: isPhoto ? "Non précisé" : PROPERTY_LABELS[propertyType],
+          surface_m2:
+            !isPhoto && Number.isFinite(surfaceValue) && surfaceValue > 0 ? surfaceValue : null,
+          floor: isPhoto ? 0 : Number.parseInt(floor, 10) || 0,
+          has_elevator: isPhoto ? false : hasElevator,
           postal_code: postalCode.trim(),
           city: city.trim() || null,
           desired_date: desiredDate || null,
-          notes: notes || null,
+          notes: isPhoto ? null : notes || null,
           volume_m3: result?.analysis.volumeM3 ?? null,
           price_min: result?.price.priceMin ?? null,
           price_max: result?.price.priceMax ?? null,
