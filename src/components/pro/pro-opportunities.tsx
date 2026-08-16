@@ -98,6 +98,8 @@ export function ProOpportunities({ quotes, proId }: { quotes: Quote[]; proId: st
 
             {quote.notes && <p className="mt-3 text-sm text-muted-foreground">{quote.notes}</p>}
 
+            <QuotePhotos quoteId={quote.id} />
+
             <div className="mt-5 grid gap-4 sm:grid-cols-[8rem_12rem_1fr]">
               <div className="grid gap-2">
                 <Label htmlFor={`price-${quote.id}`}>Mon prix TTC</Label>
