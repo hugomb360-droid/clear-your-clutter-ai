@@ -3,7 +3,7 @@ import { computePrice, type AiAnalysis, type EstimationResult } from "./pricing"
 const GATEWAY_URL = "https://ai.gateway.lovable.dev/v1/chat/completions";
 
 const SYSTEM_PROMPT = `Tu es l'expert d'estimation de Clearo, une plateforme française de débarras.
-À partir des photos et des informations fournies, tu estimes le volume à débarrasser en mètres cubes (m3)
+À partir des photos fournies, tu estimes le volume à débarrasser en mètres cubes (m3)
 ainsi que la nature des objets. Sois réaliste : une pièce standard pleine fait 8 à 15 m3, une cave encombrée 4 à 10 m3,
 un appartement complet 20 à 45 m3. Réponds UNIQUEMENT avec un objet JSON valide, sans texte autour, au format :
 {"volumeM3": number, "categories": string[], "bulkyItems": boolean, "hardAccess": boolean, "confidence": "faible"|"moyenne"|"élevée", "summary": string}
@@ -12,10 +12,10 @@ un appartement complet 20 à 45 m3. Réponds UNIQUEMENT avec un objet JSON valid
 "summary" est une phrase en français expliquant l'estimation.`;
 
 export type EstimateContext = {
-  propertyType: string;
+  propertyType?: string | undefined;
   surfaceM2?: number | undefined;
-  floor: number;
-  hasElevator: boolean;
+  floor?: number | undefined;
+  hasElevator?: boolean | undefined;
   notes?: string | undefined;
   images: string[];
 };
@@ -98,8 +98,8 @@ export async function runEstimation(input: EstimateContext): Promise<EstimationR
 
   const price = computePrice({
     volumeM3: analysis.volumeM3,
-    floor: input.floor,
-    hasElevator: input.hasElevator,
+    floor: input.floor ?? 0,
+    hasElevator: input.hasElevator ?? false,
     bulkyItems: analysis.bulkyItems,
     hardAccess: analysis.hardAccess,
   });
