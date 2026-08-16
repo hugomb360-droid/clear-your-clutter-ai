@@ -155,6 +155,59 @@ function Home() {
         </div>
       </section>
 
+      <section className="border-t border-border bg-secondary/40 py-16">
+        <div className="mx-auto max-w-6xl px-4">
+          <div className="mb-10 text-center">
+            <span className="inline-flex items-center gap-2 rounded-full bg-brand-soft px-4 py-1.5 text-sm font-semibold text-brand-ink">
+              <Star className="size-4" /> Avis clients
+            </span>
+            <h2 className="mt-4 text-3xl font-extrabold tracking-tight">
+              Ils ont fait de la place avec Clearo
+            </h2>
+            <p className="mx-auto mt-3 max-w-2xl text-muted-foreground">
+              Des milliers de clients ont déjà estimé leur débarras par photo et trouvé un pro près de chez eux.
+            </p>
+          </div>
+
+          <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
+            {reviews.map((review) => (
+              <div
+                key={review.name}
+                className="relative flex flex-col rounded-3xl border border-border bg-card p-6 shadow-[var(--shadow-soft)]"
+              >
+                <Quote className="absolute right-5 top-5 size-6 text-brand/20" />
+                <div className="flex gap-0.5">
+                  {Array.from({ length: 5 }).map((_, i) => (
+                    <Star
+                      key={i}
+                      className={`size-4 ${
+                        i < review.rating ? "fill-brand text-brand" : "text-muted-foreground/30"
+                      }`}
+                    />
+                  ))}
+                </div>
+                <p className="mt-4 flex-1 text-sm leading-relaxed text-foreground">
+                  "{review.text}"
+                </p>
+                <div className="mt-6 flex items-center gap-3">
+                  <div className="flex size-10 items-center justify-center rounded-full bg-brand-soft font-bold text-brand-ink">
+                    {review.name
+                      .split(" ")
+                      .map((n) => n[0])
+                      .join("")
+                      .slice(0, 2)}
+                  </div>
+                  <div>
+                    <p className="text-sm font-semibold">{review.name}</p>
+                    <p className="text-xs text-muted-foreground">{review.location}</p>
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
       <section className="pb-20">
         <div className="mx-auto max-w-6xl px-4">
           <div className="rounded-[2rem] bg-brand-ink px-8 py-14 text-center text-primary-foreground">
