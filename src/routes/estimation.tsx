@@ -144,16 +144,19 @@ function EstimationPage() {
     }
     setAnalyzing(true);
     try {
-      const surfaceValue = Number.parseInt(surface, 10);
       const estimation = await estimate({
-        data: {
-          propertyType: PROPERTY_LABELS[propertyType],
-          ...(Number.isFinite(surfaceValue) && surfaceValue > 0 ? { surfaceM2: surfaceValue } : {}),
-          floor: Number.parseInt(floor, 10) || 0,
-          hasElevator,
-          notes,
-          images: photos,
-        },
+        data: isPhoto
+          ? { images: photos }
+          : {
+              propertyType: PROPERTY_LABELS[propertyType],
+              ...(Number.isFinite(Number.parseInt(surface, 10)) && Number.parseInt(surface, 10) > 0
+                ? { surfaceM2: Number.parseInt(surface, 10) }
+                : {}),
+              floor: Number.parseInt(floor, 10) || 0,
+              hasElevator,
+              notes,
+              images: photos,
+            },
       });
       setResult(estimation);
       toast.success("Estimation prête");
