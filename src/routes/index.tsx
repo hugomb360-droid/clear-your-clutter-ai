@@ -1,5 +1,5 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { Camera, Clock3, Leaf, MapPin, ShieldCheck, Sparkles, Star } from "lucide-react";
+import { Camera, Clock3, Leaf, MapPin, Quote, ShieldCheck, Sparkles, Star } from "lucide-react";
 import heroImage from "@/assets/hero-clearo.jpg";
 import { Button } from "@/components/ui/button";
 
