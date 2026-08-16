@@ -141,7 +141,7 @@ export function RoomVolume3D() {
                     width: ROOM_W * SCALE,
                     height: ROOM_D * SCALE,
                     backgroundImage:
-                      "linear-gradient(to right, hsl(var(--border)) 1px, transparent 1px), linear-gradient(to bottom, hsl(var(--border)) 1px, transparent 1px)",
+                      "linear-gradient(to right, var(--border) 1px, transparent 1px), linear-gradient(to bottom, var(--border) 1px, transparent 1px)",
                     backgroundSize: `${SCALE}px ${SCALE}px`,
                   }}
                 />
