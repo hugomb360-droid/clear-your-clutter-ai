@@ -14,7 +14,7 @@ function MissionCard({
   onComplete,
 }: {
   bid: BidWithQuote;
-  contact?: QuoteContact;
+  contact?: QuoteContact | undefined;
   onComplete: (id: string) => void;
 }) {
   return (
