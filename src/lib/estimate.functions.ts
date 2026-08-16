@@ -7,6 +7,7 @@ const EstimateInput = z.object({
   surfaceM2: z.number().int().positive().max(2000).optional(),
   floor: z.number().int().min(0).max(30).optional(),
   hasElevator: z.boolean().optional(),
+  hardAccess: z.boolean().optional(),
   notes: z.string().max(1500).optional(),
   images: z.array(z.string().startsWith("data:image/")).max(8).min(1),
 });
