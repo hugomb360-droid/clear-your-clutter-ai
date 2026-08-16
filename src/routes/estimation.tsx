@@ -138,8 +138,8 @@ function EstimationPage() {
   const chooseMode = (next: Mode) => {
     setMode(next);
     setResult(null);
-    if (next === "manuel") setPhotos([]);
   };
+
 
   const handleFiles = async (files: FileList | null) => {
     if (!files?.length) return;
@@ -195,12 +195,21 @@ function EstimationPage() {
 
   const publish = async () => {
     if (mode === "photo" && !result) return;
-    if (mode === "manuel" && notes.trim().length < 15) {
-      toast.error("Décrivez ce qu'il y a à débarrasser", {
-        description: "Quelques mots suffisent pour que les pros puissent chiffrer.",
-      });
-      return;
+    if (mode === "manuel") {
+      if (photos.length === 0) {
+        toast.error("Ajoutez au moins une photo", {
+          description: "Les photos permettent aux pros de chiffrer précisément.",
+        });
+        return;
+      }
+      if (notes.trim().length < 15) {
+        toast.error("Décrivez ce qu'il y a à débarrasser", {
+          description: "Quelques mots suffisent pour que les pros puissent chiffrer.",
+        });
+        return;
+      }
     }
+
     if (!postalCode.trim()) {
       toast.error("Indiquez votre code postal");
       return;
@@ -318,11 +327,12 @@ function EstimationPage() {
             </div>
             <h2 className="mt-5 text-2xl font-bold">Devis classique</h2>
             <p className="mt-2 text-sm text-muted-foreground">
-              Pas de photos sous la main ? Décrivez la surface et ce qu'il y a à débarrasser, les
-              pros de votre secteur vous envoient leurs propositions.
+              Pas besoin d'estimation automatique ? Ajoutez vos photos, décrivez la surface et ce
+              qu'il y a à débarrasser : les pros de votre secteur vous envoient leurs propositions.
+
             </p>
             <ul className="mt-5 space-y-2 text-sm text-muted-foreground">
-              <li>• Sans photo</li>
+              <li>• Photos + description de votre bien</li>
               <li>• Prix communiqué par les professionnels</li>
               <li>• Réponses sous 24 à 48 h</li>
             </ul>
@@ -363,12 +373,15 @@ function EstimationPage() {
 
       <div className="mt-10 grid gap-8 lg:grid-cols-[1.1fr_0.9fr]">
         <div className="space-y-8">
-          {isPhoto && (
+          {(
             <section className="rounded-3xl border border-border bg-card p-7 shadow-[var(--shadow-soft)]">
               <h2 className="text-lg font-bold">1. Vos photos</h2>
               <p className="mt-1 text-sm text-muted-foreground">
-                Jusqu'à 8 photos. Cadrez large pour montrer l'ensemble de la pièce.
+                {isPhoto
+                  ? "Jusqu'à 8 photos. Cadrez large pour montrer l'ensemble de la pièce."
+                  : "Jusqu'à 8 photos. Elles aident les pros à chiffrer précisément votre débarras."}
               </p>
+
               <input
                 ref={fileInput}
                 type="file"
@@ -414,7 +427,7 @@ function EstimationPage() {
 
           {!isPhoto && (
             <section className="rounded-3xl border border-border bg-card p-7 shadow-[var(--shadow-soft)]">
-              <h2 className="text-lg font-bold">1. Le bien à débarrasser</h2>
+              <h2 className="text-lg font-bold">2. Le bien à débarrasser</h2>
               <div className="mt-5 grid gap-5">
                 <div className="grid gap-2">
                   <Label>Type de bien</Label>
@@ -552,7 +565,7 @@ function EstimationPage() {
           )}
 
           <section className="rounded-3xl border border-border bg-card p-7 shadow-[var(--shadow-soft)]">
-            <h2 className="text-lg font-bold">{isPhoto ? "4." : "2."} Où et quand ?</h2>
+            <h2 className="text-lg font-bold">{isPhoto ? "4." : "3."} Où et quand ?</h2>
             <div className="mt-5 grid gap-4 sm:grid-cols-2">
               <div className="grid gap-2">
                 <Label htmlFor="postal">Code postal *</Label>
@@ -605,9 +618,11 @@ function EstimationPage() {
             {!isPhoto ? (
               <div className="mt-5 space-y-5">
                 <p className="text-sm text-muted-foreground">
-                  Sans photo, le prix est fixé directement par les professionnels de votre secteur.
-                  Vous recevez leurs propositions dans votre espace client.
+                  Vos photos et votre description sont transmises aux professionnels de votre
+                  secteur, qui fixent leur prix. Vous recevez leurs propositions dans votre espace
+                  client.
                 </p>
+
                 <div className="rounded-2xl bg-brand-soft/50 p-4 text-sm">
                   <p className="font-semibold text-brand-ink">Envie d'un prix tout de suite ?</p>
                   <p className="mt-1 text-muted-foreground">
