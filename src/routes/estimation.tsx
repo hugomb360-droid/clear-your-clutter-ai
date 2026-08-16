@@ -322,7 +322,7 @@ function EstimationPage() {
               pros de votre secteur vous envoient leurs propositions.
             </p>
             <ul className="mt-5 space-y-2 text-sm text-muted-foreground">
-              <li>• Sans photo</li>
+              <li>• Photos + description de votre bien</li>
               <li>• Prix communiqué par les professionnels</li>
               <li>• Réponses sous 24 à 48 h</li>
             </ul>
