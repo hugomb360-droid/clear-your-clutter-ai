@@ -9,7 +9,7 @@ import { computePrice, euro } from "@/lib/pricing";
 const SCALE = 58;
 const ROOM_W = 4;
 const ROOM_D = 4;
-const ROOM_H = 2.5;
+const ROOM_H = 1.9;
 
 type Part = {
   /** position en mètres, z = hauteur depuis le sol */
@@ -338,6 +338,7 @@ export function RoomVolume3D() {
                     width: ROOM_H * SCALE,
                     height: ROOM_D * SCALE,
                     background: `linear-gradient(to right, color-mix(in oklab, var(--sim-wall), black 8%), var(--sim-wall))`,
+                    opacity: 0.5,
                     transformOrigin: "0 0",
                     transform: "rotateY(-90deg)",
                   }}
@@ -349,6 +350,7 @@ export function RoomVolume3D() {
                     width: ROOM_W * SCALE,
                     height: ROOM_H * SCALE,
                     background: `linear-gradient(to top, color-mix(in oklab, var(--sim-wall), black 6%), var(--sim-wall))`,
+                    opacity: 0.5,
                     transformOrigin: "0 0",
                     transform: "rotateX(90deg)",
                   }}
