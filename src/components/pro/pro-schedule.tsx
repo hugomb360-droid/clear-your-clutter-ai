@@ -164,7 +164,6 @@ export function ProSchedule({
                 key={bid.id}
                 bid={bid}
                 contact={bid.quote_id ? contactOf(bid.quote_id) : undefined}
-                onComplete={complete}
               />
             ))}
           </div>
