@@ -181,7 +181,7 @@ function EstimationPage() {
           volume_m3: result.analysis.volumeM3,
           price_min: result.price.priceMin,
           price_max: result.price.priceMax,
-          ai_analysis: result as unknown as Record<string, unknown>,
+          ai_analysis: JSON.parse(JSON.stringify(result)),
           status: "published",
         })
         .select("id")
