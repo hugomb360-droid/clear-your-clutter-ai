@@ -1,5 +1,5 @@
 import { Link } from "@tanstack/react-router";
-import { Recycle } from "lucide-react";
+import clearoLogo from "@/assets/clearo-logo.png.asset.json";
 
 export function SiteFooter() {
   return (
@@ -7,9 +7,7 @@ export function SiteFooter() {
       <div className="mx-auto grid max-w-6xl gap-8 px-4 py-12 sm:grid-cols-2 lg:grid-cols-4">
         <div>
           <div className="flex items-center gap-2">
-            <span className="flex size-8 items-center justify-center rounded-lg bg-primary text-primary-foreground">
-              <Recycle className="size-4" />
-            </span>
+            <img src={clearoLogo.url} alt="Logo Clearo" className="size-8 object-contain" />
             <span className="text-lg font-extrabold tracking-tight">clearo</span>
           </div>
           <p className="mt-3 text-sm text-muted-foreground">
