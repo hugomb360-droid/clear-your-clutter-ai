@@ -124,14 +124,16 @@ export function RoomVolume3D() {
         <div className="grid items-center gap-10 lg:grid-cols-[1.2fr_0.8fr]">
           <div className="rounded-[2rem] border border-border bg-secondary/40 p-4 sm:p-8">
             <div
-              className="mx-auto flex h-[340px] w-full max-w-[520px] items-center justify-center sm:h-[420px]"
-              style={{ perspective: "1400px" }}
+              className="mx-auto flex h-[320px] w-full max-w-[520px] items-center justify-center sm:h-[400px]"
               aria-hidden="true"
             >
               <div
+                className="relative"
                 style={{
+                  width: ROOM_W * SCALE,
+                  height: ROOM_D * SCALE,
                   transformStyle: "preserve-3d",
-                  transform: "rotateX(60deg) rotateZ(-45deg) translate3d(-116px, -116px, 0)",
+                  transform: "scale(0.85) rotateX(60deg) rotateZ(-45deg) translateZ(-60px)",
                 }}
               >
                 {/* sol */}
