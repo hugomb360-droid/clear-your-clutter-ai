@@ -41,10 +41,11 @@ export function ProCompleteMission({
       await uploadMissionPhotos({ files, bidId, quoteId, userId: proId, kind: "completion" });
       const { error } = await supabase
         .from("bids")
-        .update({
-          status: "awaiting_confirmation",
-          message: note.trim() ? note.trim() : undefined,
-        })
+        .update(
+          note.trim()
+            ? { status: "awaiting_confirmation", message: note.trim() }
+            : { status: "awaiting_confirmation" },
+        )
         .eq("id", bidId);
       if (error) throw error;
       toast.success("Fin de chantier envoyée au client pour validation");
