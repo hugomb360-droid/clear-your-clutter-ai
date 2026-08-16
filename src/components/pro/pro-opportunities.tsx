@@ -7,6 +7,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
+import { QuotePhotos } from "@/components/pro/quote-photos";
 import { supabase } from "@/integrations/supabase/client";
 import type { Quote } from "@/lib/pro-dashboard";
 import { commissionOf, formatDate, netOf, quoteTitle } from "@/lib/pro-dashboard";
