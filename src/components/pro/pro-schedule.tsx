@@ -3,6 +3,7 @@ import { CalendarDays, CheckCircle2, Mail, MapPin, Phone, User } from "lucide-re
 import { toast } from "sonner";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
+import { QuotePhotos } from "@/components/pro/quote-photos";
 import { supabase } from "@/integrations/supabase/client";
 import type { BidWithQuote, QuoteContact } from "@/lib/pro-dashboard";
 import { formatDate, isUpcoming, netOf, quoteTitle } from "@/lib/pro-dashboard";
@@ -42,6 +43,8 @@ function MissionCard({
           <p className="text-xs text-muted-foreground">Net : {euro(netOf(bid.price))}</p>
         </div>
       </div>
+
+      <QuotePhotos quoteId={bid.quote_id} />
 
       <div className="mt-4 rounded-2xl bg-secondary/60 p-4 text-sm">
         <p className="font-semibold">Coordonnées du client</p>

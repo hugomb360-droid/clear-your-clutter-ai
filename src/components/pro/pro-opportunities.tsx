@@ -7,6 +7,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
+import { QuotePhotos } from "@/components/pro/quote-photos";
 import { supabase } from "@/integrations/supabase/client";
 import type { Quote } from "@/lib/pro-dashboard";
 import { commissionOf, formatDate, netOf, quoteTitle } from "@/lib/pro-dashboard";
@@ -97,6 +98,8 @@ export function ProOpportunities({ quotes, proId }: { quotes: Quote[]; proId: st
             </div>
 
             {quote.notes && <p className="mt-3 text-sm text-muted-foreground">{quote.notes}</p>}
+
+            <QuotePhotos quoteId={quote.id} />
 
             <div className="mt-5 grid gap-4 sm:grid-cols-[8rem_12rem_1fr]">
               <div className="grid gap-2">

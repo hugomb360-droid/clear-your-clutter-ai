@@ -5,6 +5,7 @@ import { toast } from "sonner";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
+import { QuotePhotos } from "@/components/pro/quote-photos";
 import { supabase } from "@/integrations/supabase/client";
 import type { BidWithQuote } from "@/lib/pro-dashboard";
 import {
@@ -84,6 +85,7 @@ export function ProBids({ bids }: { bids: BidWithQuote[] }) {
               </span>
             </p>
             {bid.message && <p className="mt-2 text-sm text-muted-foreground">{bid.message}</p>}
+            <QuotePhotos quoteId={bid.quote_id} />
           </div>
 
           <div className="flex flex-col items-end gap-2">
