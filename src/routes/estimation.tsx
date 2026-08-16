@@ -318,8 +318,9 @@ function EstimationPage() {
             </div>
             <h2 className="mt-5 text-2xl font-bold">Devis classique</h2>
             <p className="mt-2 text-sm text-muted-foreground">
-              Pas de photos sous la main ? Décrivez la surface et ce qu'il y a à débarrasser, les
-              pros de votre secteur vous envoient leurs propositions.
+              Pas besoin d'estimation automatique ? Ajoutez vos photos, décrivez la surface et ce
+              qu'il y a à débarrasser : les pros de votre secteur vous envoient leurs propositions.
+
             </p>
             <ul className="mt-5 space-y-2 text-sm text-muted-foreground">
               <li>• Photos + description de votre bien</li>
