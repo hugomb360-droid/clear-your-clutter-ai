@@ -37,6 +37,20 @@ const DRAFT_KEY = "clearo-draft";
 
 type Mode = "photo" | "manuel";
 
+type AccessLevel = "facile" | "moyen" | "difficile";
+
+const ACCESS_OPTIONS: { key: AccessLevel; label: string; hint: string }[] = [
+  { key: "facile", label: "Accès facile", hint: "Plain-pied, ascenseur ou camion à proximité" },
+  { key: "moyen", label: "Accès moyen", hint: "Quelques étages, couloirs étroits" },
+  { key: "difficile", label: "Accès difficile", hint: "Étages sans ascenseur, cour, stationnement compliqué" },
+];
+
+const ACCESS_PRICING: Record<AccessLevel, { floor: number; hasElevator: boolean; hardAccess: boolean }> = {
+  facile: { floor: 0, hasElevator: true, hardAccess: false },
+  moyen: { floor: 2, hasElevator: false, hardAccess: false },
+  difficile: { floor: 3, hasElevator: false, hardAccess: true },
+};
+
 type Draft = {
   mode: Mode;
   photos: string[];
@@ -44,6 +58,7 @@ type Draft = {
   surface: string;
   floor: string;
   hasElevator: boolean;
+  accessLevel: AccessLevel;
   notes: string;
   postalCode: string;
   city: string;
@@ -65,6 +80,7 @@ function EstimationPage() {
   const [surface, setSurface] = useState("");
   const [floor, setFloor] = useState("0");
   const [hasElevator, setHasElevator] = useState(false);
+  const [accessLevel, setAccessLevel] = useState<AccessLevel>("facile");
   const [notes, setNotes] = useState("");
   const [postalCode, setPostalCode] = useState("");
   const [city, setCity] = useState("");
@@ -87,6 +103,7 @@ function EstimationPage() {
       setSurface(draft.surface ?? "");
       setFloor(draft.floor ?? "0");
       setHasElevator(Boolean(draft.hasElevator));
+      setAccessLevel(draft.accessLevel ?? "facile");
       setNotes(draft.notes ?? "");
       setPostalCode(draft.postalCode ?? "");
       setCity(draft.city ?? "");
@@ -107,6 +124,7 @@ function EstimationPage() {
     surface,
     floor,
     hasElevator,
+    accessLevel,
     notes,
     postalCode,
     city,
@@ -146,7 +164,13 @@ function EstimationPage() {
     try {
       const estimation = await estimate({
         data: isPhoto
-          ? { images: photos }
+          ? {
+              images: photos,
+              propertyType: PROPERTY_LABELS[propertyType],
+              floor: ACCESS_PRICING[accessLevel].floor,
+              hasElevator: ACCESS_PRICING[accessLevel].hasElevator,
+              hardAccess: ACCESS_PRICING[accessLevel].hardAccess,
+            }
           : {
               propertyType: PROPERTY_LABELS[propertyType],
               ...(Number.isFinite(Number.parseInt(surface, 10)) && Number.parseInt(surface, 10) > 0
@@ -197,15 +221,17 @@ function EstimationPage() {
         .from("quotes")
         .insert({
           client_id: session.user.id,
-          property_type: isPhoto ? "Non précisé" : PROPERTY_LABELS[propertyType],
+          property_type: PROPERTY_LABELS[propertyType],
           surface_m2:
             !isPhoto && Number.isFinite(surfaceValue) && surfaceValue > 0 ? surfaceValue : null,
-          floor: isPhoto ? 0 : Number.parseInt(floor, 10) || 0,
-          has_elevator: isPhoto ? false : hasElevator,
+          floor: isPhoto ? ACCESS_PRICING[accessLevel].floor : Number.parseInt(floor, 10) || 0,
+          has_elevator: isPhoto ? ACCESS_PRICING[accessLevel].hasElevator : hasElevator,
           postal_code: postalCode.trim(),
           city: city.trim() || null,
           desired_date: desiredDate || null,
-          notes: isPhoto ? null : notes || null,
+          notes: isPhoto
+            ? `Accès : ${ACCESS_OPTIONS.find((o) => o.key === accessLevel)?.label ?? accessLevel}`
+            : notes || null,
           volume_m3: result?.analysis.volumeM3 ?? null,
           price_min: result?.price.priceMin ?? null,
           price_max: result?.price.priceMax ?? null,
@@ -455,7 +481,59 @@ function EstimationPage() {
 
           {isPhoto && (
             <section className="rounded-3xl border border-border bg-card p-7 shadow-[var(--shadow-soft)]">
-              <h2 className="text-lg font-bold">2. Lancer l'estimation IA</h2>
+              <h2 className="text-lg font-bold">2. Type de logement et accès</h2>
+              <p className="mt-1 text-sm text-muted-foreground">
+                Deux infos seulement : elles ajustent le prix final.
+              </p>
+              <div className="mt-5 grid gap-5">
+                <div className="grid gap-2">
+                  <Label>Type d'habitation</Label>
+                  <div className="flex flex-wrap gap-2">
+                    {(Object.keys(PROPERTY_LABELS) as PropertyType[]).map((key) => (
+                      <button
+                        key={key}
+                        type="button"
+                        onClick={() => setPropertyType(key)}
+                        className={`rounded-full border px-4 py-2 text-sm transition-colors ${
+                          propertyType === key
+                            ? "border-primary bg-brand-soft text-brand-ink"
+                            : "border-border hover:bg-secondary"
+                        }`}
+                      >
+                        {PROPERTY_LABELS[key]}
+                      </button>
+                    ))}
+                  </div>
+                </div>
+                <div className="grid gap-2">
+                  <Label>Difficulté d'accès</Label>
+                  <div className="grid gap-3 sm:grid-cols-3">
+                    {ACCESS_OPTIONS.map((option) => (
+                      <button
+                        key={option.key}
+                        type="button"
+                        onClick={() => setAccessLevel(option.key)}
+                        className={`rounded-2xl border p-4 text-left transition-colors ${
+                          accessLevel === option.key
+                            ? "border-primary bg-brand-soft"
+                            : "border-border hover:bg-secondary"
+                        }`}
+                      >
+                        <span className="block text-sm font-semibold">{option.label}</span>
+                        <span className="mt-1 block text-xs text-muted-foreground">
+                          {option.hint}
+                        </span>
+                      </button>
+                    ))}
+                  </div>
+                </div>
+              </div>
+            </section>
+          )}
+
+          {isPhoto && (
+            <section className="rounded-3xl border border-border bg-card p-7 shadow-[var(--shadow-soft)]">
+              <h2 className="text-lg font-bold">3. Lancer l'estimation IA</h2>
               <p className="mt-1 text-sm text-muted-foreground">
                 Notre IA analyse vos photos et calcule le volume + la fourchette de prix.
               </p>
@@ -474,7 +552,7 @@ function EstimationPage() {
           )}
 
           <section className="rounded-3xl border border-border bg-card p-7 shadow-[var(--shadow-soft)]">
-            <h2 className="text-lg font-bold">{isPhoto ? "3." : "2."} Où et quand ?</h2>
+            <h2 className="text-lg font-bold">{isPhoto ? "4." : "2."} Où et quand ?</h2>
             <div className="mt-5 grid gap-4 sm:grid-cols-2">
               <div className="grid gap-2">
                 <Label htmlFor="postal">Code postal *</Label>

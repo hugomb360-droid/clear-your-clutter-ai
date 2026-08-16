@@ -16,6 +16,7 @@ export type EstimateContext = {
   surfaceM2?: number | undefined;
   floor?: number | undefined;
   hasElevator?: boolean | undefined;
+  hardAccess?: boolean | undefined;
   notes?: string | undefined;
   images: string[];
 };
@@ -96,12 +97,14 @@ export async function runEstimation(input: EstimateContext): Promise<EstimationR
     throw new Error("Réponse de l'IA illisible. Réessayez avec d'autres photos.");
   }
 
+  if (input.hardAccess) analysis.hardAccess = true;
+
   const price = computePrice({
     volumeM3: analysis.volumeM3,
     floor: input.floor ?? 0,
     hasElevator: input.hasElevator ?? false,
     bulkyItems: analysis.bulkyItems,
-    hardAccess: analysis.hardAccess,
+    hardAccess: analysis.hardAccess || (input.hardAccess ?? false),
   });
 
   return { analysis, price };
