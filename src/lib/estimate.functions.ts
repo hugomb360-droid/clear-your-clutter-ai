@@ -12,5 +12,5 @@ const EstimateInput = z.object({
 });
 
 export const estimateClearance = createServerFn({ method: "POST" })
-  .inputValidator((input: unknown) => EstimateInput.parse(input))
+  .validator((input: unknown) => EstimateInput.parse(input))
   .handler(async ({ data }) => runEstimation(data));
