@@ -66,7 +66,7 @@ function Cube({ item, index }: { item: Item; index: number }) {
           width: w,
           height: h,
           transformOrigin: "0 0",
-          transform: `translateY(${d}px) rotateX(-90deg)`,
+          transform: `translateY(${d}px) rotateX(90deg)`,
         }}
       />
       {/* face latérale (x = w) */}
@@ -162,7 +162,7 @@ export function RoomVolume3D() {
                     width: ROOM_W * SCALE,
                     height: ROOM_H * SCALE,
                     transformOrigin: "0 0",
-                    transform: "rotateX(-90deg)",
+                    transform: "rotateX(90deg)",
                   }}
                 />
                 {visible.map((item, index) => (
