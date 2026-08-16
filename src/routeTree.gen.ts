@@ -10,33 +10,154 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as AuthRouteImport } from './routes/auth'
+import { Route as CommentCaMarcheRouteImport } from './routes/comment-ca-marche'
+import { Route as CompteRouteImport } from './routes/compte'
+import { Route as ContactRouteImport } from './routes/contact'
+import { Route as EstimationRouteImport } from './routes/estimation'
+import { Route as MentionsLegalesRouteImport } from './routes/mentions-legales'
+import { Route as ProsRouteImport } from './routes/pros'
+import { Route as TarifsRouteImport } from './routes/tarifs'
+import { Route as ProDashboardRouteImport } from './routes/pro.dashboard'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const AuthRoute = AuthRouteImport.update({
+  id: '/auth',
+  path: '/auth',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const CommentCaMarcheRoute = CommentCaMarcheRouteImport.update({
+  id: '/comment-ca-marche',
+  path: '/comment-ca-marche',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const CompteRoute = CompteRouteImport.update({
+  id: '/compte',
+  path: '/compte',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ContactRoute = ContactRouteImport.update({
+  id: '/contact',
+  path: '/contact',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const EstimationRoute = EstimationRouteImport.update({
+  id: '/estimation',
+  path: '/estimation',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const MentionsLegalesRoute = MentionsLegalesRouteImport.update({
+  id: '/mentions-legales',
+  path: '/mentions-legales',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ProsRoute = ProsRouteImport.update({
+  id: '/pros',
+  path: '/pros',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const TarifsRoute = TarifsRouteImport.update({
+  id: '/tarifs',
+  path: '/tarifs',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ProDashboardRoute = ProDashboardRouteImport.update({
+  id: '/pro/dashboard',
+  path: '/pro/dashboard',
+  getParentRoute: () => rootRouteImport,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/auth': typeof AuthRoute
+  '/comment-ca-marche': typeof CommentCaMarcheRoute
+  '/compte': typeof CompteRoute
+  '/contact': typeof ContactRoute
+  '/estimation': typeof EstimationRoute
+  '/mentions-legales': typeof MentionsLegalesRoute
+  '/pros': typeof ProsRoute
+  '/tarifs': typeof TarifsRoute
+  '/pro/dashboard': typeof ProDashboardRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/auth': typeof AuthRoute
+  '/comment-ca-marche': typeof CommentCaMarcheRoute
+  '/compte': typeof CompteRoute
+  '/contact': typeof ContactRoute
+  '/estimation': typeof EstimationRoute
+  '/mentions-legales': typeof MentionsLegalesRoute
+  '/pros': typeof ProsRoute
+  '/tarifs': typeof TarifsRoute
+  '/pro/dashboard': typeof ProDashboardRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/auth': typeof AuthRoute
+  '/comment-ca-marche': typeof CommentCaMarcheRoute
+  '/compte': typeof CompteRoute
+  '/contact': typeof ContactRoute
+  '/estimation': typeof EstimationRoute
+  '/mentions-legales': typeof MentionsLegalesRoute
+  '/pros': typeof ProsRoute
+  '/tarifs': typeof TarifsRoute
+  '/pro/dashboard': typeof ProDashboardRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/'
+  fullPaths:
+    | '/'
+    | '/auth'
+    | '/comment-ca-marche'
+    | '/compte'
+    | '/contact'
+    | '/estimation'
+    | '/mentions-legales'
+    | '/pros'
+    | '/tarifs'
+    | '/pro/dashboard'
   fileRoutesByTo: FileRoutesByTo
-  to: '/'
-  id: '__root__' | '/'
+  to:
+    | '/'
+    | '/auth'
+    | '/comment-ca-marche'
+    | '/compte'
+    | '/contact'
+    | '/estimation'
+    | '/mentions-legales'
+    | '/pros'
+    | '/tarifs'
+    | '/pro/dashboard'
+  id:
+    | '__root__'
+    | '/'
+    | '/auth'
+    | '/comment-ca-marche'
+    | '/compte'
+    | '/contact'
+    | '/estimation'
+    | '/mentions-legales'
+    | '/pros'
+    | '/tarifs'
+    | '/pro/dashboard'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  AuthRoute: typeof AuthRoute
+  CommentCaMarcheRoute: typeof CommentCaMarcheRoute
+  CompteRoute: typeof CompteRoute
+  ContactRoute: typeof ContactRoute
+  EstimationRoute: typeof EstimationRoute
+  MentionsLegalesRoute: typeof MentionsLegalesRoute
+  ProsRoute: typeof ProsRoute
+  TarifsRoute: typeof TarifsRoute
+  ProDashboardRoute: typeof ProDashboardRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -48,11 +169,83 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/auth': {
+      id: '/auth'
+      path: '/auth'
+      fullPath: '/auth'
+      preLoaderRoute: typeof AuthRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/comment-ca-marche': {
+      id: '/comment-ca-marche'
+      path: '/comment-ca-marche'
+      fullPath: '/comment-ca-marche'
+      preLoaderRoute: typeof CommentCaMarcheRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/compte': {
+      id: '/compte'
+      path: '/compte'
+      fullPath: '/compte'
+      preLoaderRoute: typeof CompteRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/contact': {
+      id: '/contact'
+      path: '/contact'
+      fullPath: '/contact'
+      preLoaderRoute: typeof ContactRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/estimation': {
+      id: '/estimation'
+      path: '/estimation'
+      fullPath: '/estimation'
+      preLoaderRoute: typeof EstimationRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/mentions-legales': {
+      id: '/mentions-legales'
+      path: '/mentions-legales'
+      fullPath: '/mentions-legales'
+      preLoaderRoute: typeof MentionsLegalesRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/pros': {
+      id: '/pros'
+      path: '/pros'
+      fullPath: '/pros'
+      preLoaderRoute: typeof ProsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/tarifs': {
+      id: '/tarifs'
+      path: '/tarifs'
+      fullPath: '/tarifs'
+      preLoaderRoute: typeof TarifsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/pro/dashboard': {
+      id: '/pro/dashboard'
+      path: '/pro/dashboard'
+      fullPath: '/pro/dashboard'
+      preLoaderRoute: typeof ProDashboardRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  AuthRoute: AuthRoute,
+  CommentCaMarcheRoute: CommentCaMarcheRoute,
+  CompteRoute: CompteRoute,
+  ContactRoute: ContactRoute,
+  EstimationRoute: EstimationRoute,
+  MentionsLegalesRoute: MentionsLegalesRoute,
+  ProsRoute: ProsRoute,
+  TarifsRoute: TarifsRoute,
+  ProDashboardRoute: ProDashboardRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
