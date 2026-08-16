@@ -98,8 +98,8 @@ export async function runEstimation(input: EstimateContext): Promise<EstimationR
 
   const price = computePrice({
     volumeM3: analysis.volumeM3,
-    floor: input.floor,
-    hasElevator: input.hasElevator,
+    floor: input.floor ?? 0,
+    hasElevator: input.hasElevator ?? false,
     bulkyItems: analysis.bulkyItems,
     hardAccess: analysis.hardAccess,
   });
