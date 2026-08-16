@@ -414,7 +414,7 @@ function EstimationPage() {
 
           {!isPhoto && (
             <section className="rounded-3xl border border-border bg-card p-7 shadow-[var(--shadow-soft)]">
-              <h2 className="text-lg font-bold">1. Le bien à débarrasser</h2>
+              <h2 className="text-lg font-bold">2. Le bien à débarrasser</h2>
               <div className="mt-5 grid gap-5">
                 <div className="grid gap-2">
                   <Label>Type de bien</Label>
