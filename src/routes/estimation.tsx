@@ -1,6 +1,6 @@
 import { createFileRoute, useNavigate } from "@tanstack/react-router";
 import { useServerFn } from "@tanstack/react-start";
-import { Camera, Loader2, Sparkles, Trash2 } from "lucide-react";
+import { Camera, Loader2, PencilLine, Sparkles, Trash2 } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
 import { toast } from "sonner";
 import { Badge } from "@/components/ui/badge";
@@ -35,7 +35,10 @@ export const Route = createFileRoute("/estimation")({
 
 const DRAFT_KEY = "clearo-draft";
 
+type Mode = "photo" | "manuel";
+
 type Draft = {
+  mode: Mode;
   photos: string[];
   propertyType: PropertyType;
   surface: string;
@@ -56,6 +59,7 @@ function EstimationPage() {
   const estimate = useServerFn(estimateClearance);
   const fileInput = useRef<HTMLInputElement>(null);
 
+  const [mode, setMode] = useState<Mode | null>(null);
   const [photos, setPhotos] = useState<string[]>([]);
   const [propertyType, setPropertyType] = useState<PropertyType>("appartement");
   const [surface, setSurface] = useState("");
@@ -77,6 +81,7 @@ function EstimationPage() {
     if (!raw) return;
     try {
       const draft = JSON.parse(raw) as Draft;
+      setMode(draft.mode ?? null);
       setPhotos(draft.photos ?? []);
       setPropertyType(draft.propertyType ?? "appartement");
       setSurface(draft.surface ?? "");
@@ -96,6 +101,7 @@ function EstimationPage() {
   }, []);
 
   const currentDraft = (): Draft => ({
+    mode: mode ?? "photo",
     photos,
     propertyType,
     surface,
@@ -111,6 +117,12 @@ function EstimationPage() {
     result,
   });
 
+  const chooseMode = (next: Mode) => {
+    setMode(next);
+    setResult(null);
+    if (next === "manuel") setPhotos([]);
+  };
+
   const handleFiles = async (files: FileList | null) => {
     if (!files?.length) return;
     const remaining = 8 - photos.length;
@@ -124,6 +136,12 @@ function EstimationPage() {
   };
 
   const runEstimate = async () => {
+    if (photos.length === 0) {
+      toast.error("Ajoutez au moins une photo", {
+        description: "L'estimation IA se base sur vos photos.",
+      });
+      return;
+    }
     setAnalyzing(true);
     try {
       const surfaceValue = Number.parseInt(surface, 10);
@@ -149,7 +167,13 @@ function EstimationPage() {
   };
 
   const publish = async () => {
-    if (!result) return;
+    if (mode === "photo" && !result) return;
+    if (mode === "manuel" && notes.trim().length < 15) {
+      toast.error("Décrivez ce qu'il y a à débarrasser", {
+        description: "Quelques mots suffisent pour que les pros puissent chiffrer.",
+      });
+      return;
+    }
     if (!postalCode.trim()) {
       toast.error("Indiquez votre code postal");
       return;
@@ -178,10 +202,10 @@ function EstimationPage() {
           city: city.trim() || null,
           desired_date: desiredDate || null,
           notes: notes || null,
-          volume_m3: result.analysis.volumeM3,
-          price_min: result.price.priceMin,
-          price_max: result.price.priceMax,
-          ai_analysis: JSON.parse(JSON.stringify(result)),
+          volume_m3: result?.analysis.volumeM3 ?? null,
+          price_min: result?.price.priceMin ?? null,
+          price_max: result?.price.priceMax ?? null,
+          ai_analysis: result ? JSON.parse(JSON.stringify(result)) : null,
           status: "published",
         })
         .select("id")
@@ -218,67 +242,150 @@ function EstimationPage() {
     }
   };
 
+  if (!mode) {
+    return (
+      <div className="mx-auto max-w-5xl px-4 py-16">
+        <h1 className="text-4xl font-extrabold tracking-tight sm:text-5xl">
+          Comment voulez-vous votre devis ?
+        </h1>
+        <p className="mt-3 max-w-2xl text-muted-foreground">
+          Deux façons d'obtenir un prix : l'estimation instantanée par photos grâce à notre IA, ou
+          la demande de devis classique en décrivant vous-même le débarras.
+        </p>
+
+        <div className="mt-10 grid gap-6 lg:grid-cols-2">
+          <button
+            type="button"
+            onClick={() => chooseMode("photo")}
+            className="group relative rounded-3xl border-2 border-primary bg-brand-soft/40 p-8 text-left shadow-[var(--shadow-soft)] transition-transform hover:-translate-y-1"
+          >
+            <Badge className="absolute right-6 top-6">Recommandé</Badge>
+            <div className="flex size-12 items-center justify-center rounded-2xl bg-primary text-primary-foreground">
+              <Sparkles className="size-6" />
+            </div>
+            <h2 className="mt-5 text-2xl font-bold">Estimation IA par photos</h2>
+            <p className="mt-2 text-sm text-muted-foreground">
+              Prenez vos pièces en photo, notre IA calcule le volume, la nature des objets et vous
+              donne une fourchette de prix immédiate.
+            </p>
+            <ul className="mt-5 space-y-2 text-sm">
+              <li>• Résultat en quelques secondes</li>
+              <li>• Prix chiffré avant même de parler à un pro</li>
+              <li>• Les pros voient vos photos et répondent plus vite</li>
+            </ul>
+            <span className="mt-6 inline-flex items-center gap-2 font-semibold text-brand">
+              Démarrer avec mes photos →
+            </span>
+          </button>
+
+          <button
+            type="button"
+            onClick={() => chooseMode("manuel")}
+            className="rounded-3xl border border-border bg-card p-8 text-left shadow-[var(--shadow-soft)] transition-colors hover:border-primary/40"
+          >
+            <div className="flex size-12 items-center justify-center rounded-2xl bg-secondary text-foreground">
+              <PencilLine className="size-6" />
+            </div>
+            <h2 className="mt-5 text-2xl font-bold">Devis classique</h2>
+            <p className="mt-2 text-sm text-muted-foreground">
+              Pas de photos sous la main ? Décrivez la surface et ce qu'il y a à débarrasser, les
+              pros de votre secteur vous envoient leurs propositions.
+            </p>
+            <ul className="mt-5 space-y-2 text-sm text-muted-foreground">
+              <li>• Sans photo</li>
+              <li>• Prix communiqué par les professionnels</li>
+              <li>• Réponses sous 24 à 48 h</li>
+            </ul>
+            <span className="mt-6 inline-flex items-center gap-2 font-semibold">
+              Décrire mon débarras →
+            </span>
+          </button>
+        </div>
+      </div>
+    );
+  }
+
+  const isPhoto = mode === "photo";
+
   return (
     <div className="mx-auto max-w-5xl px-4 py-12">
-      <h1 className="text-4xl font-extrabold tracking-tight sm:text-5xl">
-        Estimez votre débarras
+      <div className="flex flex-wrap items-center gap-3">
+        <Badge variant={isPhoto ? "default" : "secondary"}>
+          {isPhoto ? "Estimation IA par photos" : "Devis classique"}
+        </Badge>
+        <button
+          type="button"
+          onClick={() => chooseMode(isPhoto ? "manuel" : "photo")}
+          className="text-sm font-medium text-brand underline-offset-4 hover:underline"
+        >
+          {isPhoto ? "Passer au devis classique" : "Passer à l'estimation IA par photos"}
+        </button>
+      </div>
+
+      <h1 className="mt-4 text-4xl font-extrabold tracking-tight sm:text-5xl">
+        {isPhoto ? "Estimez votre débarras en photos" : "Décrivez votre débarras"}
       </h1>
       <p className="mt-3 max-w-2xl text-muted-foreground">
-        Ajoutez des photos (ou décrivez simplement le bien), notre IA calcule le volume et le prix.
-        Gratuit et sans engagement.
+        {isPhoto
+          ? "Ajoutez vos photos, notre IA calcule le volume et le prix. Gratuit et sans engagement."
+          : "Renseignez la surface et le contenu à évacuer : les pros de votre secteur vous répondent avec leur prix."}
       </p>
 
       <div className="mt-10 grid gap-8 lg:grid-cols-[1.1fr_0.9fr]">
         <div className="space-y-8">
-          <section className="rounded-3xl border border-border bg-card p-7 shadow-[var(--shadow-soft)]">
-            <h2 className="text-lg font-bold">1. Vos photos</h2>
-            <p className="mt-1 text-sm text-muted-foreground">
-              Jusqu'à 8 photos. Cadrez large pour montrer l'ensemble de la pièce.
-            </p>
-            <input
-              ref={fileInput}
-              type="file"
-              accept="image/*"
-              multiple
-              className="hidden"
-              onChange={(event) => {
-                void handleFiles(event.target.files);
-                event.target.value = "";
-              }}
-            />
-            <div className="mt-5 grid grid-cols-3 gap-3 sm:grid-cols-4">
-              {photos.map((photo, index) => (
-                <div key={photo.slice(-40) + index} className="group relative">
-                  <img
-                    src={photo}
-                    alt={`Photo du débarras ${index + 1}`}
-                    className="aspect-square w-full rounded-2xl object-cover"
-                  />
+          {isPhoto && (
+            <section className="rounded-3xl border border-border bg-card p-7 shadow-[var(--shadow-soft)]">
+              <h2 className="text-lg font-bold">1. Vos photos</h2>
+              <p className="mt-1 text-sm text-muted-foreground">
+                Jusqu'à 8 photos. Cadrez large pour montrer l'ensemble de la pièce.
+              </p>
+              <input
+                ref={fileInput}
+                type="file"
+                accept="image/*"
+                multiple
+                className="hidden"
+                onChange={(event) => {
+                  void handleFiles(event.target.files);
+                  event.target.value = "";
+                }}
+              />
+              <div className="mt-5 grid grid-cols-3 gap-3 sm:grid-cols-4">
+                {photos.map((photo, index) => (
+                  <div key={photo.slice(-40) + index} className="group relative">
+                    <img
+                      src={photo}
+                      alt={`Photo du débarras ${index + 1}`}
+                      className="aspect-square w-full rounded-2xl object-cover"
+                    />
+                    <button
+                      type="button"
+                      aria-label="Supprimer la photo"
+                      onClick={() => setPhotos((prev) => prev.filter((_, i) => i !== index))}
+                      className="absolute right-1.5 top-1.5 rounded-full bg-background/90 p-1.5 text-destructive shadow"
+                    >
+                      <Trash2 className="size-3.5" />
+                    </button>
+                  </div>
+                ))}
+                {photos.length < 8 && (
                   <button
                     type="button"
-                    aria-label="Supprimer la photo"
-                    onClick={() => setPhotos((prev) => prev.filter((_, i) => i !== index))}
-                    className="absolute right-1.5 top-1.5 rounded-full bg-background/90 p-1.5 text-destructive shadow"
+                    onClick={() => fileInput.current?.click()}
+                    className="flex aspect-square w-full flex-col items-center justify-center gap-2 rounded-2xl border-2 border-dashed border-border text-xs text-muted-foreground transition-colors hover:border-primary hover:text-brand"
                   >
-                    <Trash2 className="size-3.5" />
+                    <Camera className="size-5" />
+                    Ajouter
                   </button>
-                </div>
-              ))}
-              {photos.length < 8 && (
-                <button
-                  type="button"
-                  onClick={() => fileInput.current?.click()}
-                  className="flex aspect-square w-full flex-col items-center justify-center gap-2 rounded-2xl border-2 border-dashed border-border text-xs text-muted-foreground transition-colors hover:border-primary hover:text-brand"
-                >
-                  <Camera className="size-5" />
-                  Ajouter
-                </button>
-              )}
-            </div>
-          </section>
+                )}
+              </div>
+            </section>
+          )}
 
           <section className="rounded-3xl border border-border bg-card p-7 shadow-[var(--shadow-soft)]">
-            <h2 className="text-lg font-bold">2. Le bien à débarrasser</h2>
+            <h2 className="text-lg font-bold">
+              {isPhoto ? "2. Le bien à débarrasser" : "1. Le bien à débarrasser"}
+            </h2>
             <div className="mt-5 grid gap-5">
               <div className="grid gap-2">
                 <Label>Type de bien</Label>
@@ -301,7 +408,7 @@ function EstimationPage() {
               </div>
               <div className="grid gap-4 sm:grid-cols-3">
                 <div className="grid gap-2">
-                  <Label htmlFor="surface">Surface (m²)</Label>
+                  <Label htmlFor="surface">Surface (m²){isPhoto ? "" : " *"}</Label>
                   <Input
                     id="surface"
                     inputMode="numeric"
@@ -330,31 +437,35 @@ function EstimationPage() {
                 </div>
               </div>
               <div className="grid gap-2">
-                <Label htmlFor="notes">Précisions</Label>
+                <Label htmlFor="notes">
+                  {isPhoto ? "Précisions" : "Ce qu'il y a à débarrasser *"}
+                </Label>
                 <Textarea
                   id="notes"
-                  rows={4}
+                  rows={isPhoto ? 4 : 6}
                   placeholder="Ex : cave pleine de cartons, un canapé et un vieux frigo, accès par une cour."
                   value={notes}
                   onChange={(e) => setNotes(e.target.value)}
                 />
               </div>
-              <Button size="lg" onClick={runEstimate} disabled={analyzing}>
-                {analyzing ? (
-                  <>
-                    <Loader2 className="mr-2 size-4 animate-spin" /> Analyse en cours...
-                  </>
-                ) : (
-                  <>
-                    <Sparkles className="mr-2 size-4" /> Estimer mon débarras
-                  </>
-                )}
-              </Button>
+              {isPhoto && (
+                <Button size="lg" onClick={runEstimate} disabled={analyzing}>
+                  {analyzing ? (
+                    <>
+                      <Loader2 className="mr-2 size-4 animate-spin" /> Analyse en cours...
+                    </>
+                  ) : (
+                    <>
+                      <Sparkles className="mr-2 size-4" /> Estimer mon débarras
+                    </>
+                  )}
+                </Button>
+              )}
             </div>
           </section>
 
           <section className="rounded-3xl border border-border bg-card p-7 shadow-[var(--shadow-soft)]">
-            <h2 className="text-lg font-bold">3. Où et quand ?</h2>
+            <h2 className="text-lg font-bold">{isPhoto ? "3." : "2."} Où et quand ?</h2>
             <div className="mt-5 grid gap-4 sm:grid-cols-2">
               <div className="grid gap-2">
                 <Label htmlFor="postal">Code postal *</Label>
@@ -401,8 +512,37 @@ function EstimationPage() {
 
         <aside className="lg:sticky lg:top-24 lg:self-start">
           <div className="rounded-3xl border border-border bg-card p-7 shadow-[var(--shadow-soft)]">
-            <h2 className="text-lg font-bold">Votre devis Clearo</h2>
-            {!result ? (
+            <h2 className="text-lg font-bold">
+              {isPhoto ? "Votre devis Clearo" : "Votre demande de devis"}
+            </h2>
+            {!isPhoto ? (
+              <div className="mt-5 space-y-5">
+                <p className="text-sm text-muted-foreground">
+                  Sans photo, le prix est fixé directement par les professionnels de votre secteur.
+                  Vous recevez leurs propositions dans votre espace client.
+                </p>
+                <div className="rounded-2xl bg-brand-soft/50 p-4 text-sm">
+                  <p className="font-semibold text-brand-ink">Envie d'un prix tout de suite ?</p>
+                  <p className="mt-1 text-muted-foreground">
+                    L'estimation IA par photos vous donne une fourchette en quelques secondes.
+                  </p>
+                  <Button
+                    variant="secondary"
+                    className="mt-3 w-full"
+                    onClick={() => chooseMode("photo")}
+                  >
+                    <Sparkles className="mr-2 size-4" /> Essayer l'estimation IA
+                  </Button>
+                </div>
+                <Button size="lg" className="w-full" onClick={publish} disabled={publishing}>
+                  {publishing ? "Envoi..." : "Envoyer ma demande aux pros"}
+                </Button>
+                <p className="text-xs text-muted-foreground">
+                  Vos coordonnées ne sont transmises qu'au professionnel dont vous acceptez la
+                  proposition.
+                </p>
+              </div>
+            ) : !result ? (
               <p className="mt-4 text-sm text-muted-foreground">
                 Lancez l'estimation pour découvrir le volume estimé et la fourchette de prix. Aucune
                 carte bancaire, aucun engagement.
