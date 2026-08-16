@@ -2,6 +2,7 @@ import { createFileRoute, Link } from "@tanstack/react-router";
 import { Camera, Clock3, Leaf, MapPin, Quote, ShieldCheck, Sparkles, Star } from "lucide-react";
 import heroImage from "@/assets/hero-clearo.jpg";
 import { Button } from "@/components/ui/button";
+import { RoomVolume3D } from "@/components/room-volume-3d";
 
 export const Route = createFileRoute("/")({
   head: () => ({
@@ -197,6 +198,8 @@ function Home() {
           ))}
         </div>
       </section>
+
+      <RoomVolume3D />
 
       <section className="border-t border-border bg-secondary/40 py-16">
         <div className="mx-auto max-w-6xl px-4">
