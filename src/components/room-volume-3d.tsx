@@ -63,9 +63,9 @@ const ITEMS: Item[] = [
     color: M.cardboard,
     footprint: 0.36,
     parts: [
-      box(0.2, 0.25, 0, 0.6, 0.6, 0.42, M.cardboard),
-      box(0.24, 0.3, 0.42, 0.52, 0.5, 0.36, M.cardboard),
-      box(0.3, 0.36, 0.78, 0.4, 0.4, 0.3, M.cardboard),
+      box(0.55, 2.95, 0, 0.6, 0.6, 0.42, M.cardboard),
+      box(0.59, 3.0, 0.42, 0.52, 0.5, 0.36, M.cardboard),
+      box(0.65, 3.06, 0.78, 0.4, 0.4, 0.3, M.cardboard),
     ],
   },
   {
@@ -74,11 +74,11 @@ const ITEMS: Item[] = [
     color: M.fabric,
     footprint: 1.62,
     parts: [
-      box(1.15, 0.2, 0.1, 1.9, 0.85, 0.3, M.fabric, 4), // assise
-      box(1.15, 0.2, 0, 1.9, 0.85, 0.1, M.wood, 2), // socle
-      box(1.15, 0.2, 0.4, 1.9, 0.18, 0.45, M.fabric, 4), // dossier
-      box(1.15, 0.38, 0.4, 0.22, 0.67, 0.25, M.fabric, 4), // accoudoir gauche
-      box(2.83, 0.38, 0.4, 0.22, 0.67, 0.25, M.fabric, 4), // accoudoir droit
+      box(1.15, 1.5, 0, 1.9, 0.85, 0.12, M.wood, 2), // socle
+      box(1.15, 1.62, 0.12, 1.9, 0.73, 0.28, M.fabric, 5), // assise
+      box(1.15, 1.5, 0.12, 1.9, 0.16, 0.55, M.fabric, 5), // dossier
+      box(1.15, 1.66, 0.4, 0.2, 0.69, 0.22, M.fabric, 5), // accoudoir
+      box(2.85, 1.66, 0.4, 0.2, 0.69, 0.22, M.fabric, 5),
     ],
   },
   {
@@ -87,8 +87,8 @@ const ITEMS: Item[] = [
     color: M.mattress,
     footprint: 1.14,
     parts: [
-      box(3.25, 0.25, 0, 0.6, 1.9, 0.22, M.wood, 2),
-      box(3.23, 0.23, 0.22, 0.64, 1.94, 0.24, M.mattress, 5),
+      box(3.3, 1.5, 0, 0.6, 1.9, 0.24, M.wood, 2),
+      box(3.28, 1.48, 0.24, 0.64, 1.94, 0.24, M.mattress, 6),
     ],
   },
   {
@@ -97,11 +97,11 @@ const ITEMS: Item[] = [
     color: M.wood,
     footprint: 0.9,
     parts: [
-      box(0.15, 1.1, 0, 0.5, 1.8, 1.9, M.wood, 3),
-      box(0.65, 1.14, 0.05, 0.02, 0.84, 1.8, M.appliance, 1), // porte gauche
-      box(0.65, 2.02, 0.05, 0.02, 0.84, 1.8, M.appliance, 1), // porte droite
-      box(0.67, 1.9, 0.85, 0.05, 0.06, 0.22, M.metal, 2), // poignées
-      box(0.67, 2.06, 0.85, 0.05, 0.06, 0.22, M.metal, 2),
+      box(1.35, 0.12, 0, 1.8, 0.5, 1.9, M.wood, 3),
+      box(1.4, 0.6, 0.06, 0.84, 0.03, 1.78, M.appliance, 1), // porte gauche
+      box(2.26, 0.6, 0.06, 0.84, 0.03, 1.78, M.appliance, 1), // porte droite
+      box(2.16, 0.62, 0.85, 0.06, 0.05, 0.24, M.metal, 2), // poignées
+      box(2.3, 0.62, 0.85, 0.06, 0.05, 0.24, M.metal, 2),
     ],
   },
   {
@@ -110,10 +110,10 @@ const ITEMS: Item[] = [
     color: M.appliance,
     footprint: 0.42,
     parts: [
-      box(1.05, 1.3, 0, 0.65, 0.65, 1.72, M.appliance, 3),
-      box(1.05, 1.95, 0.05, 0.6, 0.02, 1.15, M.metal, 1), // porte frigo
-      box(1.05, 1.95, 1.24, 0.6, 0.02, 0.42, M.metal, 1), // porte congélateur
-      box(1.55, 1.97, 0.75, 0.06, 0.05, 0.3, M.metal, 2), // poignée
+      box(3.25, 0.15, 0, 0.65, 0.65, 1.72, M.appliance, 3),
+      box(3.28, 0.8, 0.05, 0.59, 0.03, 1.12, M.metal, 1), // porte frigo
+      box(3.28, 0.8, 1.22, 0.59, 0.03, 0.44, M.metal, 1), // porte congélateur
+      box(3.78, 0.83, 0.72, 0.05, 0.05, 0.3, M.metal, 2), // poignée
     ],
   },
   {
@@ -122,23 +122,21 @@ const ITEMS: Item[] = [
     color: M.wood,
     footprint: 1.4,
     parts: [
-      box(1.95, 1.15, 0.7, 1.2, 0.85, 0.06, M.wood, 3), // plateau
-      box(2.0, 1.2, 0, 0.07, 0.07, 0.7, M.wood, 1),
-      box(3.05, 1.2, 0, 0.07, 0.07, 0.7, M.wood, 1),
-      box(2.0, 1.93, 0, 0.07, 0.07, 0.7, M.wood, 1),
-      box(3.05, 1.93, 0, 0.07, 0.07, 0.7, M.wood, 1),
-      // chaise 1
-      box(2.1, 0.95, 0.42, 0.42, 0.42, 0.05, M.wood, 2),
-      box(2.1, 0.95, 0.47, 0.42, 0.05, 0.45, M.wood, 2),
-      // chaise 2
-      box(2.6, 0.95, 0.42, 0.42, 0.42, 0.05, M.wood, 2),
-      box(2.6, 0.95, 0.47, 0.42, 0.05, 0.45, M.wood, 2),
-      // chaise 3
-      box(2.1, 2.05, 0.42, 0.42, 0.42, 0.05, M.wood, 2),
-      box(2.1, 2.42, 0.47, 0.42, 0.05, 0.45, M.wood, 2),
-      // chaise 4
-      box(2.6, 2.05, 0.42, 0.42, 0.42, 0.05, M.wood, 2),
-      box(2.6, 2.42, 0.47, 0.42, 0.05, 0.45, M.wood, 2),
+      box(1.3, 2.35, 0.7, 1.2, 0.85, 0.07, M.wood, 3), // plateau
+      box(1.35, 2.4, 0, 0.07, 0.07, 0.7, M.wood, 1),
+      box(2.4, 2.4, 0, 0.07, 0.07, 0.7, M.wood, 1),
+      box(1.35, 3.12, 0, 0.07, 0.07, 0.7, M.wood, 1),
+      box(2.4, 3.12, 0, 0.07, 0.07, 0.7, M.wood, 1),
+      // chaises côté fond
+      box(1.45, 2.05, 0.42, 0.42, 0.42, 0.06, M.wood, 2),
+      box(1.45, 2.05, 0.48, 0.42, 0.06, 0.46, M.wood, 2),
+      box(2.0, 2.05, 0.42, 0.42, 0.42, 0.06, M.wood, 2),
+      box(2.0, 2.05, 0.48, 0.42, 0.06, 0.46, M.wood, 2),
+      // chaises côté avant
+      box(1.45, 3.28, 0.42, 0.42, 0.42, 0.06, M.wood, 2),
+      box(1.45, 3.64, 0.48, 0.42, 0.06, 0.46, M.wood, 2),
+      box(2.0, 3.28, 0.42, 0.42, 0.42, 0.06, M.wood, 2),
+      box(2.0, 3.64, 0.48, 0.42, 0.06, 0.46, M.wood, 2),
     ],
   },
   {
@@ -147,10 +145,10 @@ const ITEMS: Item[] = [
     color: M.appliance,
     footprint: 0.75,
     parts: [
-      box(3.25, 2.25, 0, 0.6, 0.6, 0.85, M.appliance, 3),
-      box(3.35, 2.85, 0.3, 0.32, 0.02, 0.32, M.metal, 16), // hublot
-      box(3.28, 2.28, 0.85, 0.5, 0.5, 0.4, M.cardboard),
-      box(3.32, 2.34, 1.25, 0.42, 0.4, 0.34, M.cardboard),
+      box(0.15, 0.15, 0, 0.6, 0.6, 0.85, M.appliance, 3),
+      box(0.28, 0.73, 0.28, 0.34, 0.03, 0.34, M.metal, 20), // hublot
+      box(0.18, 0.18, 0.85, 0.5, 0.5, 0.4, M.cardboard),
+      box(0.22, 0.24, 1.25, 0.42, 0.4, 0.34, M.cardboard),
     ],
   },
   {
@@ -159,9 +157,9 @@ const ITEMS: Item[] = [
     color: M.bag,
     footprint: 0.72,
     parts: [
-      box(0.3, 3.1, 0, 0.42, 0.42, 0.55, M.bag, 8),
-      box(0.78, 3.2, 0, 0.4, 0.4, 0.48, M.bag, 8),
-      box(0.42, 3.55, 0, 0.38, 0.36, 0.4, M.bag, 8),
+      box(2.75, 3.15, 0, 0.42, 0.42, 0.55, M.bag, 10),
+      box(3.2, 3.25, 0, 0.4, 0.4, 0.48, M.bag, 10),
+      box(2.9, 3.6, 0, 0.38, 0.36, 0.4, M.bag, 10),
     ],
   },
   {
@@ -170,12 +168,12 @@ const ITEMS: Item[] = [
     color: M.metal,
     footprint: 0.66,
     parts: [
-      box(1.5, 2.5, 0.1, 0.06, 0.62, 0.62, M.metal, 30), // roue arrière
-      box(2.4, 2.5, 0.1, 0.06, 0.62, 0.62, M.metal, 30), // roue avant
-      box(1.55, 2.72, 0.55, 0.9, 0.05, 0.12, M.metal, 3), // cadre
-      box(1.62, 2.7, 0.28, 0.7, 0.05, 0.1, M.metal, 3),
-      box(2.3, 2.6, 0.72, 0.05, 0.4, 0.05, M.metal, 3), // guidon
-      box(1.6, 2.6, 0.68, 0.24, 0.14, 0.06, M.bag, 3), // selle
+      box(0.95, 0.95, 0.08, 0.05, 0.6, 0.6, M.metal, 30), // roue arrière
+      box(1.8, 0.95, 0.08, 0.05, 0.6, 0.6, M.metal, 30), // roue avant
+      box(1.0, 1.18, 0.5, 0.85, 0.05, 0.12, M.metal, 3), // cadre haut
+      box(1.05, 1.18, 0.25, 0.7, 0.05, 0.08, M.metal, 3), // cadre bas
+      box(1.72, 1.05, 0.7, 0.05, 0.4, 0.05, M.metal, 3), // guidon
+      box(1.05, 1.12, 0.64, 0.24, 0.14, 0.06, M.bag, 4), // selle
     ],
   },
   {
@@ -184,11 +182,11 @@ const ITEMS: Item[] = [
     color: M.wood,
     footprint: 0.77,
     parts: [
-      box(1.6, 3.3, 0, 1.7, 0.45, 1.8, M.wood, 3),
-      box(1.65, 3.28, 0.15, 1.6, 0.02, 0.35, M.cardboard, 1),
-      box(1.65, 3.28, 0.6, 1.6, 0.02, 0.35, M.cardboard, 1),
-      box(1.65, 3.28, 1.05, 1.6, 0.02, 0.35, M.cardboard, 1),
-      box(1.65, 3.28, 1.5, 1.6, 0.02, 0.25, M.cardboard, 1),
+      box(0.12, 1.3, 0, 0.45, 1.7, 1.8, M.wood, 3),
+      box(0.55, 1.35, 0.15, 0.03, 1.6, 0.35, M.cardboard, 1),
+      box(0.55, 1.35, 0.6, 0.03, 1.6, 0.35, M.cardboard, 1),
+      box(0.55, 1.35, 1.05, 0.03, 1.6, 0.35, M.cardboard, 1),
+      box(0.55, 1.35, 1.5, 0.03, 1.6, 0.25, M.cardboard, 1),
     ],
   },
 ];
