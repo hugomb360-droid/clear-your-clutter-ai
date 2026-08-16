@@ -77,6 +77,36 @@ const reviews = [
   },
 ];
 
+const stats = [
+  { value: "12 000+", label: "débarras estimés" },
+  { value: "850+", label: "pros vérifiés" },
+  { value: "4,8/5", label: "note moyenne" },
+  { value: "2 min", label: "pour un devis IA" },
+];
+
+const faq = [
+  {
+    question: "L'estimation par IA est-elle vraiment gratuite ?",
+    answer:
+      "Oui, l'estimation par photo est 100 % gratuite et sans engagement. Vous recevez une fourchette de prix instantanément.",
+  },
+  {
+    question: "Que se passe-t-il après mon devis ?",
+    answer:
+      "Les débarrasseurs de votre secteur consultent votre demande et vous envoient leurs propositions personnalisées. Vous choisissez celle qui vous convient.",
+  },
+  {
+    question: "Comment sont vérifiés les professionnels ?",
+    answer:
+      "Chaque pro doit fournir un numéro SIRET valide et une attestation d'assurance. Notre équipe valide manuellement chaque inscription.",
+  },
+  {
+    question: "Puis-je refuser une proposition ?",
+    answer:
+      "Bien sûr. Vous n'êtes engagé qu'au moment où vous acceptez une offre. Avant cela, vous pouvez comparer librement.",
+  },
+];
+
 function Home() {
   return (
     <div>
