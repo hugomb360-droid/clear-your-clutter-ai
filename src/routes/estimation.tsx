@@ -363,12 +363,15 @@ function EstimationPage() {
 
       <div className="mt-10 grid gap-8 lg:grid-cols-[1.1fr_0.9fr]">
         <div className="space-y-8">
-          {isPhoto && (
+          {(
             <section className="rounded-3xl border border-border bg-card p-7 shadow-[var(--shadow-soft)]">
               <h2 className="text-lg font-bold">1. Vos photos</h2>
               <p className="mt-1 text-sm text-muted-foreground">
-                Jusqu'à 8 photos. Cadrez large pour montrer l'ensemble de la pièce.
+                {isPhoto
+                  ? "Jusqu'à 8 photos. Cadrez large pour montrer l'ensemble de la pièce."
+                  : "Jusqu'à 8 photos. Elles aident les pros à chiffrer précisément votre débarras."}
               </p>
+
               <input
                 ref={fileInput}
                 type="file"
