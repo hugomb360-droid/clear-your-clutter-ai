@@ -385,87 +385,92 @@ function EstimationPage() {
             </section>
           )}
 
-          <section className="rounded-3xl border border-border bg-card p-7 shadow-[var(--shadow-soft)]">
-            <h2 className="text-lg font-bold">
-              {isPhoto ? "2. Le bien à débarrasser" : "1. Le bien à débarrasser"}
-            </h2>
-            <div className="mt-5 grid gap-5">
-              <div className="grid gap-2">
-                <Label>Type de bien</Label>
-                <div className="flex flex-wrap gap-2">
-                  {(Object.keys(PROPERTY_LABELS) as PropertyType[]).map((key) => (
-                    <button
-                      key={key}
-                      type="button"
-                      onClick={() => setPropertyType(key)}
-                      className={`rounded-full border px-4 py-2 text-sm transition-colors ${
-                        propertyType === key
-                          ? "border-primary bg-brand-soft text-brand-ink"
-                          : "border-border hover:bg-secondary"
-                      }`}
-                    >
-                      {PROPERTY_LABELS[key]}
-                    </button>
-                  ))}
-                </div>
-              </div>
-              <div className="grid gap-4 sm:grid-cols-3">
+          {!isPhoto && (
+            <section className="rounded-3xl border border-border bg-card p-7 shadow-[var(--shadow-soft)]">
+              <h2 className="text-lg font-bold">1. Le bien à débarrasser</h2>
+              <div className="mt-5 grid gap-5">
                 <div className="grid gap-2">
-                  <Label htmlFor="surface">Surface (m²){isPhoto ? "" : " *"}</Label>
-                  <Input
-                    id="surface"
-                    inputMode="numeric"
-                    placeholder="45"
-                    value={surface}
-                    onChange={(e) => setSurface(e.target.value)}
-                  />
-                </div>
-                <div className="grid gap-2">
-                  <Label htmlFor="floor">Étage</Label>
-                  <Input
-                    id="floor"
-                    inputMode="numeric"
-                    value={floor}
-                    onChange={(e) => setFloor(e.target.value)}
-                  />
-                </div>
-                <div className="grid gap-2">
-                  <Label htmlFor="elevator">Ascenseur</Label>
-                  <div className="flex h-9 items-center gap-3">
-                    <Switch id="elevator" checked={hasElevator} onCheckedChange={setHasElevator} />
-                    <span className="text-sm text-muted-foreground">
-                      {hasElevator ? "Oui" : "Non"}
-                    </span>
+                  <Label>Type de bien</Label>
+                  <div className="flex flex-wrap gap-2">
+                    {(Object.keys(PROPERTY_LABELS) as PropertyType[]).map((key) => (
+                      <button
+                        key={key}
+                        type="button"
+                        onClick={() => setPropertyType(key)}
+                        className={`rounded-full border px-4 py-2 text-sm transition-colors ${
+                          propertyType === key
+                            ? "border-primary bg-brand-soft text-brand-ink"
+                            : "border-border hover:bg-secondary"
+                        }`}
+                      >
+                        {PROPERTY_LABELS[key]}
+                      </button>
+                    ))}
                   </div>
                 </div>
+                <div className="grid gap-4 sm:grid-cols-3">
+                  <div className="grid gap-2">
+                    <Label htmlFor="surface">Surface (m²) *</Label>
+                    <Input
+                      id="surface"
+                      inputMode="numeric"
+                      placeholder="45"
+                      value={surface}
+                      onChange={(e) => setSurface(e.target.value)}
+                    />
+                  </div>
+                  <div className="grid gap-2">
+                    <Label htmlFor="floor">Étage</Label>
+                    <Input
+                      id="floor"
+                      inputMode="numeric"
+                      value={floor}
+                      onChange={(e) => setFloor(e.target.value)}
+                    />
+                  </div>
+                  <div className="grid gap-2">
+                    <Label htmlFor="elevator">Ascenseur</Label>
+                    <div className="flex h-9 items-center gap-3">
+                      <Switch id="elevator" checked={hasElevator} onCheckedChange={setHasElevator} />
+                      <span className="text-sm text-muted-foreground">
+                        {hasElevator ? "Oui" : "Non"}
+                      </span>
+                    </div>
+                  </div>
+                </div>
+                <div className="grid gap-2">
+                  <Label htmlFor="notes">Ce qu'il y a à débarrasser *</Label>
+                  <Textarea
+                    id="notes"
+                    rows={6}
+                    placeholder="Ex : cave pleine de cartons, un canapé et un vieux frigo, accès par une cour."
+                    value={notes}
+                    onChange={(e) => setNotes(e.target.value)}
+                  />
+                </div>
               </div>
-              <div className="grid gap-2">
-                <Label htmlFor="notes">
-                  {isPhoto ? "Précisions" : "Ce qu'il y a à débarrasser *"}
-                </Label>
-                <Textarea
-                  id="notes"
-                  rows={isPhoto ? 4 : 6}
-                  placeholder="Ex : cave pleine de cartons, un canapé et un vieux frigo, accès par une cour."
-                  value={notes}
-                  onChange={(e) => setNotes(e.target.value)}
-                />
-              </div>
-              {isPhoto && (
-                <Button size="lg" onClick={runEstimate} disabled={analyzing}>
-                  {analyzing ? (
-                    <>
-                      <Loader2 className="mr-2 size-4 animate-spin" /> Analyse en cours...
-                    </>
-                  ) : (
-                    <>
-                      <Sparkles className="mr-2 size-4" /> Estimer mon débarras
-                    </>
-                  )}
-                </Button>
-              )}
-            </div>
-          </section>
+            </section>
+          )}
+
+          {isPhoto && (
+            <section className="rounded-3xl border border-border bg-card p-7 shadow-[var(--shadow-soft)]">
+              <h2 className="text-lg font-bold">2. Lancer l'estimation IA</h2>
+              <p className="mt-1 text-sm text-muted-foreground">
+                Notre IA analyse vos photos et calcule le volume + la fourchette de prix.
+              </p>
+              <Button size="lg" className="mt-5 w-full" onClick={runEstimate} disabled={analyzing}>
+                {analyzing ? (
+                  <>
+                    <Loader2 className="mr-2 size-4 animate-spin" /> Analyse en cours...
+                  </>
+                ) : (
+                  <>
+                    <Sparkles className="mr-2 size-4" /> Estimer mon débarras
+                  </>
+                )}
+              </Button>
+            </section>
+          )}
 
           <section className="rounded-3xl border border-border bg-card p-7 shadow-[var(--shadow-soft)]">
             <h2 className="text-lg font-bold">{isPhoto ? "3." : "2."} Où et quand ?</h2>
