@@ -138,8 +138,8 @@ function EstimationPage() {
   const chooseMode = (next: Mode) => {
     setMode(next);
     setResult(null);
-    if (next === "manuel") setPhotos([]);
   };
+
 
   const handleFiles = async (files: FileList | null) => {
     if (!files?.length) return;
