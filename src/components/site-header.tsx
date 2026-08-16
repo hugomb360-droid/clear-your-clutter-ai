@@ -1,6 +1,6 @@
 import { Link, useNavigate } from "@tanstack/react-router";
 import { Menu } from "lucide-react";
-import clearoLogo from "@/assets/clearo-logo.png.asset.json";
+import clearoLogo from "@/assets/clearo-logo-black.png";
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";

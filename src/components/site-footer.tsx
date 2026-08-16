@@ -1,5 +1,5 @@
 import { Link } from "@tanstack/react-router";
-import clearoLogo from "@/assets/clearo-logo.png.asset.json";
+import clearoLogo from "@/assets/clearo-logo-black.png";
 
 export function SiteFooter() {
   return (
