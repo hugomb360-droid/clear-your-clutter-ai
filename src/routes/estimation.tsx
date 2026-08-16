@@ -605,9 +605,11 @@ function EstimationPage() {
             {!isPhoto ? (
               <div className="mt-5 space-y-5">
                 <p className="text-sm text-muted-foreground">
-                  Sans photo, le prix est fixé directement par les professionnels de votre secteur.
-                  Vous recevez leurs propositions dans votre espace client.
+                  Vos photos et votre description sont transmises aux professionnels de votre
+                  secteur, qui fixent leur prix. Vous recevez leurs propositions dans votre espace
+                  client.
                 </p>
+
                 <div className="rounded-2xl bg-brand-soft/50 p-4 text-sm">
                   <p className="font-semibold text-brand-ink">Envie d'un prix tout de suite ?</p>
                   <p className="mt-1 text-muted-foreground">
