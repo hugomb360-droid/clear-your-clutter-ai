@@ -10,6 +10,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Textarea } from "@/components/ui/textarea";
 import { useAuth } from "@/hooks/useAuth";
 import { supabase } from "@/integrations/supabase/client";
+import type { Tables } from "@/integrations/supabase/types";
 import { DISPUTE_STATUS_LABELS, MISSION_STATUS_LABELS } from "@/lib/mission";
 import { commissionOf, formatDate } from "@/lib/pro-dashboard";
 import { euro } from "@/lib/pricing";
@@ -53,7 +54,7 @@ function Stat({
   );
 }
 
-function DisputeCard({ dispute }: { dispute: Record<string, any> }) {
+function DisputeCard({ dispute }: { dispute: Tables<"disputes"> }) {
   const queryClient = useQueryClient();
   const [note, setNote] = useState(dispute.admin_note ?? "");
   const [saving, setSaving] = useState(false);
