@@ -50,6 +50,33 @@ const trust = [
   { icon: Star, title: "Prix transparents", text: "Grille publique, zéro frais caché." },
 ];
 
+const reviews = [
+  {
+    name: "Sophie L.",
+    location: "Paris 12e",
+    rating: 5,
+    text: "J'ai envoyé 4 photos de mon appartement, j'ai eu un prix en moins d'une minute. Le pro est venu 2 jours après, tout était propre.",
+  },
+  {
+    name: "Marc D.",
+    location: "Bordeaux",
+    rating: 5,
+    text: "Génial pour vider la cave de ma mère. L'estimation IA était juste, et j'ai reçu 3 propositions de pros du coin.",
+  },
+  {
+    name: "Claire & Julien",
+    location: "Lyon",
+    rating: 4,
+    text: "Simple, rapide, pas d'appels insistants. On a comparé les offres et choisi le débarrasseur qui nous convenait.",
+  },
+  {
+    name: "Karim B.",
+    location: "Nantes",
+    rating: 5,
+    text: "Service impeccable. J'ai pu suivre mon devis depuis mon espace client et valider la proposition en un clic.",
+  },
+];
+
 function Home() {
   return (
     <div>
