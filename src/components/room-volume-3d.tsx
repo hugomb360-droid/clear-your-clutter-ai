@@ -305,7 +305,7 @@ export function RoomVolume3D() {
         <div className="grid items-start gap-10 lg:grid-cols-[1.2fr_0.8fr]">
           <div className="rounded-[2rem] border border-border bg-secondary/40 p-4 sm:p-8">
             <div
-              className="mx-auto flex h-[340px] w-full max-w-[520px] items-center justify-center sm:h-[420px]"
+              className="mx-auto flex h-[380px] w-full max-w-[560px] items-center justify-center sm:h-[480px]"
               style={{ perspective: 1400 }}
               aria-hidden="true"
             >
@@ -315,7 +315,7 @@ export function RoomVolume3D() {
                   width: ROOM_W * SCALE,
                   height: ROOM_D * SCALE,
                   transformStyle: "preserve-3d",
-                  transform: "scale(0.82) rotateX(58deg) rotateZ(-45deg) translateZ(-40px)",
+                  transform: "scale(1) rotateX(56deg) rotateZ(-42deg) translateZ(-30px)",
                 }}
               >
                 {/* sol parquet */}
