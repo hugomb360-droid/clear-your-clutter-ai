@@ -1,5 +1,6 @@
 import { Link, useNavigate } from "@tanstack/react-router";
-import { Menu, Recycle } from "lucide-react";
+import { Menu } from "lucide-react";
+import clearoLogo from "@/assets/clearo-logo.png.asset.json";
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
@@ -28,9 +29,7 @@ export function SiteHeader() {
     <header className="sticky top-0 z-50 border-b border-border/70 bg-background/85 backdrop-blur">
       <div className="mx-auto flex h-16 max-w-6xl items-center justify-between px-4">
         <Link to="/" className="flex items-center gap-2">
-          <span className="flex size-9 items-center justify-center rounded-xl bg-primary text-primary-foreground">
-            <Recycle className="size-5" />
-          </span>
+          <img src={clearoLogo.url} alt="Logo Clearo" className="size-9 object-contain" />
           <span className="text-xl font-extrabold tracking-tight">clearo</span>
         </Link>
 
