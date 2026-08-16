@@ -552,7 +552,7 @@ function EstimationPage() {
           )}
 
           <section className="rounded-3xl border border-border bg-card p-7 shadow-[var(--shadow-soft)]">
-            <h2 className="text-lg font-bold">{isPhoto ? "4." : "2."} Où et quand ?</h2>
+            <h2 className="text-lg font-bold">{isPhoto ? "4." : "3."} Où et quand ?</h2>
             <div className="mt-5 grid gap-4 sm:grid-cols-2">
               <div className="grid gap-2">
                 <Label htmlFor="postal">Code postal *</Label>
