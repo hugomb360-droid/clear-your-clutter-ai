@@ -195,12 +195,21 @@ function EstimationPage() {
 
   const publish = async () => {
     if (mode === "photo" && !result) return;
-    if (mode === "manuel" && notes.trim().length < 15) {
-      toast.error("Décrivez ce qu'il y a à débarrasser", {
-        description: "Quelques mots suffisent pour que les pros puissent chiffrer.",
-      });
-      return;
+    if (mode === "manuel") {
+      if (photos.length === 0) {
+        toast.error("Ajoutez au moins une photo", {
+          description: "Les photos permettent aux pros de chiffrer précisément.",
+        });
+        return;
+      }
+      if (notes.trim().length < 15) {
+        toast.error("Décrivez ce qu'il y a à débarrasser", {
+          description: "Quelques mots suffisent pour que les pros puissent chiffrer.",
+        });
+        return;
+      }
     }
+
     if (!postalCode.trim()) {
       toast.error("Indiquez votre code postal");
       return;
