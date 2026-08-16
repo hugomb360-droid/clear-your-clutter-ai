@@ -55,6 +55,108 @@ export type Database = {
           },
         ]
       }
+      disputes: {
+        Row: {
+          admin_note: string | null
+          bid_id: string
+          client_id: string
+          created_at: string
+          id: string
+          pro_id: string
+          quote_id: string
+          reason: string
+          resolved_at: string | null
+          status: string
+          updated_at: string
+        }
+        Insert: {
+          admin_note?: string | null
+          bid_id: string
+          client_id: string
+          created_at?: string
+          id?: string
+          pro_id: string
+          quote_id: string
+          reason: string
+          resolved_at?: string | null
+          status?: string
+          updated_at?: string
+        }
+        Update: {
+          admin_note?: string | null
+          bid_id?: string
+          client_id?: string
+          created_at?: string
+          id?: string
+          pro_id?: string
+          quote_id?: string
+          reason?: string
+          resolved_at?: string | null
+          status?: string
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "disputes_bid_id_fkey"
+            columns: ["bid_id"]
+            isOneToOne: true
+            referencedRelation: "bids"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "disputes_quote_id_fkey"
+            columns: ["quote_id"]
+            isOneToOne: false
+            referencedRelation: "quotes"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      mission_photos: {
+        Row: {
+          bid_id: string
+          created_at: string
+          id: string
+          kind: string
+          quote_id: string
+          storage_path: string
+          uploaded_by: string
+        }
+        Insert: {
+          bid_id: string
+          created_at?: string
+          id?: string
+          kind: string
+          quote_id: string
+          storage_path: string
+          uploaded_by: string
+        }
+        Update: {
+          bid_id?: string
+          created_at?: string
+          id?: string
+          kind?: string
+          quote_id?: string
+          storage_path?: string
+          uploaded_by?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "mission_photos_bid_id_fkey"
+            columns: ["bid_id"]
+            isOneToOne: false
+            referencedRelation: "bids"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "mission_photos_quote_id_fkey"
+            columns: ["quote_id"]
+            isOneToOne: false
+            referencedRelation: "quotes"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       pro_profiles: {
         Row: {
           company_name: string
@@ -245,6 +347,57 @@ export type Database = {
         }
         Relationships: []
       }
+      reviews: {
+        Row: {
+          bid_id: string
+          client_id: string
+          comment: string | null
+          created_at: string
+          id: string
+          pro_id: string
+          quote_id: string
+          rating: number
+          updated_at: string
+        }
+        Insert: {
+          bid_id: string
+          client_id: string
+          comment?: string | null
+          created_at?: string
+          id?: string
+          pro_id: string
+          quote_id: string
+          rating: number
+          updated_at?: string
+        }
+        Update: {
+          bid_id?: string
+          client_id?: string
+          comment?: string | null
+          created_at?: string
+          id?: string
+          pro_id?: string
+          quote_id?: string
+          rating?: number
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "reviews_bid_id_fkey"
+            columns: ["bid_id"]
+            isOneToOne: true
+            referencedRelation: "bids"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "reviews_quote_id_fkey"
+            columns: ["quote_id"]
+            isOneToOne: false
+            referencedRelation: "quotes"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       user_roles: {
         Row: {
           created_at: string
@@ -276,6 +429,14 @@ export type Database = {
           _role: Database["public"]["Enums"]["app_role"]
           _user_id: string
         }
+        Returns: boolean
+      }
+      is_bid_client: {
+        Args: { _bid_id: string; _user_id: string }
+        Returns: boolean
+      }
+      is_bid_pro: {
+        Args: { _bid_id: string; _user_id: string }
         Returns: boolean
       }
       pro_covers_postal: {
