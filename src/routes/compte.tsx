@@ -5,8 +5,10 @@ import { useEffect } from "react";
 import { toast } from "sonner";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
+import { ClientMissionPanel } from "@/components/client/client-mission-panel";
 import { useAuth } from "@/hooks/useAuth";
 import { supabase } from "@/integrations/supabase/client";
+import { MISSION_STATUS_LABELS } from "@/lib/mission";
 import { euro } from "@/lib/pricing";
 
 export const Route = createFileRoute("/compte")({
@@ -149,25 +151,37 @@ function ClientAccount() {
                 ) : (
                   <ul className="mt-3 space-y-3">
                     {bids.map((bid) => (
-                      <li
-                        key={bid.id}
-                        className="flex flex-wrap items-center justify-between gap-3 rounded-2xl bg-secondary/60 p-4"
-                      >
-                        <div>
-                          <p className="font-semibold">{euro(bid.price)}</p>
-                          <p className="text-sm text-muted-foreground">
-                            {bid.available_date
-                              ? `Disponible le ${new Date(bid.available_date).toLocaleDateString("fr-FR")}`
-                              : "Date à convenir"}
-                            {bid.message ? ` · ${bid.message}` : ""}
-                          </p>
+                      <li key={bid.id} className="rounded-2xl bg-secondary/60 p-4">
+                        <div className="flex flex-wrap items-center justify-between gap-3">
+                          <div>
+                            <p className="font-semibold">{euro(bid.price)}</p>
+                            <p className="text-sm text-muted-foreground">
+                              {bid.available_date
+                                ? `Disponible le ${new Date(bid.available_date).toLocaleDateString("fr-FR")}`
+                                : "Date à convenir"}
+                              {bid.message ? ` · ${bid.message}` : ""}
+                            </p>
+                          </div>
+                          {bid.status === "pending" ? (
+                            <Button size="sm" onClick={() => acceptBid(quote.id, bid.id)}>
+                              Accepter
+                            </Button>
+                          ) : (
+                            <Badge variant={bid.status === "disputed" ? "destructive" : "default"}>
+                              {MISSION_STATUS_LABELS[bid.status] ?? bid.status}
+                            </Badge>
+                          )}
                         </div>
-                        {bid.status === "accepted" ? (
-                          <Badge>Acceptée</Badge>
-                        ) : (
-                          <Button size="sm" onClick={() => acceptBid(quote.id, bid.id)}>
-                            Accepter
-                          </Button>
+                        {["accepted", "awaiting_confirmation", "completed", "disputed"].includes(
+                          bid.status,
+                        ) && (
+                          <ClientMissionPanel
+                            bidId={bid.id}
+                            quoteId={quote.id}
+                            clientId={user.id}
+                            proId={bid.pro_id}
+                            status={bid.status}
+                          />
                         )}
                       </li>
                     ))}

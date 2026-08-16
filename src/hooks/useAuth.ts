@@ -48,6 +48,7 @@ export function useAuth() {
     roles,
     loading,
     isPro: roles.includes("pro"),
+    isAdmin: roles.includes("admin"),
     signOut: () => supabase.auth.signOut(),
   };
 }
