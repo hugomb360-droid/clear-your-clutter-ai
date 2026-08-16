@@ -14,7 +14,7 @@ const NAV = [
 ] as const;
 
 export function SiteHeader() {
-  const { user, isPro, signOut } = useAuth();
+  const { user, isPro, isAdmin, signOut } = useAuth();
   const navigate = useNavigate();
   const [open, setOpen] = useState(false);
 
@@ -23,7 +23,7 @@ export function SiteHeader() {
     navigate({ to: "/" });
   };
 
-  const accountLink = isPro ? "/pro/dashboard" : "/compte";
+  const accountLink = isAdmin ? "/admin" : isPro ? "/pro/dashboard" : "/compte";
 
   return (
     <header className="sticky top-0 z-50 border-b border-border/70 bg-background/85 backdrop-blur">
@@ -50,7 +50,7 @@ export function SiteHeader() {
           {user ? (
             <>
               <Button asChild variant="ghost" size="sm">
-                <Link to={accountLink}>Mon espace</Link>
+                <Link to={accountLink}>{isAdmin ? "Administration" : "Mon espace"}</Link>
               </Button>
               <Button variant="outline" size="sm" onClick={handleSignOut}>
                 Déconnexion
@@ -90,7 +90,7 @@ export function SiteHeader() {
                 {user ? (
                   <>
                     <Button asChild variant="outline" onClick={() => setOpen(false)}>
-                      <Link to={accountLink}>Mon espace</Link>
+                      <Link to={accountLink}>{isAdmin ? "Administration" : "Mon espace"}</Link>
                     </Button>
                     <Button
                       onClick={() => {
