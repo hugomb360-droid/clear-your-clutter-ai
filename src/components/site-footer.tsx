@@ -1,5 +1,5 @@
 import { Link } from "@tanstack/react-router";
-import clearoLogo from "@/assets/clearo-logo.png.asset.json";
+import clearoLogo from "@/assets/clearo-logo-black.png";
 
 export function SiteFooter() {
   return (
@@ -7,7 +7,7 @@ export function SiteFooter() {
       <div className="mx-auto grid max-w-6xl gap-8 px-4 py-12 sm:grid-cols-2 lg:grid-cols-4">
         <div>
           <div className="flex items-center gap-2">
-            <img src={clearoLogo.url} alt="Logo Clearo" className="size-8 object-contain" />
+            <img src={clearoLogo} alt="Logo Clearo" className="size-8 object-contain" />
             <span className="text-lg font-extrabold tracking-tight">clearo</span>
           </div>
           <p className="mt-3 text-sm text-muted-foreground">

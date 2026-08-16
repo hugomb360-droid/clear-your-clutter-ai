@@ -1,6 +1,6 @@
 import { Link, useNavigate } from "@tanstack/react-router";
 import { Menu } from "lucide-react";
-import clearoLogo from "@/assets/clearo-logo.png.asset.json";
+import clearoLogo from "@/assets/clearo-logo-black.png";
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
@@ -29,7 +29,7 @@ export function SiteHeader() {
     <header className="sticky top-0 z-50 border-b border-border/70 bg-background/85 backdrop-blur">
       <div className="mx-auto flex h-16 max-w-6xl items-center justify-between px-4">
         <Link to="/" className="flex items-center gap-2">
-          <img src={clearoLogo.url} alt="Logo Clearo" className="size-9 object-contain" />
+          <img src={clearoLogo} alt="Logo Clearo" className="size-9 object-contain" />
           <span className="text-xl font-extrabold tracking-tight">clearo</span>
         </Link>
 
