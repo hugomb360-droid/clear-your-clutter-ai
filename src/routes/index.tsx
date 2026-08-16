@@ -77,6 +77,36 @@ const reviews = [
   },
 ];
 
+const stats = [
+  { value: "12 000+", label: "débarras estimés" },
+  { value: "850+", label: "pros vérifiés" },
+  { value: "4,8/5", label: "note moyenne" },
+  { value: "2 min", label: "pour un devis IA" },
+];
+
+const faq = [
+  {
+    question: "L'estimation par IA est-elle vraiment gratuite ?",
+    answer:
+      "Oui, l'estimation par photo est 100 % gratuite et sans engagement. Vous recevez une fourchette de prix instantanément.",
+  },
+  {
+    question: "Que se passe-t-il après mon devis ?",
+    answer:
+      "Les débarrasseurs de votre secteur consultent votre demande et vous envoient leurs propositions personnalisées. Vous choisissez celle qui vous convient.",
+  },
+  {
+    question: "Comment sont vérifiés les professionnels ?",
+    answer:
+      "Chaque pro doit fournir un numéro SIRET valide et une attestation d'assurance. Notre équipe valide manuellement chaque inscription.",
+  },
+  {
+    question: "Puis-je refuser une proposition ?",
+    answer:
+      "Bien sûr. Vous n'êtes engagé qu'au moment où vous acceptez une offre. Avant cela, vous pouvez comparer librement.",
+  },
+];
+
 function Home() {
   return (
     <div>
@@ -114,6 +144,19 @@ function Home() {
               height={1200}
               className="w-full rounded-[2rem] object-cover shadow-[var(--shadow-lift)]"
             />
+          </div>
+        </div>
+      </section>
+
+      <section className="border-y border-border bg-secondary/40 py-10">
+        <div className="mx-auto max-w-6xl px-4">
+          <div className="grid gap-8 divide-y divide-border sm:grid-cols-2 sm:divide-x sm:divide-y-0 lg:grid-cols-4">
+            {stats.map((stat) => (
+              <div key={stat.label} className="pt-8 text-center first:pt-0 sm:pt-0 sm:first:pl-0">
+                <p className="text-4xl font-extrabold tracking-tight text-brand">{stat.value}</p>
+                <p className="mt-1 text-sm font-medium text-muted-foreground">{stat.label}</p>
+              </div>
+            ))}
           </div>
         </div>
       </section>
@@ -202,6 +245,33 @@ function Home() {
                     <p className="text-xs text-muted-foreground">{review.location}</p>
                   </div>
                 </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      <section className="border-t border-border py-16">
+        <div className="mx-auto max-w-4xl px-4">
+          <div className="mb-10 text-center">
+            <span className="inline-flex items-center gap-2 rounded-full bg-brand-soft px-4 py-1.5 text-sm font-semibold text-brand-ink">
+              FAQ
+            </span>
+            <h2 className="mt-4 text-3xl font-extrabold tracking-tight">
+              Vos questions, nos réponses
+            </h2>
+          </div>
+
+          <div className="grid gap-4 md:grid-cols-2">
+            {faq.map((item) => (
+              <div
+                key={item.question}
+                className="rounded-3xl border border-border bg-card p-6 shadow-[var(--shadow-soft)]"
+              >
+                <h3 className="font-bold leading-snug">{item.question}</h3>
+                <p className="mt-3 text-sm leading-relaxed text-muted-foreground">
+                  {item.answer}
+                </p>
               </div>
             ))}
           </div>
