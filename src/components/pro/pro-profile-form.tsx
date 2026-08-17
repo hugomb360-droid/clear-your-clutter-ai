@@ -9,6 +9,7 @@ import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { supabase } from "@/integrations/supabase/client";
 import type { Tables } from "@/integrations/supabase/types";
+import { parsePostalCodes } from "@/lib/pro-dashboard";
 
 const SERVICES = [
   "Débarras maison",
