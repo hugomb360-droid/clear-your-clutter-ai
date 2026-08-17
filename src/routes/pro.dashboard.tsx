@@ -10,6 +10,7 @@ import { ProWallet } from "@/components/pro/pro-wallet";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { useAuth } from "@/hooks/useAuth";
 import { supabase } from "@/integrations/supabase/client";
+import { coversPostal } from "@/lib/pro-dashboard";
 import type { BidWithQuote, QuoteContact } from "@/lib/pro-dashboard";
 
 export const Route = createFileRoute("/pro/dashboard")({
@@ -102,7 +103,10 @@ function ProDashboard() {
   const activeBids = bids.filter((bid) => bid.status !== "withdrawn");
   const quoteIdsWithBid = new Set(activeBids.map((bid) => bid.quote_id));
   const opportunities = (missionsQuery.data ?? []).filter(
-    (quote) => !quoteIdsWithBid.has(quote.id) && quote.status === "published",
+    (quote) =>
+      !quoteIdsWithBid.has(quote.id) &&
+      quote.status === "published" &&
+      coversPostal(profile?.postal_codes, quote.postal_code),
   );
   const proposals = bids.filter((bid) => bid.status === "pending" || bid.status === "withdrawn");
   const missions = bids.filter((bid) => bid.status === "accepted" || bid.status === "completed");
