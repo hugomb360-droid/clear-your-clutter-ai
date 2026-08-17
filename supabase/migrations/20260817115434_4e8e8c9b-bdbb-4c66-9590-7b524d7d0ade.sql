@@ -1,0 +1,1 @@
+DELETE FROM public.user_roles ur USING auth.users u WHERE ur.user_id = u.id AND u.email = 'hugomb360@gmail.com' AND ur.role = 'admin';
