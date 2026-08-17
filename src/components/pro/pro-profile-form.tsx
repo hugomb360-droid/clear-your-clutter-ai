@@ -52,12 +52,19 @@ export function ProProfileForm({
       prev.includes(service) ? prev.filter((s) => s !== service) : [...prev, service],
     );
 
+  const postalCodes = parsePostalCodes(zones);
+
   const save = async () => {
+    if (postalCodes.length === 0) {
+      toast.error("Ajoutez au moins une zone", {
+        description: "Exemple : 75 pour tout Paris, ou 92100 pour une commune.",
+      });
+      return;
+    }
     setSaving(true);
-    const postalCodes = zones
-      .split(",")
-      .map((zone) => zone.trim())
-      .filter(Boolean);
+    if (!hasProRole) {
+      await supabase.from("user_roles").insert({ user_id: userId, role: "pro" });
+    }
     const { error } = await supabase.from("pro_profiles").upsert(
       {
         user_id: userId,
@@ -70,15 +77,14 @@ export function ProProfileForm({
       },
       { onConflict: "user_id" },
     );
-    if (!hasProRole) {
-      await supabase.from("user_roles").insert({ user_id: userId, role: "pro" });
-    }
     setSaving(false);
     if (error) {
       toast.error("Enregistrement impossible", { description: error.message });
       return;
     }
-    toast.success("Fiche entreprise enregistrée");
+    toast.success("Fiche entreprise enregistrée", {
+      description: `Vous recevez les demandes des zones ${postalCodes.join(", ")}.`,
+    });
     void queryClient.invalidateQueries({ queryKey: ["pro-profile"] });
     void queryClient.invalidateQueries({ queryKey: ["pro-missions"] });
   };
