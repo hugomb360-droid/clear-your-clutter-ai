@@ -70,7 +70,7 @@ function AuthPage() {
   const handleSignUp = async (event: React.FormEvent) => {
     event.preventDefault();
     setLoading(true);
-    const { error } = await supabase.auth.signUp({
+    const { data, error } = await supabase.auth.signUp({
       email,
       password,
       options: {
@@ -81,6 +81,12 @@ function AuthPage() {
     setLoading(false);
     if (error) {
       toast.error("Inscription impossible", { description: error.message });
+      return;
+    }
+    if (!data.session) {
+      toast.success("Compte créé", {
+        description: "Confirmez votre e-mail, puis connectez-vous pour accéder à votre espace.",
+      });
       return;
     }
     toast.success("Compte créé", { description: "Bienvenue chez Clearo !" });
