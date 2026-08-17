@@ -122,6 +122,16 @@ export function ProProfileForm({
             value={zones}
             onChange={(e) => setZones(e.target.value)}
           />
+          {postalCodes.length > 0 ? (
+            <p className="text-xs text-muted-foreground">
+              Zones prises en compte : {postalCodes.join(", ")} — vous ne verrez que les demandes de
+              ces secteurs.
+            </p>
+          ) : (
+            <p className="text-xs text-destructive">
+              Renseignez au moins un code postal pour recevoir des demandes.
+            </p>
+          )}
         </div>
         <div className="grid gap-2 sm:col-span-2">
           <Label>Prestations proposées</Label>
