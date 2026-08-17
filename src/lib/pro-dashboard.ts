@@ -11,6 +11,20 @@ export const CLEARO_COMMISSION_RATE = 0.12;
 export const commissionOf = (price: number) => Math.round(price * CLEARO_COMMISSION_RATE);
 export const netOf = (price: number) => price - commissionOf(price);
 
+/** Normalise une saisie libre de codes postaux : « 75, 92100 » -> ["75", "92100"]. */
+export function parsePostalCodes(input: string) {
+  const seen = new Set<string>();
+  for (const raw of input.split(/[,;\s]+/)) {
+    const zone = raw.replace(/\D/g, "");
+    if (zone.length >= 2 && zone.length <= 5) seen.add(zone);
+  }
+  return [...seen];
+}
+
+/** Un pro couvre un code postal si l'une de ses zones en est le préfixe (75 -> 75011). */
+export const coversPostal = (zones: string[] | null | undefined, postal: string | null) =>
+  Boolean(postal) && (zones ?? []).some((zone) => postal!.startsWith(zone));
+
 export const BID_STATUS_LABELS: Record<string, string> = {
   pending: "En attente",
   accepted: "Acceptée",
