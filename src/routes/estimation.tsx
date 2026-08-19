@@ -1,7 +1,7 @@
 import { createFileRoute, useNavigate } from "@tanstack/react-router";
 import { useServerFn } from "@tanstack/react-start";
 import { Camera, Check, Loader2, PencilLine, Sparkles, Trash2 } from "lucide-react";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { toast } from "sonner";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
@@ -11,6 +11,7 @@ import { Textarea } from "@/components/ui/textarea";
 import { supabase } from "@/integrations/supabase/client";
 import { estimateClearance } from "@/lib/estimate.functions";
 import { dataUrlToBlob, fileToDataUrl } from "@/lib/image";
+import { estimateManualPrice } from "@/lib/manual-estimate";
 import { PROPERTY_LABELS, euro, type EstimationResult, type PropertyType } from "@/lib/pricing";
 
 export const Route = createFileRoute("/estimation")({
@@ -181,6 +182,7 @@ function EstimationPage() {
   const [fullName, setFullName] = useState("");
   const [desiredDate, setDesiredDate] = useState("");
   const [result, setResult] = useState<EstimationResult | null>(null);
+  const [showManualEstimate, setShowManualEstimate] = useState(false);
   const [analyzing, setAnalyzing] = useState(false);
   const [publishing, setPublishing] = useState(false);
 
