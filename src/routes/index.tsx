@@ -7,17 +7,17 @@ import { RoomVolume3D } from "@/components/room-volume-3d";
 export const Route = createFileRoute("/")({
   head: () => ({
     meta: [
-      { title: "Clearo — devis de débarras en photo grâce à l'IA" },
+      { title: "Clearo | Débarras France – Devis Rapide en Photo avec IA" },
       {
         name: "description",
         content:
           "Photographiez ce que vous voulez débarrasser : notre IA estime le volume et le prix en quelques secondes, puis vous met en relation avec un débarrasseur près de chez vous.",
       },
-      { property: "og:title", content: "Clearo — votre débarras estimé en photo" },
+      { property: "og:title", content: "Clearo | Débarras France – Devis Rapide en Photo avec IA" },
       {
         property: "og:description",
         content:
-          "Devis instantané par IA et mise en relation avec des professionnels du débarras près de chez vous.",
+          "Photographiez ce que vous voulez débarrasser : notre IA estime le volume et le prix en quelques secondes, puis vous met en relation avec un débarrasseur près de chez vous.",
       },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
