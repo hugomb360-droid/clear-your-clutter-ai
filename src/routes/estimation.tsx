@@ -329,7 +329,7 @@ function EstimationPage() {
     try {
       const surfaceValue = Number.parseInt(surface, 10);
       const manualAccessOption =
-        MANUAL_ACCESS_OPTIONS.find((o) => o.key === manualAccess) ?? MANUAL_ACCESS_OPTIONS[0];
+        MANUAL_ACCESS_OPTIONS.find((o) => o.key === manualAccess) ?? MANUAL_ACCESS_OPTIONS[0]!;
       const annexSurfaceValue = Number.parseInt(annexSurface, 10);
       const manualSummary = [
         `Encombrement : ${CLUTTER_OPTIONS.find((o) => o.key === clutter)?.label}`,
