@@ -34,15 +34,15 @@ const ACCESS_SURCHARGE: Record<ManualAccessKey, { rate: number; label: string }>
 
 /** Tarif au m³ dégressif, comme sur le marché : plus le volume est gros, moins le m³ coûte cher. */
 export function pricePerM3(volumeM3: number) {
-  if (volumeM3 <= 5) return 58;
-  if (volumeM3 <= 12) return 48;
-  if (volumeM3 <= 25) return 40;
-  if (volumeM3 <= 45) return 34;
-  if (volumeM3 <= 80) return 29;
-  return 25;
+  if (volumeM3 <= 5) return 174;
+  if (volumeM3 <= 12) return 144;
+  if (volumeM3 <= 25) return 120;
+  if (volumeM3 <= 45) return 102;
+  if (volumeM3 <= 80) return 87;
+  return 75;
 }
 
-export const MANUAL_MINIMUM_PRICE = 190;
+export const MANUAL_MINIMUM_PRICE = 570;
 
 export type ManualEstimateInput = {
   surfaceM2: number;

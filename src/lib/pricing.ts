@@ -17,8 +17,8 @@ export const PROPERTY_LABELS: Record<PropertyType, string> = {
 
 /** Grille tarifaire Clearo — ajustable sans toucher au modèle IA. */
 export const PRICING = {
-  pricePerM3: 38,
-  minimumPrice: 149,
+  pricePerM3: 114,
+  minimumPrice: 447,
   floorSurchargeRate: 0.07, // par étage sans ascenseur
   maxFloorSurcharge: 0.35,
   bulkySurchargeRate: 0.12,
