@@ -1,13 +1,12 @@
 import { createFileRoute, useNavigate } from "@tanstack/react-router";
 import { useServerFn } from "@tanstack/react-start";
-import { Camera, Loader2, PencilLine, Sparkles, Trash2 } from "lucide-react";
+import { Camera, Check, Loader2, PencilLine, Sparkles, Trash2 } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
 import { toast } from "sonner";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { Switch } from "@/components/ui/switch";
 import { Textarea } from "@/components/ui/textarea";
 import { supabase } from "@/integrations/supabase/client";
 import { estimateClearance } from "@/lib/estimate.functions";
@@ -51,6 +50,89 @@ const ACCESS_PRICING: Record<AccessLevel, { floor: number; hasElevator: boolean;
   difficile: { floor: 3, hasElevator: false, hardAccess: true },
 };
 
+type AnnexKey = "garage" | "cave" | "sous-sol" | "dependance";
+type ClutterKey = "normal" | "encombre" | "compulsif";
+type SanitationKey = "normal" | "poussiereux" | "insalubre" | "diogene";
+type ManualAccessKey = "facile" | "moyen" | "complique" | "tres_complique";
+
+const ANNEX_OPTIONS: { key: AnnexKey; label: string }[] = [
+  { key: "garage", label: "Un garage" },
+  { key: "cave", label: "Une cave" },
+  { key: "sous-sol", label: "Un sous-sol" },
+  { key: "dependance", label: "Une dépendance" },
+];
+
+const CLUTTER_OPTIONS: { key: ClutterKey; label: string }[] = [
+  { key: "normal", label: "Encombrement normal" },
+  { key: "encombre", label: "Plutôt encombré" },
+  { key: "compulsif", label: "Accumulation compulsive" },
+];
+
+const SANITATION_OPTIONS: { key: SanitationKey; label: string; hint: string }[] = [
+  { key: "normal", label: "Normal", hint: "Compris : balayage des sols" },
+  { key: "poussiereux", label: "Poussiéreux", hint: "Compris : balayage des sols" },
+  { key: "insalubre", label: "Insalubre", hint: "Compris : lessivage des sols, nettoyage" },
+  {
+    key: "diogene",
+    label: "Syndrome de Diogène",
+    hint: "Compris : désinfection, lessivage des sols, nettoyage",
+  },
+];
+
+const MANUAL_ACCESS_OPTIONS: {
+  key: ManualAccessKey;
+  label: string;
+  hint: string;
+  floor: number;
+  hasElevator: boolean;
+}[] = [
+  { key: "facile", label: "Facile", hint: "Rez-de-chaussée", floor: 0, hasElevator: true },
+  { key: "moyen", label: "Moyen", hint: "Étage avec ascenseur", floor: 2, hasElevator: true },
+  { key: "complique", label: "Compliqué", hint: "Étage sans ascenseur", floor: 2, hasElevator: false },
+  {
+    key: "tres_complique",
+    label: "Très compliqué",
+    hint: "Étage avec accès étroit",
+    floor: 3,
+    hasElevator: false,
+  },
+];
+
+function OptionCard({
+  selected,
+  label,
+  hint,
+  onSelect,
+}: {
+  selected: boolean;
+  label: string;
+  hint?: string;
+  onSelect: () => void;
+}) {
+  return (
+    <button
+      type="button"
+      onClick={onSelect}
+      className={`flex items-start gap-3 rounded-2xl border p-4 text-left transition-colors ${
+        selected ? "border-primary bg-brand-soft" : "border-border hover:bg-secondary"
+      }`}
+    >
+      <span
+        className={`mt-0.5 flex size-4 shrink-0 items-center justify-center rounded-full border ${
+          selected ? "border-primary" : "border-border"
+        }`}
+      >
+        {selected && <span className="size-2 rounded-full bg-primary" />}
+      </span>
+      <span>
+        <span className="block text-sm font-semibold">{label}</span>
+        {hint && <span className="mt-1 block text-xs text-muted-foreground">{hint}</span>}
+      </span>
+    </button>
+  );
+}
+
+
 type Draft = {
   mode: Mode;
   photos: string[];
@@ -59,6 +141,11 @@ type Draft = {
   floor: string;
   hasElevator: boolean;
   accessLevel: AccessLevel;
+  annexes: AnnexKey[];
+  annexSurface: string;
+  clutter: ClutterKey;
+  sanitation: SanitationKey;
+  manualAccess: ManualAccessKey;
   notes: string;
   postalCode: string;
   city: string;
@@ -81,6 +168,11 @@ function EstimationPage() {
   const [floor, setFloor] = useState("0");
   const [hasElevator, setHasElevator] = useState(false);
   const [accessLevel, setAccessLevel] = useState<AccessLevel>("facile");
+  const [annexes, setAnnexes] = useState<AnnexKey[]>([]);
+  const [annexSurface, setAnnexSurface] = useState("");
+  const [clutter, setClutter] = useState<ClutterKey>("normal");
+  const [sanitation, setSanitation] = useState<SanitationKey>("normal");
+  const [manualAccess, setManualAccess] = useState<ManualAccessKey>("facile");
   const [notes, setNotes] = useState("");
   const [postalCode, setPostalCode] = useState("");
   const [city, setCity] = useState("");
@@ -104,6 +196,11 @@ function EstimationPage() {
       setFloor(draft.floor ?? "0");
       setHasElevator(Boolean(draft.hasElevator));
       setAccessLevel(draft.accessLevel ?? "facile");
+      setAnnexes(draft.annexes ?? []);
+      setAnnexSurface(draft.annexSurface ?? "");
+      setClutter(draft.clutter ?? "normal");
+      setSanitation(draft.sanitation ?? "normal");
+      setManualAccess(draft.manualAccess ?? "facile");
       setNotes(draft.notes ?? "");
       setPostalCode(draft.postalCode ?? "");
       setCity(draft.city ?? "");
@@ -125,6 +222,11 @@ function EstimationPage() {
     floor,
     hasElevator,
     accessLevel,
+    annexes,
+    annexSurface,
+    clutter,
+    sanitation,
+    manualAccess,
     notes,
     postalCode,
     city,
@@ -202,10 +304,9 @@ function EstimationPage() {
         });
         return;
       }
-      if (notes.trim().length < 15) {
-        toast.error("Décrivez ce qu'il y a à débarrasser", {
-          description: "Quelques mots suffisent pour que les pros puissent chiffrer.",
-        });
+      const surfaceCheck = Number.parseInt(surface, 10);
+      if (!Number.isFinite(surfaceCheck) || surfaceCheck <= 0) {
+        toast.error("Indiquez la surface du logement en m²");
         return;
       }
     }
@@ -226,6 +327,26 @@ function EstimationPage() {
     setPublishing(true);
     try {
       const surfaceValue = Number.parseInt(surface, 10);
+      const manualAccessOption =
+        MANUAL_ACCESS_OPTIONS.find((o) => o.key === manualAccess) ?? MANUAL_ACCESS_OPTIONS[0]!;
+      const annexSurfaceValue = Number.parseInt(annexSurface, 10);
+      const manualSummary = [
+        `Encombrement : ${CLUTTER_OPTIONS.find((o) => o.key === clutter)?.label}`,
+        `Salubrité : ${SANITATION_OPTIONS.find((o) => o.key === sanitation)?.label}`,
+        `Accès : ${manualAccessOption.label} (${manualAccessOption.hint})`,
+        annexes.length
+          ? `Annexes : ${annexes
+              .map((key) => ANNEX_OPTIONS.find((o) => o.key === key)?.label)
+              .join(", ")}${
+              Number.isFinite(annexSurfaceValue) && annexSurfaceValue > 0
+                ? ` — ${annexSurfaceValue} m²`
+                : ""
+            }`
+          : null,
+        notes.trim() ? `Précisions : ${notes.trim()}` : null,
+      ]
+        .filter(Boolean)
+        .join("\n");
       const { data: quote, error } = await supabase
         .from("quotes")
         .insert({
@@ -233,14 +354,16 @@ function EstimationPage() {
           property_type: PROPERTY_LABELS[propertyType],
           surface_m2:
             !isPhoto && Number.isFinite(surfaceValue) && surfaceValue > 0 ? surfaceValue : null,
-          floor: isPhoto ? ACCESS_PRICING[accessLevel].floor : Number.parseInt(floor, 10) || 0,
-          has_elevator: isPhoto ? ACCESS_PRICING[accessLevel].hasElevator : hasElevator,
+          floor: isPhoto ? ACCESS_PRICING[accessLevel].floor : manualAccessOption.floor,
+          has_elevator: isPhoto
+            ? ACCESS_PRICING[accessLevel].hasElevator
+            : manualAccessOption.hasElevator,
           postal_code: postalCode.trim(),
           city: city.trim() || null,
           desired_date: desiredDate || null,
           notes: isPhoto
             ? `Accès : ${ACCESS_OPTIONS.find((o) => o.key === accessLevel)?.label ?? accessLevel}`
-            : notes || null,
+            : manualSummary,
           volume_m3: result?.analysis.volumeM3 ?? null,
           price_min: result?.price.priceMin ?? null,
           price_max: result?.price.priceMax ?? null,
@@ -427,8 +550,12 @@ function EstimationPage() {
 
           {!isPhoto && (
             <section className="rounded-3xl border border-border bg-card p-7 shadow-[var(--shadow-soft)]">
-              <h2 className="text-lg font-bold">2. Le bien à débarrasser</h2>
-              <div className="mt-5 grid gap-5">
+              <h2 className="text-lg font-bold">2. Votre logement en détail</h2>
+              <p className="mt-1 text-sm text-muted-foreground">
+                Cinq questions rapides pour que les pros chiffrent au plus juste.
+              </p>
+
+              <div className="mt-6 space-y-8">
                 <div className="grid gap-2">
                   <Label>Type de bien</Label>
                   <div className="flex flex-wrap gap-2">
@@ -448,41 +575,129 @@ function EstimationPage() {
                     ))}
                   </div>
                 </div>
-                <div className="grid gap-4 sm:grid-cols-3">
-                  <div className="grid gap-2">
-                    <Label htmlFor="surface">Surface (m²) *</Label>
-                    <Input
-                      id="surface"
-                      inputMode="numeric"
-                      placeholder="45"
-                      value={surface}
-                      onChange={(e) => setSurface(e.target.value)}
-                    />
+
+                <div className="grid gap-2">
+                  <Label htmlFor="surface" className="text-base font-semibold">
+                    Quelle est la surface du logement en m² ? *
+                  </Label>
+                  <Input
+                    id="surface"
+                    inputMode="numeric"
+                    placeholder="Entrez la surface"
+                    className="max-w-xs"
+                    value={surface}
+                    onChange={(e) => setSurface(e.target.value)}
+                  />
+                </div>
+
+                <div className="grid gap-3">
+                  <Label className="text-base font-semibold">
+                    Le logement dispose-t-il des éléments suivants ?
+                  </Label>
+                  <div className="grid gap-2 sm:grid-cols-2">
+                    {ANNEX_OPTIONS.map((option) => {
+                      const checked = annexes.includes(option.key);
+                      return (
+                        <button
+                          key={option.key}
+                          type="button"
+                          onClick={() =>
+                            setAnnexes((prev) =>
+                              checked
+                                ? prev.filter((k) => k !== option.key)
+                                : [...prev, option.key],
+                            )
+                          }
+                          className={`flex items-center gap-3 rounded-2xl border px-4 py-3 text-left text-sm transition-colors ${
+                            checked
+                              ? "border-primary bg-brand-soft text-brand-ink"
+                              : "border-border hover:bg-secondary"
+                          }`}
+                        >
+                          <span
+                            className={`flex size-5 shrink-0 items-center justify-center rounded-md border ${
+                              checked ? "border-primary bg-primary text-primary-foreground" : "border-border"
+                            }`}
+                          >
+                            {checked && <Check className="size-3.5" />}
+                          </span>
+                          {option.label}
+                        </button>
+                      );
+                    })}
                   </div>
-                  <div className="grid gap-2">
-                    <Label htmlFor="floor">Étage</Label>
-                    <Input
-                      id="floor"
-                      inputMode="numeric"
-                      value={floor}
-                      onChange={(e) => setFloor(e.target.value)}
-                    />
-                  </div>
-                  <div className="grid gap-2">
-                    <Label htmlFor="elevator">Ascenseur</Label>
-                    <div className="flex h-9 items-center gap-3">
-                      <Switch id="elevator" checked={hasElevator} onCheckedChange={setHasElevator} />
-                      <span className="text-sm text-muted-foreground">
-                        {hasElevator ? "Oui" : "Non"}
-                      </span>
+                  {annexes.length > 0 && (
+                    <div className="grid gap-2 pt-1">
+                      <Label htmlFor="annex-surface">Si oui, surface totale de ces espaces (m²)</Label>
+                      <Input
+                        id="annex-surface"
+                        inputMode="numeric"
+                        placeholder="0"
+                        className="max-w-xs"
+                        value={annexSurface}
+                        onChange={(e) => setAnnexSurface(e.target.value)}
+                      />
                     </div>
+                  )}
+                </div>
+
+                <div className="grid gap-3">
+                  <Label className="text-base font-semibold">
+                    Quel est le taux d'encombrement du logement ?
+                  </Label>
+                  <div className="grid gap-3 sm:grid-cols-3">
+                    {CLUTTER_OPTIONS.map((option) => (
+                      <OptionCard
+                        key={option.key}
+                        selected={clutter === option.key}
+                        label={option.label}
+                        onSelect={() => setClutter(option.key)}
+                      />
+                    ))}
                   </div>
                 </div>
+
+                <div className="grid gap-3">
+                  <Label className="text-base font-semibold">
+                    Dans quel état de salubrité est votre logement ?
+                  </Label>
+                  <div className="grid gap-3 sm:grid-cols-2">
+                    {SANITATION_OPTIONS.map((option) => (
+                      <OptionCard
+                        key={option.key}
+                        selected={sanitation === option.key}
+                        label={option.label}
+                        hint={option.hint}
+                        onSelect={() => setSanitation(option.key)}
+                      />
+                    ))}
+                  </div>
+                </div>
+
+                <div className="grid gap-3">
+                  <Label className="text-base font-semibold">
+                    Comment est l'accessibilité à l'habitation ?
+                  </Label>
+                  <div className="grid gap-3 sm:grid-cols-2">
+                    {MANUAL_ACCESS_OPTIONS.map((option) => (
+                      <OptionCard
+                        key={option.key}
+                        selected={manualAccess === option.key}
+                        label={option.label}
+                        hint={option.hint}
+                        onSelect={() => setManualAccess(option.key)}
+                      />
+                    ))}
+                  </div>
+                </div>
+
                 <div className="grid gap-2">
-                  <Label htmlFor="notes">Ce qu'il y a à débarrasser *</Label>
+                  <Label htmlFor="notes" className="text-base font-semibold">
+                    Précisions sur ce qu'il y a à débarrasser
+                  </Label>
                   <Textarea
                     id="notes"
-                    rows={6}
+                    rows={5}
                     placeholder="Ex : cave pleine de cartons, un canapé et un vieux frigo, accès par une cour."
                     value={notes}
                     onChange={(e) => setNotes(e.target.value)}
@@ -491,6 +706,7 @@ function EstimationPage() {
               </div>
             </section>
           )}
+
 
           {isPhoto && (
             <section className="rounded-3xl border border-border bg-card p-7 shadow-[var(--shadow-soft)]">
