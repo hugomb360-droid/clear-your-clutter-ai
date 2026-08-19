@@ -305,10 +305,9 @@ function EstimationPage() {
         });
         return;
       }
-      if (notes.trim().length < 15) {
-        toast.error("Décrivez ce qu'il y a à débarrasser", {
-          description: "Quelques mots suffisent pour que les pros puissent chiffrer.",
-        });
+      const surfaceCheck = Number.parseInt(surface, 10);
+      if (!Number.isFinite(surfaceCheck) || surfaceCheck <= 0) {
+        toast.error("Indiquez la surface du logement en m²");
         return;
       }
     }
