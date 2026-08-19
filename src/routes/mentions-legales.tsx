@@ -24,8 +24,14 @@ function Legal() {
         <section>
           <h2 className="text-lg font-bold text-foreground">Éditeur</h2>
           <p className="mt-2">
-            Clearo — plateforme de mise en relation dans le domaine du débarras. Coordonnées
-            complètes de la société à compléter avant la mise en ligne officielle.
+            Le site Clearo est édité par l'auto-entreprise <strong>Monsallut Barranger</strong>,
+            SIREN 105 524 110, dont le siège est situé 27 rue Marcel Pointeau, 16000 Angoulême,
+            France.
+            <br />
+            Contact : <a className="underline" href="mailto:clientclearo@gmail.com">clientclearo@gmail.com</a>{" "}
+            — <a className="underline" href="tel:+33609957915">06 09 95 79 15</a>
+            <br />
+            Directeur de la publication : Monsallut Barranger.
           </p>
         </section>
         <section>
