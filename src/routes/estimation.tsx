@@ -385,9 +385,9 @@ function EstimationPage() {
           notes: isPhoto
             ? `Accès : ${ACCESS_OPTIONS.find((o) => o.key === accessLevel)?.label ?? accessLevel}`
             : manualSummary,
-          volume_m3: result?.analysis.volumeM3 ?? null,
-          price_min: result?.price.priceMin ?? null,
-          price_max: result?.price.priceMax ?? null,
+          volume_m3: isPhoto ? (result?.analysis.volumeM3 ?? null) : (manualEstimate?.volumeM3 ?? null),
+          price_min: isPhoto ? (result?.price.priceMin ?? null) : (manualEstimate?.priceMin ?? null),
+          price_max: isPhoto ? (result?.price.priceMax ?? null) : (manualEstimate?.priceMax ?? null),
           ai_analysis: result ? JSON.parse(JSON.stringify(result)) : null,
           status: "published",
         })
