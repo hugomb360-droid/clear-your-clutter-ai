@@ -427,8 +427,12 @@ function EstimationPage() {
 
           {!isPhoto && (
             <section className="rounded-3xl border border-border bg-card p-7 shadow-[var(--shadow-soft)]">
-              <h2 className="text-lg font-bold">2. Le bien à débarrasser</h2>
-              <div className="mt-5 grid gap-5">
+              <h2 className="text-lg font-bold">2. Votre logement en détail</h2>
+              <p className="mt-1 text-sm text-muted-foreground">
+                Cinq questions rapides pour que les pros chiffrent au plus juste.
+              </p>
+
+              <div className="mt-6 space-y-8">
                 <div className="grid gap-2">
                   <Label>Type de bien</Label>
                   <div className="flex flex-wrap gap-2">
@@ -448,41 +452,129 @@ function EstimationPage() {
                     ))}
                   </div>
                 </div>
-                <div className="grid gap-4 sm:grid-cols-3">
-                  <div className="grid gap-2">
-                    <Label htmlFor="surface">Surface (m²) *</Label>
-                    <Input
-                      id="surface"
-                      inputMode="numeric"
-                      placeholder="45"
-                      value={surface}
-                      onChange={(e) => setSurface(e.target.value)}
-                    />
+
+                <div className="grid gap-2">
+                  <Label htmlFor="surface" className="text-base font-semibold">
+                    Quelle est la surface du logement en m² ? *
+                  </Label>
+                  <Input
+                    id="surface"
+                    inputMode="numeric"
+                    placeholder="Entrez la surface"
+                    className="max-w-xs"
+                    value={surface}
+                    onChange={(e) => setSurface(e.target.value)}
+                  />
+                </div>
+
+                <div className="grid gap-3">
+                  <Label className="text-base font-semibold">
+                    Le logement dispose-t-il des éléments suivants ?
+                  </Label>
+                  <div className="grid gap-2 sm:grid-cols-2">
+                    {ANNEX_OPTIONS.map((option) => {
+                      const checked = annexes.includes(option.key);
+                      return (
+                        <button
+                          key={option.key}
+                          type="button"
+                          onClick={() =>
+                            setAnnexes((prev) =>
+                              checked
+                                ? prev.filter((k) => k !== option.key)
+                                : [...prev, option.key],
+                            )
+                          }
+                          className={`flex items-center gap-3 rounded-2xl border px-4 py-3 text-left text-sm transition-colors ${
+                            checked
+                              ? "border-primary bg-brand-soft text-brand-ink"
+                              : "border-border hover:bg-secondary"
+                          }`}
+                        >
+                          <span
+                            className={`flex size-5 shrink-0 items-center justify-center rounded-md border ${
+                              checked ? "border-primary bg-primary text-primary-foreground" : "border-border"
+                            }`}
+                          >
+                            {checked && <Check className="size-3.5" />}
+                          </span>
+                          {option.label}
+                        </button>
+                      );
+                    })}
                   </div>
-                  <div className="grid gap-2">
-                    <Label htmlFor="floor">Étage</Label>
-                    <Input
-                      id="floor"
-                      inputMode="numeric"
-                      value={floor}
-                      onChange={(e) => setFloor(e.target.value)}
-                    />
-                  </div>
-                  <div className="grid gap-2">
-                    <Label htmlFor="elevator">Ascenseur</Label>
-                    <div className="flex h-9 items-center gap-3">
-                      <Switch id="elevator" checked={hasElevator} onCheckedChange={setHasElevator} />
-                      <span className="text-sm text-muted-foreground">
-                        {hasElevator ? "Oui" : "Non"}
-                      </span>
+                  {annexes.length > 0 && (
+                    <div className="grid gap-2 pt-1">
+                      <Label htmlFor="annex-surface">Si oui, surface totale de ces espaces (m²)</Label>
+                      <Input
+                        id="annex-surface"
+                        inputMode="numeric"
+                        placeholder="0"
+                        className="max-w-xs"
+                        value={annexSurface}
+                        onChange={(e) => setAnnexSurface(e.target.value)}
+                      />
                     </div>
+                  )}
+                </div>
+
+                <div className="grid gap-3">
+                  <Label className="text-base font-semibold">
+                    Quel est le taux d'encombrement du logement ?
+                  </Label>
+                  <div className="grid gap-3 sm:grid-cols-3">
+                    {CLUTTER_OPTIONS.map((option) => (
+                      <OptionCard
+                        key={option.key}
+                        selected={clutter === option.key}
+                        label={option.label}
+                        onSelect={() => setClutter(option.key)}
+                      />
+                    ))}
                   </div>
                 </div>
+
+                <div className="grid gap-3">
+                  <Label className="text-base font-semibold">
+                    Dans quel état de salubrité est votre logement ?
+                  </Label>
+                  <div className="grid gap-3 sm:grid-cols-2">
+                    {SANITATION_OPTIONS.map((option) => (
+                      <OptionCard
+                        key={option.key}
+                        selected={sanitation === option.key}
+                        label={option.label}
+                        hint={option.hint}
+                        onSelect={() => setSanitation(option.key)}
+                      />
+                    ))}
+                  </div>
+                </div>
+
+                <div className="grid gap-3">
+                  <Label className="text-base font-semibold">
+                    Comment est l'accessibilité à l'habitation ?
+                  </Label>
+                  <div className="grid gap-3 sm:grid-cols-2">
+                    {MANUAL_ACCESS_OPTIONS.map((option) => (
+                      <OptionCard
+                        key={option.key}
+                        selected={manualAccess === option.key}
+                        label={option.label}
+                        hint={option.hint}
+                        onSelect={() => setManualAccess(option.key)}
+                      />
+                    ))}
+                  </div>
+                </div>
+
                 <div className="grid gap-2">
-                  <Label htmlFor="notes">Ce qu'il y a à débarrasser *</Label>
+                  <Label htmlFor="notes" className="text-base font-semibold">
+                    Précisions sur ce qu'il y a à débarrasser
+                  </Label>
                   <Textarea
                     id="notes"
-                    rows={6}
+                    rows={5}
                     placeholder="Ex : cave pleine de cartons, un canapé et un vieux frigo, accès par une cour."
                     value={notes}
                     onChange={(e) => setNotes(e.target.value)}
@@ -491,6 +583,7 @@ function EstimationPage() {
               </div>
             </section>
           )}
+
 
           {isPhoto && (
             <section className="rounded-3xl border border-border bg-card p-7 shadow-[var(--shadow-soft)]">
