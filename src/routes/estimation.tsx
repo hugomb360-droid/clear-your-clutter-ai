@@ -51,6 +51,89 @@ const ACCESS_PRICING: Record<AccessLevel, { floor: number; hasElevator: boolean;
   difficile: { floor: 3, hasElevator: false, hardAccess: true },
 };
 
+type AnnexKey = "garage" | "cave" | "sous-sol" | "dependance";
+type ClutterKey = "normal" | "encombre" | "compulsif";
+type SanitationKey = "normal" | "poussiereux" | "insalubre" | "diogene";
+type ManualAccessKey = "facile" | "moyen" | "complique" | "tres_complique";
+
+const ANNEX_OPTIONS: { key: AnnexKey; label: string }[] = [
+  { key: "garage", label: "Un garage" },
+  { key: "cave", label: "Une cave" },
+  { key: "sous-sol", label: "Un sous-sol" },
+  { key: "dependance", label: "Une dépendance" },
+];
+
+const CLUTTER_OPTIONS: { key: ClutterKey; label: string }[] = [
+  { key: "normal", label: "Encombrement normal" },
+  { key: "encombre", label: "Plutôt encombré" },
+  { key: "compulsif", label: "Accumulation compulsive" },
+];
+
+const SANITATION_OPTIONS: { key: SanitationKey; label: string; hint: string }[] = [
+  { key: "normal", label: "Normal", hint: "Compris : balayage des sols" },
+  { key: "poussiereux", label: "Poussiéreux", hint: "Compris : balayage des sols" },
+  { key: "insalubre", label: "Insalubre", hint: "Compris : lessivage des sols, nettoyage" },
+  {
+    key: "diogene",
+    label: "Syndrome de Diogène",
+    hint: "Compris : désinfection, lessivage des sols, nettoyage",
+  },
+];
+
+const MANUAL_ACCESS_OPTIONS: {
+  key: ManualAccessKey;
+  label: string;
+  hint: string;
+  floor: number;
+  hasElevator: boolean;
+}[] = [
+  { key: "facile", label: "Facile", hint: "Rez-de-chaussée", floor: 0, hasElevator: true },
+  { key: "moyen", label: "Moyen", hint: "Étage avec ascenseur", floor: 2, hasElevator: true },
+  { key: "complique", label: "Compliqué", hint: "Étage sans ascenseur", floor: 2, hasElevator: false },
+  {
+    key: "tres_complique",
+    label: "Très compliqué",
+    hint: "Étage avec accès étroit",
+    floor: 3,
+    hasElevator: false,
+  },
+];
+
+function OptionCard({
+  selected,
+  label,
+  hint,
+  onSelect,
+}: {
+  selected: boolean;
+  label: string;
+  hint?: string;
+  onSelect: () => void;
+}) {
+  return (
+    <button
+      type="button"
+      onClick={onSelect}
+      className={`flex items-start gap-3 rounded-2xl border p-4 text-left transition-colors ${
+        selected ? "border-primary bg-brand-soft" : "border-border hover:bg-secondary"
+      }`}
+    >
+      <span
+        className={`mt-0.5 flex size-4 shrink-0 items-center justify-center rounded-full border ${
+          selected ? "border-primary" : "border-border"
+        }`}
+      >
+        {selected && <span className="size-2 rounded-full bg-primary" />}
+      </span>
+      <span>
+        <span className="block text-sm font-semibold">{label}</span>
+        {hint && <span className="mt-1 block text-xs text-muted-foreground">{hint}</span>}
+      </span>
+    </button>
+  );
+}
+
+
 type Draft = {
   mode: Mode;
   photos: string[];
