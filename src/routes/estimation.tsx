@@ -192,6 +192,11 @@ function EstimationPage() {
       setFloor(draft.floor ?? "0");
       setHasElevator(Boolean(draft.hasElevator));
       setAccessLevel(draft.accessLevel ?? "facile");
+      setAnnexes(draft.annexes ?? []);
+      setAnnexSurface(draft.annexSurface ?? "");
+      setClutter(draft.clutter ?? "normal");
+      setSanitation(draft.sanitation ?? "normal");
+      setManualAccess(draft.manualAccess ?? "facile");
       setNotes(draft.notes ?? "");
       setPostalCode(draft.postalCode ?? "");
       setCity(draft.city ?? "");
