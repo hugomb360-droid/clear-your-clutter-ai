@@ -18,6 +18,7 @@ import { Route as ContactRouteImport } from './routes/contact'
 import { Route as EstimationRouteImport } from './routes/estimation'
 import { Route as MentionsLegalesRouteImport } from './routes/mentions-legales'
 import { Route as ProsRouteImport } from './routes/pros'
+import { Route as SitemapDotxmlRouteImport } from './routes/sitemap[.]xml'
 import { Route as TarifsRouteImport } from './routes/tarifs'
 import { Route as ProDashboardRouteImport } from './routes/pro.dashboard'
 
@@ -66,6 +67,11 @@ const ProsRoute = ProsRouteImport.update({
   path: '/pros',
   getParentRoute: () => rootRouteImport,
 } as any)
+const SitemapDotxmlRoute = SitemapDotxmlRouteImport.update({
+  id: '/sitemap.xml',
+  path: '/sitemap.xml',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const TarifsRoute = TarifsRouteImport.update({
   id: '/tarifs',
   path: '/tarifs',
@@ -87,6 +93,7 @@ export interface FileRoutesByFullPath {
   '/estimation': typeof EstimationRoute
   '/mentions-legales': typeof MentionsLegalesRoute
   '/pros': typeof ProsRoute
+  '/sitemap.xml': typeof SitemapDotxmlRoute
   '/tarifs': typeof TarifsRoute
   '/pro/dashboard': typeof ProDashboardRoute
 }
@@ -100,6 +107,7 @@ export interface FileRoutesByTo {
   '/estimation': typeof EstimationRoute
   '/mentions-legales': typeof MentionsLegalesRoute
   '/pros': typeof ProsRoute
+  '/sitemap.xml': typeof SitemapDotxmlRoute
   '/tarifs': typeof TarifsRoute
   '/pro/dashboard': typeof ProDashboardRoute
 }
@@ -114,6 +122,7 @@ export interface FileRoutesById {
   '/estimation': typeof EstimationRoute
   '/mentions-legales': typeof MentionsLegalesRoute
   '/pros': typeof ProsRoute
+  '/sitemap.xml': typeof SitemapDotxmlRoute
   '/tarifs': typeof TarifsRoute
   '/pro/dashboard': typeof ProDashboardRoute
 }
@@ -129,6 +138,7 @@ export interface FileRouteTypes {
     | '/estimation'
     | '/mentions-legales'
     | '/pros'
+    | '/sitemap.xml'
     | '/tarifs'
     | '/pro/dashboard'
   fileRoutesByTo: FileRoutesByTo
@@ -142,6 +152,7 @@ export interface FileRouteTypes {
     | '/estimation'
     | '/mentions-legales'
     | '/pros'
+    | '/sitemap.xml'
     | '/tarifs'
     | '/pro/dashboard'
   id:
@@ -155,6 +166,7 @@ export interface FileRouteTypes {
     | '/estimation'
     | '/mentions-legales'
     | '/pros'
+    | '/sitemap.xml'
     | '/tarifs'
     | '/pro/dashboard'
   fileRoutesById: FileRoutesById
@@ -169,6 +181,7 @@ export interface RootRouteChildren {
   EstimationRoute: typeof EstimationRoute
   MentionsLegalesRoute: typeof MentionsLegalesRoute
   ProsRoute: typeof ProsRoute
+  SitemapDotxmlRoute: typeof SitemapDotxmlRoute
   TarifsRoute: typeof TarifsRoute
   ProDashboardRoute: typeof ProDashboardRoute
 }
@@ -238,6 +251,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ProsRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/sitemap.xml': {
+      id: '/sitemap.xml'
+      path: '/sitemap.xml'
+      fullPath: '/sitemap.xml'
+      preLoaderRoute: typeof SitemapDotxmlRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/tarifs': {
       id: '/tarifs'
       path: '/tarifs'
@@ -265,6 +285,7 @@ const rootRouteChildren: RootRouteChildren = {
   EstimationRoute: EstimationRoute,
   MentionsLegalesRoute: MentionsLegalesRoute,
   ProsRoute: ProsRoute,
+  SitemapDotxmlRoute: SitemapDotxmlRoute,
   TarifsRoute: TarifsRoute,
   ProDashboardRoute: ProDashboardRoute,
 }
