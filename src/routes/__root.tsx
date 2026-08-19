@@ -80,7 +80,7 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
     meta: [
       { charSet: "utf-8" },
       { name: "viewport", content: "width=device-width, initial-scale=1" },
-      { title: "Clearo — débarras estimé par IA" },
+      { title: "Clearo | Débarras France – Devis Rapide en Photo avec IA" },
       {
         name: "description",
         content:
@@ -91,10 +91,11 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
         name: "google-site-verification",
         content: "RgyPHeo6CE3U7SZb1HwIh9Hw8d3opJsmd6NPuS6i2vg",
       },
-      { property: "og:title", content: "Clearo — débarras estimé par IA" },
+      { property: "og:title", content: "Clearo | Débarras France – Devis Rapide en Photo avec IA" },
       {
         property: "og:description",
-        content: "Devis instantané en photo et mise en relation avec un débarrasseur local.",
+        content:
+          "Clearo estime votre débarras à partir de photos et vous met en relation avec des professionnels près de chez vous.",
       },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
