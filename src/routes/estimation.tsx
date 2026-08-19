@@ -1,6 +1,6 @@
 import { createFileRoute, useNavigate } from "@tanstack/react-router";
 import { useServerFn } from "@tanstack/react-start";
-import { Camera, Loader2, PencilLine, Sparkles, Trash2 } from "lucide-react";
+import { Camera, Check, Loader2, PencilLine, Sparkles, Trash2 } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
 import { toast } from "sonner";
 import { Badge } from "@/components/ui/badge";
@@ -223,6 +223,11 @@ function EstimationPage() {
     floor,
     hasElevator,
     accessLevel,
+    annexes,
+    annexSurface,
+    clutter,
+    sanitation,
+    manualAccess,
     notes,
     postalCode,
     city,
