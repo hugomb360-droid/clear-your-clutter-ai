@@ -169,6 +169,11 @@ function EstimationPage() {
   const [floor, setFloor] = useState("0");
   const [hasElevator, setHasElevator] = useState(false);
   const [accessLevel, setAccessLevel] = useState<AccessLevel>("facile");
+  const [annexes, setAnnexes] = useState<AnnexKey[]>([]);
+  const [annexSurface, setAnnexSurface] = useState("");
+  const [clutter, setClutter] = useState<ClutterKey>("normal");
+  const [sanitation, setSanitation] = useState<SanitationKey>("normal");
+  const [manualAccess, setManualAccess] = useState<ManualAccessKey>("facile");
   const [notes, setNotes] = useState("");
   const [postalCode, setPostalCode] = useState("");
   const [city, setCity] = useState("");
