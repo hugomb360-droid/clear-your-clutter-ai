@@ -335,14 +335,16 @@ function EstimationPage() {
           property_type: PROPERTY_LABELS[propertyType],
           surface_m2:
             !isPhoto && Number.isFinite(surfaceValue) && surfaceValue > 0 ? surfaceValue : null,
-          floor: isPhoto ? ACCESS_PRICING[accessLevel].floor : Number.parseInt(floor, 10) || 0,
-          has_elevator: isPhoto ? ACCESS_PRICING[accessLevel].hasElevator : hasElevator,
+          floor: isPhoto ? ACCESS_PRICING[accessLevel].floor : manualAccessOption.floor,
+          has_elevator: isPhoto
+            ? ACCESS_PRICING[accessLevel].hasElevator
+            : manualAccessOption.hasElevator,
           postal_code: postalCode.trim(),
           city: city.trim() || null,
           desired_date: desiredDate || null,
           notes: isPhoto
             ? `Accès : ${ACCESS_OPTIONS.find((o) => o.key === accessLevel)?.label ?? accessLevel}`
-            : notes || null,
+            : manualSummary,
           volume_m3: result?.analysis.volumeM3 ?? null,
           price_min: result?.price.priceMin ?? null,
           price_max: result?.price.priceMax ?? null,
