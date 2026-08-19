@@ -359,6 +359,11 @@ function EstimationPage() {
                 : ""
             }`
           : null,
+        manualEstimate
+          ? `Estimation Clearo : ${manualEstimate.volumeM3} m³ · ${euro(
+              manualEstimate.priceMin,
+            )} – ${euro(manualEstimate.priceMax)}`
+          : null,
         notes.trim() ? `Précisions : ${notes.trim()}` : null,
       ]
         .filter(Boolean)
