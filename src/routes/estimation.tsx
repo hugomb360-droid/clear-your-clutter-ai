@@ -142,6 +142,11 @@ type Draft = {
   floor: string;
   hasElevator: boolean;
   accessLevel: AccessLevel;
+  annexes: AnnexKey[];
+  annexSurface: string;
+  clutter: ClutterKey;
+  sanitation: SanitationKey;
+  manualAccess: ManualAccessKey;
   notes: string;
   postalCode: string;
   city: string;
