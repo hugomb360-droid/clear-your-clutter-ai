@@ -328,6 +328,26 @@ function EstimationPage() {
     setPublishing(true);
     try {
       const surfaceValue = Number.parseInt(surface, 10);
+      const manualAccessOption =
+        MANUAL_ACCESS_OPTIONS.find((o) => o.key === manualAccess) ?? MANUAL_ACCESS_OPTIONS[0];
+      const annexSurfaceValue = Number.parseInt(annexSurface, 10);
+      const manualSummary = [
+        `Encombrement : ${CLUTTER_OPTIONS.find((o) => o.key === clutter)?.label}`,
+        `Salubrité : ${SANITATION_OPTIONS.find((o) => o.key === sanitation)?.label}`,
+        `Accès : ${manualAccessOption.label} (${manualAccessOption.hint})`,
+        annexes.length
+          ? `Annexes : ${annexes
+              .map((key) => ANNEX_OPTIONS.find((o) => o.key === key)?.label)
+              .join(", ")}${
+              Number.isFinite(annexSurfaceValue) && annexSurfaceValue > 0
+                ? ` — ${annexSurfaceValue} m²`
+                : ""
+            }`
+          : null,
+        notes.trim() ? `Précisions : ${notes.trim()}` : null,
+      ]
+        .filter(Boolean)
+        .join("\n");
       const { data: quote, error } = await supabase
         .from("quotes")
         .insert({
