@@ -912,6 +912,17 @@ function EstimationPage() {
             </h2>
             {!isPhoto ? (
               <div className="mt-5 space-y-5">
+                {showManualEstimate && manualEstimate && (
+                  <div>
+                    <p className="text-sm text-muted-foreground">Prix estimé</p>
+                    <p className="text-3xl font-extrabold text-brand">
+                      {euro(manualEstimate.priceMin)} – {euro(manualEstimate.priceMax)}
+                    </p>
+                    <p className="mt-1 text-sm text-muted-foreground">
+                      Volume estimé : {manualEstimate.volumeM3} m³
+                    </p>
+                  </div>
+                )}
                 <p className="text-sm text-muted-foreground">
                   Vos photos et votre description sont transmises aux professionnels de votre
                   secteur, qui fixent leur prix. Vous recevez leurs propositions dans votre espace
