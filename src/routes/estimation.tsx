@@ -239,6 +239,20 @@ function EstimationPage() {
     result,
   });
 
+  const surfaceNumber = Number.parseInt(surface, 10);
+  const annexSurfaceNumber = Number.parseInt(annexSurface, 10);
+  const manualEstimate = useMemo(() => {
+    if (!Number.isFinite(surfaceNumber) || surfaceNumber <= 0) return null;
+    return estimateManualPrice({
+      surfaceM2: surfaceNumber,
+      annexSurfaceM2:
+        annexes.length && Number.isFinite(annexSurfaceNumber) ? annexSurfaceNumber : 0,
+      clutter,
+      sanitation,
+      access: manualAccess,
+    });
+  }, [surfaceNumber, annexSurfaceNumber, annexes.length, clutter, sanitation, manualAccess]);
+
   const chooseMode = (next: Mode) => {
     setMode(next);
     setResult(null);
