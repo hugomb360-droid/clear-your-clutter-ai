@@ -87,6 +87,10 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
           "Clearo estime votre débarras à partir de photos et vous met en relation avec des professionnels près de chez vous.",
       },
       { name: "author", content: "Clearo" },
+      {
+        name: "google-site-verification",
+        content: "RgyPHeo6CE3U7SZb1HwIh9Hw8d3opJsmd6NPuS6i2vg",
+      },
       { property: "og:title", content: "Clearo — débarras estimé par IA" },
       {
         property: "og:description",
