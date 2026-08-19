@@ -1,7 +1,7 @@
 import { createFileRoute, useNavigate } from "@tanstack/react-router";
 import { useServerFn } from "@tanstack/react-start";
 import { Camera, Check, Loader2, PencilLine, Sparkles, Trash2 } from "lucide-react";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { toast } from "sonner";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
@@ -11,6 +11,7 @@ import { Textarea } from "@/components/ui/textarea";
 import { supabase } from "@/integrations/supabase/client";
 import { estimateClearance } from "@/lib/estimate.functions";
 import { dataUrlToBlob, fileToDataUrl } from "@/lib/image";
+import { estimateManualPrice } from "@/lib/manual-estimate";
 import { PROPERTY_LABELS, euro, type EstimationResult, type PropertyType } from "@/lib/pricing";
 
 export const Route = createFileRoute("/estimation")({
@@ -181,6 +182,7 @@ function EstimationPage() {
   const [fullName, setFullName] = useState("");
   const [desiredDate, setDesiredDate] = useState("");
   const [result, setResult] = useState<EstimationResult | null>(null);
+  const [showManualEstimate, setShowManualEstimate] = useState(false);
   const [analyzing, setAnalyzing] = useState(false);
   const [publishing, setPublishing] = useState(false);
 
@@ -236,6 +238,20 @@ function EstimationPage() {
     desiredDate,
     result,
   });
+
+  const surfaceNumber = Number.parseInt(surface, 10);
+  const annexSurfaceNumber = Number.parseInt(annexSurface, 10);
+  const manualEstimate = useMemo(() => {
+    if (!Number.isFinite(surfaceNumber) || surfaceNumber <= 0) return null;
+    return estimateManualPrice({
+      surfaceM2: surfaceNumber,
+      annexSurfaceM2:
+        annexes.length && Number.isFinite(annexSurfaceNumber) ? annexSurfaceNumber : 0,
+      clutter,
+      sanitation,
+      access: manualAccess,
+    });
+  }, [surfaceNumber, annexSurfaceNumber, annexes.length, clutter, sanitation, manualAccess]);
 
   const chooseMode = (next: Mode) => {
     setMode(next);
@@ -343,6 +359,11 @@ function EstimationPage() {
                 : ""
             }`
           : null,
+        manualEstimate
+          ? `Estimation Clearo : ${manualEstimate.volumeM3} m³ · ${euro(
+              manualEstimate.priceMin,
+            )} – ${euro(manualEstimate.priceMax)}`
+          : null,
         notes.trim() ? `Précisions : ${notes.trim()}` : null,
       ]
         .filter(Boolean)
@@ -364,9 +385,9 @@ function EstimationPage() {
           notes: isPhoto
             ? `Accès : ${ACCESS_OPTIONS.find((o) => o.key === accessLevel)?.label ?? accessLevel}`
             : manualSummary,
-          volume_m3: result?.analysis.volumeM3 ?? null,
-          price_min: result?.price.priceMin ?? null,
-          price_max: result?.price.priceMax ?? null,
+          volume_m3: isPhoto ? (result?.analysis.volumeM3 ?? null) : (manualEstimate?.volumeM3 ?? null),
+          price_min: isPhoto ? (result?.price.priceMin ?? null) : (manualEstimate?.priceMin ?? null),
+          price_max: isPhoto ? (result?.price.priceMax ?? null) : (manualEstimate?.priceMax ?? null),
           ai_analysis: result ? JSON.parse(JSON.stringify(result)) : null,
           status: "published",
         })
@@ -780,8 +801,66 @@ function EstimationPage() {
             </section>
           )}
 
+          {!isPhoto && (
+            <section className="rounded-3xl border border-border bg-card p-7 shadow-[var(--shadow-soft)]">
+              <h2 className="text-lg font-bold">3. Votre estimation immédiate</h2>
+              <p className="mt-1 text-sm text-muted-foreground">
+                Calculée à partir de vos réponses et des prix réellement pratiqués sur le marché du
+                débarras (tarif au m³ dégressif, majorations salubrité et accès).
+              </p>
+
+              {!showManualEstimate ? (
+                <Button
+                  size="lg"
+                  className="mt-5 w-full"
+                  onClick={() => {
+                    if (!manualEstimate) {
+                      toast.error("Indiquez d'abord la surface du logement en m²");
+                      return;
+                    }
+                    setShowManualEstimate(true);
+                  }}
+                >
+                  <Sparkles className="mr-2 size-4" /> Calculer mon prix
+                </Button>
+              ) : manualEstimate ? (
+                <div className="mt-5 space-y-4">
+                  <div className="rounded-2xl bg-brand-soft/60 p-5">
+                    <p className="text-sm text-muted-foreground">Prix estimé du débarras</p>
+                    <p className="text-3xl font-extrabold text-brand">
+                      {euro(manualEstimate.priceMin)} – {euro(manualEstimate.priceMax)}
+                    </p>
+                    <p className="mt-1 text-sm text-muted-foreground">
+                      Volume estimé : {manualEstimate.volumeM3} m³ · {manualEstimate.pricePerM3} €/m³
+                    </p>
+                  </div>
+                  <div className="rounded-2xl bg-secondary/60 p-4 text-sm">
+                    <div className="flex justify-between">
+                      <span className="text-muted-foreground">Base volume</span>
+                      <span>{euro(manualEstimate.base)}</span>
+                    </div>
+                    {manualEstimate.surcharges.map((surcharge) => (
+                      <div key={surcharge.label} className="mt-2 flex justify-between">
+                        <span className="text-muted-foreground">{surcharge.label}</span>
+                        <span>+{euro(surcharge.amount)}</span>
+                      </div>
+                    ))}
+                  </div>
+                  <p className="text-xs text-muted-foreground">
+                    Estimation indicative, débarras d'un logement vidé de ses occupants. Les pros de
+                    votre secteur confirment ce prix après avoir vu vos photos.
+                  </p>
+                </div>
+              ) : (
+                <p className="mt-4 text-sm text-muted-foreground">
+                  Renseignez la surface du logement pour obtenir votre prix.
+                </p>
+              )}
+            </section>
+          )}
+
           <section className="rounded-3xl border border-border bg-card p-7 shadow-[var(--shadow-soft)]">
-            <h2 className="text-lg font-bold">{isPhoto ? "4." : "3."} Où et quand ?</h2>
+            <h2 className="text-lg font-bold">4. Où et quand ?</h2>
             <div className="mt-5 grid gap-4 sm:grid-cols-2">
               <div className="grid gap-2">
                 <Label htmlFor="postal">Code postal *</Label>
@@ -833,6 +912,17 @@ function EstimationPage() {
             </h2>
             {!isPhoto ? (
               <div className="mt-5 space-y-5">
+                {showManualEstimate && manualEstimate && (
+                  <div>
+                    <p className="text-sm text-muted-foreground">Prix estimé</p>
+                    <p className="text-3xl font-extrabold text-brand">
+                      {euro(manualEstimate.priceMin)} – {euro(manualEstimate.priceMax)}
+                    </p>
+                    <p className="mt-1 text-sm text-muted-foreground">
+                      Volume estimé : {manualEstimate.volumeM3} m³
+                    </p>
+                  </div>
+                )}
                 <p className="text-sm text-muted-foreground">
                   Vos photos et votre description sont transmises aux professionnels de votre
                   secteur, qui fixent leur prix. Vous recevez leurs propositions dans votre espace
