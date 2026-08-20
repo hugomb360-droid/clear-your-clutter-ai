@@ -1,10 +1,12 @@
 import { Link } from "@tanstack/react-router";
 import clearoLogo from "@/assets/clearo-logo-black.png";
+import { CITIES } from "@/lib/cities";
+
 
 export function SiteFooter() {
   return (
     <footer className="border-t border-border/70 bg-secondary/40">
-      <div className="mx-auto grid max-w-6xl gap-8 px-4 py-12 sm:grid-cols-2 lg:grid-cols-4">
+      <div className="mx-auto grid max-w-6xl gap-8 px-4 py-12 sm:grid-cols-2 lg:grid-cols-5">
         <div>
           <div className="flex items-center gap-2">
             <img src={clearoLogo} alt="Logo Clearo" className="size-8 object-contain" />
@@ -42,8 +44,30 @@ export function SiteFooter() {
                 Débarras de maison
               </Link>
             </li>
+            <li>
+              <Link to="/debarras" className="hover:text-foreground">
+                Débarras par ville
+              </Link>
+            </li>
           </ul>
         </div>
+        <div>
+          <h3 className="text-sm font-semibold">Villes</h3>
+          <ul className="mt-3 grid grid-cols-2 gap-x-4 gap-y-2 text-sm text-muted-foreground">
+            {CITIES.map((city) => (
+              <li key={city.slug}>
+                <Link
+                  to="/debarras/$ville"
+                  params={{ ville: city.slug }}
+                  className="hover:text-foreground"
+                >
+                  {city.name}
+                </Link>
+              </li>
+            ))}
+          </ul>
+        </div>
+
         <div>
           <h3 className="text-sm font-semibold">Professionnels</h3>
           <ul className="mt-3 space-y-2 text-sm text-muted-foreground">

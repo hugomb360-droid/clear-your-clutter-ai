@@ -1,5 +1,7 @@
 import { createFileRoute } from "@tanstack/react-router";
 import type {} from "@tanstack/react-start";
+import { CITIES } from "@/lib/cities";
+
 
 const BASE_URL = "https://clearo.fr";
 
@@ -12,6 +14,12 @@ interface SitemapEntry {
 const entries: SitemapEntry[] = [
   { path: "/", changefreq: "weekly", priority: "1.0" },
   { path: "/estimation", changefreq: "weekly", priority: "0.9" },
+  { path: "/debarras", changefreq: "weekly", priority: "0.8" },
+  ...CITIES.map((c) => ({
+    path: `/debarras/${c.slug}`,
+    changefreq: "monthly" as const,
+    priority: "0.8",
+  })),
   { path: "/debarras-appartement", changefreq: "monthly", priority: "0.8" },
   { path: "/debarras-maison", changefreq: "monthly", priority: "0.8" },
   { path: "/comment-ca-marche", changefreq: "monthly", priority: "0.7" },
@@ -21,6 +29,7 @@ const entries: SitemapEntry[] = [
   { path: "/auth", changefreq: "yearly", priority: "0.3" },
   { path: "/mentions-legales", changefreq: "yearly", priority: "0.3" },
 ];
+
 
 export const Route = createFileRoute("/sitemap.xml")({
   server: {
