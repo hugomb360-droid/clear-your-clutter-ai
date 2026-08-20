@@ -11,7 +11,12 @@ export const Route = createFileRoute("/mentions-legales")({
       },
       { property: "og:title", content: "Mentions légales Clearo" },
       { property: "og:description", content: "Informations légales de la plateforme Clearo." },
+      { property: "og:url", content: "https://clearo.fr/mentions-legales" },
+      { property: "og:type", content: "website" },
+      { name: "twitter:card", content: "summary_large_image" },
     ],
+    links: [{ rel: "canonical", href: "https://clearo.fr/mentions-legales" }],
+
   }),
   component: Legal,
 });
