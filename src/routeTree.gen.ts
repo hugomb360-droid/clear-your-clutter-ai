@@ -22,6 +22,7 @@ import { Route as MentionsLegalesRouteImport } from './routes/mentions-legales'
 import { Route as ProsRouteImport } from './routes/pros'
 import { Route as SitemapDotxmlRouteImport } from './routes/sitemap[.]xml'
 import { Route as TarifsRouteImport } from './routes/tarifs'
+import { Route as DebarrasVilleRouteImport } from './routes/debarras.$ville'
 import { Route as ProDashboardRouteImport } from './routes/pro.dashboard'
 
 const IndexRoute = IndexRouteImport.update({
@@ -89,6 +90,11 @@ const TarifsRoute = TarifsRouteImport.update({
   path: '/tarifs',
   getParentRoute: () => rootRouteImport,
 } as any)
+const DebarrasVilleRoute = DebarrasVilleRouteImport.update({
+  id: '/debarras/$ville',
+  path: '/debarras/$ville',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const ProDashboardRoute = ProDashboardRouteImport.update({
   id: '/pro/dashboard',
   path: '/pro/dashboard',
@@ -109,6 +115,7 @@ export interface FileRoutesByFullPath {
   '/pros': typeof ProsRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
   '/tarifs': typeof TarifsRoute
+  '/debarras/$ville': typeof DebarrasVilleRoute
   '/pro/dashboard': typeof ProDashboardRoute
 }
 export interface FileRoutesByTo {
@@ -125,6 +132,7 @@ export interface FileRoutesByTo {
   '/pros': typeof ProsRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
   '/tarifs': typeof TarifsRoute
+  '/debarras/$ville': typeof DebarrasVilleRoute
   '/pro/dashboard': typeof ProDashboardRoute
 }
 export interface FileRoutesById {
@@ -142,6 +150,7 @@ export interface FileRoutesById {
   '/pros': typeof ProsRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
   '/tarifs': typeof TarifsRoute
+  '/debarras/$ville': typeof DebarrasVilleRoute
   '/pro/dashboard': typeof ProDashboardRoute
 }
 export interface FileRouteTypes {
@@ -160,6 +169,7 @@ export interface FileRouteTypes {
     | '/pros'
     | '/sitemap.xml'
     | '/tarifs'
+    | '/debarras/$ville'
     | '/pro/dashboard'
   fileRoutesByTo: FileRoutesByTo
   to:
@@ -176,6 +186,7 @@ export interface FileRouteTypes {
     | '/pros'
     | '/sitemap.xml'
     | '/tarifs'
+    | '/debarras/$ville'
     | '/pro/dashboard'
   id:
     | '__root__'
@@ -192,6 +203,7 @@ export interface FileRouteTypes {
     | '/pros'
     | '/sitemap.xml'
     | '/tarifs'
+    | '/debarras/$ville'
     | '/pro/dashboard'
   fileRoutesById: FileRoutesById
 }
@@ -209,6 +221,7 @@ export interface RootRouteChildren {
   ProsRoute: typeof ProsRoute
   SitemapDotxmlRoute: typeof SitemapDotxmlRoute
   TarifsRoute: typeof TarifsRoute
+  DebarrasVilleRoute: typeof DebarrasVilleRoute
   ProDashboardRoute: typeof ProDashboardRoute
 }
 
@@ -305,6 +318,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof TarifsRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/debarras/$ville': {
+      id: '/debarras/$ville'
+      path: '/debarras/$ville'
+      fullPath: '/debarras/$ville'
+      preLoaderRoute: typeof DebarrasVilleRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/pro/dashboard': {
       id: '/pro/dashboard'
       path: '/pro/dashboard'
@@ -329,6 +349,7 @@ const rootRouteChildren: RootRouteChildren = {
   ProsRoute: ProsRoute,
   SitemapDotxmlRoute: SitemapDotxmlRoute,
   TarifsRoute: TarifsRoute,
+  DebarrasVilleRoute: DebarrasVilleRoute,
   ProDashboardRoute: ProDashboardRoute,
 }
 export const routeTree = rootRouteImport
