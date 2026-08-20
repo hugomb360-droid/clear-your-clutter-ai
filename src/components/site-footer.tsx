@@ -6,7 +6,7 @@ import { CITIES } from "@/lib/cities";
 export function SiteFooter() {
   return (
     <footer className="border-t border-border/70 bg-secondary/40">
-      <div className="mx-auto grid max-w-6xl gap-8 px-4 py-12 sm:grid-cols-2 lg:grid-cols-4">
+      <div className="mx-auto grid max-w-6xl gap-8 px-4 py-12 sm:grid-cols-2 lg:grid-cols-5">
         <div>
           <div className="flex items-center gap-2">
             <img src={clearoLogo} alt="Logo Clearo" className="size-8 object-contain" />
