@@ -16,6 +16,7 @@ import { Route as CommentCaMarcheRouteImport } from './routes/comment-ca-marche'
 import { Route as CompteRouteImport } from './routes/compte'
 import { Route as ContactRouteImport } from './routes/contact'
 import { Route as DebarrasAppartementRouteImport } from './routes/debarras-appartement'
+import { Route as DebarrasMaisonRouteImport } from './routes/debarras-maison'
 import { Route as EstimationRouteImport } from './routes/estimation'
 import { Route as MentionsLegalesRouteImport } from './routes/mentions-legales'
 import { Route as ProsRouteImport } from './routes/pros'
@@ -58,6 +59,11 @@ const DebarrasAppartementRoute = DebarrasAppartementRouteImport.update({
   path: '/debarras-appartement',
   getParentRoute: () => rootRouteImport,
 } as any)
+const DebarrasMaisonRoute = DebarrasMaisonRouteImport.update({
+  id: '/debarras-maison',
+  path: '/debarras-maison',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const EstimationRoute = EstimationRouteImport.update({
   id: '/estimation',
   path: '/estimation',
@@ -97,6 +103,7 @@ export interface FileRoutesByFullPath {
   '/compte': typeof CompteRoute
   '/contact': typeof ContactRoute
   '/debarras-appartement': typeof DebarrasAppartementRoute
+  '/debarras-maison': typeof DebarrasMaisonRoute
   '/estimation': typeof EstimationRoute
   '/mentions-legales': typeof MentionsLegalesRoute
   '/pros': typeof ProsRoute
@@ -112,6 +119,7 @@ export interface FileRoutesByTo {
   '/compte': typeof CompteRoute
   '/contact': typeof ContactRoute
   '/debarras-appartement': typeof DebarrasAppartementRoute
+  '/debarras-maison': typeof DebarrasMaisonRoute
   '/estimation': typeof EstimationRoute
   '/mentions-legales': typeof MentionsLegalesRoute
   '/pros': typeof ProsRoute
@@ -128,6 +136,7 @@ export interface FileRoutesById {
   '/compte': typeof CompteRoute
   '/contact': typeof ContactRoute
   '/debarras-appartement': typeof DebarrasAppartementRoute
+  '/debarras-maison': typeof DebarrasMaisonRoute
   '/estimation': typeof EstimationRoute
   '/mentions-legales': typeof MentionsLegalesRoute
   '/pros': typeof ProsRoute
@@ -145,6 +154,7 @@ export interface FileRouteTypes {
     | '/compte'
     | '/contact'
     | '/debarras-appartement'
+    | '/debarras-maison'
     | '/estimation'
     | '/mentions-legales'
     | '/pros'
@@ -160,6 +170,7 @@ export interface FileRouteTypes {
     | '/compte'
     | '/contact'
     | '/debarras-appartement'
+    | '/debarras-maison'
     | '/estimation'
     | '/mentions-legales'
     | '/pros'
@@ -175,6 +186,7 @@ export interface FileRouteTypes {
     | '/compte'
     | '/contact'
     | '/debarras-appartement'
+    | '/debarras-maison'
     | '/estimation'
     | '/mentions-legales'
     | '/pros'
@@ -191,6 +203,7 @@ export interface RootRouteChildren {
   CompteRoute: typeof CompteRoute
   ContactRoute: typeof ContactRoute
   DebarrasAppartementRoute: typeof DebarrasAppartementRoute
+  DebarrasMaisonRoute: typeof DebarrasMaisonRoute
   EstimationRoute: typeof EstimationRoute
   MentionsLegalesRoute: typeof MentionsLegalesRoute
   ProsRoute: typeof ProsRoute
@@ -250,6 +263,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof DebarrasAppartementRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/debarras-maison': {
+      id: '/debarras-maison'
+      path: '/debarras-maison'
+      fullPath: '/debarras-maison'
+      preLoaderRoute: typeof DebarrasMaisonRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/estimation': {
       id: '/estimation'
       path: '/estimation'
@@ -303,6 +323,7 @@ const rootRouteChildren: RootRouteChildren = {
   CompteRoute: CompteRoute,
   ContactRoute: ContactRoute,
   DebarrasAppartementRoute: DebarrasAppartementRoute,
+  DebarrasMaisonRoute: DebarrasMaisonRoute,
   EstimationRoute: EstimationRoute,
   MentionsLegalesRoute: MentionsLegalesRoute,
   ProsRoute: ProsRoute,

@@ -18,7 +18,12 @@ export const Route = createFileRoute("/contact")({
       },
       { property: "og:title", content: "Contacter l'équipe Clearo" },
       { property: "og:description", content: "Réponse sous 24 h ouvrées, du lundi au samedi." },
+      { property: "og:url", content: "https://clearo.fr/contact" },
+      { property: "og:type", content: "website" },
+      { name: "twitter:card", content: "summary_large_image" },
     ],
+    links: [{ rel: "canonical", href: "https://clearo.fr/contact" }],
+
   }),
   component: Contact,
 });

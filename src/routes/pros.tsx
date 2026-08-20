@@ -16,7 +16,12 @@ export const Route = createFileRoute("/pros")({
         property: "og:description",
         content: "Des missions de débarras qualifiées dans vos zones d'intervention.",
       },
+      { property: "og:url", content: "https://clearo.fr/pros" },
+      { property: "og:type", content: "website" },
+      { name: "twitter:card", content: "summary_large_image" },
     ],
+    links: [{ rel: "canonical", href: "https://clearo.fr/pros" }],
+
   }),
   component: ProsLanding,
 });
