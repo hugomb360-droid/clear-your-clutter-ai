@@ -32,6 +32,16 @@ export function SiteFooter() {
                 Tarifs
               </Link>
             </li>
+            <li>
+              <Link to="/debarras-appartement" className="hover:text-foreground">
+                Débarras d'appartement
+              </Link>
+            </li>
+            <li>
+              <Link to="/debarras-maison" className="hover:text-foreground">
+                Débarras de maison
+              </Link>
+            </li>
           </ul>
         </div>
         <div>
