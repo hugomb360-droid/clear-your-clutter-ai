@@ -42,8 +42,30 @@ export function SiteFooter() {
                 Débarras de maison
               </Link>
             </li>
+            <li>
+              <Link to="/debarras" className="hover:text-foreground">
+                Débarras par ville
+              </Link>
+            </li>
           </ul>
         </div>
+        <div>
+          <h3 className="text-sm font-semibold">Villes</h3>
+          <ul className="mt-3 grid grid-cols-2 gap-x-4 gap-y-2 text-sm text-muted-foreground">
+            {CITIES.map((city) => (
+              <li key={city.slug}>
+                <Link
+                  to="/debarras/$ville"
+                  params={{ ville: city.slug }}
+                  className="hover:text-foreground"
+                >
+                  {city.name}
+                </Link>
+              </li>
+            ))}
+          </ul>
+        </div>
+
         <div>
           <h3 className="text-sm font-semibold">Professionnels</h3>
           <ul className="mt-3 space-y-2 text-sm text-muted-foreground">
