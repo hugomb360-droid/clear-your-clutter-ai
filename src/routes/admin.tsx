@@ -213,7 +213,7 @@ function AdminConsole() {
   return (
     <div className="mx-auto max-w-6xl px-4 py-12">
       <header>
-        <h1 className="text-3xl font-extrabold tracking-tight">Console d'administration</h1>
+        <h1 className="text-2xl font-extrabold sm:text-3xl tracking-tight">Console d'administration</h1>
         <p className="mt-2 text-sm text-muted-foreground">
           Toute l'activité Clearo en direct — actualisée automatiquement.
         </p>

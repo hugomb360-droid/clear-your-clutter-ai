@@ -174,13 +174,13 @@ function ProDashboard() {
 
   return (
     <div className="mx-auto max-w-6xl px-4 py-10">
-      <header className="overflow-hidden rounded-[2rem] bg-proposal-emerald p-8 text-proposal-cream shadow-[var(--shadow-proposal)] lg:p-10">
+      <header className="overflow-hidden rounded-[2rem] bg-proposal-emerald p-6 text-proposal-cream shadow-[var(--shadow-proposal)] sm:p-8 lg:p-10">
         <div className="flex flex-wrap items-start justify-between gap-4">
           <div>
             <p className="text-[11px] font-semibold uppercase tracking-widest text-proposal-gold">
               Espace professionnel
             </p>
-            <h1 className="font-display mt-2 text-3xl font-extrabold tracking-tight lg:text-4xl">
+            <h1 className="font-display mt-2 text-2xl font-extrabold sm:text-3xl tracking-tight lg:text-4xl">
               {profile?.company_name ?? "Bienvenue sur Clearo"}
             </h1>
             <p className="mt-3 max-w-xl font-body text-sm text-proposal-cream/70">
@@ -200,7 +200,7 @@ function ProDashboard() {
           </Button>
         </div>
 
-        <div className="mt-8 grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
+        <div className="mt-8 grid grid-cols-2 gap-3 lg:grid-cols-4">
           {stats.map((stat) => (
             <div
               key={stat.label}
@@ -222,7 +222,7 @@ function ProDashboard() {
           count={opportunities.length}
         />
         {!profile ? (
-          <div className="rounded-[2rem] border border-dashed border-proposal-emerald/20 bg-proposal-cream/30 p-10 text-center">
+          <div className="rounded-[2rem] border border-dashed border-proposal-emerald/20 bg-proposal-cream/30 p-6 sm:p-10 text-center">
             <p className="font-body text-sm text-muted-foreground">
               Enregistrez votre fiche entreprise et vos zones d'intervention pour recevoir des
               demandes.

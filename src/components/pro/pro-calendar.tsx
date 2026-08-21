@@ -73,7 +73,7 @@ export function ProCalendar({
 
   return (
     <div className="grid gap-6 lg:grid-cols-[minmax(0,360px)_1fr]">
-      <div className="h-fit overflow-hidden rounded-[2rem] bg-proposal-emerald p-6 text-proposal-cream shadow-[var(--shadow-proposal)]">
+      <div className="h-fit overflow-hidden rounded-[2rem] bg-proposal-emerald p-4 text-proposal-cream shadow-[var(--shadow-proposal)] sm:p-6">
         <div className="flex items-center justify-between">
           <p className="font-display font-bold capitalize">
             {formatMonth(`${year}-${String(month + 1).padStart(2, "0")}-01`)}
@@ -149,7 +149,7 @@ export function ProCalendar({
 
       <div className="space-y-4">
         {selectedBids.length === 0 ? (
-          <div className="rounded-[2rem] border border-dashed border-proposal-emerald/20 bg-proposal-cream/30 p-10 text-center font-body text-sm text-muted-foreground">
+          <div className="rounded-[2rem] border border-dashed border-proposal-emerald/20 bg-proposal-cream/30 p-6 sm:p-10 text-center font-body text-sm text-muted-foreground">
             Aucun chantier ce jour-là. Sélectionnez une date dorée pour voir les coordonnées du
             client et le détail de la mission.
           </div>

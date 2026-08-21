@@ -80,7 +80,7 @@ export const Route = createFileRoute("/debarras/$ville")({
 function CityNotFound() {
   return (
     <main className="mx-auto max-w-3xl px-4 py-24 text-center">
-      <h1 className="text-3xl font-extrabold tracking-tight">Ville non encore couverte</h1>
+      <h1 className="text-2xl font-extrabold sm:text-3xl tracking-tight">Ville non encore couverte</h1>
       <p className="mt-4 text-muted-foreground">
         Nous n'avons pas encore de page dédiée pour cette ville, mais nos débarrasseurs interviennent
         partout en France : lancez votre estimation, nous cherchons un pro près de chez vous.
@@ -102,12 +102,12 @@ function CityPageView() {
   const others = CITIES.filter((c) => c.slug !== city.slug).slice(0, 6);
 
   return (
-    <main className="mx-auto max-w-5xl px-4 py-16">
+    <main className="mx-auto max-w-5xl px-4 py-12 sm:py-16">
       <section className="text-center">
         <span className="inline-flex items-center gap-2 rounded-full bg-primary/10 px-4 py-1.5 text-xs font-semibold uppercase tracking-wide text-primary">
           <MapPin className="h-4 w-4" /> {city.department}
         </span>
-        <h1 className="mt-5 text-4xl font-extrabold tracking-tight sm:text-5xl">
+        <h1 className="mt-5 text-3xl font-extrabold sm:text-4xl tracking-tight sm:text-5xl">
           Débarras {city.preposition} : prix estimé en 2 minutes, en photos
         </h1>
         <p className="mx-auto mt-5 max-w-2xl text-muted-foreground">{city.intro}</p>

@@ -51,8 +51,8 @@ const STEPS = [
 
 function HowItWorks() {
   return (
-    <div className="mx-auto max-w-5xl px-4 py-16">
-      <h1 className="text-4xl font-extrabold tracking-tight sm:text-5xl">Comment ça marche</h1>
+    <div className="mx-auto max-w-5xl px-4 py-12 sm:py-16">
+      <h1 className="text-3xl font-extrabold sm:text-4xl tracking-tight sm:text-5xl">Comment ça marche</h1>
       <p className="mt-4 max-w-2xl text-lg text-muted-foreground">
         Clearo remplace les visites d'estimation et les appels sans réponse par un parcours de deux
         minutes.

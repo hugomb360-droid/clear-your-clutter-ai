@@ -130,87 +130,95 @@ function Home() {
   return (
     <div>
       <section className="relative overflow-hidden">
-        <div className="mx-auto grid max-w-6xl items-center gap-12 px-4 py-8 lg:grid-cols-2 lg:py-12">
+        <div className="mx-auto grid max-w-6xl items-center gap-8 px-4 py-8 lg:grid-cols-2 lg:gap-12 lg:py-12">
           <div>
-            <span className="inline-flex items-center gap-2 rounded-full bg-brand-soft px-4 py-1.5 text-sm font-semibold text-brand-ink">
+            <span className="inline-flex items-center gap-2 rounded-full bg-brand-soft px-4 py-1.5 text-xs font-semibold text-brand-ink sm:text-sm">
               <Sparkles className="size-4" /> Estimation par IA
             </span>
-            <h1 className="mt-5 text-5xl font-extrabold leading-[1.05] tracking-tight sm:text-6xl lg:text-7xl">
+            <h1 className="mt-4 text-[2.5rem] font-extrabold leading-[1.05] tracking-tight sm:mt-5 sm:text-6xl lg:text-7xl">
               Votre débarras estimé
               <span className="text-brand"> en une photo</span>
             </h1>
-            <p className="mt-5 max-w-xl text-xl text-muted-foreground">
+            <p className="mt-4 max-w-xl text-base text-muted-foreground sm:mt-5 sm:text-xl">
               Clearo analyse vos photos, calcule le volume à évacuer et vous donne un prix immédiat.
               Puis on vous met en relation avec un débarrasseur près de chez vous.
             </p>
-            <div className="mt-7 flex flex-wrap gap-3">
-              <Button asChild size="lg" className="rounded-full px-7 text-base">
+            <div className="mt-6 flex flex-col gap-3 sm:mt-7 sm:flex-row sm:flex-wrap">
+              <Button asChild size="lg" className="w-full rounded-full px-7 text-base sm:w-auto">
                 <Link to="/estimation">Estimer mon débarras</Link>
               </Button>
-              <Button asChild size="lg" variant="outline" className="rounded-full px-7 text-base">
+              <Button asChild size="lg" variant="outline" className="w-full rounded-full px-7 text-base sm:w-auto">
                 <Link to="/comment-ca-marche">Comment ça marche</Link>
               </Button>
             </div>
+
             <p className="mt-4 text-sm text-muted-foreground">
               Gratuit, sans engagement · Réponse des pros sous 48 h
             </p>
           </div>
-          <div className="relative self-stretch">
-            <div className="animate-float absolute left-0 top-0 w-[86%]">
+          <div className="relative h-[62vw] max-h-[420px] min-h-[240px] sm:h-[380px] lg:h-auto lg:max-h-none lg:self-stretch">
+            <div className="animate-float absolute left-0 top-0 w-[80%] lg:w-[86%]">
               <div className="relative">
                 <img
                   src={heroBefore.url}
                   alt="Appartement encombré avant débarras"
                   width={1792}
                   height={1024}
-                  className="w-full rounded-[2rem] object-cover shadow-2xl"
+                  className="w-full rounded-2xl object-cover shadow-2xl sm:rounded-[2rem]"
                 />
-                <span className="absolute left-4 top-4 rounded-full bg-black/70 px-3 py-1 text-xs font-semibold text-white backdrop-blur-sm">
+                <span className="absolute left-3 top-3 rounded-full bg-black/70 px-2.5 py-1 text-[11px] font-semibold text-white backdrop-blur-sm sm:left-4 sm:top-4 sm:px-3 sm:text-xs">
                   Avant
                 </span>
               </div>
             </div>
-            <div className="animate-float-delayed absolute bottom-0 left-[54%] w-[60%]">
+            <div className="animate-float-delayed absolute bottom-0 right-0 w-[56%] lg:left-[54%] lg:right-auto lg:w-[60%]">
+
               <div className="relative">
                 <img
                   src={heroAfter.url}
                   alt="Appartement vide et nettoyé après débarras"
                   width={1792}
                   height={1024}
-                  className="w-full rounded-[2rem] object-cover shadow-2xl"
+                  className="w-full rounded-2xl object-cover shadow-2xl sm:rounded-[2rem]"
                 />
-                <span className="absolute right-4 top-4 rounded-full bg-brand px-3 py-1 text-xs font-semibold text-white backdrop-blur-sm">
+                <span className="absolute right-3 top-3 rounded-full bg-brand px-2.5 py-1 text-[11px] font-semibold text-white backdrop-blur-sm sm:right-4 sm:top-4 sm:px-3 sm:text-xs">
                   Après
                 </span>
+
               </div>
             </div>
           </div>
         </div>
       </section>
 
-      <section className="border-y border-border bg-secondary/40 py-10">
+      <section className="border-y border-border bg-secondary/40 py-8 sm:py-10">
         <div className="mx-auto max-w-6xl px-4">
-          <div className="grid gap-8 divide-y divide-border sm:grid-cols-2 sm:divide-x sm:divide-y-0 lg:grid-cols-4">
+          <div className="grid grid-cols-2 gap-6 sm:divide-x sm:divide-border lg:grid-cols-4">
             {stats.map((stat) => (
-              <div key={stat.label} className="pt-8 text-center first:pt-0 sm:pt-0 sm:first:pl-0">
-                <p className="text-4xl font-extrabold tracking-tight text-brand">{stat.value}</p>
-                <p className="mt-1 text-sm font-medium text-muted-foreground">{stat.label}</p>
+              <div key={stat.label} className="text-center sm:first:pl-0">
+                <p className="text-2xl font-extrabold sm:text-3xl tracking-tight text-brand sm:text-4xl">
+                  {stat.value}
+                </p>
+                <p className="mt-1 text-xs font-medium text-muted-foreground sm:text-sm">
+                  {stat.label}
+                </p>
               </div>
             ))}
+
           </div>
         </div>
       </section>
 
-      <section className="border-t border-border bg-secondary/40 py-16">
+      <section className="border-t border-border bg-secondary/40 py-12 sm:py-16">
         <div className="mx-auto max-w-6xl px-4">
-          <h2 className="text-center text-3xl font-extrabold tracking-tight">
+          <h2 className="text-center text-2xl font-extrabold sm:text-3xl tracking-tight">
             Trois étapes, zéro paperasse
           </h2>
           <div className="mt-10 grid gap-6 md:grid-cols-3">
             {steps.map((step, index) => (
               <div
                 key={step.title}
-                className="rounded-3xl border border-border bg-card p-7 shadow-[var(--shadow-soft)]"
+                className="rounded-3xl border border-border bg-card p-5 sm:p-7 shadow-[var(--shadow-soft)]"
               >
                 <div className="flex size-11 items-center justify-center rounded-2xl bg-brand-soft text-brand-ink">
                   <step.icon className="size-5" />
@@ -227,13 +235,13 @@ function Home() {
       </section>
 
 
-      <section className="border-t border-border py-16">
+      <section className="border-t border-border py-12 sm:py-16">
         <div className="mx-auto max-w-6xl px-4">
           <div className="mb-10 text-center">
             <span className="inline-flex items-center gap-2 rounded-full bg-brand-soft px-4 py-1.5 text-sm font-semibold text-brand-ink">
               Chantiers réels
             </span>
-            <h2 className="mt-4 text-3xl font-extrabold tracking-tight">
+            <h2 className="mt-4 text-2xl font-extrabold sm:text-3xl tracking-tight">
               À quoi ressemble un débarras Clearo
             </h2>
             <p className="mx-auto mt-3 max-w-2xl text-muted-foreground">
@@ -315,13 +323,13 @@ function Home() {
         </div>
       </section>
 
-      <section className="border-t border-border bg-secondary/40 py-16">
+      <section className="border-t border-border bg-secondary/40 py-12 sm:py-16">
         <div className="mx-auto max-w-6xl px-4">
           <div className="mb-10 text-center">
             <span className="inline-flex items-center gap-2 rounded-full bg-brand-soft px-4 py-1.5 text-sm font-semibold text-brand-ink">
               <Star className="size-4" /> Avis clients
             </span>
-            <h2 className="mt-4 text-3xl font-extrabold tracking-tight">
+            <h2 className="mt-4 text-2xl font-extrabold sm:text-3xl tracking-tight">
               Ils ont fait de la place avec Clearo
             </h2>
             <p className="mx-auto mt-3 max-w-2xl text-muted-foreground">
@@ -371,13 +379,13 @@ function Home() {
       <RoomVolume3D />
 
 
-      <section className="border-t border-border py-16">
+      <section className="border-t border-border py-12 sm:py-16">
         <div className="mx-auto max-w-4xl px-4">
           <div className="mb-10 text-center">
             <span className="inline-flex items-center gap-2 rounded-full bg-brand-soft px-4 py-1.5 text-sm font-semibold text-brand-ink">
               FAQ
             </span>
-            <h2 className="mt-4 text-3xl font-extrabold tracking-tight">
+            <h2 className="mt-4 text-2xl font-extrabold sm:text-3xl tracking-tight">
               Vos questions, nos réponses
             </h2>
           </div>
@@ -401,7 +409,7 @@ function Home() {
       <section className="pb-20">
         <div className="mx-auto max-w-6xl px-4">
           <div className="rounded-[2rem] bg-brand-ink px-8 py-14 text-center text-primary-foreground">
-            <h2 className="text-3xl font-extrabold tracking-tight sm:text-4xl">
+            <h2 className="text-2xl font-extrabold sm:text-3xl tracking-tight sm:text-4xl">
               Prêt à faire de la place ?
             </h2>
             <p className="mx-auto mt-3 max-w-xl text-primary-foreground/80">

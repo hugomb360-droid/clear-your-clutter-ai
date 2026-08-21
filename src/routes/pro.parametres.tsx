@@ -62,7 +62,7 @@ function ProSettings() {
         <ArrowLeft className="size-4" /> Retour à mes missions
       </Link>
       <header className="mt-4">
-        <h1 className="text-3xl font-extrabold tracking-tight">Paramètres</h1>
+        <h1 className="text-2xl font-extrabold sm:text-3xl tracking-tight">Paramètres</h1>
         <p className="mt-2 text-sm text-muted-foreground">
           Fiche entreprise, SIRET, prestations et zones d'intervention.
         </p>

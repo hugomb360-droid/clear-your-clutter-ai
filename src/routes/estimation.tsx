@@ -432,8 +432,8 @@ function EstimationPage() {
 
   if (!mode) {
     return (
-      <div className="mx-auto max-w-5xl px-4 py-16">
-        <h1 className="text-4xl font-extrabold tracking-tight sm:text-5xl">
+      <div className="mx-auto max-w-5xl px-4 py-12 sm:py-16">
+        <h1 className="text-3xl font-extrabold tracking-tight sm:text-4xl lg:text-5xl">
           Comment voulez-vous votre devis ?
         </h1>
         <p className="mt-3 max-w-2xl text-muted-foreground">
@@ -511,7 +511,7 @@ function EstimationPage() {
         </button>
       </div>
 
-      <h1 className="mt-4 text-4xl font-extrabold tracking-tight sm:text-5xl">
+      <h1 className="mt-4 text-3xl font-extrabold tracking-tight sm:text-4xl lg:text-5xl">
         {isPhoto ? "Estimez votre débarras en photos" : "Décrivez votre débarras"}
       </h1>
       <p className="mt-3 max-w-2xl text-muted-foreground">
@@ -523,7 +523,7 @@ function EstimationPage() {
       <div className="mt-10 grid gap-8 lg:grid-cols-[1.1fr_0.9fr]">
         <div className="space-y-8">
           {(
-            <section className="rounded-3xl border border-border bg-card p-7 shadow-[var(--shadow-soft)]">
+            <section className="rounded-3xl border border-border bg-card p-5 sm:p-7 shadow-[var(--shadow-soft)]">
               <h2 className="text-lg font-bold">1. Vos photos</h2>
               <p className="mt-1 text-sm text-muted-foreground">
                 {isPhoto
@@ -575,7 +575,7 @@ function EstimationPage() {
           )}
 
           {!isPhoto && (
-            <section className="rounded-3xl border border-border bg-card p-7 shadow-[var(--shadow-soft)]">
+            <section className="rounded-3xl border border-border bg-card p-5 sm:p-7 shadow-[var(--shadow-soft)]">
               <h2 className="text-lg font-bold">2. Votre logement en détail</h2>
               <p className="mt-1 text-sm text-muted-foreground">
                 Cinq questions rapides pour que les pros chiffrent au plus juste.
@@ -735,7 +735,7 @@ function EstimationPage() {
 
 
           {isPhoto && (
-            <section className="rounded-3xl border border-border bg-card p-7 shadow-[var(--shadow-soft)]">
+            <section className="rounded-3xl border border-border bg-card p-5 sm:p-7 shadow-[var(--shadow-soft)]">
               <h2 className="text-lg font-bold">2. Type de logement et accès</h2>
               <p className="mt-1 text-sm text-muted-foreground">
                 Deux infos seulement : elles ajustent le prix final.
@@ -787,7 +787,7 @@ function EstimationPage() {
           )}
 
           {isPhoto && (
-            <section className="rounded-3xl border border-border bg-card p-7 shadow-[var(--shadow-soft)]">
+            <section className="rounded-3xl border border-border bg-card p-5 sm:p-7 shadow-[var(--shadow-soft)]">
               <h2 className="text-lg font-bold">3. Lancer l'estimation IA</h2>
               <p className="mt-1 text-sm text-muted-foreground">
                 Notre IA analyse vos photos et calcule le volume + la fourchette de prix.
@@ -807,7 +807,7 @@ function EstimationPage() {
           )}
 
           {!isPhoto && (
-            <section className="rounded-3xl border border-border bg-card p-7 shadow-[var(--shadow-soft)]">
+            <section className="rounded-3xl border border-border bg-card p-5 sm:p-7 shadow-[var(--shadow-soft)]">
               <h2 className="text-lg font-bold">3. Votre estimation immédiate</h2>
               <p className="mt-1 text-sm text-muted-foreground">
                 Calculée à partir de vos réponses et des prix réellement pratiqués sur le marché du
@@ -832,7 +832,7 @@ function EstimationPage() {
                 <div className="mt-5 space-y-4">
                   <div className="rounded-2xl bg-brand-soft/60 p-5">
                     <p className="text-sm text-muted-foreground">Prix estimé du débarras</p>
-                    <p className="text-3xl font-extrabold text-brand">
+                    <p className="text-2xl font-extrabold sm:text-3xl text-brand">
                       {euro(manualEstimate.priceMin)} – {euro(manualEstimate.priceMax)}
                     </p>
                     <p className="mt-1 text-sm text-muted-foreground">
@@ -864,7 +864,7 @@ function EstimationPage() {
             </section>
           )}
 
-          <section className="rounded-3xl border border-border bg-card p-7 shadow-[var(--shadow-soft)]">
+          <section className="rounded-3xl border border-border bg-card p-5 sm:p-7 shadow-[var(--shadow-soft)]">
             <h2 className="text-lg font-bold">4. Où et quand ?</h2>
             <div className="mt-5 grid gap-4 sm:grid-cols-2">
               <div className="grid gap-2">
@@ -911,7 +911,7 @@ function EstimationPage() {
         </div>
 
         <aside className="lg:sticky lg:top-24 lg:self-start">
-          <div className="rounded-3xl border border-border bg-card p-7 shadow-[var(--shadow-soft)]">
+          <div className="rounded-3xl border border-border bg-card p-5 sm:p-7 shadow-[var(--shadow-soft)]">
             <h2 className="text-lg font-bold">
               {isPhoto ? "Votre devis Clearo" : "Votre demande de devis"}
             </h2>
@@ -920,7 +920,7 @@ function EstimationPage() {
                 {showManualEstimate && manualEstimate && (
                   <div>
                     <p className="text-sm text-muted-foreground">Prix estimé</p>
-                    <p className="text-3xl font-extrabold text-brand">
+                    <p className="text-2xl font-extrabold sm:text-3xl text-brand">
                       {euro(manualEstimate.priceMin)} – {euro(manualEstimate.priceMax)}
                     </p>
                     <p className="mt-1 text-sm text-muted-foreground">
@@ -964,7 +964,7 @@ function EstimationPage() {
               <div className="mt-5 space-y-5">
                 <div>
                   <p className="text-sm text-muted-foreground">Fourchette estimée</p>
-                  <p className="text-3xl font-extrabold text-brand">
+                  <p className="text-2xl font-extrabold sm:text-3xl text-brand">
                     {euro(result.price.priceMin)} – {euro(result.price.priceMax)}
                   </p>
                   <p className="mt-1 text-sm text-muted-foreground">

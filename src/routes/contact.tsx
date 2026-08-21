@@ -32,9 +32,9 @@ function Contact() {
   const [sending, setSending] = useState(false);
 
   return (
-    <div className="mx-auto grid max-w-5xl gap-12 px-4 py-16 lg:grid-cols-[1fr_1.2fr]">
+    <div className="mx-auto grid max-w-5xl gap-12 px-4 py-12 sm:py-16 lg:grid-cols-[1fr_1.2fr]">
       <div>
-        <h1 className="text-4xl font-extrabold tracking-tight">Parlons de votre débarras</h1>
+        <h1 className="text-3xl font-extrabold sm:text-4xl tracking-tight">Parlons de votre débarras</h1>
         <p className="mt-4 text-muted-foreground">
           Pour une estimation, passez plutôt par le parcours en photo : c'est immédiat. Pour tout le
           reste, écrivez-nous.

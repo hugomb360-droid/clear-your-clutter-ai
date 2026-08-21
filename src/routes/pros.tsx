@@ -57,7 +57,7 @@ function ProsLanding() {
           <p className="text-sm font-semibold uppercase tracking-widest text-brand">
             Espace professionnels
           </p>
-          <h1 className="mt-3 max-w-2xl text-4xl font-extrabold tracking-tight sm:text-5xl">
+          <h1 className="mt-3 max-w-2xl text-3xl font-extrabold sm:text-4xl tracking-tight sm:text-5xl">
             Remplissez vos camions avec des missions de débarras près de chez vous
           </h1>
           <p className="mt-5 max-w-xl text-lg text-muted-foreground">
@@ -77,7 +77,7 @@ function ProsLanding() {
         </div>
       </section>
 
-      <section className="mx-auto max-w-5xl px-4 py-16">
+      <section className="mx-auto max-w-5xl px-4 py-12 sm:py-16">
         <div className="grid gap-6 sm:grid-cols-2">
           {BENEFITS.map((benefit) => (
             <div key={benefit.title} className="rounded-3xl border border-border bg-card p-7">

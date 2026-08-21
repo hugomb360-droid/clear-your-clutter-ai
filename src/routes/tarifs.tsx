@@ -35,8 +35,8 @@ const EXAMPLES = [
 
 function Pricing() {
   return (
-    <div className="mx-auto max-w-5xl px-4 py-16">
-      <h1 className="text-4xl font-extrabold tracking-tight sm:text-5xl">Des tarifs lisibles</h1>
+    <div className="mx-auto max-w-5xl px-4 py-12 sm:py-16">
+      <h1 className="text-3xl font-extrabold sm:text-4xl tracking-tight sm:text-5xl">Des tarifs lisibles</h1>
       <p className="mt-4 max-w-2xl text-lg text-muted-foreground">
         Le prix d'un débarras dépend surtout du volume. Voici la base utilisée par l'estimation
         Clearo, avant les propositions des pros de votre secteur.
@@ -45,14 +45,14 @@ function Pricing() {
       <div className="mt-10 grid gap-6 sm:grid-cols-3">
         <div className="rounded-3xl border border-border bg-card p-7">
           <p className="text-sm text-muted-foreground">Prix de base</p>
-          <p className="mt-2 text-3xl font-extrabold">{euro(PRICING.pricePerM3)}/m³</p>
+          <p className="mt-2 text-2xl font-extrabold sm:text-3xl">{euro(PRICING.pricePerM3)}/m³</p>
           <p className="mt-2 text-sm text-muted-foreground">
             Minimum d'intervention {euro(PRICING.minimumPrice)}
           </p>
         </div>
         <div className="rounded-3xl border border-border bg-card p-7">
           <p className="text-sm text-muted-foreground">Étage sans ascenseur</p>
-          <p className="mt-2 text-3xl font-extrabold">
+          <p className="mt-2 text-2xl font-extrabold sm:text-3xl">
             +{Math.round(PRICING.floorSurchargeRate * 100)}%
           </p>
           <p className="mt-2 text-sm text-muted-foreground">
@@ -61,7 +61,7 @@ function Pricing() {
         </div>
         <div className="rounded-3xl border border-border bg-card p-7">
           <p className="text-sm text-muted-foreground">Encombrants / accès difficile</p>
-          <p className="mt-2 text-3xl font-extrabold">
+          <p className="mt-2 text-2xl font-extrabold sm:text-3xl">
             +{Math.round(PRICING.bulkySurchargeRate * 100)}%
           </p>
           <p className="mt-2 text-sm text-muted-foreground">

@@ -285,13 +285,13 @@ export function RoomVolume3D() {
   });
 
   return (
-    <section className="border-t border-border py-16">
+    <section className="border-t border-border py-12 sm:py-16">
       <div className="mx-auto max-w-6xl px-4">
         <div className="mb-10 text-center">
           <span className="inline-flex items-center gap-2 rounded-full bg-brand-soft px-4 py-1.5 text-sm font-semibold text-brand-ink">
             <Boxes className="size-4" /> Simulateur de volume
           </span>
-          <h2 className="mt-4 text-3xl font-extrabold tracking-tight">
+          <h2 className="mt-4 text-2xl font-extrabold sm:text-3xl tracking-tight">
             Visualisez la place que prennent vos encombrants
           </h2>
           <p className="mx-auto mt-3 max-w-2xl text-muted-foreground">
