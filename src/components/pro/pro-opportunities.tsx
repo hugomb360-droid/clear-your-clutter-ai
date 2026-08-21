@@ -2,7 +2,6 @@ import { useQueryClient } from "@tanstack/react-query";
 import { CalendarDays, MapPin, Sparkles } from "lucide-react";
 import { useState } from "react";
 import { toast } from "sonner";
-import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -52,96 +51,128 @@ export function ProOpportunities({ quotes, proId }: { quotes: Quote[]; proId: st
 
   if (quotes.length === 0) {
     return (
-      <p className="rounded-3xl border border-dashed border-border p-8 text-sm text-muted-foreground">
-        Aucune nouvelle demande dans vos zones pour le moment. Élargissez vos codes postaux dans
-        l'onglet « Ma fiche » pour recevoir plus de missions.
-      </p>
+      <div className="rounded-[2rem] border border-dashed border-proposal-emerald/20 bg-proposal-cream/30 p-10 text-center">
+        <Sparkles className="mx-auto size-6 text-proposal-gold" />
+        <p className="mt-3 font-body text-sm text-muted-foreground">
+          Aucune nouvelle demande dans vos zones pour le moment. Élargissez vos codes postaux dans
+          vos paramètres pour recevoir plus de missions.
+        </p>
+      </div>
     );
   }
 
   return (
-    <div className="space-y-5">
+    <div className="space-y-6">
       {quotes.map((quote) => {
         const draft = draftOf(quote.id);
         const price = Number.parseInt(draft.price, 10);
         return (
-          <article key={quote.id} className="rounded-3xl border border-border bg-card p-6">
-            <div className="flex flex-wrap items-start justify-between gap-3">
-              <div>
-                <div className="flex items-center gap-2">
-                  <h3 className="text-lg font-bold">{quoteTitle(quote)}</h3>
+          <article
+            key={quote.id}
+            className="overflow-hidden rounded-[2rem] bg-white shadow-[var(--shadow-proposal)] ring-1 ring-proposal-emerald/10"
+          >
+            <div className="grid grid-cols-1 md:grid-cols-12">
+              <div className="flex flex-col justify-between bg-proposal-emerald p-7 text-proposal-cream md:col-span-4 lg:p-8">
+                <div>
                   {quote.ai_analysis != null && (
-                    <Badge variant="secondary" className="gap-1">
+                    <span className="inline-flex items-center gap-1.5 rounded-full bg-proposal-emerald-light/60 px-3 py-1 text-[10px] font-semibold uppercase tracking-wider text-proposal-gold">
                       <Sparkles className="size-3" /> Analysé par l'IA
-                    </Badge>
+                    </span>
                   )}
-                </div>
-                <p className="mt-1 flex flex-wrap items-center gap-3 text-sm text-muted-foreground">
-                  <span className="flex items-center gap-1.5">
-                    <MapPin className="size-3.5" /> {quote.postal_code} {quote.city ?? ""}
-                  </span>
-                  <span className="flex items-center gap-1.5">
-                    <CalendarDays className="size-3.5" /> {formatDate(quote.desired_date)}
-                  </span>
-                  <span>
+                  <h3 className="font-display mt-4 text-2xl font-bold leading-tight">
+                    {quoteTitle(quote)}
+                  </h3>
+                  <div className="mt-6 space-y-3 font-body text-sm">
+                    <p className="flex items-center gap-3">
+                      <span className="flex size-8 items-center justify-center rounded-full bg-proposal-emerald-light/60">
+                        <MapPin className="size-4 text-proposal-gold" />
+                      </span>
+                      {quote.postal_code} {quote.city ?? ""}
+                    </p>
+                    <p className="flex items-center gap-3">
+                      <span className="flex size-8 items-center justify-center rounded-full bg-proposal-emerald-light/60">
+                        <CalendarDays className="size-4 text-proposal-gold" />
+                      </span>
+                      {formatDate(quote.desired_date)}
+                    </p>
+                  </div>
+                  <p className="mt-5 font-body text-xs leading-relaxed text-proposal-cream/70">
                     Étage {quote.floor}
                     {quote.has_elevator ? " avec ascenseur" : " sans ascenseur"}
-                  </span>
-                  {quote.surface_m2 ? <span>{quote.surface_m2} m²</span> : null}
-                </p>
-              </div>
-              {quote.price_min != null && quote.price_max != null && (
-                <p className="rounded-full bg-secondary px-3 py-1.5 text-sm font-medium">
-                  Estimation Clearo : {euro(quote.price_min)} – {euro(quote.price_max)}
-                </p>
-              )}
-            </div>
+                    {quote.surface_m2 ? ` · ${quote.surface_m2} m²` : ""}
+                  </p>
+                  {quote.notes && (
+                    <p className="mt-3 font-body text-xs italic leading-relaxed text-proposal-cream/70">
+                      « {quote.notes} »
+                    </p>
+                  )}
+                </div>
 
-            {quote.notes && <p className="mt-3 text-sm text-muted-foreground">{quote.notes}</p>}
-
-            <QuotePhotos quoteId={quote.id} />
-
-            <div className="mt-5 grid gap-4 sm:grid-cols-[8rem_12rem_1fr]">
-              <div className="grid gap-2">
-                <Label htmlFor={`price-${quote.id}`}>Mon prix TTC</Label>
-                <Input
-                  id={`price-${quote.id}`}
-                  inputMode="numeric"
-                  placeholder="450"
-                  value={draft.price}
-                  onChange={(e) => patch(quote.id, { price: e.target.value })}
-                />
+                <div className="mt-8 border-t border-proposal-emerald-light/40 pt-5">
+                  <p className="text-[10px] uppercase tracking-widest text-proposal-cream/50">
+                    Estimation Clearo
+                  </p>
+                  <p className="font-display mt-1 text-xl font-bold">
+                    {quote.price_min != null && quote.price_max != null
+                      ? `${euro(quote.price_min)} – ${euro(quote.price_max)}`
+                      : "Sur devis"}
+                  </p>
+                </div>
               </div>
-              <div className="grid gap-2">
-                <Label htmlFor={`date-${quote.id}`}>Date proposée</Label>
-                <Input
-                  id={`date-${quote.id}`}
-                  type="date"
-                  value={draft.date}
-                  onChange={(e) => patch(quote.id, { date: e.target.value })}
-                />
-              </div>
-              <div className="grid gap-2">
-                <Label htmlFor={`msg-${quote.id}`}>Message au client</Label>
-                <Textarea
-                  id={`msg-${quote.id}`}
-                  rows={2}
-                  placeholder="Équipe de 2, camion 20 m³, évacuation en déchèterie agréée."
-                  value={draft.message}
-                  onChange={(e) => patch(quote.id, { message: e.target.value })}
-                />
-              </div>
-            </div>
 
-            <div className="mt-4 flex flex-wrap items-center justify-between gap-3">
-              <p className="text-xs text-muted-foreground">
-                {Number.isFinite(price) && price > 0
-                  ? `Commission Clearo ${euro(commissionOf(price))} · vous percevez ${euro(netOf(price))}`
-                  : "Commission Clearo de 12 % prélevée uniquement si le client vous choisit."}
-              </p>
-              <Button onClick={() => send(quote)} disabled={sending === quote.id}>
-                {sending === quote.id ? "Envoi..." : "Envoyer ma proposition"}
-              </Button>
+              <div className="bg-white p-7 md:col-span-8 lg:p-8">
+                <QuotePhotos quoteId={quote.id} />
+
+                <div className="mt-5 grid gap-4 sm:grid-cols-[8rem_12rem]">
+                  <div className="grid gap-2">
+                    <Label htmlFor={`price-${quote.id}`}>Mon prix TTC</Label>
+                    <Input
+                      id={`price-${quote.id}`}
+                      inputMode="numeric"
+                      placeholder="450"
+                      className="rounded-xl"
+                      value={draft.price}
+                      onChange={(e) => patch(quote.id, { price: e.target.value })}
+                    />
+                  </div>
+                  <div className="grid gap-2">
+                    <Label htmlFor={`date-${quote.id}`}>Date proposée</Label>
+                    <Input
+                      id={`date-${quote.id}`}
+                      type="date"
+                      className="rounded-xl"
+                      value={draft.date}
+                      onChange={(e) => patch(quote.id, { date: e.target.value })}
+                    />
+                  </div>
+                </div>
+                <div className="mt-4 grid gap-2">
+                  <Label htmlFor={`msg-${quote.id}`}>Message au client</Label>
+                  <Textarea
+                    id={`msg-${quote.id}`}
+                    rows={2}
+                    className="rounded-xl"
+                    placeholder="Équipe de 2, camion 20 m³, évacuation en déchèterie agréée."
+                    value={draft.message}
+                    onChange={(e) => patch(quote.id, { message: e.target.value })}
+                  />
+                </div>
+
+                <div className="mt-5 flex flex-wrap items-center justify-between gap-3 border-t border-border pt-5">
+                  <p className="font-body text-xs text-muted-foreground">
+                    {Number.isFinite(price) && price > 0
+                      ? `Commission ${euro(commissionOf(price))} · vous percevez ${euro(netOf(price))}`
+                      : "Commission Clearo de 12 % uniquement si le client vous choisit."}
+                  </p>
+                  <Button
+                    onClick={() => send(quote)}
+                    disabled={sending === quote.id}
+                    className="rounded-xl bg-proposal-gold font-semibold text-proposal-emerald hover:bg-proposal-gold/90"
+                  >
+                    {sending === quote.id ? "Envoi..." : "Envoyer ma proposition"}
+                  </Button>
+                </div>
+              </div>
             </div>
           </article>
         );

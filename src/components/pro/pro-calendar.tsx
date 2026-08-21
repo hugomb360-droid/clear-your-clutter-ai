@@ -1,6 +1,5 @@
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import { useMemo, useState } from "react";
-import { Button } from "@/components/ui/button";
 import { MissionCard } from "@/components/pro/pro-schedule";
 import type { BidWithQuote, QuoteContact } from "@/lib/pro-dashboard";
 import { formatMonth } from "@/lib/pro-dashboard";
@@ -36,8 +35,7 @@ export function ProCalendar({
 
   const year = cursor.getFullYear();
   const month = cursor.getMonth();
-  const firstDay = new Date(year, month, 1);
-  const offset = (firstDay.getDay() + 6) % 7;
+  const offset = (new Date(year, month, 1).getDay() + 6) % 7;
   const daysInMonth = new Date(year, month + 1, 0).getDate();
   const cells: (number | null)[] = [
     ...Array.from({ length: offset }, () => null),
@@ -47,44 +45,44 @@ export function ProCalendar({
   const selectedBids = selected ? (byDay.get(selected) ?? []) : [];
   const contactOf = (quoteId: string) => contacts.find((c) => c.quote_id === quoteId);
 
-  const monthTotal = [...byDay.entries()]
+  const monthBids = [...byDay.entries()]
     .filter(([key]) => key.startsWith(`${year}-${String(month + 1).padStart(2, "0")}`))
     .flatMap(([, list]) => list);
 
   return (
-    <div className="grid gap-6 lg:grid-cols-[minmax(0,380px)_1fr]">
-      <div className="rounded-3xl border border-border bg-card p-5">
+    <div className="grid gap-6 lg:grid-cols-[minmax(0,360px)_1fr]">
+      <div className="h-fit overflow-hidden rounded-[2rem] bg-proposal-emerald p-6 text-proposal-cream shadow-[var(--shadow-proposal)]">
         <div className="flex items-center justify-between">
-          <p className="font-bold capitalize">{formatMonth(`${year}-${String(month + 1).padStart(2, "0")}-01`)}</p>
+          <p className="font-display font-bold capitalize">
+            {formatMonth(`${year}-${String(month + 1).padStart(2, "0")}-01`)}
+          </p>
           <div className="flex gap-1">
-            <Button
-              size="icon"
-              variant="ghost"
-              className="size-8"
-              onClick={() => setCursor(new Date(year, month - 1, 1))}
+            <button
+              type="button"
               aria-label="Mois précédent"
+              onClick={() => setCursor(new Date(year, month - 1, 1))}
+              className="flex size-8 items-center justify-center rounded-full bg-proposal-emerald-light/50 transition hover:bg-proposal-emerald-light"
             >
-              <ChevronLeft className="size-4" />
-            </Button>
-            <Button
-              size="icon"
-              variant="ghost"
-              className="size-8"
-              onClick={() => setCursor(new Date(year, month + 1, 1))}
+              <ChevronLeft className="size-4 text-proposal-gold" />
+            </button>
+            <button
+              type="button"
               aria-label="Mois suivant"
+              onClick={() => setCursor(new Date(year, month + 1, 1))}
+              className="flex size-8 items-center justify-center rounded-full bg-proposal-emerald-light/50 transition hover:bg-proposal-emerald-light"
             >
-              <ChevronRight className="size-4" />
-            </Button>
+              <ChevronRight className="size-4 text-proposal-gold" />
+            </button>
           </div>
         </div>
 
-        <div className="mt-4 grid grid-cols-7 gap-1 text-center text-xs font-semibold text-muted-foreground">
+        <div className="mt-5 grid grid-cols-7 gap-1 text-center text-[10px] font-semibold uppercase tracking-wider text-proposal-cream/50">
           {WEEKDAYS.map((d, i) => (
             <span key={`${d}-${i}`}>{d}</span>
           ))}
         </div>
 
-        <div className="mt-1 grid grid-cols-7 gap-1">
+        <div className="mt-2 grid grid-cols-7 gap-1">
           {cells.map((day, index) => {
             if (day === null) return <span key={`empty-${index}`} />;
             const key = dayKey(new Date(year, month, day));
@@ -97,17 +95,17 @@ export function ProCalendar({
                 type="button"
                 onClick={() => setSelected(key)}
                 className={[
-                  "relative aspect-square rounded-xl text-sm font-semibold transition",
+                  "relative aspect-square rounded-xl font-body text-sm font-semibold transition",
                   dayBids.length > 0
-                    ? "bg-primary text-primary-foreground hover:opacity-90"
-                    : "text-foreground hover:bg-secondary",
-                  isSelected ? "ring-2 ring-primary ring-offset-2 ring-offset-card" : "",
-                  isToday && dayBids.length === 0 ? "border border-primary/40" : "",
+                    ? "bg-proposal-gold text-proposal-emerald hover:brightness-105"
+                    : "text-proposal-cream/70 hover:bg-proposal-emerald-light/50",
+                  isSelected ? "ring-2 ring-proposal-cream ring-offset-2 ring-offset-proposal-emerald" : "",
+                  isToday && dayBids.length === 0 ? "border border-proposal-cream/30" : "",
                 ].join(" ")}
               >
                 {day}
                 {dayBids.length > 1 && (
-                  <span className="absolute bottom-1 left-1/2 -translate-x-1/2 text-[10px] font-bold">
+                  <span className="absolute bottom-0.5 left-1/2 -translate-x-1/2 text-[9px] font-bold">
                     ×{dayBids.length}
                   </span>
                 )}
@@ -116,20 +114,23 @@ export function ProCalendar({
           })}
         </div>
 
-        <div className="mt-4 flex items-center gap-2 text-xs text-muted-foreground">
-          <span className="size-3 rounded-md bg-primary" /> Jour avec chantier
+        <div className="mt-6 flex items-center gap-2 border-t border-proposal-emerald-light/40 pt-4 font-body text-xs text-proposal-cream/70">
+          <span className="size-3 rounded-md bg-proposal-gold" /> Jour de chantier
         </div>
-        <p className="mt-3 border-t border-border pt-3 text-xs text-muted-foreground">
-          {monthTotal.length} chantier(s) ce mois — {euro(monthTotal.reduce((s, b) => s + b.price, 0))} brut
+        <p className="mt-2 font-body text-xs text-proposal-cream/70">
+          {monthBids.length} chantier(s) ce mois ·{" "}
+          <span className="font-semibold text-proposal-gold">
+            {euro(monthBids.reduce((s, b) => s + b.price, 0))} brut
+          </span>
         </p>
       </div>
 
       <div className="space-y-4">
         {selectedBids.length === 0 ? (
-          <p className="rounded-3xl border border-dashed border-border p-8 text-sm text-muted-foreground">
-            Aucun chantier ce jour-là. Sélectionnez une date en vert pour voir les coordonnées du
-            client et les détails de la mission.
-          </p>
+          <div className="rounded-[2rem] border border-dashed border-proposal-emerald/20 bg-proposal-cream/30 p-10 text-center font-body text-sm text-muted-foreground">
+            Aucun chantier ce jour-là. Sélectionnez une date dorée pour voir les coordonnées du
+            client et le détail de la mission.
+          </div>
         ) : (
           selectedBids.map((bid) => (
             <MissionCard
