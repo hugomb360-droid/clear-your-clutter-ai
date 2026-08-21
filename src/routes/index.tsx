@@ -95,8 +95,8 @@ const reviews = [
 ];
 
 const stats = [
-  { value: "12 000+", label: "débarras estimés" },
-  { value: "850+", label: "pros vérifiés" },
+  { value: "800+", label: "débarras estimés" },
+  { value: "15+", label: "pros vérifiés" },
   { value: "4,8/5", label: "note moyenne" },
   { value: "2 min", label: "pour un devis IA" },
 ];
