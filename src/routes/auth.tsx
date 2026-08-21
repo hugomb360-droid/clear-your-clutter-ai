@@ -100,8 +100,11 @@ function AuthPage() {
   const [services, setServices] = useState<string[]>([]);
   const [description, setDescription] = useState("");
 
+  const [step, setStep] = useState(0);
+
   const postalCodes = parsePostalCodes(zones);
   const target = safePath(search.redirect);
+  const isPro = role === "pro";
 
   useEffect(() => {
     supabase.auth.getSession().then(({ data }) => {
@@ -115,6 +118,33 @@ function AuthPage() {
     setServices((prev) =>
       prev.includes(service) ? prev.filter((s) => s !== service) : [...prev, service],
     );
+
+  const goNext = () => {
+    if (step === 0) {
+      if (!fullName.trim() || !email.trim() || password.length < 6) {
+        toast.error("Complétez vos informations", {
+          description: "Nom, e-mail et mot de passe (6 caractères minimum).",
+        });
+        return;
+      }
+    }
+    if (step === 1 && !companyName.trim()) {
+      toast.error("Nom de société requis");
+      return;
+    }
+    if (step === 2 && siret.replace(/\D/g, "").length !== 14) {
+      toast.error("SIRET invalide", { description: "Le SIRET contient 14 chiffres." });
+      return;
+    }
+    if (step === 4 && postalCodes.length === 0) {
+      toast.error("Ajoutez au moins une zone", {
+        description: "Exemple : 75 pour tout Paris, ou 92100 pour une commune.",
+      });
+      return;
+    }
+    setStep((s) => s + 1);
+  };
+
 
   const handleSignIn = async (event: React.FormEvent) => {
     event.preventDefault();
