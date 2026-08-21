@@ -1,5 +1,5 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { Camera, Clock3, Leaf, MapPin, Quote, ShieldCheck, Sparkles, Star } from "lucide-react";
+import { Camera, MapPin, Quote, Sparkles } from "lucide-react";
 import heroBefore from "@/assets/hero-clearo-v2.jpg.asset.json";
 import heroAfter from "@/assets/hero-apres-v1.jpg.asset.json";
 import galleryEquipe from "@/assets/gallery-equipe.jpg";
@@ -67,12 +67,6 @@ const steps = [
   },
 ];
 
-const trust = [
-  { icon: ShieldCheck, title: "Pros vérifiés", text: "SIRET et assurance contrôlés." },
-  { icon: Clock3, title: "Devis en 2 minutes", text: "Sans visite, sans appel commercial." },
-  { icon: Leaf, title: "Tri responsable", text: "Réemploi et recyclage privilégiés." },
-  { icon: Star, title: "Prix transparents", text: "Grille publique, zéro frais caché." },
-];
 
 const reviews = [
   {
