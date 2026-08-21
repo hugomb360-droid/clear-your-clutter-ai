@@ -8,14 +8,6 @@ import galleryApres from "@/assets/gallery-apres.jpg";
 import galleryCamion from "@/assets/gallery-camion.jpg";
 import galleryCave from "@/assets/gallery-cave.jpg";
 import clipVideo from "@/assets/debarras-clip.mp4.asset.json";
-import avisSophieAvant from "@/assets/avis-sophie-avant.jpg";
-import avisSophieApres from "@/assets/avis-sophie-apres.jpg";
-import avisMarcAvant from "@/assets/avis-marc-avant.jpg";
-import avisMarcApres from "@/assets/avis-marc-apres.jpg";
-import avisClaireAvant from "@/assets/avis-claire-avant.jpg";
-import avisClaireApres from "@/assets/avis-claire-apres.jpg";
-import avisKarimAvant from "@/assets/avis-karim-avant.jpg";
-import avisKarimApres from "@/assets/avis-karim-apres.jpg";
 import { Button } from "@/components/ui/button";
 import { RoomVolume3D } from "@/components/room-volume-3d";
 
@@ -81,32 +73,24 @@ const reviews = [
     name: "Sophie L.",
     location: "Paris 12e",
     rating: 5,
-    before: avisSophieAvant,
-    after: avisSophieApres,
     text: "J'ai envoyé 4 photos de mon appartement, j'ai eu un prix en moins d'une minute. Le pro est venu 2 jours après, tout était propre.",
   },
   {
     name: "Marc D.",
     location: "Bordeaux",
     rating: 5,
-    before: avisMarcAvant,
-    after: avisMarcApres,
     text: "Génial pour vider la cave de ma mère. L'estimation IA était juste, et j'ai reçu 3 propositions de pros du coin.",
   },
   {
     name: "Claire & Julien",
     location: "Lyon",
     rating: 4,
-    before: avisClaireAvant,
-    after: avisClaireApres,
     text: "Simple, rapide, pas d'appels insistants. On a comparé les offres et choisi le débarrasseur qui nous convenait.",
   },
   {
     name: "Karim B.",
     location: "Nantes",
     rating: 5,
-    before: avisKarimAvant,
-    after: avisKarimApres,
     text: "Service impeccable. J'ai pu suivre mon devis depuis mon espace client et valider la proposition en un clic.",
   },
 ];
@@ -349,63 +333,33 @@ function Home() {
             {reviews.map((review) => (
               <div
                 key={review.name}
-                className="relative flex flex-col overflow-hidden rounded-3xl border border-border bg-card shadow-[var(--shadow-soft)]"
+                className="relative flex flex-col rounded-3xl border border-border bg-card p-6 shadow-[var(--shadow-soft)]"
               >
-                <div className="grid grid-cols-2">
-                  <figure className="relative">
-                    <img
-                      src={review.before}
-                      alt={`Avant le débarras chez ${review.name}`}
-                      width={768}
-                      height={576}
-                      loading="lazy"
-                      className="aspect-[4/3] w-full object-cover"
+                <Quote className="absolute right-5 top-5 size-6 text-brand/30" />
+                <div className="flex gap-0.5">
+                  {Array.from({ length: 5 }).map((_, i) => (
+                    <Star
+                      key={i}
+                      className={`size-4 ${
+                        i < review.rating ? "fill-brand text-brand" : "text-muted-foreground/30"
+                      }`}
                     />
-                    <figcaption className="absolute bottom-2 left-2 rounded-full bg-background/90 px-2 py-0.5 text-[10px] font-semibold">
-                      Avant
-                    </figcaption>
-                  </figure>
-                  <figure className="relative">
-                    <img
-                      src={review.after}
-                      alt={`Après le débarras chez ${review.name}`}
-                      width={768}
-                      height={576}
-                      loading="lazy"
-                      className="aspect-[4/3] w-full object-cover"
-                    />
-                    <figcaption className="absolute bottom-2 left-2 rounded-full bg-brand px-2 py-0.5 text-[10px] font-semibold text-primary-foreground">
-                      Après
-                    </figcaption>
-                  </figure>
+                  ))}
                 </div>
-                <div className="flex flex-1 flex-col p-6">
-                  <Quote className="absolute right-5 top-5 size-6 text-brand/30" />
-                  <div className="flex gap-0.5">
-                    {Array.from({ length: 5 }).map((_, i) => (
-                      <Star
-                        key={i}
-                        className={`size-4 ${
-                          i < review.rating ? "fill-brand text-brand" : "text-muted-foreground/30"
-                        }`}
-                      />
-                    ))}
+                <p className="mt-4 flex-1 text-sm leading-relaxed text-foreground">
+                  "{review.text}"
+                </p>
+                <div className="mt-6 flex items-center gap-3">
+                  <div className="flex size-10 items-center justify-center rounded-full bg-brand-soft font-bold text-brand-ink">
+                    {review.name
+                      .split(" ")
+                      .map((n) => n[0])
+                      .join("")
+                      .slice(0, 2)}
                   </div>
-                  <p className="mt-4 flex-1 text-sm leading-relaxed text-foreground">
-                    "{review.text}"
-                  </p>
-                  <div className="mt-6 flex items-center gap-3">
-                    <div className="flex size-10 items-center justify-center rounded-full bg-brand-soft font-bold text-brand-ink">
-                      {review.name
-                        .split(" ")
-                        .map((n) => n[0])
-                        .join("")
-                        .slice(0, 2)}
-                    </div>
-                    <div>
-                      <p className="text-sm font-semibold">{review.name}</p>
-                      <p className="text-xs text-muted-foreground">{review.location}</p>
-                    </div>
+                  <div>
+                    <p className="text-sm font-semibold">{review.name}</p>
+                    <p className="text-xs text-muted-foreground">{review.location}</p>
                   </div>
                 </div>
               </div>
