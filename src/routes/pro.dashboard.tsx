@@ -1,13 +1,12 @@
 import { useQuery } from "@tanstack/react-query";
 import { createFileRoute, Link, useNavigate } from "@tanstack/react-router";
-import { CalendarDays, Send, Settings, Sparkles } from "lucide-react";
+import { CalendarDays, Send, Settings, Sparkles, Wallet } from "lucide-react";
 import { useEffect } from "react";
 import { ProBids } from "@/components/pro/pro-bids";
 import { ProCalendar } from "@/components/pro/pro-calendar";
 import { ProOpportunities } from "@/components/pro/pro-opportunities";
 import { ProWallet } from "@/components/pro/pro-wallet";
 import { Button } from "@/components/ui/button";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { useAuth } from "@/hooks/useAuth";
 import { supabase } from "@/integrations/supabase/client";
 import { coversPostal, isUpcoming, netOf } from "@/lib/pro-dashboard";
@@ -34,6 +33,28 @@ export const Route = createFileRoute("/pro/dashboard")({
   }),
   component: ProDashboard,
 });
+
+function SectionTitle({
+  eyebrow,
+  title,
+  count,
+}: {
+  eyebrow: string;
+  title: string;
+  count?: number;
+}) {
+  return (
+    <div className="mb-5">
+      <p className="text-[11px] font-semibold uppercase tracking-widest text-proposal-gold">
+        {eyebrow}
+      </p>
+      <h2 className="font-display mt-1 text-2xl font-bold text-proposal-emerald">
+        {title}
+        {count != null && <span className="text-proposal-gold"> ({count})</span>}
+      </h2>
+    </div>
+  );
+}
 
 function ProDashboard() {
   const { user, loading } = useAuth();
@@ -124,91 +145,114 @@ function ProDashboard() {
   );
   const netRevenue = missions.reduce((sum, b) => sum + netOf(b.price), 0);
 
+  const stats = [
+    {
+      icon: Sparkles,
+      label: "Demandes à chiffrer",
+      value: String(opportunities.length),
+      hint: "Dans vos zones",
+    },
+    {
+      icon: Send,
+      label: "Propositions envoyées",
+      value: String(proposals.filter((b) => b.status === "pending").length),
+      hint: "En attente du client",
+    },
+    {
+      icon: CalendarDays,
+      label: "Chantiers à venir",
+      value: String(upcoming.length),
+      hint: `${missions.length} mission(s) au total`,
+    },
+    {
+      icon: Wallet,
+      label: "Revenus nets",
+      value: euro(netRevenue),
+      hint: "Commission déduite",
+    },
+  ];
+
   return (
     <div className="mx-auto max-w-6xl px-4 py-10">
-      <header className="flex flex-wrap items-start justify-between gap-4">
-        <div>
-          <h1 className="text-3xl font-extrabold tracking-tight">Mes missions</h1>
-          <p className="mt-2 text-sm text-muted-foreground">
-            {profile?.company_name
-              ? `${profile.company_name} — ${opportunities.length} demande(s) à chiffrer, ${upcoming.length} chantier(s) à venir.`
-              : "Complétez votre fiche entreprise dans les paramètres pour recevoir les demandes de votre secteur."}
-          </p>
+      <header className="overflow-hidden rounded-[2rem] bg-proposal-emerald p-8 text-proposal-cream shadow-[var(--shadow-proposal)] lg:p-10">
+        <div className="flex flex-wrap items-start justify-between gap-4">
+          <div>
+            <p className="text-[11px] font-semibold uppercase tracking-widest text-proposal-gold">
+              Espace professionnel
+            </p>
+            <h1 className="font-display mt-2 text-3xl font-extrabold tracking-tight lg:text-4xl">
+              {profile?.company_name ?? "Bienvenue sur Clearo"}
+            </h1>
+            <p className="mt-3 max-w-xl font-body text-sm text-proposal-cream/70">
+              {profile
+                ? `${opportunities.length} demande(s) à chiffrer et ${upcoming.length} chantier(s) planifié(s).`
+                : "Complétez votre fiche entreprise dans vos paramètres pour recevoir les demandes de votre secteur."}
+            </p>
+          </div>
+          <Button
+            asChild
+            variant="ghost"
+            className="rounded-xl bg-proposal-emerald-light/50 text-proposal-cream hover:bg-proposal-emerald-light hover:text-proposal-cream"
+          >
+            <Link to="/pro/parametres">
+              <Settings className="size-4" /> Paramètres
+            </Link>
+          </Button>
         </div>
-        <Button asChild variant="outline" className="rounded-xl">
-          <Link to="/pro/parametres">
-            <Settings className="size-4" /> Paramètres
-          </Link>
-        </Button>
+
+        <div className="mt-8 grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
+          {stats.map((stat) => (
+            <div
+              key={stat.label}
+              className="rounded-2xl bg-proposal-emerald-light/30 p-4 ring-1 ring-proposal-cream/10"
+            >
+              <stat.icon className="size-4 text-proposal-gold" />
+              <p className="font-display mt-2 text-2xl font-extrabold">{stat.value}</p>
+              <p className="font-body text-xs font-medium">{stat.label}</p>
+              <p className="mt-0.5 font-body text-[11px] text-proposal-cream/50">{stat.hint}</p>
+            </div>
+          ))}
+        </div>
       </header>
 
-      <div className="mt-6 grid gap-3 sm:grid-cols-3">
-        <div className="rounded-2xl border border-border bg-card p-4">
-          <p className="flex items-center gap-2 text-xs font-semibold uppercase tracking-wide text-muted-foreground">
-            <Sparkles className="size-3.5" /> À chiffrer
-          </p>
-          <p className="mt-1 text-2xl font-extrabold">{opportunities.length}</p>
-        </div>
-        <div className="rounded-2xl border border-border bg-card p-4">
-          <p className="flex items-center gap-2 text-xs font-semibold uppercase tracking-wide text-muted-foreground">
-            <Send className="size-3.5" /> Propositions envoyées
-          </p>
-          <p className="mt-1 text-2xl font-extrabold">
-            {proposals.filter((b) => b.status === "pending").length}
-          </p>
-        </div>
-        <div className="rounded-2xl border border-border bg-card p-4">
-          <p className="flex items-center gap-2 text-xs font-semibold uppercase tracking-wide text-muted-foreground">
-            <CalendarDays className="size-3.5" /> Chantiers à venir
-          </p>
-          <p className="mt-1 text-2xl font-extrabold">{upcoming.length}</p>
-          <p className="text-xs text-muted-foreground">{euro(netRevenue)} nets cumulés</p>
-        </div>
-      </div>
+      <section className="mt-12">
+        <SectionTitle
+          eyebrow="Priorité 1"
+          title="Demandes à chiffrer"
+          count={opportunities.length}
+        />
+        {!profile ? (
+          <div className="rounded-[2rem] border border-dashed border-proposal-emerald/20 bg-proposal-cream/30 p-10 text-center">
+            <p className="font-body text-sm text-muted-foreground">
+              Enregistrez votre fiche entreprise et vos zones d'intervention pour recevoir des
+              demandes.
+            </p>
+            <Button
+              asChild
+              className="mt-5 rounded-xl bg-proposal-gold text-proposal-emerald hover:bg-proposal-gold/90"
+            >
+              <Link to="/pro/parametres">Compléter mes paramètres</Link>
+            </Button>
+          </div>
+        ) : (
+          <ProOpportunities quotes={opportunities} proId={user.id} />
+        )}
+      </section>
 
-      <Tabs defaultValue="demandes" className="mt-8">
-        <TabsList className="flex h-auto w-full flex-wrap justify-start gap-1 rounded-2xl p-1.5">
-          <TabsTrigger value="demandes" className="rounded-xl">
-            À chiffrer ({opportunities.length})
-          </TabsTrigger>
-          <TabsTrigger value="propositions" className="rounded-xl">
-            Mes propositions ({proposals.length})
-          </TabsTrigger>
-          <TabsTrigger value="agenda" className="rounded-xl">
-            Agenda ({missions.length})
-          </TabsTrigger>
-          <TabsTrigger value="portefeuille" className="rounded-xl">
-            Portefeuille
-          </TabsTrigger>
-        </TabsList>
+      <section className="mt-14">
+        <SectionTitle eyebrow="Priorité 2" title="Mes propositions" count={proposals.length} />
+        <ProBids bids={proposals} />
+      </section>
 
-        <TabsContent value="demandes" className="mt-6">
-          {!profile ? (
-            <div className="rounded-3xl border border-dashed border-border p-8 text-sm text-muted-foreground">
-              Enregistrez d'abord votre fiche entreprise et vos zones d'intervention.
-              <div className="mt-4">
-                <Button asChild className="rounded-xl">
-                  <Link to="/pro/parametres">Aller aux paramètres</Link>
-                </Button>
-              </div>
-            </div>
-          ) : (
-            <ProOpportunities quotes={opportunities} proId={user.id} />
-          )}
-        </TabsContent>
+      <section className="mt-14">
+        <SectionTitle eyebrow="Agenda" title="Mes chantiers" count={missions.length} />
+        <ProCalendar bids={missions} contacts={contactsQuery.data ?? []} />
+      </section>
 
-        <TabsContent value="propositions" className="mt-6">
-          <ProBids bids={proposals} />
-        </TabsContent>
-
-        <TabsContent value="agenda" className="mt-6">
-          <ProCalendar bids={missions} contacts={contactsQuery.data ?? []} />
-        </TabsContent>
-
-        <TabsContent value="portefeuille" className="mt-6">
-          <ProWallet bids={bids} />
-        </TabsContent>
-      </Tabs>
+      <section className="mt-14">
+        <SectionTitle eyebrow="Finances" title="Mon portefeuille" />
+        <ProWallet bids={bids} />
+      </section>
     </div>
   );
 }
