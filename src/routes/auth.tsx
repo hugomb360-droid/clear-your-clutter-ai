@@ -33,7 +33,6 @@ export const Route = createFileRoute("/auth")({
       { property: "og:description", content: "Suivez vos devis et vos missions de débarras." },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
-      { rel: "canonical", href: "https://clearo.fr/auth" },
     ],
     links: [{ rel: "canonical", href: "https://clearo.fr/auth" }],
   }),
