@@ -69,12 +69,35 @@ function ClientAccount() {
     queryKey: ["my-quotes", user?.id],
     enabled: Boolean(user?.id),
     queryFn: async () => {
-      const { data, error } = await supabase
+      const { data: quotes, error } = await supabase
         .from("quotes")
-        .select("*, bids(*, pro_profiles(*))")
+        .select("*, bids(*)")
         .order("created_at", { ascending: false });
       if (error) throw error;
-      return data;
+
+      const bids = (quotes ?? []).flatMap((q) => q.bids ?? []);
+      const proIds = Array.from(new Set(bids.map((b) => b.pro_id).filter(Boolean)));
+
+      let profilesById: Record<string, { company_name: string; verified: boolean; description: string | null }> = {};
+      if (proIds.length > 0) {
+        const { data: profiles, error: profilesError } = await supabase
+          .from("pro_profiles")
+          .select("user_id, company_name, verified, description")
+          .in("user_id", proIds);
+        if (!profilesError && profiles) {
+          profilesById = Object.fromEntries(
+            profiles.map((p) => [p.user_id, p]),
+          );
+        }
+      }
+
+      return (quotes ?? []).map((q) => ({
+        ...q,
+        bids: (q.bids ?? []).map((b) => ({
+          ...b,
+          pro_profiles: profilesById[b.pro_id] ?? null,
+        })),
+      }));
     },
   });
 
