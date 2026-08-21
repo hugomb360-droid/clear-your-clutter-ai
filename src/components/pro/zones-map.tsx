@@ -87,9 +87,9 @@ export default function ZonesMap({ zones }: { zones: string[] }) {
       layer.clearLayers();
       const accent = getComputedStyle(document.documentElement).getPropertyValue("--brand").trim();
       const color = accent ? `oklch(${accent.replace(/^oklch\(|\)$/g, "")})` : "#16a34a";
-      const bounds: [number, number][] = [];
+      let bounds: import("leaflet").LatLngBounds | null = null;
       for (const shape of shapes) {
-        L.circle([shape.lat, shape.lng], {
+        const circle = L.circle([shape.lat, shape.lng], {
           radius: shape.radiusKm * 1000,
           color,
           weight: 2,
@@ -98,10 +98,10 @@ export default function ZonesMap({ zones }: { zones: string[] }) {
         })
           .bindTooltip(shape.label, { direction: "top" })
           .addTo(layer);
-        bounds.push([shape.lat, shape.lng]);
+        bounds = bounds ? bounds.extend(circle.getBounds()) : circle.getBounds();
       }
-      if (bounds.length) {
-        map.fitBounds(L.latLngBounds(bounds).pad(0.6), { maxZoom: 10 });
+      if (bounds) {
+        map.fitBounds(bounds.pad(0.25), { maxZoom: 11 });
       } else {
         map.setView([46.6, 2.4], 5);
       }
