@@ -100,6 +100,7 @@ export default function ZonesMap({ zones }: { zones: string[] }) {
           .addTo(layer);
         bounds = bounds ? bounds.extend(circle.getBounds()) : circle.getBounds();
       }
+      map.invalidateSize();
       if (bounds) {
         map.fitBounds(bounds.pad(0.25), { maxZoom: 11 });
       } else {
