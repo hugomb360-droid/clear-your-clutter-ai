@@ -38,16 +38,20 @@ export function ProCalendar({
 
   const [cursor, setCursor] = useState<Date | null>(null);
   const [selected, setSelected] = useState<string | null>(null);
+  const touched = useRef(false);
 
   useEffect(() => {
-    setSelected((prev) => prev ?? firstMissionDay);
+    if (touched.current || byDay.size === 0) return;
+    setSelected(firstMissionDay);
     setCursor(
-      (prev) =>
-        prev ??
-        new Date(Number(firstMissionDay.slice(0, 4)), Number(firstMissionDay.slice(5, 7)) - 1, 1),
+      new Date(Number(firstMissionDay.slice(0, 4)), Number(firstMissionDay.slice(5, 7)) - 1, 1),
     );
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [firstMissionDay]);
+  }, [firstMissionDay, byDay]);
+
+  const pick = (key: string) => {
+    touched.current = true;
+    setSelected(key);
+  };
 
   const view = cursor ?? new Date(today.getFullYear(), today.getMonth(), 1);
 
