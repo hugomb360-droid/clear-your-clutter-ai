@@ -73,7 +73,7 @@ export function ProCalendar({
 
   return (
     <div className="grid gap-6 lg:grid-cols-[minmax(0,360px)_1fr]">
-      <div className="h-fit overflow-hidden rounded-[2rem] bg-proposal-emerald p-6 text-proposal-cream shadow-[var(--shadow-proposal)]">
+      <div className="h-fit overflow-hidden rounded-[2rem] bg-proposal-emerald p-4 text-proposal-cream shadow sm:p-6-[var(--shadow-proposal)]">
         <div className="flex items-center justify-between">
           <p className="font-display font-bold capitalize">
             {formatMonth(`${year}-${String(month + 1).padStart(2, "0")}-01`)}
