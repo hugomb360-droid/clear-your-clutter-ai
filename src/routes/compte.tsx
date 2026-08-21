@@ -175,7 +175,7 @@ function ClientAccount() {
             >
               <div className="grid grid-cols-1 md:grid-cols-12">
                 {/* Left column — request summary */}
-                <div className="relative flex flex-col justify-between bg-proposal-emerald p-6 text-proposal-cream sm:p-8 md:col-span-5 lg:p-6 sm:p-10">
+                <div className="relative flex flex-col justify-between bg-proposal-emerald p-6 text-proposal-cream md:col-span-5 sm:p-8 lg:p-10">
                   <div>
                     <span className="inline-flex items-center gap-2 rounded-full bg-proposal-emerald-light/60 px-3 py-1 text-xs font-semibold tracking-wider text-proposal-gold uppercase">
                       {quote.status === "matched" ? "Mission en cours" : STATUS_LABELS[quote.status] ?? quote.status}
@@ -225,7 +225,7 @@ function ClientAccount() {
                 </div>
 
                 {/* Right column — proposals */}
-                <div className="bg-white p-6 md:col-span-7 sm:p-8 lg:p-6 sm:p-10">
+                <div className="bg-white p-6 md:col-span-7 sm:p-8 lg:p-10">
                   <div className="flex items-center justify-between">
                     <h3 className="font-display text-xl font-bold text-proposal-emerald">
                       Propositions reçues{" "}
