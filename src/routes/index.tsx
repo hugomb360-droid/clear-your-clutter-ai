@@ -380,7 +380,7 @@ function Home() {
                   </figure>
                 </div>
                 <div className="flex flex-1 flex-col p-6">
-                  <Quote className="absolute right-5 top-5 size-6 text-white/50" />
+                  <Quote className="absolute right-5 top-5 size-6 text-brand/30" />
                   <div className="flex gap-0.5">
                     {Array.from({ length: 5 }).map((_, i) => (
                       <Star
