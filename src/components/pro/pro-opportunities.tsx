@@ -167,7 +167,7 @@ export function ProOpportunities({ quotes, proId }: { quotes: Quote[]; proId: st
                   <Button
                     onClick={() => send(quote)}
                     disabled={sending === quote.id}
-                    className="rounded-xl bg-proposal-gold font-semibold text-proposal-emerald hover:bg-proposal-gold/90"
+                    className="w-full rounded-xl bg-proposal-gold font-semibold text-proposal-emerald hover:bg-proposal-gold/90 sm:w-auto"
                   >
                     {sending === quote.id ? "Envoi..." : "Envoyer ma proposition"}
                   </Button>
