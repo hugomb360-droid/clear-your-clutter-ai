@@ -1,6 +1,7 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { Camera, Clock3, Leaf, MapPin, Quote, ShieldCheck, Sparkles, Star } from "lucide-react";
-import heroImage from "@/assets/hero-clearo-v2.jpg.asset.json";
+import heroBefore from "@/assets/hero-clearo-v2.jpg.asset.json";
+import heroAfter from "@/assets/hero-apres-v1.jpg.asset.json";
 import galleryEquipe from "@/assets/gallery-equipe.jpg";
 import galleryAvant from "@/assets/gallery-avant.jpg";
 import galleryApres from "@/assets/gallery-apres.jpg";
@@ -159,14 +160,35 @@ function Home() {
               Gratuit, sans engagement · Réponse des pros sous 48 h
             </p>
           </div>
-          <div className="relative">
-            <img
-              src={heroImage.url}
-              alt="Équipe de débarras évacuant cartons et meubles d'un appartement"
-              width={1792}
-              height={1024}
-              className="w-full rounded-[2rem] object-cover shadow-[var(--shadow-lift)]"
-            />
+          <div className="relative h-[340px] sm:h-[420px] lg:h-[480px]">
+            <div className="animate-float absolute left-0 top-8 w-[78%] lg:top-12">
+              <div className="relative">
+                <img
+                  src={heroBefore.url}
+                  alt="Appartement encombré avant débarras"
+                  width={1792}
+                  height={1024}
+                  className="w-full rounded-[2rem] object-cover shadow-2xl"
+                />
+                <span className="absolute left-4 top-4 rounded-full bg-black/70 px-3 py-1 text-xs font-semibold text-white backdrop-blur-sm">
+                  Avant
+                </span>
+              </div>
+            </div>
+            <div className="animate-float-delayed absolute right-0 top-0 w-[62%] lg:-top-4">
+              <div className="relative">
+                <img
+                  src={heroAfter.url}
+                  alt="Appartement vide et nettoyé après débarras"
+                  width={1792}
+                  height={1024}
+                  className="w-full rounded-[2rem] object-cover shadow-2xl ring-4 ring-white"
+                />
+                <span className="absolute right-4 top-4 rounded-full bg-brand px-3 py-1 text-xs font-semibold text-white backdrop-blur-sm">
+                  Après
+                </span>
+              </div>
+            </div>
           </div>
         </div>
       </section>
