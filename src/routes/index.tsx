@@ -155,22 +155,23 @@ function Home() {
               Gratuit, sans engagement · Réponse des pros sous 48 h
             </p>
           </div>
-          <div className="relative self-stretch">
-            <div className="animate-float absolute left-0 top-0 w-[86%]">
+          <div className="relative h-[62vw] max-h-[420px] min-h-[240px] sm:h-[380px] lg:h-auto lg:max-h-none lg:self-stretch">
+            <div className="animate-float absolute left-0 top-0 w-[80%] lg:w-[86%]">
               <div className="relative">
                 <img
                   src={heroBefore.url}
                   alt="Appartement encombré avant débarras"
                   width={1792}
                   height={1024}
-                  className="w-full rounded-[2rem] object-cover shadow-2xl"
+                  className="w-full rounded-2xl object-cover shadow-2xl sm:rounded-[2rem]"
                 />
-                <span className="absolute left-4 top-4 rounded-full bg-black/70 px-3 py-1 text-xs font-semibold text-white backdrop-blur-sm">
+                <span className="absolute left-3 top-3 rounded-full bg-black/70 px-2.5 py-1 text-[11px] font-semibold text-white backdrop-blur-sm sm:left-4 sm:top-4 sm:px-3 sm:text-xs">
                   Avant
                 </span>
               </div>
             </div>
-            <div className="animate-float-delayed absolute bottom-0 left-[54%] w-[60%]">
+            <div className="animate-float-delayed absolute bottom-0 right-0 w-[56%] lg:left-[54%] lg:right-auto lg:w-[60%]">
+
               <div className="relative">
                 <img
                   src={heroAfter.url}
