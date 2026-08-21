@@ -125,6 +125,9 @@ export function ProProfileForm({
             </p>
           )}
         </div>
+        <div className="sm:col-span-2">
+          <ZonesMapPanel zones={postalCodes} />
+        </div>
         <div className="grid gap-2 sm:col-span-2">
           <Label>Prestations proposées</Label>
           <div className="flex flex-wrap gap-2">
