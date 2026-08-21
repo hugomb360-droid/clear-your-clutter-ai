@@ -72,7 +72,7 @@ export function ProOpportunities({ quotes, proId }: { quotes: Quote[]; proId: st
             className="overflow-hidden rounded-[2rem] bg-white shadow-[var(--shadow-proposal)] ring-1 ring-proposal-emerald/10"
           >
             <div className="grid grid-cols-1 md:grid-cols-12">
-              <div className="flex flex-col justify-between bg-proposal-emerald p-7 text-proposal-cream md:col-span-4 lg:p-8">
+              <div className="flex flex-col justify-between bg-proposal-emerald p-5 sm:p-7 text-proposal-cream md:col-span-4 lg:p-8">
                 <div>
                   {quote.ai_analysis != null && (
                     <span className="inline-flex items-center gap-1.5 rounded-full bg-proposal-emerald-light/60 px-3 py-1 text-[10px] font-semibold uppercase tracking-wider text-proposal-gold">
@@ -120,7 +120,7 @@ export function ProOpportunities({ quotes, proId }: { quotes: Quote[]; proId: st
                 </div>
               </div>
 
-              <div className="bg-white p-7 md:col-span-8 lg:p-8">
+              <div className="bg-white p-5 sm:p-7 md:col-span-8 lg:p-8">
                 <QuotePhotos quoteId={quote.id} />
 
                 <div className="mt-5 grid gap-4 sm:grid-cols-[8rem_12rem]">

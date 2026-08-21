@@ -309,7 +309,7 @@ function ClientAccount() {
                                 <Button
                                   size="sm"
                                   onClick={() => acceptBid(quote.id, bid.id)}
-                                  className="gap-2 bg-proposal-gold text-proposal-emerald hover:bg-proposal-gold/90"
+                                  className="w-full gap-2 bg-proposal-gold text-proposal-emerald hover:bg-proposal-gold/90 sm:w-auto"
                                 >
                                   Accepter le devis
                                 </Button>

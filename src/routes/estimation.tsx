@@ -523,7 +523,7 @@ function EstimationPage() {
       <div className="mt-10 grid gap-8 lg:grid-cols-[1.1fr_0.9fr]">
         <div className="space-y-8">
           {(
-            <section className="rounded-3xl border border-border bg-card p-7 shadow-[var(--shadow-soft)]">
+            <section className="rounded-3xl border border-border bg-card p-5 sm:p-7 shadow-[var(--shadow-soft)]">
               <h2 className="text-lg font-bold">1. Vos photos</h2>
               <p className="mt-1 text-sm text-muted-foreground">
                 {isPhoto
@@ -575,7 +575,7 @@ function EstimationPage() {
           )}
 
           {!isPhoto && (
-            <section className="rounded-3xl border border-border bg-card p-7 shadow-[var(--shadow-soft)]">
+            <section className="rounded-3xl border border-border bg-card p-5 sm:p-7 shadow-[var(--shadow-soft)]">
               <h2 className="text-lg font-bold">2. Votre logement en détail</h2>
               <p className="mt-1 text-sm text-muted-foreground">
                 Cinq questions rapides pour que les pros chiffrent au plus juste.
@@ -735,7 +735,7 @@ function EstimationPage() {
 
 
           {isPhoto && (
-            <section className="rounded-3xl border border-border bg-card p-7 shadow-[var(--shadow-soft)]">
+            <section className="rounded-3xl border border-border bg-card p-5 sm:p-7 shadow-[var(--shadow-soft)]">
               <h2 className="text-lg font-bold">2. Type de logement et accès</h2>
               <p className="mt-1 text-sm text-muted-foreground">
                 Deux infos seulement : elles ajustent le prix final.
@@ -787,7 +787,7 @@ function EstimationPage() {
           )}
 
           {isPhoto && (
-            <section className="rounded-3xl border border-border bg-card p-7 shadow-[var(--shadow-soft)]">
+            <section className="rounded-3xl border border-border bg-card p-5 sm:p-7 shadow-[var(--shadow-soft)]">
               <h2 className="text-lg font-bold">3. Lancer l'estimation IA</h2>
               <p className="mt-1 text-sm text-muted-foreground">
                 Notre IA analyse vos photos et calcule le volume + la fourchette de prix.
@@ -807,7 +807,7 @@ function EstimationPage() {
           )}
 
           {!isPhoto && (
-            <section className="rounded-3xl border border-border bg-card p-7 shadow-[var(--shadow-soft)]">
+            <section className="rounded-3xl border border-border bg-card p-5 sm:p-7 shadow-[var(--shadow-soft)]">
               <h2 className="text-lg font-bold">3. Votre estimation immédiate</h2>
               <p className="mt-1 text-sm text-muted-foreground">
                 Calculée à partir de vos réponses et des prix réellement pratiqués sur le marché du
@@ -864,7 +864,7 @@ function EstimationPage() {
             </section>
           )}
 
-          <section className="rounded-3xl border border-border bg-card p-7 shadow-[var(--shadow-soft)]">
+          <section className="rounded-3xl border border-border bg-card p-5 sm:p-7 shadow-[var(--shadow-soft)]">
             <h2 className="text-lg font-bold">4. Où et quand ?</h2>
             <div className="mt-5 grid gap-4 sm:grid-cols-2">
               <div className="grid gap-2">
@@ -911,7 +911,7 @@ function EstimationPage() {
         </div>
 
         <aside className="lg:sticky lg:top-24 lg:self-start">
-          <div className="rounded-3xl border border-border bg-card p-7 shadow-[var(--shadow-soft)]">
+          <div className="rounded-3xl border border-border bg-card p-5 sm:p-7 shadow-[var(--shadow-soft)]">
             <h2 className="text-lg font-bold">
               {isPhoto ? "Votre devis Clearo" : "Votre demande de devis"}
             </h2>

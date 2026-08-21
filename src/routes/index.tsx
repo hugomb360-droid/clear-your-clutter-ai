@@ -218,7 +218,7 @@ function Home() {
             {steps.map((step, index) => (
               <div
                 key={step.title}
-                className="rounded-3xl border border-border bg-card p-7 shadow-[var(--shadow-soft)]"
+                className="rounded-3xl border border-border bg-card p-5 sm:p-7 shadow-[var(--shadow-soft)]"
               >
                 <div className="flex size-11 items-center justify-center rounded-2xl bg-brand-soft text-brand-ink">
                   <step.icon className="size-5" />
