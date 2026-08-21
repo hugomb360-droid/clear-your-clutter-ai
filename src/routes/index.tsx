@@ -161,10 +161,10 @@ function Home() {
           </div>
           <div className="relative">
             <img
-              src={heroImage}
+              src={heroImage.url}
               alt="Équipe de débarras évacuant cartons et meubles d'un appartement"
-              width={1600}
-              height={1200}
+              width={1792}
+              height={1024}
               className="w-full rounded-[2rem] object-cover shadow-[var(--shadow-lift)]"
             />
           </div>
