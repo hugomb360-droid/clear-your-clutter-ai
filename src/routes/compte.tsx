@@ -216,8 +216,10 @@ function ClientAccount() {
                       <p className="font-display mt-1 text-2xl font-bold">
                         {euro(quote.price_min)} – {euro(quote.price_max)}
                       </p>
+                    ) : quote.volume_m3 != null ? (
+                      <p className="font-display mt-1 text-2xl font-bold">{quote.volume_m3} m³</p>
                     ) : (
-                      <p className="font-display mt-1 text-2xl font-bold">{quote.volume_m3 ?? "?"} m³</p>
+                      <p className="font-display mt-1 text-2xl font-bold">Sur devis</p>
                     )}
                   </div>
                 </div>
