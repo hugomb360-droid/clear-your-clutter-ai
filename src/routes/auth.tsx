@@ -49,6 +49,40 @@ const HIGHLIGHTS = [
   { icon: Sparkles, title: "Sans engagement", text: "Comparez les offres, choisissez librement." },
 ];
 
+const PRO_STEPS = [
+  {
+    label: "Société",
+    question: "Quel est le nom de votre société ?",
+    hint: "Il apparaîtra sur vos propositions envoyées aux clients.",
+  },
+  {
+    label: "SIRET",
+    question: "Quel est votre numéro SIRET ?",
+    hint: "14 chiffres. Il nous sert à vérifier votre entreprise.",
+  },
+  {
+    label: "Téléphone",
+    question: "Sur quel numéro peut-on vous joindre ?",
+    hint: "Communiqué au client uniquement quand il accepte votre offre.",
+  },
+  {
+    label: "Secteurs",
+    question: "Où intervenez-vous ?",
+    hint: "Codes postaux séparés par des virgules. Vous ne recevrez que ces missions.",
+  },
+  {
+    label: "Prestations",
+    question: "Quelles prestations proposez-vous ?",
+    hint: "Sélectionnez tout ce que vous savez faire (facultatif).",
+  },
+  {
+    label: "Présentation",
+    question: "Présentez votre entreprise",
+    hint: "Quelques lignes pour rassurer les clients (facultatif).",
+  },
+];
+
+
 function AuthPage() {
   const search = Route.useSearch();
   const navigate = useNavigate();
