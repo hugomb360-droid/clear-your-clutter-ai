@@ -115,7 +115,7 @@ export function ProCalendar({
               <button
                 key={key}
                 type="button"
-                onClick={() => setSelected(key)}
+                onClick={() => pick(key)}
                 className={[
                   "relative aspect-square rounded-xl font-body text-sm font-semibold transition",
                   dayBids.length > 0
