@@ -179,15 +179,14 @@ function AuthPage() {
           <span className="inline-flex w-fit items-center gap-2 rounded-full border border-border bg-card px-3 py-1 text-xs font-medium text-muted-foreground">
             <BadgeCheck className="size-3.5 text-primary" /> +850 débarrasseurs partout en France
           </span>
-          <h2 className="mt-5 text-4xl font-extrabold leading-tight tracking-tight">
-            Le débarras,
-            <br />
-            <span className="text-primary">simple et transparent.</span>
+          <h2 className="mt-5 max-w-md pb-1 text-4xl font-extrabold leading-[1.15] tracking-tight [text-wrap:balance]">
+            Le débarras, <span className="text-primary">simple et transparent.</span>
           </h2>
-          <p className="mt-4 max-w-md text-muted-foreground">
+          <p className="mt-4 max-w-md text-pretty text-muted-foreground">
             Créez votre compte pour suivre vos devis, comparer les propositions et gérer vos
             missions au même endroit.
           </p>
+
           <ul className="mt-8 grid gap-3">
             {HIGHLIGHTS.map(({ icon: Icon, title, text }) => (
               <li
