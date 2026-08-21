@@ -1,6 +1,6 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { Camera, Clock3, Leaf, MapPin, Quote, ShieldCheck, Sparkles, Star } from "lucide-react";
-import heroImage from "@/assets/hero-clearo.jpg";
+import heroImage from "@/assets/hero-clearo.jpg.asset.json";
 import galleryEquipe from "@/assets/gallery-equipe.jpg";
 import galleryAvant from "@/assets/gallery-avant.jpg";
 import galleryApres from "@/assets/gallery-apres.jpg";
@@ -161,10 +161,10 @@ function Home() {
           </div>
           <div className="relative">
             <img
-              src={heroImage}
+              src={heroImage.url}
               alt="Équipe de débarras évacuant cartons et meubles d'un appartement"
-              width={1600}
-              height={1200}
+              width={1792}
+              height={1024}
               className="w-full rounded-[2rem] object-cover shadow-[var(--shadow-lift)]"
             />
           </div>
