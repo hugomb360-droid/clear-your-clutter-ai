@@ -1,5 +1,5 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { Camera, MapPin, Quote, Sparkles } from "lucide-react";
+import { Camera, MapPin, Quote, Sparkles, Star } from "lucide-react";
 import heroBefore from "@/assets/hero-clearo-v2.jpg.asset.json";
 import heroAfter from "@/assets/hero-apres-v1.jpg.asset.json";
 import galleryEquipe from "@/assets/gallery-equipe.jpg";
