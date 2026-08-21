@@ -1,5 +1,5 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { Camera, Clock3, Leaf, MapPin, Quote, ShieldCheck, Sparkles, Star } from "lucide-react";
+import { Camera, MapPin, Quote, Sparkles, Star } from "lucide-react";
 import heroBefore from "@/assets/hero-clearo-v2.jpg.asset.json";
 import heroAfter from "@/assets/hero-apres-v1.jpg.asset.json";
 import galleryEquipe from "@/assets/gallery-equipe.jpg";
@@ -67,12 +67,6 @@ const steps = [
   },
 ];
 
-const trust = [
-  { icon: ShieldCheck, title: "Pros vérifiés", text: "SIRET et assurance contrôlés." },
-  { icon: Clock3, title: "Devis en 2 minutes", text: "Sans visite, sans appel commercial." },
-  { icon: Leaf, title: "Tri responsable", text: "Réemploi et recyclage privilégiés." },
-  { icon: Star, title: "Prix transparents", text: "Grille publique, zéro frais caché." },
-];
 
 const reviews = [
   {
@@ -231,17 +225,6 @@ function Home() {
         </div>
       </section>
 
-      <section className="py-16">
-        <div className="mx-auto grid max-w-6xl gap-6 px-4 sm:grid-cols-2 lg:grid-cols-4">
-          {trust.map((item) => (
-            <div key={item.title} className="rounded-3xl border border-border p-6">
-              <item.icon className="size-5 text-brand" />
-              <h3 className="mt-4 font-bold">{item.title}</h3>
-              <p className="mt-1 text-sm text-muted-foreground">{item.text}</p>
-            </div>
-          ))}
-        </div>
-      </section>
 
       <section className="border-t border-border py-16">
         <div className="mx-auto max-w-6xl px-4">
