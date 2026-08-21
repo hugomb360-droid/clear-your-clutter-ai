@@ -130,27 +130,28 @@ function Home() {
   return (
     <div>
       <section className="relative overflow-hidden">
-        <div className="mx-auto grid max-w-6xl items-center gap-12 px-4 py-8 lg:grid-cols-2 lg:py-12">
+        <div className="mx-auto grid max-w-6xl items-center gap-8 px-4 py-8 lg:grid-cols-2 lg:gap-12 lg:py-12">
           <div>
-            <span className="inline-flex items-center gap-2 rounded-full bg-brand-soft px-4 py-1.5 text-sm font-semibold text-brand-ink">
+            <span className="inline-flex items-center gap-2 rounded-full bg-brand-soft px-4 py-1.5 text-xs font-semibold text-brand-ink sm:text-sm">
               <Sparkles className="size-4" /> Estimation par IA
             </span>
-            <h1 className="mt-5 text-5xl font-extrabold leading-[1.05] tracking-tight sm:text-6xl lg:text-7xl">
+            <h1 className="mt-4 text-[2.5rem] font-extrabold leading-[1.05] tracking-tight sm:mt-5 sm:text-6xl lg:text-7xl">
               Votre débarras estimé
               <span className="text-brand"> en une photo</span>
             </h1>
-            <p className="mt-5 max-w-xl text-xl text-muted-foreground">
+            <p className="mt-4 max-w-xl text-base text-muted-foreground sm:mt-5 sm:text-xl">
               Clearo analyse vos photos, calcule le volume à évacuer et vous donne un prix immédiat.
               Puis on vous met en relation avec un débarrasseur près de chez vous.
             </p>
-            <div className="mt-7 flex flex-wrap gap-3">
-              <Button asChild size="lg" className="rounded-full px-7 text-base">
+            <div className="mt-6 flex flex-col gap-3 sm:mt-7 sm:flex-row sm:flex-wrap">
+              <Button asChild size="lg" className="w-full rounded-full px-7 text-base sm:w-auto">
                 <Link to="/estimation">Estimer mon débarras</Link>
               </Button>
-              <Button asChild size="lg" variant="outline" className="rounded-full px-7 text-base">
+              <Button asChild size="lg" variant="outline" className="w-full rounded-full px-7 text-base sm:w-auto">
                 <Link to="/comment-ca-marche">Comment ça marche</Link>
               </Button>
             </div>
+
             <p className="mt-4 text-sm text-muted-foreground">
               Gratuit, sans engagement · Réponse des pros sous 48 h
             </p>
