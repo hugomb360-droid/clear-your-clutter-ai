@@ -25,6 +25,7 @@ import { Route as TarifsRouteImport } from './routes/tarifs'
 import { Route as DebarrasIndexRouteImport } from './routes/debarras.index'
 import { Route as DebarrasVilleRouteImport } from './routes/debarras.$ville'
 import { Route as ProDashboardRouteImport } from './routes/pro.dashboard'
+import { Route as ProParametresRouteImport } from './routes/pro.parametres'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
@@ -106,6 +107,11 @@ const ProDashboardRoute = ProDashboardRouteImport.update({
   path: '/pro/dashboard',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ProParametresRoute = ProParametresRouteImport.update({
+  id: '/pro/parametres',
+  path: '/pro/parametres',
+  getParentRoute: () => rootRouteImport,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
@@ -123,6 +129,7 @@ export interface FileRoutesByFullPath {
   '/tarifs': typeof TarifsRoute
   '/debarras/$ville': typeof DebarrasVilleRoute
   '/pro/dashboard': typeof ProDashboardRoute
+  '/pro/parametres': typeof ProParametresRoute
   '/debarras/': typeof DebarrasIndexRoute
 }
 export interface FileRoutesByTo {
@@ -141,6 +148,7 @@ export interface FileRoutesByTo {
   '/tarifs': typeof TarifsRoute
   '/debarras/$ville': typeof DebarrasVilleRoute
   '/pro/dashboard': typeof ProDashboardRoute
+  '/pro/parametres': typeof ProParametresRoute
   '/debarras': typeof DebarrasIndexRoute
 }
 export interface FileRoutesById {
@@ -160,6 +168,7 @@ export interface FileRoutesById {
   '/tarifs': typeof TarifsRoute
   '/debarras/$ville': typeof DebarrasVilleRoute
   '/pro/dashboard': typeof ProDashboardRoute
+  '/pro/parametres': typeof ProParametresRoute
   '/debarras/': typeof DebarrasIndexRoute
 }
 export interface FileRouteTypes {
@@ -180,6 +189,7 @@ export interface FileRouteTypes {
     | '/tarifs'
     | '/debarras/$ville'
     | '/pro/dashboard'
+    | '/pro/parametres'
     | '/debarras/'
   fileRoutesByTo: FileRoutesByTo
   to:
@@ -198,6 +208,7 @@ export interface FileRouteTypes {
     | '/tarifs'
     | '/debarras/$ville'
     | '/pro/dashboard'
+    | '/pro/parametres'
     | '/debarras'
   id:
     | '__root__'
@@ -216,6 +227,7 @@ export interface FileRouteTypes {
     | '/tarifs'
     | '/debarras/$ville'
     | '/pro/dashboard'
+    | '/pro/parametres'
     | '/debarras/'
   fileRoutesById: FileRoutesById
 }
@@ -235,6 +247,7 @@ export interface RootRouteChildren {
   TarifsRoute: typeof TarifsRoute
   DebarrasVilleRoute: typeof DebarrasVilleRoute
   ProDashboardRoute: typeof ProDashboardRoute
+  ProParametresRoute: typeof ProParametresRoute
   DebarrasIndexRoute: typeof DebarrasIndexRoute
 }
 
@@ -352,6 +365,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ProDashboardRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/pro/parametres': {
+      id: '/pro/parametres'
+      path: '/pro/parametres'
+      fullPath: '/pro/parametres'
+      preLoaderRoute: typeof ProParametresRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
@@ -371,6 +391,7 @@ const rootRouteChildren: RootRouteChildren = {
   TarifsRoute: TarifsRoute,
   DebarrasVilleRoute: DebarrasVilleRoute,
   ProDashboardRoute: ProDashboardRoute,
+  ProParametresRoute: ProParametresRoute,
   DebarrasIndexRoute: DebarrasIndexRoute,
 }
 export const routeTree = rootRouteImport
