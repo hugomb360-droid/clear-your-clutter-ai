@@ -128,7 +128,7 @@ function ClientAccount() {
 
       <div className="mt-8 space-y-8">
         {quotes.map((quote) => {
-          const bids = (quote.bids ?? []) as Array<{
+          const bids = (quote.bids ?? []) as unknown as Array<{
             id: string;
             price: number;
             available_date: string | null;
