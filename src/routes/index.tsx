@@ -135,24 +135,24 @@ function Home() {
   return (
     <div>
       <section className="relative overflow-hidden">
-        <div className="mx-auto grid max-w-6xl items-center gap-12 px-4 py-16 lg:grid-cols-2 lg:py-24">
+        <div className="mx-auto grid max-w-6xl items-center gap-12 px-4 py-8 lg:grid-cols-2 lg:py-12">
           <div>
             <span className="inline-flex items-center gap-2 rounded-full bg-brand-soft px-4 py-1.5 text-sm font-semibold text-brand-ink">
               <Sparkles className="size-4" /> Estimation par IA
             </span>
-            <h1 className="mt-6 text-4xl font-extrabold leading-[1.05] tracking-tight sm:text-6xl">
+            <h1 className="mt-5 text-5xl font-extrabold leading-[1.05] tracking-tight sm:text-6xl lg:text-7xl">
               Votre débarras estimé
               <span className="text-brand"> en une photo</span>
             </h1>
-            <p className="mt-6 max-w-xl text-lg text-muted-foreground">
+            <p className="mt-5 max-w-xl text-xl text-muted-foreground">
               Clearo analyse vos photos, calcule le volume à évacuer et vous donne un prix immédiat.
               Puis on vous met en relation avec un débarrasseur près de chez vous.
             </p>
-            <div className="mt-8 flex flex-wrap gap-3">
-              <Button asChild size="lg" className="rounded-full px-7">
+            <div className="mt-7 flex flex-wrap gap-3">
+              <Button asChild size="lg" className="rounded-full px-7 text-base">
                 <Link to="/estimation">Estimer mon débarras</Link>
               </Button>
-              <Button asChild size="lg" variant="outline" className="rounded-full px-7">
+              <Button asChild size="lg" variant="outline" className="rounded-full px-7 text-base">
                 <Link to="/comment-ca-marche">Comment ça marche</Link>
               </Button>
             </div>
