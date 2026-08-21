@@ -175,7 +175,7 @@ function Home() {
                 </span>
               </div>
             </div>
-            <div className="animate-float-delayed absolute bottom-0 left-[54%] w-[54%]">
+            <div className="animate-float-delayed absolute bottom-0 left-[54%] w-[60%]">
               <div className="relative">
                 <img
                   src={heroAfter.url}
