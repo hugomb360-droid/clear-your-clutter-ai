@@ -231,17 +231,6 @@ function Home() {
         </div>
       </section>
 
-      <section className="py-16">
-        <div className="mx-auto grid max-w-6xl gap-6 px-4 sm:grid-cols-2 lg:grid-cols-4">
-          {trust.map((item) => (
-            <div key={item.title} className="rounded-3xl border border-border p-6">
-              <item.icon className="size-5 text-brand" />
-              <h3 className="mt-4 font-bold">{item.title}</h3>
-              <p className="mt-1 text-sm text-muted-foreground">{item.text}</p>
-            </div>
-          ))}
-        </div>
-      </section>
 
       <section className="border-t border-border py-16">
         <div className="mx-auto max-w-6xl px-4">
