@@ -174,7 +174,7 @@ function ProDashboard() {
 
   return (
     <div className="mx-auto max-w-6xl px-4 py-10">
-      <header className="overflow-hidden rounded-[2rem] bg-proposal-emerald p-6 text-proposal-cream sm:p-8 shadow-[var(--shadow-proposal)] lg:p-6 sm:p-10">
+      <header className="overflow-hidden rounded-[2rem] bg-proposal-emerald p-6 text-proposal-cream shadow-[var(--shadow-proposal)] sm:p-8 lg:p-10">
         <div className="flex flex-wrap items-start justify-between gap-4">
           <div>
             <p className="text-[11px] font-semibold uppercase tracking-widest text-proposal-gold">
