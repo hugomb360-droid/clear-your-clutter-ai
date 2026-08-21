@@ -191,15 +191,20 @@ function Home() {
         </div>
       </section>
 
-      <section className="border-y border-border bg-secondary/40 py-10">
+      <section className="border-y border-border bg-secondary/40 py-8 sm:py-10">
         <div className="mx-auto max-w-6xl px-4">
-          <div className="grid gap-8 divide-y divide-border sm:grid-cols-2 sm:divide-x sm:divide-y-0 lg:grid-cols-4">
+          <div className="grid grid-cols-2 gap-6 sm:divide-x sm:divide-border lg:grid-cols-4">
             {stats.map((stat) => (
-              <div key={stat.label} className="pt-8 text-center first:pt-0 sm:pt-0 sm:first:pl-0">
-                <p className="text-4xl font-extrabold tracking-tight text-brand">{stat.value}</p>
-                <p className="mt-1 text-sm font-medium text-muted-foreground">{stat.label}</p>
+              <div key={stat.label} className="text-center sm:first:pl-0">
+                <p className="text-3xl font-extrabold tracking-tight text-brand sm:text-4xl">
+                  {stat.value}
+                </p>
+                <p className="mt-1 text-xs font-medium text-muted-foreground sm:text-sm">
+                  {stat.label}
+                </p>
               </div>
             ))}
+
           </div>
         </div>
       </section>
