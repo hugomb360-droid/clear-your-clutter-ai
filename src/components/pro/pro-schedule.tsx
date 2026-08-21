@@ -11,7 +11,7 @@ import { formatDate, isUpcoming, netOf, quoteTitle } from "@/lib/pro-dashboard";
 import { euro } from "@/lib/pricing";
 import { supabase } from "@/integrations/supabase/client";
 
-function MissionCard({ bid, contact }: { bid: BidWithQuote; contact?: QuoteContact | undefined }) {
+export function MissionCard({ bid, contact }: { bid: BidWithQuote; contact?: QuoteContact | undefined }) {
   const { data: dispute } = useQuery({
     queryKey: ["mission-dispute", bid.id],
     queryFn: async () => {
