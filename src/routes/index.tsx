@@ -160,8 +160,8 @@ function Home() {
               Gratuit, sans engagement · Réponse des pros sous 48 h
             </p>
           </div>
-          <div className="relative h-[420px] sm:h-[520px] lg:h-[620px]">
-            <div className="animate-float absolute left-0 top-4 w-[86%] lg:top-6">
+          <div className="relative self-stretch">
+            <div className="animate-float absolute left-0 top-0 w-[86%]">
               <div className="relative">
                 <img
                   src={heroBefore.url}
@@ -175,7 +175,7 @@ function Home() {
                 </span>
               </div>
             </div>
-            <div className="animate-float-delayed absolute left-[54%] top-[38%] w-[54%]">
+            <div className="animate-float-delayed absolute bottom-0 left-[54%] w-[54%]">
               <div className="relative">
                 <img
                   src={heroAfter.url}
