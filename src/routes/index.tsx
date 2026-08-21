@@ -178,11 +178,12 @@ function Home() {
                   alt="Appartement vide et nettoyé après débarras"
                   width={1792}
                   height={1024}
-                  className="w-full rounded-[2rem] object-cover shadow-2xl"
+                  className="w-full rounded-2xl object-cover shadow-2xl sm:rounded-[2rem]"
                 />
-                <span className="absolute right-4 top-4 rounded-full bg-brand px-3 py-1 text-xs font-semibold text-white backdrop-blur-sm">
+                <span className="absolute right-3 top-3 rounded-full bg-brand px-2.5 py-1 text-[11px] font-semibold text-white backdrop-blur-sm sm:right-4 sm:top-4 sm:px-3 sm:text-xs">
                   Après
                 </span>
+
               </div>
             </div>
           </div>
