@@ -91,12 +91,12 @@ const cases = [
 
 function ApartmentClearance() {
   return (
-    <main className="mx-auto max-w-5xl px-4 py-16">
+    <main className="mx-auto max-w-5xl px-4 py-12 sm:py-16">
       <section className="text-center">
         <span className="inline-flex items-center gap-2 rounded-full bg-primary/10 px-4 py-1.5 text-xs font-semibold uppercase tracking-wide text-primary">
           <Building2 className="h-4 w-4" /> Débarras d'appartement
         </span>
-        <h1 className="mt-5 text-4xl font-extrabold tracking-tight sm:text-5xl">
+        <h1 className="mt-5 text-3xl font-extrabold sm:text-4xl tracking-tight sm:text-5xl">
           Débarras d'appartement : le prix estimé en 2 minutes, en photos
         </h1>
         <p className="mx-auto mt-5 max-w-2xl text-muted-foreground">

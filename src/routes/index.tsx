@@ -196,7 +196,7 @@ function Home() {
           <div className="grid grid-cols-2 gap-6 sm:divide-x sm:divide-border lg:grid-cols-4">
             {stats.map((stat) => (
               <div key={stat.label} className="text-center sm:first:pl-0">
-                <p className="text-3xl font-extrabold tracking-tight text-brand sm:text-4xl">
+                <p className="text-2xl font-extrabold sm:text-3xl tracking-tight text-brand sm:text-4xl">
                   {stat.value}
                 </p>
                 <p className="mt-1 text-xs font-medium text-muted-foreground sm:text-sm">
@@ -209,9 +209,9 @@ function Home() {
         </div>
       </section>
 
-      <section className="border-t border-border bg-secondary/40 py-16">
+      <section className="border-t border-border bg-secondary/40 py-12 sm:py-16">
         <div className="mx-auto max-w-6xl px-4">
-          <h2 className="text-center text-3xl font-extrabold tracking-tight">
+          <h2 className="text-center text-2xl font-extrabold sm:text-3xl tracking-tight">
             Trois étapes, zéro paperasse
           </h2>
           <div className="mt-10 grid gap-6 md:grid-cols-3">
@@ -235,13 +235,13 @@ function Home() {
       </section>
 
 
-      <section className="border-t border-border py-16">
+      <section className="border-t border-border py-12 sm:py-16">
         <div className="mx-auto max-w-6xl px-4">
           <div className="mb-10 text-center">
             <span className="inline-flex items-center gap-2 rounded-full bg-brand-soft px-4 py-1.5 text-sm font-semibold text-brand-ink">
               Chantiers réels
             </span>
-            <h2 className="mt-4 text-3xl font-extrabold tracking-tight">
+            <h2 className="mt-4 text-2xl font-extrabold sm:text-3xl tracking-tight">
               À quoi ressemble un débarras Clearo
             </h2>
             <p className="mx-auto mt-3 max-w-2xl text-muted-foreground">
@@ -323,13 +323,13 @@ function Home() {
         </div>
       </section>
 
-      <section className="border-t border-border bg-secondary/40 py-16">
+      <section className="border-t border-border bg-secondary/40 py-12 sm:py-16">
         <div className="mx-auto max-w-6xl px-4">
           <div className="mb-10 text-center">
             <span className="inline-flex items-center gap-2 rounded-full bg-brand-soft px-4 py-1.5 text-sm font-semibold text-brand-ink">
               <Star className="size-4" /> Avis clients
             </span>
-            <h2 className="mt-4 text-3xl font-extrabold tracking-tight">
+            <h2 className="mt-4 text-2xl font-extrabold sm:text-3xl tracking-tight">
               Ils ont fait de la place avec Clearo
             </h2>
             <p className="mx-auto mt-3 max-w-2xl text-muted-foreground">
@@ -379,13 +379,13 @@ function Home() {
       <RoomVolume3D />
 
 
-      <section className="border-t border-border py-16">
+      <section className="border-t border-border py-12 sm:py-16">
         <div className="mx-auto max-w-4xl px-4">
           <div className="mb-10 text-center">
             <span className="inline-flex items-center gap-2 rounded-full bg-brand-soft px-4 py-1.5 text-sm font-semibold text-brand-ink">
               FAQ
             </span>
-            <h2 className="mt-4 text-3xl font-extrabold tracking-tight">
+            <h2 className="mt-4 text-2xl font-extrabold sm:text-3xl tracking-tight">
               Vos questions, nos réponses
             </h2>
           </div>
@@ -409,7 +409,7 @@ function Home() {
       <section className="pb-20">
         <div className="mx-auto max-w-6xl px-4">
           <div className="rounded-[2rem] bg-brand-ink px-8 py-14 text-center text-primary-foreground">
-            <h2 className="text-3xl font-extrabold tracking-tight sm:text-4xl">
+            <h2 className="text-2xl font-extrabold sm:text-3xl tracking-tight sm:text-4xl">
               Prêt à faire de la place ?
             </h2>
             <p className="mx-auto mt-3 max-w-xl text-primary-foreground/80">

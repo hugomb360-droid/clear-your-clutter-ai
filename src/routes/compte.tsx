@@ -126,7 +126,7 @@ function ClientAccount() {
     <div className="mx-auto max-w-6xl px-4 py-14">
       <div className="flex flex-wrap items-center justify-between gap-4">
         <div>
-          <h1 className="font-display text-3xl font-extrabold tracking-tight">Mes demandes</h1>
+          <h1 className="font-display text-2xl font-extrabold sm:text-3xl tracking-tight">Mes demandes</h1>
           <p className="mt-2 font-body text-sm text-muted-foreground">
             Suivez vos devis et comparez les propositions des débarrasseurs.
           </p>

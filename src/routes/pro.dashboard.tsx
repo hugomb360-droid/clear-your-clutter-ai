@@ -180,7 +180,7 @@ function ProDashboard() {
             <p className="text-[11px] font-semibold uppercase tracking-widest text-proposal-gold">
               Espace professionnel
             </p>
-            <h1 className="font-display mt-2 text-3xl font-extrabold tracking-tight lg:text-4xl">
+            <h1 className="font-display mt-2 text-2xl font-extrabold sm:text-3xl tracking-tight lg:text-4xl">
               {profile?.company_name ?? "Bienvenue sur Clearo"}
             </h1>
             <p className="mt-3 max-w-xl font-body text-sm text-proposal-cream/70">

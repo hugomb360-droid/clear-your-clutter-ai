@@ -243,7 +243,7 @@ function AuthPage() {
           <span className="inline-flex w-fit items-center gap-2 rounded-full border border-border bg-card px-3 py-1 text-xs font-medium text-muted-foreground">
             <BadgeCheck className="size-3.5 text-primary" /> +850 débarrasseurs partout en France
           </span>
-          <h2 className="mt-5 max-w-md pb-1 text-4xl font-extrabold leading-[1.15] tracking-tight [text-wrap:balance]">
+          <h2 className="mt-5 max-w-md pb-1 text-3xl font-extrabold sm:text-4xl leading-[1.15] tracking-tight [text-wrap:balance]">
             Le débarras, <span className="text-primary">simple et transparent.</span>
           </h2>
           <p className="mt-4 max-w-md text-pretty text-muted-foreground">
@@ -270,7 +270,7 @@ function AuthPage() {
         </aside>
 
         <div className="mx-auto w-full max-w-xl">
-          <h1 className="text-3xl font-extrabold tracking-tight">Votre espace Clearo</h1>
+          <h1 className="text-2xl font-extrabold sm:text-3xl tracking-tight">Votre espace Clearo</h1>
           <p className="mt-2 text-sm text-muted-foreground">
             Connexion en un clic, inscription en une minute.
           </p>

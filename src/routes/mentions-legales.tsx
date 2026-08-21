@@ -23,8 +23,8 @@ export const Route = createFileRoute("/mentions-legales")({
 
 function Legal() {
   return (
-    <div className="mx-auto max-w-3xl px-4 py-16">
-      <h1 className="text-4xl font-extrabold tracking-tight">Mentions légales</h1>
+    <div className="mx-auto max-w-3xl px-4 py-12 sm:py-16">
+      <h1 className="text-3xl font-extrabold sm:text-4xl tracking-tight">Mentions légales</h1>
       <div className="mt-8 space-y-8 text-sm leading-relaxed text-muted-foreground">
         <section>
           <h2 className="text-lg font-bold text-foreground">Éditeur</h2>
