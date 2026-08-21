@@ -174,7 +174,7 @@ function ProDashboard() {
 
   return (
     <div className="mx-auto max-w-6xl px-4 py-10">
-      <header className="overflow-hidden rounded-[2rem] bg-proposal-emerald p-8 text-proposal-cream shadow-[var(--shadow-proposal)] lg:p-10">
+      <header className="overflow-hidden rounded-[2rem] bg-proposal-emerald p-6 text-proposal-cream sm:p-8 shadow-[var(--shadow-proposal)] lg:p-6 sm:p-10">
         <div className="flex flex-wrap items-start justify-between gap-4">
           <div>
             <p className="text-[11px] font-semibold uppercase tracking-widest text-proposal-gold">
@@ -222,7 +222,7 @@ function ProDashboard() {
           count={opportunities.length}
         />
         {!profile ? (
-          <div className="rounded-[2rem] border border-dashed border-proposal-emerald/20 bg-proposal-cream/30 p-10 text-center">
+          <div className="rounded-[2rem] border border-dashed border-proposal-emerald/20 bg-proposal-cream/30 p-6 sm:p-10 text-center">
             <p className="font-body text-sm text-muted-foreground">
               Enregistrez votre fiche entreprise et vos zones d'intervention pour recevoir des
               demandes.

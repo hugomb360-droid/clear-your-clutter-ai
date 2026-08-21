@@ -433,7 +433,7 @@ function EstimationPage() {
   if (!mode) {
     return (
       <div className="mx-auto max-w-5xl px-4 py-12 sm:py-16">
-        <h1 className="text-3xl font-extrabold sm:text-4xl tracking-tight sm:text-5xl">
+        <h1 className="text-3xl font-extrabold tracking-tight sm:text-4xl lg:text-5xl">
           Comment voulez-vous votre devis ?
         </h1>
         <p className="mt-3 max-w-2xl text-muted-foreground">
@@ -511,7 +511,7 @@ function EstimationPage() {
         </button>
       </div>
 
-      <h1 className="mt-4 text-3xl font-extrabold sm:text-4xl tracking-tight sm:text-5xl">
+      <h1 className="mt-4 text-3xl font-extrabold tracking-tight sm:text-4xl lg:text-5xl">
         {isPhoto ? "Estimez votre débarras en photos" : "Décrivez votre débarras"}
       </h1>
       <p className="mt-3 max-w-2xl text-muted-foreground">

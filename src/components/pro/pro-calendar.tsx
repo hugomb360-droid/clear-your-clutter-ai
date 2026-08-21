@@ -149,7 +149,7 @@ export function ProCalendar({
 
       <div className="space-y-4">
         {selectedBids.length === 0 ? (
-          <div className="rounded-[2rem] border border-dashed border-proposal-emerald/20 bg-proposal-cream/30 p-10 text-center font-body text-sm text-muted-foreground">
+          <div className="rounded-[2rem] border border-dashed border-proposal-emerald/20 bg-proposal-cream/30 p-6 sm:p-10 text-center font-body text-sm text-muted-foreground">
             Aucun chantier ce jour-là. Sélectionnez une date dorée pour voir les coordonnées du
             client et le détail de la mission.
           </div>

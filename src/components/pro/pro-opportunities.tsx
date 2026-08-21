@@ -51,7 +51,7 @@ export function ProOpportunities({ quotes, proId }: { quotes: Quote[]; proId: st
 
   if (quotes.length === 0) {
     return (
-      <div className="rounded-[2rem] border border-dashed border-proposal-emerald/20 bg-proposal-cream/30 p-10 text-center">
+      <div className="rounded-[2rem] border border-dashed border-proposal-emerald/20 bg-proposal-cream/30 p-6 sm:p-10 text-center">
         <Sparkles className="mx-auto size-6 text-proposal-gold" />
         <p className="mt-3 font-body text-sm text-muted-foreground">
           Aucune nouvelle demande dans vos zones pour le moment. Élargissez vos codes postaux dans

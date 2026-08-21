@@ -133,7 +133,7 @@ export function ProSchedule({
 
   if (upcoming.length === 0) {
     return (
-      <p className="rounded-[2rem] border border-dashed border-proposal-emerald/20 bg-proposal-cream/30 p-10 text-center font-body text-sm text-muted-foreground">
+      <p className="rounded-[2rem] border border-dashed border-proposal-emerald/20 bg-proposal-cream/30 p-6 sm:p-10 text-center font-body text-sm text-muted-foreground">
         Aucune mission planifiée pour l'instant.
       </p>
     );
