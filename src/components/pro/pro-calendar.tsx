@@ -1,5 +1,5 @@
 import { ChevronLeft, ChevronRight } from "lucide-react";
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { MissionCard } from "@/components/pro/pro-schedule";
 import type { BidWithQuote, QuoteContact } from "@/lib/pro-dashboard";
 import { formatMonth } from "@/lib/pro-dashboard";
