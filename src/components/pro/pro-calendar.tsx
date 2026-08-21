@@ -20,8 +20,6 @@ export function ProCalendar({
   contacts: QuoteContact[];
 }) {
   const today = new Date();
-  const [cursor, setCursor] = useState(new Date(today.getFullYear(), today.getMonth(), 1));
-  const [selected, setSelected] = useState<string | null>(dayKey(today));
 
   const byDay = useMemo(() => {
     const map = new Map<string, BidWithQuote[]>();
@@ -32,6 +30,16 @@ export function ProCalendar({
     }
     return map;
   }, [bids]);
+
+  const firstMissionDay =
+    [...byDay.keys()].filter((k) => k >= dayKey(today)).sort()[0] ??
+    [...byDay.keys()].sort().pop() ??
+    dayKey(today);
+
+  const [cursor, setCursor] = useState(
+    new Date(Number(firstMissionDay.slice(0, 4)), Number(firstMissionDay.slice(5, 7)) - 1, 1),
+  );
+  const [selected, setSelected] = useState<string | null>(firstMissionDay);
 
   const year = cursor.getFullYear();
   const month = cursor.getMonth();
