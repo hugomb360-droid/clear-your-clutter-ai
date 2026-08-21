@@ -1,6 +1,12 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { Camera, Clock3, Leaf, MapPin, Quote, ShieldCheck, Sparkles, Star } from "lucide-react";
 import heroImage from "@/assets/hero-clearo.jpg";
+import galleryEquipe from "@/assets/gallery-equipe.jpg";
+import galleryAvant from "@/assets/gallery-avant.jpg";
+import galleryApres from "@/assets/gallery-apres.jpg";
+import galleryCamion from "@/assets/gallery-camion.jpg";
+import galleryCave from "@/assets/gallery-cave.jpg";
+import clipVideo from "@/assets/debarras-clip.mp4.asset.json";
 import { Button } from "@/components/ui/button";
 import { RoomVolume3D } from "@/components/room-volume-3d";
 
@@ -215,7 +221,96 @@ function Home() {
         </div>
       </section>
 
+      <section className="border-t border-border py-16">
+        <div className="mx-auto max-w-6xl px-4">
+          <div className="mb-10 text-center">
+            <span className="inline-flex items-center gap-2 rounded-full bg-brand-soft px-4 py-1.5 text-sm font-semibold text-brand-ink">
+              Chantiers réels
+            </span>
+            <h2 className="mt-4 text-3xl font-extrabold tracking-tight">
+              À quoi ressemble un débarras Clearo
+            </h2>
+            <p className="mx-auto mt-3 max-w-2xl text-muted-foreground">
+              Appartements, caves, maisons : nos pros vident, trient et nettoient. Voici des
+              chantiers en images.
+            </p>
+          </div>
+
+          <div className="grid gap-5 lg:grid-cols-3">
+            <div className="relative overflow-hidden rounded-[2rem] border border-border shadow-[var(--shadow-lift)] lg:col-span-2">
+              <video
+                src={clipVideo.url}
+                autoPlay
+                muted
+                loop
+                playsInline
+                preload="metadata"
+                poster={galleryEquipe}
+                className="h-full w-full object-cover"
+              />
+              <span className="absolute bottom-4 left-4 rounded-full bg-background/90 px-3 py-1 text-xs font-semibold">
+                Débarras d'appartement · Paris
+              </span>
+            </div>
+            <div className="grid gap-5">
+              <figure className="relative overflow-hidden rounded-[2rem] border border-border">
+                <img
+                  src={galleryAvant}
+                  alt="Appartement encombré avant le débarras"
+                  width={1280}
+                  height={960}
+                  loading="lazy"
+                  className="h-full w-full object-cover"
+                />
+                <figcaption className="absolute bottom-3 left-3 rounded-full bg-background/90 px-3 py-1 text-xs font-semibold">
+                  Avant
+                </figcaption>
+              </figure>
+              <figure className="relative overflow-hidden rounded-[2rem] border border-border">
+                <img
+                  src={galleryApres}
+                  alt="Le même appartement vidé et nettoyé après le débarras"
+                  width={1280}
+                  height={960}
+                  loading="lazy"
+                  className="h-full w-full object-cover"
+                />
+                <figcaption className="absolute bottom-3 left-3 rounded-full bg-brand px-3 py-1 text-xs font-semibold text-primary-foreground">
+                  Après
+                </figcaption>
+              </figure>
+            </div>
+          </div>
+
+          <div className="mt-5 grid gap-5 sm:grid-cols-3">
+            {[
+              { src: galleryEquipe, alt: "Équipe de débarras évacuant cartons et meubles", caption: "Équipe de 2 pros" },
+              { src: galleryCamion, alt: "Camion de débarras chargé de meubles et d'un matelas", caption: "Évacuation le jour même" },
+              { src: galleryCave, alt: "Cave encombrée en cours de débarras", caption: "Caves & garages" },
+            ].map((photo) => (
+              <figure
+                key={photo.caption}
+                className="relative overflow-hidden rounded-[2rem] border border-border"
+              >
+                <img
+                  src={photo.src}
+                  alt={photo.alt}
+                  width={1280}
+                  height={960}
+                  loading="lazy"
+                  className="aspect-[4/3] w-full object-cover"
+                />
+                <figcaption className="absolute bottom-3 left-3 rounded-full bg-background/90 px-3 py-1 text-xs font-semibold">
+                  {photo.caption}
+                </figcaption>
+              </figure>
+            ))}
+          </div>
+        </div>
+      </section>
+
       <RoomVolume3D />
+
 
       <section className="border-t border-border bg-secondary/40 py-16">
         <div className="mx-auto max-w-6xl px-4">
