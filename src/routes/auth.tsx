@@ -49,6 +49,40 @@ const HIGHLIGHTS = [
   { icon: Sparkles, title: "Sans engagement", text: "Comparez les offres, choisissez librement." },
 ];
 
+const PRO_STEPS = [
+  {
+    label: "Société",
+    question: "Quel est le nom de votre société ?",
+    hint: "Il apparaîtra sur vos propositions envoyées aux clients.",
+  },
+  {
+    label: "SIRET",
+    question: "Quel est votre numéro SIRET ?",
+    hint: "14 chiffres. Il nous sert à vérifier votre entreprise.",
+  },
+  {
+    label: "Téléphone",
+    question: "Sur quel numéro peut-on vous joindre ?",
+    hint: "Communiqué au client uniquement quand il accepte votre offre.",
+  },
+  {
+    label: "Secteurs",
+    question: "Où intervenez-vous ?",
+    hint: "Codes postaux séparés par des virgules. Vous ne recevrez que ces missions.",
+  },
+  {
+    label: "Prestations",
+    question: "Quelles prestations proposez-vous ?",
+    hint: "Sélectionnez tout ce que vous savez faire (facultatif).",
+  },
+  {
+    label: "Présentation",
+    question: "Présentez votre entreprise",
+    hint: "Quelques lignes pour rassurer les clients (facultatif).",
+  },
+];
+
+
 function AuthPage() {
   const search = Route.useSearch();
   const navigate = useNavigate();
@@ -66,8 +100,11 @@ function AuthPage() {
   const [services, setServices] = useState<string[]>([]);
   const [description, setDescription] = useState("");
 
+  const [step, setStep] = useState(0);
+
   const postalCodes = parsePostalCodes(zones);
   const target = safePath(search.redirect);
+  const isPro = role === "pro";
 
   useEffect(() => {
     supabase.auth.getSession().then(({ data }) => {
@@ -81,6 +118,33 @@ function AuthPage() {
     setServices((prev) =>
       prev.includes(service) ? prev.filter((s) => s !== service) : [...prev, service],
     );
+
+  const goNext = () => {
+    if (step === 0) {
+      if (!fullName.trim() || !email.trim() || password.length < 6) {
+        toast.error("Complétez vos informations", {
+          description: "Nom, e-mail et mot de passe (6 caractères minimum).",
+        });
+        return;
+      }
+    }
+    if (step === 1 && !companyName.trim()) {
+      toast.error("Nom de société requis");
+      return;
+    }
+    if (step === 2 && siret.replace(/\D/g, "").length !== 14) {
+      toast.error("SIRET invalide", { description: "Le SIRET contient 14 chiffres." });
+      return;
+    }
+    if (step === 4 && postalCodes.length === 0) {
+      toast.error("Ajoutez au moins une zone", {
+        description: "Exemple : 75 pour tout Paris, ou 92100 pour une commune.",
+      });
+      return;
+    }
+    setStep((s) => s + 1);
+  };
+
 
   const handleSignIn = async (event: React.FormEvent) => {
     event.preventDefault();
@@ -179,15 +243,14 @@ function AuthPage() {
           <span className="inline-flex w-fit items-center gap-2 rounded-full border border-border bg-card px-3 py-1 text-xs font-medium text-muted-foreground">
             <BadgeCheck className="size-3.5 text-primary" /> +850 débarrasseurs partout en France
           </span>
-          <h2 className="mt-5 text-4xl font-extrabold leading-tight tracking-tight">
-            Le débarras,
-            <br />
-            <span className="text-primary">simple et transparent.</span>
+          <h2 className="mt-5 max-w-md pb-1 text-4xl font-extrabold leading-[1.15] tracking-tight [text-wrap:balance]">
+            Le débarras, <span className="text-primary">simple et transparent.</span>
           </h2>
-          <p className="mt-4 max-w-md text-muted-foreground">
+          <p className="mt-4 max-w-md text-pretty text-muted-foreground">
             Créez votre compte pour suivre vos devis, comparer les propositions et gérer vos
             missions au même endroit.
           </p>
+
           <ul className="mt-8 grid gap-3">
             {HIGHLIGHTS.map(({ icon: Icon, title, text }) => (
               <li
@@ -254,122 +317,151 @@ function AuthPage() {
 
               <TabsContent value="signup">
                 <form className="mt-6 grid gap-5" onSubmit={handleSignUp}>
-                  <div className="grid gap-2 sm:grid-cols-2">
-                    {(["client", "pro"] as const).map((option) => {
-                      const active = role === option;
-                      const Icon = option === "client" ? User2 : Building2;
-                      return (
-                        <button
-                          key={option}
-                          type="button"
-                          onClick={() => setRole(option)}
-                          className={`flex items-start gap-3 rounded-2xl border p-4 text-left transition-colors ${
-                            active
-                              ? "border-primary bg-brand-soft text-brand-ink"
-                              : "border-border hover:bg-secondary"
-                          }`}
-                        >
-                          <Icon className="mt-0.5 size-4 shrink-0" />
-                          <span>
-                            <span className="block text-sm font-semibold">
-                              {option === "client" ? "Je débarrasse un bien" : "Je suis débarrasseur"}
-                            </span>
-                            <span className="block text-xs opacity-80">
-                              {option === "client"
-                                ? "Devis IA gratuit en 2 min"
-                                : "Recevez des missions près de chez vous"}
-                            </span>
-                          </span>
-                        </button>
-                      );
-                    })}
-                  </div>
+                  {step === 0 && (
+                    <>
+                      <div className="grid gap-2 sm:grid-cols-2">
+                        {(["client", "pro"] as const).map((option) => {
+                          const active = role === option;
+                          const Icon = option === "client" ? User2 : Building2;
+                          return (
+                            <button
+                              key={option}
+                              type="button"
+                              onClick={() => setRole(option)}
+                              className={`flex items-start gap-3 rounded-2xl border p-4 text-left transition-colors ${
+                                active
+                                  ? "border-primary bg-brand-soft text-brand-ink"
+                                  : "border-border hover:bg-secondary"
+                              }`}
+                            >
+                              <Icon className="mt-0.5 size-4 shrink-0" />
+                              <span>
+                                <span className="block text-sm font-semibold">
+                                  {option === "client"
+                                    ? "Je débarrasse un bien"
+                                    : "Je suis débarrasseur"}
+                                </span>
+                                <span className="block text-xs opacity-80">
+                                  {option === "client"
+                                    ? "Devis IA gratuit en 2 min"
+                                    : "Recevez des missions près de chez vous"}
+                                </span>
+                              </span>
+                            </button>
+                          );
+                        })}
+                      </div>
 
-                  <div className="grid gap-4 sm:grid-cols-2">
-                    <div className="grid gap-2">
-                      <Label htmlFor="name">Nom complet *</Label>
-                      <Input
-                        id="name"
-                        required
-                        value={fullName}
-                        onChange={(e) => setFullName(e.target.value)}
-                      />
-                    </div>
-                    <div className="grid gap-2">
-                      <Label htmlFor="email-up">E-mail *</Label>
-                      <Input
-                        id="email-up"
-                        type="email"
-                        required
-                        value={email}
-                        onChange={(e) => setEmail(e.target.value)}
-                      />
-                    </div>
-                    <div className="grid gap-2 sm:col-span-2">
-                      <Label htmlFor="password-up">Mot de passe *</Label>
-                      <Input
-                        id="password-up"
-                        type="password"
-                        required
-                        minLength={6}
-                        value={password}
-                        onChange={(e) => setPassword(e.target.value)}
-                      />
-                    </div>
-                  </div>
+                      <div className="grid gap-4 sm:grid-cols-2">
+                        <div className="grid gap-2">
+                          <Label htmlFor="name">Nom complet *</Label>
+                          <Input
+                            id="name"
+                            required
+                            value={fullName}
+                            onChange={(e) => setFullName(e.target.value)}
+                          />
+                        </div>
+                        <div className="grid gap-2">
+                          <Label htmlFor="email-up">E-mail *</Label>
+                          <Input
+                            id="email-up"
+                            type="email"
+                            required
+                            value={email}
+                            onChange={(e) => setEmail(e.target.value)}
+                          />
+                        </div>
+                        <div className="grid gap-2 sm:col-span-2">
+                          <Label htmlFor="password-up">Mot de passe *</Label>
+                          <Input
+                            id="password-up"
+                            type="password"
+                            required
+                            minLength={6}
+                            value={password}
+                            onChange={(e) => setPassword(e.target.value)}
+                          />
+                        </div>
+                      </div>
+                    </>
+                  )}
 
-                  {role === "pro" && (
-                    <div className="grid gap-4 rounded-2xl border border-border bg-secondary/50 p-4 sm:grid-cols-2">
-                      <p className="sm:col-span-2 text-sm font-semibold">
-                        Informations de votre entreprise
-                      </p>
+                  {isPro && step > 0 && (
+                    <div className="grid gap-4 rounded-2xl border border-border bg-secondary/50 p-5">
                       <div className="grid gap-2">
-                        <Label htmlFor="company">Nom de la société *</Label>
+                        <div className="flex items-center justify-between text-xs font-medium text-muted-foreground">
+                          <span>
+                            Étape {step} sur {PRO_STEPS.length}
+                          </span>
+                          <span>{PRO_STEPS[step - 1]?.label}</span>
+                        </div>
+                        <div className="h-1.5 overflow-hidden rounded-full bg-border">
+                          <div
+                            className="h-full rounded-full bg-primary transition-all"
+                            style={{ width: `${(step / PRO_STEPS.length) * 100}%` }}
+                          />
+                        </div>
+                      </div>
+
+                      <div>
+                        <p className="text-base font-bold">{PRO_STEPS[step - 1]?.question}</p>
+                        <p className="mt-1 text-sm text-muted-foreground">
+                          {PRO_STEPS[step - 1]?.hint}
+                        </p>
+                      </div>
+
+                      {step === 1 && (
                         <Input
+                          autoFocus
                           id="company"
-                          required
+                          placeholder="Débarras Express SARL"
                           value={companyName}
                           onChange={(e) => setCompanyName(e.target.value)}
                         />
-                      </div>
-                      <div className="grid gap-2">
-                        <Label htmlFor="siret">SIRET (14 chiffres) *</Label>
+                      )}
+
+                      {step === 2 && (
                         <Input
+                          autoFocus
                           id="siret"
-                          required
                           inputMode="numeric"
                           maxLength={17}
+                          placeholder="123 456 789 00012"
                           value={siret}
                           onChange={(e) => setSiret(e.target.value)}
                         />
-                      </div>
-                      <div className="grid gap-2">
-                        <Label htmlFor="pro-phone">Téléphone</Label>
+                      )}
+
+                      {step === 3 && (
                         <Input
+                          autoFocus
                           id="pro-phone"
                           type="tel"
+                          placeholder="06 12 34 56 78"
                           value={phone}
                           onChange={(e) => setPhone(e.target.value)}
                         />
-                      </div>
-                      <div className="grid gap-2">
-                        <Label htmlFor="zones">Secteurs (codes postaux) *</Label>
-                        <Input
-                          id="zones"
-                          placeholder="75, 92100, 93"
-                          value={zones}
-                          onChange={(e) => setZones(e.target.value)}
-                        />
-                      </div>
-                      <div className="sm:col-span-2">
-                        <ZonesMapPanel
-                          zones={postalCodes}
-                          title="Votre secteur d'intervention"
-                          description="Saisissez « 75 » pour tout Paris ou « 92100 » pour une commune : la carte se met à jour."
-                        />
-                      </div>
-                      <div className="grid gap-2 sm:col-span-2">
-                        <Label>Prestations proposées</Label>
+                      )}
+
+                      {step === 4 && (
+                        <div className="grid gap-3">
+                          <Input
+                            autoFocus
+                            id="zones"
+                            placeholder="75, 92100, 93"
+                            value={zones}
+                            onChange={(e) => setZones(e.target.value)}
+                          />
+                          <ZonesMapPanel
+                            zones={postalCodes}
+                            title="Votre secteur d'intervention"
+                            description="Saisissez « 75 » pour tout Paris ou « 92100 » pour une commune : la carte se met à jour."
+                          />
+                        </div>
+                      )}
+
+                      {step === 5 && (
                         <div className="flex flex-wrap gap-2">
                           {PRO_SERVICES.map((service) => {
                             const active = services.includes(service);
@@ -389,29 +481,60 @@ function AuthPage() {
                             );
                           })}
                         </div>
-                      </div>
-                      <div className="grid gap-2 sm:col-span-2">
-                        <Label htmlFor="pro-desc">Présentation de votre société</Label>
+                      )}
+
+                      {step === 6 && (
                         <Textarea
+                          autoFocus
                           id="pro-desc"
-                          rows={3}
+                          rows={4}
                           value={description}
                           onChange={(e) => setDescription(e.target.value)}
                           placeholder="Équipe, véhicules, spécialités, délais d'intervention..."
                         />
-                      </div>
+                      )}
                     </div>
                   )}
 
-                  <Button type="submit" size="lg" className="rounded-xl" disabled={loading}>
-                    {loading
-                      ? "Création..."
-                      : role === "pro"
-                        ? "Créer mon compte pro"
-                        : "Créer mon compte"}
-                  </Button>
+                  <div className="flex gap-3">
+                    {step > 0 && (
+                      <Button
+                        type="button"
+                        variant="outline"
+                        size="lg"
+                        className="rounded-xl"
+                        onClick={() => setStep((s) => s - 1)}
+                      >
+                        Retour
+                      </Button>
+                    )}
+                    {isPro && step < PRO_STEPS.length ? (
+                      <Button
+                        type="button"
+                        size="lg"
+                        className="flex-1 rounded-xl"
+                        onClick={goNext}
+                      >
+                        Continuer
+                      </Button>
+                    ) : (
+                      <Button
+                        type="submit"
+                        size="lg"
+                        className="flex-1 rounded-xl"
+                        disabled={loading}
+                      >
+                        {loading
+                          ? "Création..."
+                          : isPro
+                            ? "Créer mon compte pro"
+                            : "Créer mon compte"}
+                      </Button>
+                    )}
+                  </div>
                 </form>
               </TabsContent>
+
             </Tabs>
 
             <div className="my-6 flex items-center gap-3 text-xs text-muted-foreground">
