@@ -1,6 +1,6 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { Camera, Clock3, Leaf, MapPin, Quote, ShieldCheck, Sparkles, Star } from "lucide-react";
-import heroImage from "@/assets/hero-clearo.jpg";
+import heroImage from "@/assets/hero-clearo.jpg.asset.json";
 import galleryEquipe from "@/assets/gallery-equipe.jpg";
 import galleryAvant from "@/assets/gallery-avant.jpg";
 import galleryApres from "@/assets/gallery-apres.jpg";
