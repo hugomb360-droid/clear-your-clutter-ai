@@ -1,5 +1,5 @@
 import { ChevronLeft, ChevronRight } from "lucide-react";
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { MissionCard } from "@/components/pro/pro-schedule";
 import type { BidWithQuote, QuoteContact } from "@/lib/pro-dashboard";
 import { formatMonth } from "@/lib/pro-dashboard";
@@ -20,8 +20,6 @@ export function ProCalendar({
   contacts: QuoteContact[];
 }) {
   const today = new Date();
-  const [cursor, setCursor] = useState(new Date(today.getFullYear(), today.getMonth(), 1));
-  const [selected, setSelected] = useState<string | null>(dayKey(today));
 
   const byDay = useMemo(() => {
     const map = new Map<string, BidWithQuote[]>();
@@ -33,8 +31,32 @@ export function ProCalendar({
     return map;
   }, [bids]);
 
-  const year = cursor.getFullYear();
-  const month = cursor.getMonth();
+  const firstMissionDay =
+    [...byDay.keys()].filter((k) => k >= dayKey(today)).sort()[0] ??
+    [...byDay.keys()].sort().pop() ??
+    dayKey(today);
+
+  const [cursor, setCursor] = useState<Date | null>(null);
+  const [selected, setSelected] = useState<string | null>(null);
+  const touched = useRef(false);
+
+  useEffect(() => {
+    if (touched.current || byDay.size === 0) return;
+    setSelected(firstMissionDay);
+    setCursor(
+      new Date(Number(firstMissionDay.slice(0, 4)), Number(firstMissionDay.slice(5, 7)) - 1, 1),
+    );
+  }, [firstMissionDay, byDay]);
+
+  const pick = (key: string) => {
+    touched.current = true;
+    setSelected(key);
+  };
+
+  const view = cursor ?? new Date(today.getFullYear(), today.getMonth(), 1);
+
+  const year = view.getFullYear();
+  const month = view.getMonth();
   const offset = (new Date(year, month, 1).getDay() + 6) % 7;
   const daysInMonth = new Date(year, month + 1, 0).getDate();
   const cells: (number | null)[] = [
@@ -93,7 +115,7 @@ export function ProCalendar({
               <button
                 key={key}
                 type="button"
-                onClick={() => setSelected(key)}
+                onClick={() => pick(key)}
                 className={[
                   "relative aspect-square rounded-xl font-body text-sm font-semibold transition",
                   dayBids.length > 0
