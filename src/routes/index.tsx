@@ -160,8 +160,8 @@ function Home() {
               Gratuit, sans engagement · Réponse des pros sous 48 h
             </p>
           </div>
-          <div className="relative h-[340px] sm:h-[420px] lg:h-[480px]">
-            <div className="animate-float absolute left-0 top-8 w-[78%] lg:top-12">
+          <div className="relative h-[400px] sm:h-[500px] lg:h-[600px]">
+            <div className="animate-float absolute left-0 top-6 w-[82%] lg:top-8">
               <div className="relative">
                 <img
                   src={heroBefore.url}
@@ -175,14 +175,14 @@ function Home() {
                 </span>
               </div>
             </div>
-            <div className="animate-float-delayed absolute right-0 top-0 w-[62%] lg:-top-4">
+            <div className="animate-float-delayed absolute bottom-0 right-0 w-[54%]">
               <div className="relative">
                 <img
                   src={heroAfter.url}
                   alt="Appartement vide et nettoyé après débarras"
                   width={1792}
                   height={1024}
-                  className="w-full rounded-[2rem] object-cover shadow-2xl ring-4 ring-white"
+                  className="w-full rounded-[2rem] object-cover shadow-2xl"
                 />
                 <span className="absolute right-4 top-4 rounded-full bg-brand px-3 py-1 text-xs font-semibold text-white backdrop-blur-sm">
                   Après
