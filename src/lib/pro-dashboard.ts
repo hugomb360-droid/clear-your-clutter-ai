@@ -83,3 +83,13 @@ export function monthlyRevenue(bids: BidWithQuote[]) {
   }
   return [...map.values()].sort((a, b) => b.key.localeCompare(a.key));
 }
+
+/** Prestations proposables par un professionnel (inscription + fiche entreprise). */
+export const PRO_SERVICES = [
+  "Débarras maison",
+  "Débarras appartement",
+  "Cave / grenier",
+  "Succession",
+  "Local pro",
+  "Encombrants lourds",
+];

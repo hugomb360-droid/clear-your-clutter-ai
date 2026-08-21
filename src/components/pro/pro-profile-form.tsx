@@ -9,16 +9,8 @@ import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { supabase } from "@/integrations/supabase/client";
 import type { Tables } from "@/integrations/supabase/types";
-import { parsePostalCodes } from "@/lib/pro-dashboard";
-
-const SERVICES = [
-  "Débarras maison",
-  "Débarras appartement",
-  "Cave / grenier",
-  "Succession",
-  "Local pro",
-  "Encombrants lourds",
-];
+import { parsePostalCodes, PRO_SERVICES as SERVICES } from "@/lib/pro-dashboard";
+import { ZonesMapPanel } from "@/components/pro/zones-map-panel";
 
 export function ProProfileForm({
   profile,
@@ -132,6 +124,9 @@ export function ProProfileForm({
               Renseignez au moins un code postal pour recevoir des demandes.
             </p>
           )}
+        </div>
+        <div className="sm:col-span-2">
+          <ZonesMapPanel zones={postalCodes} />
         </div>
         <div className="grid gap-2 sm:col-span-2">
           <Label>Prestations proposées</Label>

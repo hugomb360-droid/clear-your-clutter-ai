@@ -4,6 +4,7 @@ import { useEffect } from "react";
 import { ProBids } from "@/components/pro/pro-bids";
 import { ProOpportunities } from "@/components/pro/pro-opportunities";
 import { ProProfileForm } from "@/components/pro/pro-profile-form";
+import { ZonesMapPanel } from "@/components/pro/zones-map-panel";
 import { ProSchedule } from "@/components/pro/pro-schedule";
 import { ProStats } from "@/components/pro/pro-stats";
 import { ProWallet } from "@/components/pro/pro-wallet";
@@ -152,7 +153,13 @@ function ProDashboard() {
               demandes.
             </p>
           ) : (
-            <ProOpportunities quotes={opportunities} proId={user.id} />
+            <div className="grid gap-6">
+              <ZonesMapPanel
+                zones={profile.postal_codes ?? []}
+                description="Vous ne recevez que les demandes situées dans ces secteurs."
+              />
+              <ProOpportunities quotes={opportunities} proId={user.id} />
+            </div>
           )}
         </TabsContent>
 

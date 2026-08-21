@@ -1,13 +1,17 @@
 import { createFileRoute, useNavigate, Link } from "@tanstack/react-router";
+import { BadgeCheck, Building2, Camera, ShieldCheck, Sparkles, User2 } from "lucide-react";
 import { useEffect, useState } from "react";
 import { toast } from "sonner";
 import { z } from "zod";
+import { ZonesMapPanel } from "@/components/pro/zones-map-panel";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import { Textarea } from "@/components/ui/textarea";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { supabase } from "@/integrations/supabase/client";
 import { lovable } from "@/integrations/lovable/index";
+import { parsePostalCodes, PRO_SERVICES } from "@/lib/pro-dashboard";
 
 const searchSchema = z.object({
   mode: z.enum(["signin", "signup"]).default("signin"),
@@ -23,11 +27,14 @@ export const Route = createFileRoute("/auth")({
       {
         name: "description",
         content:
-          "Connectez-vous à Clearo pour suivre vos devis de débarras ou rejoindre le réseau de professionnels.",
+          "Connectez-vous à Clearo pour suivre vos devis de débarras ou rejoindre le réseau de professionnels vérifiés.",
       },
       { property: "og:title", content: "Votre espace Clearo" },
       { property: "og:description", content: "Suivez vos devis et vos missions de débarras." },
+      { property: "og:type", content: "website" },
+      { name: "twitter:card", content: "summary_large_image" },
     ],
+    links: [{ rel: "canonical", href: "https://clearo.fr/auth" }],
   }),
   component: AuthPage,
 });
@@ -35,6 +42,12 @@ export const Route = createFileRoute("/auth")({
 function safePath(value: string | undefined) {
   return value && value.startsWith("/") && !value.startsWith("//") ? value : null;
 }
+
+const HIGHLIGHTS = [
+  { icon: Camera, title: "Devis en photo", text: "Une estimation IA en moins de 2 minutes." },
+  { icon: ShieldCheck, title: "Pros vérifiés", text: "SIRET contrôlé, avis clients publics." },
+  { icon: Sparkles, title: "Sans engagement", text: "Comparez les offres, choisissez librement." },
+];
 
 function AuthPage() {
   const search = Route.useSearch();
@@ -45,6 +58,15 @@ function AuthPage() {
   const [fullName, setFullName] = useState("");
   const [role, setRole] = useState<"client" | "pro">(search.role);
 
+  // Champs professionnels
+  const [companyName, setCompanyName] = useState("");
+  const [siret, setSiret] = useState("");
+  const [phone, setPhone] = useState("");
+  const [zones, setZones] = useState("");
+  const [services, setServices] = useState<string[]>([]);
+  const [description, setDescription] = useState("");
+
+  const postalCodes = parsePostalCodes(zones);
   const target = safePath(search.redirect);
 
   useEffect(() => {
@@ -54,6 +76,11 @@ function AuthPage() {
   }, [navigate, target]);
 
   const finish = () => navigate({ to: target ?? (role === "pro" ? "/pro/dashboard" : "/compte") });
+
+  const toggleService = (service: string) =>
+    setServices((prev) =>
+      prev.includes(service) ? prev.filter((s) => s !== service) : [...prev, service],
+    );
 
   const handleSignIn = async (event: React.FormEvent) => {
     event.preventDefault();
@@ -67,8 +94,40 @@ function AuthPage() {
     finish();
   };
 
+  const saveProProfile = async (userId: string) => {
+    await supabase.from("user_roles").insert({ user_id: userId, role: "pro" });
+    await supabase.from("pro_profiles").upsert(
+      {
+        user_id: userId,
+        company_name: companyName,
+        siret: siret || null,
+        phone: phone || null,
+        description: description || null,
+        postal_codes: postalCodes,
+        service_types: services,
+      },
+      { onConflict: "user_id" },
+    );
+  };
+
   const handleSignUp = async (event: React.FormEvent) => {
     event.preventDefault();
+    if (role === "pro") {
+      if (!companyName.trim()) {
+        toast.error("Nom de société requis");
+        return;
+      }
+      if (siret.replace(/\D/g, "").length !== 14) {
+        toast.error("SIRET invalide", { description: "Le SIRET contient 14 chiffres." });
+        return;
+      }
+      if (postalCodes.length === 0) {
+        toast.error("Ajoutez au moins une zone", {
+          description: "Exemple : 75 pour tout Paris, ou 92100 pour une commune.",
+        });
+        return;
+      }
+    }
     setLoading(true);
     const { data, error } = await supabase.auth.signUp({
       email,
@@ -78,11 +137,15 @@ function AuthPage() {
         data: { full_name: fullName, role },
       },
     });
-    setLoading(false);
     if (error) {
+      setLoading(false);
       toast.error("Inscription impossible", { description: error.message });
       return;
     }
+    if (data.session && data.user && role === "pro") {
+      await saveProProfile(data.user.id);
+    }
+    setLoading(false);
     if (!data.session) {
       toast.success("Compte créé", {
         description: "Confirmez votre e-mail, puis connectez-vous pour accéder à votre espace.",
@@ -106,119 +169,275 @@ function AuthPage() {
   };
 
   return (
-    <div className="mx-auto flex max-w-md flex-col px-4 py-16">
-      <h1 className="text-3xl font-extrabold tracking-tight">Votre espace Clearo</h1>
-      <p className="mt-2 text-sm text-muted-foreground">
-        Suivez vos devis, comparez les propositions et gérez vos missions.
-      </p>
+    <div className="relative overflow-hidden">
+      <div
+        aria-hidden
+        className="pointer-events-none absolute inset-x-0 -top-40 h-80 bg-[radial-gradient(60%_100%_at_50%_100%,var(--brand-soft),transparent)]"
+      />
+      <div className="relative mx-auto grid max-w-6xl gap-10 px-4 py-14 lg:grid-cols-[1fr_minmax(0,560px)] lg:py-20">
+        <aside className="hidden flex-col justify-center lg:flex">
+          <span className="inline-flex w-fit items-center gap-2 rounded-full border border-border bg-card px-3 py-1 text-xs font-medium text-muted-foreground">
+            <BadgeCheck className="size-3.5 text-primary" /> +850 débarrasseurs partout en France
+          </span>
+          <h2 className="mt-5 text-4xl font-extrabold leading-tight tracking-tight">
+            Le débarras,
+            <br />
+            <span className="text-primary">simple et transparent.</span>
+          </h2>
+          <p className="mt-4 max-w-md text-muted-foreground">
+            Créez votre compte pour suivre vos devis, comparer les propositions et gérer vos
+            missions au même endroit.
+          </p>
+          <ul className="mt-8 grid gap-3">
+            {HIGHLIGHTS.map(({ icon: Icon, title, text }) => (
+              <li
+                key={title}
+                className="flex items-start gap-3 rounded-2xl border border-border bg-card/70 p-4 backdrop-blur"
+              >
+                <span className="rounded-xl bg-brand-soft p-2 text-brand-ink">
+                  <Icon className="size-4" />
+                </span>
+                <div>
+                  <p className="text-sm font-semibold">{title}</p>
+                  <p className="text-sm text-muted-foreground">{text}</p>
+                </div>
+              </li>
+            ))}
+          </ul>
+        </aside>
 
-      <div className="mt-8 rounded-3xl border border-border bg-card p-7 shadow-[var(--shadow-soft)]">
-        <Tabs defaultValue={search.mode}>
-          <TabsList className="grid w-full grid-cols-2">
-            <TabsTrigger value="signin">Connexion</TabsTrigger>
-            <TabsTrigger value="signup">Inscription</TabsTrigger>
-          </TabsList>
+        <div className="mx-auto w-full max-w-xl">
+          <h1 className="text-3xl font-extrabold tracking-tight">Votre espace Clearo</h1>
+          <p className="mt-2 text-sm text-muted-foreground">
+            Connexion en un clic, inscription en une minute.
+          </p>
 
-          <TabsContent value="signin">
-            <form className="mt-6 grid gap-4" onSubmit={handleSignIn}>
-              <div className="grid gap-2">
-                <Label htmlFor="email">E-mail</Label>
-                <Input
-                  id="email"
-                  type="email"
-                  required
-                  value={email}
-                  onChange={(e) => setEmail(e.target.value)}
-                />
-              </div>
-              <div className="grid gap-2">
-                <Label htmlFor="password">Mot de passe</Label>
-                <Input
-                  id="password"
-                  type="password"
-                  required
-                  value={password}
-                  onChange={(e) => setPassword(e.target.value)}
-                />
-              </div>
-              <Button type="submit" disabled={loading}>
-                {loading ? "Connexion..." : "Se connecter"}
-              </Button>
-            </form>
-          </TabsContent>
+          <div className="mt-6 rounded-3xl border border-border bg-card p-6 shadow-[var(--shadow-soft)] sm:p-8">
+            <Tabs defaultValue={search.mode}>
+              <TabsList className="grid w-full grid-cols-2 rounded-2xl p-1.5">
+                <TabsTrigger value="signin" className="rounded-xl">
+                  Connexion
+                </TabsTrigger>
+                <TabsTrigger value="signup" className="rounded-xl">
+                  Inscription
+                </TabsTrigger>
+              </TabsList>
 
-          <TabsContent value="signup">
-            <form className="mt-6 grid gap-4" onSubmit={handleSignUp}>
-              <div className="grid grid-cols-2 gap-2">
-                {(["client", "pro"] as const).map((option) => (
-                  <button
-                    key={option}
-                    type="button"
-                    onClick={() => setRole(option)}
-                    className={`rounded-xl border px-3 py-3 text-sm font-medium transition-colors ${
-                      role === option
-                        ? "border-primary bg-brand-soft text-brand-ink"
-                        : "border-border hover:bg-secondary"
-                    }`}
-                  >
-                    {option === "client" ? "Je débarrasse un bien" : "Je suis débarrasseur"}
-                  </button>
-                ))}
-              </div>
-              <div className="grid gap-2">
-                <Label htmlFor="name">Nom complet</Label>
-                <Input
-                  id="name"
-                  required
-                  value={fullName}
-                  onChange={(e) => setFullName(e.target.value)}
-                />
-              </div>
-              <div className="grid gap-2">
-                <Label htmlFor="email-up">E-mail</Label>
-                <Input
-                  id="email-up"
-                  type="email"
-                  required
-                  value={email}
-                  onChange={(e) => setEmail(e.target.value)}
-                />
-              </div>
-              <div className="grid gap-2">
-                <Label htmlFor="password-up">Mot de passe</Label>
-                <Input
-                  id="password-up"
-                  type="password"
-                  required
-                  minLength={6}
-                  value={password}
-                  onChange={(e) => setPassword(e.target.value)}
-                />
-              </div>
-              <Button type="submit" disabled={loading}>
-                {loading ? "Création..." : "Créer mon compte"}
-              </Button>
-            </form>
-          </TabsContent>
-        </Tabs>
+              <TabsContent value="signin">
+                <form className="mt-6 grid gap-4" onSubmit={handleSignIn}>
+                  <div className="grid gap-2">
+                    <Label htmlFor="email">E-mail</Label>
+                    <Input
+                      id="email"
+                      type="email"
+                      required
+                      placeholder="vous@exemple.fr"
+                      value={email}
+                      onChange={(e) => setEmail(e.target.value)}
+                    />
+                  </div>
+                  <div className="grid gap-2">
+                    <Label htmlFor="password">Mot de passe</Label>
+                    <Input
+                      id="password"
+                      type="password"
+                      required
+                      value={password}
+                      onChange={(e) => setPassword(e.target.value)}
+                    />
+                  </div>
+                  <Button type="submit" size="lg" className="rounded-xl" disabled={loading}>
+                    {loading ? "Connexion..." : "Se connecter"}
+                  </Button>
+                </form>
+              </TabsContent>
 
-        <div className="my-6 flex items-center gap-3 text-xs text-muted-foreground">
-          <span className="h-px flex-1 bg-border" />
-          ou
-          <span className="h-px flex-1 bg-border" />
+              <TabsContent value="signup">
+                <form className="mt-6 grid gap-5" onSubmit={handleSignUp}>
+                  <div className="grid gap-2 sm:grid-cols-2">
+                    {(["client", "pro"] as const).map((option) => {
+                      const active = role === option;
+                      const Icon = option === "client" ? User2 : Building2;
+                      return (
+                        <button
+                          key={option}
+                          type="button"
+                          onClick={() => setRole(option)}
+                          className={`flex items-start gap-3 rounded-2xl border p-4 text-left transition-colors ${
+                            active
+                              ? "border-primary bg-brand-soft text-brand-ink"
+                              : "border-border hover:bg-secondary"
+                          }`}
+                        >
+                          <Icon className="mt-0.5 size-4 shrink-0" />
+                          <span>
+                            <span className="block text-sm font-semibold">
+                              {option === "client" ? "Je débarrasse un bien" : "Je suis débarrasseur"}
+                            </span>
+                            <span className="block text-xs opacity-80">
+                              {option === "client"
+                                ? "Devis IA gratuit en 2 min"
+                                : "Recevez des missions près de chez vous"}
+                            </span>
+                          </span>
+                        </button>
+                      );
+                    })}
+                  </div>
+
+                  <div className="grid gap-4 sm:grid-cols-2">
+                    <div className="grid gap-2">
+                      <Label htmlFor="name">Nom complet *</Label>
+                      <Input
+                        id="name"
+                        required
+                        value={fullName}
+                        onChange={(e) => setFullName(e.target.value)}
+                      />
+                    </div>
+                    <div className="grid gap-2">
+                      <Label htmlFor="email-up">E-mail *</Label>
+                      <Input
+                        id="email-up"
+                        type="email"
+                        required
+                        value={email}
+                        onChange={(e) => setEmail(e.target.value)}
+                      />
+                    </div>
+                    <div className="grid gap-2 sm:col-span-2">
+                      <Label htmlFor="password-up">Mot de passe *</Label>
+                      <Input
+                        id="password-up"
+                        type="password"
+                        required
+                        minLength={6}
+                        value={password}
+                        onChange={(e) => setPassword(e.target.value)}
+                      />
+                    </div>
+                  </div>
+
+                  {role === "pro" && (
+                    <div className="grid gap-4 rounded-2xl border border-border bg-secondary/50 p-4 sm:grid-cols-2">
+                      <p className="sm:col-span-2 text-sm font-semibold">
+                        Informations de votre entreprise
+                      </p>
+                      <div className="grid gap-2">
+                        <Label htmlFor="company">Nom de la société *</Label>
+                        <Input
+                          id="company"
+                          required
+                          value={companyName}
+                          onChange={(e) => setCompanyName(e.target.value)}
+                        />
+                      </div>
+                      <div className="grid gap-2">
+                        <Label htmlFor="siret">SIRET (14 chiffres) *</Label>
+                        <Input
+                          id="siret"
+                          required
+                          inputMode="numeric"
+                          maxLength={17}
+                          value={siret}
+                          onChange={(e) => setSiret(e.target.value)}
+                        />
+                      </div>
+                      <div className="grid gap-2">
+                        <Label htmlFor="pro-phone">Téléphone</Label>
+                        <Input
+                          id="pro-phone"
+                          type="tel"
+                          value={phone}
+                          onChange={(e) => setPhone(e.target.value)}
+                        />
+                      </div>
+                      <div className="grid gap-2">
+                        <Label htmlFor="zones">Secteurs (codes postaux) *</Label>
+                        <Input
+                          id="zones"
+                          placeholder="75, 92100, 93"
+                          value={zones}
+                          onChange={(e) => setZones(e.target.value)}
+                        />
+                      </div>
+                      <div className="sm:col-span-2">
+                        <ZonesMapPanel
+                          zones={postalCodes}
+                          title="Votre secteur d'intervention"
+                          description="Saisissez « 75 » pour tout Paris ou « 92100 » pour une commune : la carte se met à jour."
+                        />
+                      </div>
+                      <div className="grid gap-2 sm:col-span-2">
+                        <Label>Prestations proposées</Label>
+                        <div className="flex flex-wrap gap-2">
+                          {PRO_SERVICES.map((service) => {
+                            const active = services.includes(service);
+                            return (
+                              <button
+                                key={service}
+                                type="button"
+                                onClick={() => toggleService(service)}
+                                className={`rounded-full border px-3.5 py-1.5 text-sm transition-colors ${
+                                  active
+                                    ? "border-primary bg-primary text-primary-foreground"
+                                    : "border-border bg-background text-muted-foreground hover:bg-secondary"
+                                }`}
+                              >
+                                {service}
+                              </button>
+                            );
+                          })}
+                        </div>
+                      </div>
+                      <div className="grid gap-2 sm:col-span-2">
+                        <Label htmlFor="pro-desc">Présentation de votre société</Label>
+                        <Textarea
+                          id="pro-desc"
+                          rows={3}
+                          value={description}
+                          onChange={(e) => setDescription(e.target.value)}
+                          placeholder="Équipe, véhicules, spécialités, délais d'intervention..."
+                        />
+                      </div>
+                    </div>
+                  )}
+
+                  <Button type="submit" size="lg" className="rounded-xl" disabled={loading}>
+                    {loading
+                      ? "Création..."
+                      : role === "pro"
+                        ? "Créer mon compte pro"
+                        : "Créer mon compte"}
+                  </Button>
+                </form>
+              </TabsContent>
+            </Tabs>
+
+            <div className="my-6 flex items-center gap-3 text-xs text-muted-foreground">
+              <span className="h-px flex-1 bg-border" />
+              ou
+              <span className="h-px flex-1 bg-border" />
+            </div>
+            <Button
+              variant="outline"
+              size="lg"
+              className="w-full rounded-xl"
+              onClick={handleGoogle}
+            >
+              Continuer avec Google
+            </Button>
+          </div>
+
+          <p className="mt-6 text-center text-xs text-muted-foreground">
+            En continuant, vous acceptez les{" "}
+            <Link to="/mentions-legales" className="underline">
+              mentions légales
+            </Link>{" "}
+            de Clearo.
+          </p>
         </div>
-        <Button variant="outline" className="w-full" onClick={handleGoogle}>
-          Continuer avec Google
-        </Button>
       </div>
-
-      <p className="mt-6 text-center text-xs text-muted-foreground">
-        En continuant, vous acceptez les{" "}
-        <Link to="/mentions-legales" className="underline">
-          mentions légales
-        </Link>{" "}
-        de Clearo.
-      </p>
     </div>
   );
 }
