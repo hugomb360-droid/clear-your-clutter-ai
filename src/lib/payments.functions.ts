@@ -4,6 +4,9 @@ import { type StripeEnv, createStripeClient, getStripeErrorMessage } from "@/lib
 import { CLEARO_COMMISSION_RATE } from "@/lib/pro-dashboard";
 
 type CheckoutResult = { clientSecret: string } | { error: string };
+type FoundingResult =
+  | { isFounding: boolean; paidMissions: number; freeRemaining: number }
+  | { error: string };
 type ActionResult = { ok: true } | { error: string };
 
 /** Crée la session de paiement sécurisé (fonds bloqués) pour une proposition acceptée. */
@@ -31,7 +34,13 @@ export const createEscrowCheckout = createServerFn({ method: "POST" })
 
     const amountTotal = Math.round(bid.price * 100);
     if (amountTotal < 100) return { error: "Montant invalide" };
-    const commission = Math.round(amountTotal * CLEARO_COMMISSION_RATE);
+
+    // Offre de lancement : 20 premiers pros, 5 premiers chantiers sans commission Clearo.
+    const { getFoundingStatus } = await import("@/lib/founding.server");
+    const founding = await getFoundingStatus(bid.pro_id);
+    const commission = founding.freeRemaining > 0
+      ? 0
+      : Math.round(amountTotal * CLEARO_COMMISSION_RATE);
 
     try {
       const stripe = createStripeClient(data.environment);
@@ -156,4 +165,16 @@ export const refundEscrow = createServerFn({ method: "POST" })
       .update({ status: "refunded", refunded_at: new Date().toISOString() })
       .eq("id", payment.id);
     return { ok: true };
+  });
+
+/** Statut de l'offre de lancement du pro connecté (chantiers sans commission restants). */
+export const getMyFoundingStatus = createServerFn({ method: "GET" })
+  .middleware([requireSupabaseAuth])
+  .handler(async ({ context }): Promise<FoundingResult> => {
+    const { getFoundingStatus } = await import("@/lib/founding.server");
+    try {
+      return await getFoundingStatus(context.userId);
+    } catch {
+      return { error: "Statut indisponible" };
+    }
   });
