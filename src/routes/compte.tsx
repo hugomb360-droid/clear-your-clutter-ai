@@ -1,11 +1,12 @@
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { createFileRoute, Link, useNavigate } from "@tanstack/react-router";
-import { CalendarDays, CheckCircle2, Clock, MapPin, Package, ShieldCheck, Star } from "lucide-react";
-import { useEffect } from "react";
+import { CalendarDays, CheckCircle2, Clock, Lock, MapPin, Package, ShieldCheck, Star } from "lucide-react";
+import { useEffect, useState } from "react";
 import { toast } from "sonner";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { ClientMissionPanel } from "@/components/client/client-mission-panel";
+import { EscrowCheckoutDialog } from "@/components/payments/escrow-checkout-dialog";
 import { useAuth } from "@/hooks/useAuth";
 import { supabase } from "@/integrations/supabase/client";
 import { MISSION_STATUS_LABELS } from "@/lib/mission";
@@ -60,6 +61,7 @@ function ClientAccount() {
   const { user, loading } = useAuth();
   const navigate = useNavigate();
   const queryClient = useQueryClient();
+  const [checkout, setCheckout] = useState<{ bidId: string; price: number; companyName: string } | null>(null);
 
   useEffect(() => {
     if (!loading && !user) navigate({ to: "/auth", search: { redirect: "/compte" } });
