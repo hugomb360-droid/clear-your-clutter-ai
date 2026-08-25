@@ -8,6 +8,7 @@ import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Textarea } from "@/components/ui/textarea";
+import { RoleGuard } from "@/components/role-guard";
 import { useAuth } from "@/hooks/useAuth";
 import { supabase } from "@/integrations/supabase/client";
 import type { Tables } from "@/integrations/supabase/types";
@@ -32,7 +33,7 @@ export const Route = createFileRoute("/admin")({
       { name: "twitter:card", content: "summary_large_image" },
     ],
   }),
-  component: AdminConsole,
+  component: AdminConsolePage,
 });
 
 function Stat({
@@ -419,5 +420,13 @@ function AdminConsole() {
         </TabsContent>
       </Tabs>
     </div>
+  );
+}
+
+function AdminConsolePage() {
+  return (
+    <RoleGuard role="admin" redirect="/admin">
+      <AdminConsole />
+    </RoleGuard>
   );
 }

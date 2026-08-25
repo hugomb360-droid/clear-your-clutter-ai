@@ -7,6 +7,7 @@ import { ProCalendar } from "@/components/pro/pro-calendar";
 import { ProOpportunities } from "@/components/pro/pro-opportunities";
 import { ProWallet } from "@/components/pro/pro-wallet";
 import { Button } from "@/components/ui/button";
+import { RoleGuard } from "@/components/role-guard";
 import { useAuth } from "@/hooks/useAuth";
 import { supabase } from "@/integrations/supabase/client";
 import { coversPostal, isUpcoming, netOf } from "@/lib/pro-dashboard";
@@ -31,7 +32,7 @@ export const Route = createFileRoute("/pro/dashboard")({
       { name: "twitter:card", content: "summary_large_image" },
     ],
   }),
-  component: ProDashboard,
+  component: ProDashboardPage,
 });
 
 function SectionTitle({
@@ -254,5 +255,13 @@ function ProDashboard() {
         <ProWallet bids={bids} />
       </section>
     </div>
+  );
+}
+
+function ProDashboardPage() {
+  return (
+    <RoleGuard role="pro" redirect="/pro/dashboard">
+      <ProDashboard />
+    </RoleGuard>
   );
 }

@@ -7,6 +7,7 @@ import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { ClientMissionPanel } from "@/components/client/client-mission-panel";
 import { EscrowCheckoutDialog } from "@/components/payments/escrow-checkout-dialog";
+import { RoleGuard } from "@/components/role-guard";
 import { useAuth } from "@/hooks/useAuth";
 import { supabase } from "@/integrations/supabase/client";
 import { MISSION_STATUS_LABELS } from "@/lib/mission";
@@ -25,7 +26,7 @@ export const Route = createFileRoute("/compte")({
       { property: "og:description", content: "Suivez vos devis et les propositions des pros." },
     ],
   }),
-  component: ClientAccount,
+  component: ClientAccountPage,
 });
 
 const STATUS_LABELS: Record<string, string> = {
@@ -395,5 +396,13 @@ function ClientAccount() {
         />
       )}
     </div>
+  );
+}
+
+function ClientAccountPage() {
+  return (
+    <RoleGuard role="client" redirect="/compte">
+      <ClientAccount />
+    </RoleGuard>
   );
 }

@@ -8,6 +8,7 @@ export function useAuth() {
   const [session, setSession] = useState<Session | null>(null);
   const [loading, setLoading] = useState(true);
   const [roles, setRoles] = useState<AppRole[]>([]);
+  const [rolesLoading, setRolesLoading] = useState(true);
 
   useEffect(() => {
     const { data: sub } = supabase.auth.onAuthStateChange((_event, nextSession) => {
@@ -25,15 +26,19 @@ export function useAuth() {
     const userId = session?.user?.id;
     if (!userId) {
       setRoles([]);
+      setRolesLoading(false);
       return;
     }
     let active = true;
+    setRolesLoading(true);
     supabase
       .from("user_roles")
       .select("role")
       .eq("user_id", userId)
       .then(({ data }) => {
-        if (active) setRoles((data ?? []).map((row) => row.role as AppRole));
+        if (!active) return;
+        setRoles((data ?? []).map((row) => row.role as AppRole));
+        setRolesLoading(false);
       });
     return () => {
       active = false;
@@ -47,8 +52,10 @@ export function useAuth() {
     user,
     roles,
     loading,
+    rolesLoading,
     isPro: roles.includes("pro"),
     isAdmin: roles.includes("admin"),
+    isClient: roles.includes("client") && !roles.includes("pro"),
     signOut: () => supabase.auth.signOut(),
   };
 }

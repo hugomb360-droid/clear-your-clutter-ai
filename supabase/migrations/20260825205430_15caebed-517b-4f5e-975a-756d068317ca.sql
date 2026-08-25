@@ -1,0 +1,1 @@
+REVOKE EXECUTE ON FUNCTION public.enforce_role_exclusivity() FROM PUBLIC, anon, authenticated;
