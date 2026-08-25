@@ -64,6 +64,14 @@ function ProsLanding() {
             Clearo estime le volume et le budget avant de vous transmettre la demande. Vous
             répondez, le client choisit.
           </p>
+          <p className="mt-5 inline-flex max-w-xl items-start gap-2 rounded-2xl border border-brand/30 bg-brand/10 px-4 py-3 text-sm font-medium text-foreground">
+            <span aria-hidden>🎁</span>
+            <span>
+              <strong>Offre fondateur</strong> — pour les 20 premiers pros inscrits :{" "}
+              <strong>0 % de commission Clearo sur vos 5 premiers chantiers</strong>. Vous encaissez
+              100 % du montant.
+            </span>
+          </p>
           <div className="mt-8 flex flex-wrap gap-3">
             <Button asChild size="lg">
               <Link to="/auth" search={{ mode: "signup", role: "pro" }}>
