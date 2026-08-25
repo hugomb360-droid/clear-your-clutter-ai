@@ -97,6 +97,7 @@ export function BeforeAfterSlider({
       ref={containerRef}
       className={`relative select-none overflow-hidden rounded-2xl shadow-2xl sm:rounded-[2rem] ${className ?? ""}`}
       onPointerDown={(e) => {
+        handleInteractionStart();
         draggingRef.current = true;
         updateFromClientX(e.clientX);
       }}
@@ -142,12 +143,14 @@ export function BeforeAfterSlider({
         aria-valuemax={100}
         aria-valuenow={Math.round(position)}
         onKeyDown={(e) => {
+          handleInteractionStart();
           if (e.key === "ArrowLeft") setPosition((p) => Math.max(0, p - 4));
           if (e.key === "ArrowRight") setPosition((p) => Math.min(100, p + 4));
         }}
         className="absolute top-1/2 flex size-10 -translate-x-1/2 -translate-y-1/2 cursor-ew-resize items-center justify-center rounded-full border border-border bg-background text-foreground shadow-lg focus:outline-none focus:ring-2 focus:ring-brand"
         style={{ left: `${position}%` }}
         onPointerDown={(e) => {
+          handleInteractionStart();
           e.stopPropagation();
           draggingRef.current = true;
         }}
