@@ -10,6 +10,7 @@ import galleryCave from "@/assets/gallery-cave.jpg";
 import clipVideo from "@/assets/debarras-clip.mp4.asset.json";
 import { Button } from "@/components/ui/button";
 import { RoomVolume3D } from "@/components/room-volume-3d";
+import { BeforeAfterSlider } from "@/components/before-after-slider";
 
 export const Route = createFileRoute("/")({
   head: () => ({
@@ -156,38 +157,18 @@ function Home() {
               Gratuit, sans engagement · Réponse des pros sous 48 h
             </p>
           </div>
-          <div className="relative h-[62vw] max-h-[420px] min-h-[240px] sm:h-[380px] lg:h-auto lg:max-h-none lg:self-stretch">
-            <div className="animate-float absolute left-0 top-0 w-[80%] lg:w-[86%]">
-              <div className="relative">
-                <img
-                  src={heroBefore.url}
-                  alt="Appartement encombré avant débarras"
-                  width={1792}
-                  height={1024}
-                  className="w-full rounded-2xl object-cover shadow-2xl sm:rounded-[2rem]"
-                />
-                <span className="absolute left-3 top-3 rounded-full bg-black/70 px-2.5 py-1 text-[11px] font-semibold text-white backdrop-blur-sm sm:left-4 sm:top-4 sm:px-3 sm:text-xs">
-                  Avant
-                </span>
-              </div>
-            </div>
-            <div className="animate-float-delayed absolute bottom-0 right-0 w-[56%] lg:left-[54%] lg:right-auto lg:w-[60%]">
-
-              <div className="relative">
-                <img
-                  src={heroAfter.url}
-                  alt="Appartement vide et nettoyé après débarras"
-                  width={1792}
-                  height={1024}
-                  className="w-full rounded-2xl object-cover shadow-2xl sm:rounded-[2rem]"
-                />
-                <span className="absolute right-3 top-3 rounded-full bg-brand px-2.5 py-1 text-[11px] font-semibold text-white backdrop-blur-sm sm:right-4 sm:top-4 sm:px-3 sm:text-xs">
-                  Après
-                </span>
-
-              </div>
-            </div>
+          <div className="relative">
+            <BeforeAfterSlider
+              beforeSrc={heroBefore.url}
+              afterSrc={heroAfter.url}
+              beforeAlt="Appartement encombré avant débarras"
+              afterAlt="Appartement vide et nettoyé après débarras"
+            />
+            <p className="mt-3 text-center text-xs text-muted-foreground">
+              Faites glisser la barre pour voir l'avant / après
+            </p>
           </div>
+
         </div>
       </section>
 
