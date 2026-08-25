@@ -378,6 +378,22 @@ function ClientAccount() {
           );
         })}
       </div>
+
+      {checkout && (
+        <EscrowCheckoutDialog
+          open={Boolean(checkout)}
+          onOpenChange={(open) => {
+            if (!open) {
+              setCheckout(null);
+              void queryClient.invalidateQueries({ queryKey: ["my-quotes"] });
+              void queryClient.invalidateQueries({ queryKey: ["my-payments"] });
+            }
+          }}
+          bidId={checkout.bidId}
+          price={checkout.price}
+          companyName={checkout.companyName}
+        />
+      )}
     </div>
   );
 }
