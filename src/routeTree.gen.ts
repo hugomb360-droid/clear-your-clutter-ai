@@ -24,8 +24,10 @@ import { Route as SitemapDotxmlRouteImport } from './routes/sitemap[.]xml'
 import { Route as TarifsRouteImport } from './routes/tarifs'
 import { Route as DebarrasIndexRouteImport } from './routes/debarras.index'
 import { Route as DebarrasVilleRouteImport } from './routes/debarras.$ville'
+import { Route as PaiementRetourRouteImport } from './routes/paiement.retour'
 import { Route as ProDashboardRouteImport } from './routes/pro.dashboard'
 import { Route as ProParametresRouteImport } from './routes/pro.parametres'
+import { Route as ApiPublicPaymentsWebhookRouteImport } from './routes/api/public/payments/webhook'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
@@ -102,6 +104,11 @@ const DebarrasVilleRoute = DebarrasVilleRouteImport.update({
   path: '/debarras/$ville',
   getParentRoute: () => rootRouteImport,
 } as any)
+const PaiementRetourRoute = PaiementRetourRouteImport.update({
+  id: '/paiement/retour',
+  path: '/paiement/retour',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const ProDashboardRoute = ProDashboardRouteImport.update({
   id: '/pro/dashboard',
   path: '/pro/dashboard',
@@ -112,6 +119,12 @@ const ProParametresRoute = ProParametresRouteImport.update({
   path: '/pro/parametres',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ApiPublicPaymentsWebhookRoute =
+  ApiPublicPaymentsWebhookRouteImport.update({
+    id: '/api/public/payments/webhook',
+    path: '/api/public/payments/webhook',
+    getParentRoute: () => rootRouteImport,
+  } as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
@@ -128,9 +141,11 @@ export interface FileRoutesByFullPath {
   '/sitemap.xml': typeof SitemapDotxmlRoute
   '/tarifs': typeof TarifsRoute
   '/debarras/$ville': typeof DebarrasVilleRoute
+  '/paiement/retour': typeof PaiementRetourRoute
   '/pro/dashboard': typeof ProDashboardRoute
   '/pro/parametres': typeof ProParametresRoute
   '/debarras/': typeof DebarrasIndexRoute
+  '/api/public/payments/webhook': typeof ApiPublicPaymentsWebhookRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
@@ -147,9 +162,11 @@ export interface FileRoutesByTo {
   '/sitemap.xml': typeof SitemapDotxmlRoute
   '/tarifs': typeof TarifsRoute
   '/debarras/$ville': typeof DebarrasVilleRoute
+  '/paiement/retour': typeof PaiementRetourRoute
   '/pro/dashboard': typeof ProDashboardRoute
   '/pro/parametres': typeof ProParametresRoute
   '/debarras': typeof DebarrasIndexRoute
+  '/api/public/payments/webhook': typeof ApiPublicPaymentsWebhookRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -167,9 +184,11 @@ export interface FileRoutesById {
   '/sitemap.xml': typeof SitemapDotxmlRoute
   '/tarifs': typeof TarifsRoute
   '/debarras/$ville': typeof DebarrasVilleRoute
+  '/paiement/retour': typeof PaiementRetourRoute
   '/pro/dashboard': typeof ProDashboardRoute
   '/pro/parametres': typeof ProParametresRoute
   '/debarras/': typeof DebarrasIndexRoute
+  '/api/public/payments/webhook': typeof ApiPublicPaymentsWebhookRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -188,9 +207,11 @@ export interface FileRouteTypes {
     | '/sitemap.xml'
     | '/tarifs'
     | '/debarras/$ville'
+    | '/paiement/retour'
     | '/pro/dashboard'
     | '/pro/parametres'
     | '/debarras/'
+    | '/api/public/payments/webhook'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
@@ -207,9 +228,11 @@ export interface FileRouteTypes {
     | '/sitemap.xml'
     | '/tarifs'
     | '/debarras/$ville'
+    | '/paiement/retour'
     | '/pro/dashboard'
     | '/pro/parametres'
     | '/debarras'
+    | '/api/public/payments/webhook'
   id:
     | '__root__'
     | '/'
@@ -226,9 +249,11 @@ export interface FileRouteTypes {
     | '/sitemap.xml'
     | '/tarifs'
     | '/debarras/$ville'
+    | '/paiement/retour'
     | '/pro/dashboard'
     | '/pro/parametres'
     | '/debarras/'
+    | '/api/public/payments/webhook'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -246,9 +271,11 @@ export interface RootRouteChildren {
   SitemapDotxmlRoute: typeof SitemapDotxmlRoute
   TarifsRoute: typeof TarifsRoute
   DebarrasVilleRoute: typeof DebarrasVilleRoute
+  PaiementRetourRoute: typeof PaiementRetourRoute
   ProDashboardRoute: typeof ProDashboardRoute
   ProParametresRoute: typeof ProParametresRoute
   DebarrasIndexRoute: typeof DebarrasIndexRoute
+  ApiPublicPaymentsWebhookRoute: typeof ApiPublicPaymentsWebhookRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -358,6 +385,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof DebarrasVilleRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/paiement/retour': {
+      id: '/paiement/retour'
+      path: '/paiement/retour'
+      fullPath: '/paiement/retour'
+      preLoaderRoute: typeof PaiementRetourRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/pro/dashboard': {
       id: '/pro/dashboard'
       path: '/pro/dashboard'
@@ -370,6 +404,13 @@ declare module '@tanstack/react-router' {
       path: '/pro/parametres'
       fullPath: '/pro/parametres'
       preLoaderRoute: typeof ProParametresRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/api/public/payments/webhook': {
+      id: '/api/public/payments/webhook'
+      path: '/api/public/payments/webhook'
+      fullPath: '/api/public/payments/webhook'
+      preLoaderRoute: typeof ApiPublicPaymentsWebhookRouteImport
       parentRoute: typeof rootRouteImport
     }
   }
@@ -390,9 +431,11 @@ const rootRouteChildren: RootRouteChildren = {
   SitemapDotxmlRoute: SitemapDotxmlRoute,
   TarifsRoute: TarifsRoute,
   DebarrasVilleRoute: DebarrasVilleRoute,
+  PaiementRetourRoute: PaiementRetourRoute,
   ProDashboardRoute: ProDashboardRoute,
   ProParametresRoute: ProParametresRoute,
   DebarrasIndexRoute: DebarrasIndexRoute,
+  ApiPublicPaymentsWebhookRoute: ApiPublicPaymentsWebhookRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)

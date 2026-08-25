@@ -157,6 +157,84 @@ export type Database = {
           },
         ]
       }
+      payments: {
+        Row: {
+          amount_total: number
+          bid_id: string
+          client_id: string
+          commission_amount: number
+          created_at: string
+          currency: string
+          environment: string
+          id: string
+          paid_at: string | null
+          pro_amount: number
+          pro_id: string
+          quote_id: string
+          refunded_at: string | null
+          released_at: string | null
+          status: string
+          stripe_payment_intent_id: string | null
+          stripe_session_id: string | null
+          updated_at: string
+        }
+        Insert: {
+          amount_total: number
+          bid_id: string
+          client_id: string
+          commission_amount: number
+          created_at?: string
+          currency?: string
+          environment?: string
+          id?: string
+          paid_at?: string | null
+          pro_amount: number
+          pro_id: string
+          quote_id: string
+          refunded_at?: string | null
+          released_at?: string | null
+          status?: string
+          stripe_payment_intent_id?: string | null
+          stripe_session_id?: string | null
+          updated_at?: string
+        }
+        Update: {
+          amount_total?: number
+          bid_id?: string
+          client_id?: string
+          commission_amount?: number
+          created_at?: string
+          currency?: string
+          environment?: string
+          id?: string
+          paid_at?: string | null
+          pro_amount?: number
+          pro_id?: string
+          quote_id?: string
+          refunded_at?: string | null
+          released_at?: string | null
+          status?: string
+          stripe_payment_intent_id?: string | null
+          stripe_session_id?: string | null
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "payments_bid_id_fkey"
+            columns: ["bid_id"]
+            isOneToOne: true
+            referencedRelation: "bids"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "payments_quote_id_fkey"
+            columns: ["quote_id"]
+            isOneToOne: false
+            referencedRelation: "quotes"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       pro_profiles: {
         Row: {
           company_name: string

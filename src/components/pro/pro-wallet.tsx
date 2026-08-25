@@ -1,4 +1,6 @@
-import { Wallet } from "lucide-react";
+import { useQuery } from "@tanstack/react-query";
+import { Lock, Wallet } from "lucide-react";
+import { supabase } from "@/integrations/supabase/client";
 import type { BidWithQuote } from "@/lib/pro-dashboard";
 import {
   CLEARO_COMMISSION_RATE,
@@ -10,7 +12,29 @@ import {
 } from "@/lib/pro-dashboard";
 import { euro } from "@/lib/pricing";
 
+const PAYMENT_LABELS: Record<string, string> = {
+  pending: "Paiement en attente",
+  held: "Fonds bloqués",
+  released: "Versé",
+  refunded: "Remboursé",
+  failed: "Échec",
+};
+
 export function ProWallet({ bids }: { bids: BidWithQuote[] }) {
+  const paymentsQuery = useQuery({
+    queryKey: ["pro-payments"],
+    queryFn: async () => {
+      const { data, error } = await supabase
+        .from("payments")
+        .select("bid_id, status, pro_amount");
+      if (error) throw error;
+      return Object.fromEntries((data ?? []).map((p) => [p.bid_id, p]));
+    },
+  });
+  const payments = paymentsQuery.data ?? {};
+  const secured = Object.values(payments)
+    .filter((p) => p.status === "held")
+    .reduce((sum, p) => sum + p.pro_amount / 100, 0);
   const earning = bids.filter((b) => b.status === "accepted" || b.status === "completed");
   const done = earning.filter((b) => b.status === "completed");
   const pending = earning.filter((b) => b.status === "accepted");
@@ -24,6 +48,15 @@ export function ProWallet({ bids }: { bids: BidWithQuote[] }) {
 
   return (
     <div className="space-y-8">
+      <div className="flex items-start gap-3 rounded-2xl border border-proposal-gold/40 bg-proposal-gold/10 p-4">
+        <Lock className="mt-0.5 size-4 shrink-0 text-proposal-emerald" />
+        <p className="text-sm leading-relaxed text-proposal-emerald">
+          <strong>{euro(secured)} sécurisés</strong> par Clearo pour vos missions en cours. Le
+          client paie l'intégralité à l'acceptation du devis : vous êtes certain d'être payé, et les
+          fonds vous sont versés dès la validation de fin de chantier.
+        </p>
+      </div>
+
       <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
         {[
           { label: "Chiffre d'affaires", value: euro(gross), hint: `${earning.length} mission(s)` },
@@ -90,6 +123,7 @@ export function ProWallet({ bids }: { bids: BidWithQuote[] }) {
                   <th className="pb-2 text-right">Montant</th>
                   <th className="pb-2 text-right">Commission</th>
                   <th className="pb-2 text-right">Net</th>
+                  <th className="pb-2 text-right">Paiement</th>
                 </tr>
               </thead>
               <tbody>
@@ -104,6 +138,9 @@ export function ProWallet({ bids }: { bids: BidWithQuote[] }) {
                       −{euro(commissionOf(bid.price))}
                     </td>
                     <td className="py-2.5 text-right font-semibold">{euro(netOf(bid.price))}</td>
+                    <td className="py-2.5 text-right text-xs text-muted-foreground">
+                      {PAYMENT_LABELS[payments[bid.id]?.status ?? ""] ?? "—"}
+                    </td>
                   </tr>
                 ))}
               </tbody>
@@ -111,8 +148,9 @@ export function ProWallet({ bids }: { bids: BidWithQuote[] }) {
           </div>
         )}
         <p className="mt-4 text-xs text-muted-foreground">
-          Les paiements sont réglés directement par le client à la fin de la mission. La commission
-          Clearo est facturée mensuellement.
+          Les clients règlent 100 % du montant à l'acceptation du devis via le paiement sécurisé
+          Clearo. Les fonds sont bloqués puis libérés vers vous dès la validation du chantier,
+          commission Clearo déjà déduite.
         </p>
       </section>
     </div>

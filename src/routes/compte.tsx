@@ -1,11 +1,12 @@
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { createFileRoute, Link, useNavigate } from "@tanstack/react-router";
-import { CalendarDays, CheckCircle2, Clock, MapPin, Package, ShieldCheck, Star } from "lucide-react";
-import { useEffect } from "react";
+import { CalendarDays, CheckCircle2, Clock, Lock, MapPin, Package, ShieldCheck, Star } from "lucide-react";
+import { useEffect, useState } from "react";
 import { toast } from "sonner";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { ClientMissionPanel } from "@/components/client/client-mission-panel";
+import { EscrowCheckoutDialog } from "@/components/payments/escrow-checkout-dialog";
 import { useAuth } from "@/hooks/useAuth";
 import { supabase } from "@/integrations/supabase/client";
 import { MISSION_STATUS_LABELS } from "@/lib/mission";
@@ -60,6 +61,7 @@ function ClientAccount() {
   const { user, loading } = useAuth();
   const navigate = useNavigate();
   const queryClient = useQueryClient();
+  const [checkout, setCheckout] = useState<{ bidId: string; price: number; companyName: string } | null>(null);
 
   useEffect(() => {
     if (!loading && !user) navigate({ to: "/auth", search: { redirect: "/compte" } });
@@ -101,26 +103,24 @@ function ClientAccount() {
     },
   });
 
-  const acceptBid = async (quoteId: string, bidId: string) => {
-    const { error } = await supabase
-      .from("bids")
-      .update({ status: "accepted" })
-      .eq("id", bidId)
-      .eq("quote_id", quoteId);
-    if (error) {
-      toast.error("Impossible d'accepter cette proposition");
-      return;
-    }
-    await supabase.from("quotes").update({ status: "matched" }).eq("id", quoteId);
-    toast.success("Proposition acceptée ! Le pro reçoit vos coordonnées.");
-    void queryClient.invalidateQueries({ queryKey: ["my-quotes"] });
-  };
+  const paymentsQuery = useQuery({
+    queryKey: ["my-payments", user?.id],
+    enabled: Boolean(user?.id),
+    queryFn: async () => {
+      const { data, error } = await supabase
+        .from("payments")
+        .select("bid_id, status, amount_total, released_at");
+      if (error) throw error;
+      return Object.fromEntries((data ?? []).map((p) => [p.bid_id, p]));
+    },
+  });
 
   if (loading || !user) {
     return <div className="mx-auto max-w-4xl px-4 py-20 text-muted-foreground">Chargement...</div>;
   }
 
   const quotes = quotesQuery.data ?? [];
+  const payments = paymentsQuery.data ?? {};
 
   return (
     <div className="mx-auto max-w-6xl px-4 py-14">
@@ -308,10 +308,16 @@ function ClientAccount() {
                               {bid.status === "pending" ? (
                                 <Button
                                   size="sm"
-                                  onClick={() => acceptBid(quote.id, bid.id)}
+                                  onClick={() =>
+                                    setCheckout({
+                                      bidId: bid.id,
+                                      price: bid.price,
+                                      companyName,
+                                    })
+                                  }
                                   className="w-full gap-2 bg-proposal-gold text-proposal-emerald hover:bg-proposal-gold/90 sm:w-auto"
                                 >
-                                  Accepter le devis
+                                  <Lock className="size-4" /> Accepter et payer en sécurité
                                 </Button>
                               ) : (
                                 <Badge
@@ -322,6 +328,35 @@ function ClientAccount() {
                                 </Badge>
                               )}
                             </div>
+
+                            {bid.status === "pending" && (
+                              <p className="mt-2 flex items-start gap-1.5 text-[11px] leading-relaxed text-muted-foreground">
+                                <ShieldCheck className="mt-0.5 size-3.5 shrink-0 text-proposal-emerald" />
+                                Paiement sécurisé : votre argent est bloqué par Clearo et n'est
+                                versé au pro qu'une fois le chantier terminé et validé par vous.
+                              </p>
+                            )}
+
+                            {payments[bid.id] && (
+                              <div
+                                className={`mt-3 flex items-center gap-2 rounded-xl px-3 py-2 text-xs font-medium ${
+                                  payments[bid.id]!.status === "released"
+                                    ? "bg-proposal-emerald/10 text-proposal-emerald"
+                                    : payments[bid.id]!.status === "refunded"
+                                      ? "bg-destructive/10 text-destructive"
+                                      : "bg-proposal-gold/15 text-proposal-emerald"
+                                }`}
+                              >
+                                <Lock className="size-3.5" />
+                                {payments[bid.id]!.status === "held" &&
+                                  `${euro(payments[bid.id]!.amount_total / 100)} bloqués en séquestre — versés au pro après votre validation`}
+                                {payments[bid.id]!.status === "released" &&
+                                  "Paiement libéré vers le professionnel"}
+                                {payments[bid.id]!.status === "refunded" && "Paiement remboursé"}
+                                {payments[bid.id]!.status === "pending" &&
+                                  "Paiement en cours de confirmation..."}
+                              </div>
+                            )}
 
                             {activeBid?.id === bid.id && (
                               <ClientMissionPanel
@@ -343,6 +378,22 @@ function ClientAccount() {
           );
         })}
       </div>
+
+      {checkout && (
+        <EscrowCheckoutDialog
+          open={Boolean(checkout)}
+          onOpenChange={(open) => {
+            if (!open) {
+              setCheckout(null);
+              void queryClient.invalidateQueries({ queryKey: ["my-quotes"] });
+              void queryClient.invalidateQueries({ queryKey: ["my-payments"] });
+            }
+          }}
+          bidId={checkout.bidId}
+          price={checkout.price}
+          companyName={checkout.companyName}
+        />
+      )}
     </div>
   );
 }

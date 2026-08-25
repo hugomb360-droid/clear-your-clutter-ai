@@ -1,6 +1,6 @@
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { createFileRoute, useNavigate } from "@tanstack/react-router";
-import { AlertTriangle, Building2, FileText, Hammer, Star, Users } from "lucide-react";
+import { AlertTriangle, Building2, FileText, Hammer, Lock, Star, Users } from "lucide-react";
 import { useEffect, useState } from "react";
 import { toast } from "sonner";
 import { MissionPhotoGallery } from "@/components/mission/mission-photo-gallery";
@@ -14,6 +14,8 @@ import type { Tables } from "@/integrations/supabase/types";
 import { DISPUTE_STATUS_LABELS, MISSION_STATUS_LABELS } from "@/lib/mission";
 import { commissionOf, formatDate } from "@/lib/pro-dashboard";
 import { euro } from "@/lib/pricing";
+import { getStripeEnvironment } from "@/lib/stripe";
+import { refundEscrow, releaseEscrow } from "@/lib/payments.functions";
 
 export const Route = createFileRoute("/admin")({
   head: () => ({
@@ -118,6 +120,7 @@ function AdminConsole() {
   const { user, loading, roles } = useAuth();
   const navigate = useNavigate();
   const isAdmin = roles.includes("admin");
+  const queryClient = useQueryClient();
 
   useEffect(() => {
     if (!loading && !user) navigate({ to: "/auth", search: { redirect: "/admin" } });
@@ -163,6 +166,37 @@ function AdminConsole() {
       return data ?? [];
     },
   });
+
+  const paymentsQuery = useQuery({
+    queryKey: ["admin-payments"],
+    enabled: isAdmin,
+    queryFn: async () => {
+      const { data, error } = await supabase
+        .from("payments")
+        .select("*")
+        .order("created_at", { ascending: false });
+      if (error) throw error;
+      return data ?? [];
+    },
+  });
+
+  const handleRelease = async (bidId: string) => {
+    const res = await releaseEscrow({ data: { bidId } });
+    if ("error" in res) toast.error(res.error);
+    else {
+      toast.success("Fonds libérés vers le pro");
+      void queryClient.invalidateQueries({ queryKey: ["admin-payments"] });
+    }
+  };
+
+  const handleRefund = async (bidId: string) => {
+    const res = await refundEscrow({ data: { bidId, environment: getStripeEnvironment() } });
+    if ("error" in res) toast.error(res.error);
+    else {
+      toast.success("Client remboursé");
+      void queryClient.invalidateQueries({ queryKey: ["admin-payments"] });
+    }
+  };
 
   const reviewsQuery = useQuery({
     queryKey: ["admin-reviews"],
@@ -239,6 +273,9 @@ function AdminConsole() {
           </TabsTrigger>
           <TabsTrigger value="pros" className="rounded-xl">
             Pros ({pros.length})
+          </TabsTrigger>
+          <TabsTrigger value="paiements" className="rounded-xl">
+            <Lock className="mr-1.5 size-4" /> Paiements
           </TabsTrigger>
           <TabsTrigger value="avis" className="rounded-xl">
             Avis ({reviews.length})
@@ -318,6 +355,50 @@ function AdminConsole() {
               <Badge variant={pro.verified ? "default" : "secondary"}>
                 {pro.verified ? "Vérifié" : "À vérifier"}
               </Badge>
+            </div>
+          ))}
+        </TabsContent>
+
+        <TabsContent value="paiements" className="mt-6 space-y-3">
+          {(paymentsQuery.data ?? []).length === 0 && (
+            <p className="text-sm text-muted-foreground">Aucun paiement pour le moment.</p>
+          )}
+          {(paymentsQuery.data ?? []).map((payment: any) => (
+            <div
+              key={payment.id}
+              className="flex flex-wrap items-center justify-between gap-3 rounded-2xl border border-border bg-card p-4 text-sm"
+            >
+              <div>
+                <p className="font-semibold">
+                  {euro(payment.amount_total / 100)}{" "}
+                  <span className="text-xs font-normal text-muted-foreground">
+                    (commission {euro(payment.commission_amount / 100)} · pro{" "}
+                    {euro(payment.pro_amount / 100)})
+                  </span>
+                </p>
+                <p className="mt-1 text-xs text-muted-foreground">
+                  {formatDate(payment.created_at)} · {payment.environment}
+                </p>
+              </div>
+              <div className="flex flex-wrap items-center gap-2">
+                <Badge variant={payment.status === "held" ? "default" : "secondary"}>
+                  {payment.status}
+                </Badge>
+                {payment.status === "held" && (
+                  <>
+                    <Button size="sm" onClick={() => handleRelease(payment.bid_id)}>
+                      Libérer au pro
+                    </Button>
+                    <Button
+                      size="sm"
+                      variant="destructive"
+                      onClick={() => handleRefund(payment.bid_id)}
+                    >
+                      Rembourser
+                    </Button>
+                  </>
+                )}
+              </div>
             </div>
           ))}
         </TabsContent>
