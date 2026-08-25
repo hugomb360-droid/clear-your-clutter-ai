@@ -24,6 +24,7 @@ import { Route as SitemapDotxmlRouteImport } from './routes/sitemap[.]xml'
 import { Route as TarifsRouteImport } from './routes/tarifs'
 import { Route as DebarrasIndexRouteImport } from './routes/debarras.index'
 import { Route as DebarrasVilleRouteImport } from './routes/debarras.$ville'
+import { Route as PaiementRetourRouteImport } from './routes/paiement.retour'
 import { Route as ProDashboardRouteImport } from './routes/pro.dashboard'
 import { Route as ProParametresRouteImport } from './routes/pro.parametres'
 import { Route as ApiPublicPaymentsWebhookRouteImport } from './routes/api/public/payments/webhook'
@@ -103,6 +104,11 @@ const DebarrasVilleRoute = DebarrasVilleRouteImport.update({
   path: '/debarras/$ville',
   getParentRoute: () => rootRouteImport,
 } as any)
+const PaiementRetourRoute = PaiementRetourRouteImport.update({
+  id: '/paiement/retour',
+  path: '/paiement/retour',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const ProDashboardRoute = ProDashboardRouteImport.update({
   id: '/pro/dashboard',
   path: '/pro/dashboard',
@@ -135,6 +141,7 @@ export interface FileRoutesByFullPath {
   '/sitemap.xml': typeof SitemapDotxmlRoute
   '/tarifs': typeof TarifsRoute
   '/debarras/$ville': typeof DebarrasVilleRoute
+  '/paiement/retour': typeof PaiementRetourRoute
   '/pro/dashboard': typeof ProDashboardRoute
   '/pro/parametres': typeof ProParametresRoute
   '/debarras/': typeof DebarrasIndexRoute
@@ -155,6 +162,7 @@ export interface FileRoutesByTo {
   '/sitemap.xml': typeof SitemapDotxmlRoute
   '/tarifs': typeof TarifsRoute
   '/debarras/$ville': typeof DebarrasVilleRoute
+  '/paiement/retour': typeof PaiementRetourRoute
   '/pro/dashboard': typeof ProDashboardRoute
   '/pro/parametres': typeof ProParametresRoute
   '/debarras': typeof DebarrasIndexRoute
@@ -176,6 +184,7 @@ export interface FileRoutesById {
   '/sitemap.xml': typeof SitemapDotxmlRoute
   '/tarifs': typeof TarifsRoute
   '/debarras/$ville': typeof DebarrasVilleRoute
+  '/paiement/retour': typeof PaiementRetourRoute
   '/pro/dashboard': typeof ProDashboardRoute
   '/pro/parametres': typeof ProParametresRoute
   '/debarras/': typeof DebarrasIndexRoute
@@ -198,6 +207,7 @@ export interface FileRouteTypes {
     | '/sitemap.xml'
     | '/tarifs'
     | '/debarras/$ville'
+    | '/paiement/retour'
     | '/pro/dashboard'
     | '/pro/parametres'
     | '/debarras/'
@@ -218,6 +228,7 @@ export interface FileRouteTypes {
     | '/sitemap.xml'
     | '/tarifs'
     | '/debarras/$ville'
+    | '/paiement/retour'
     | '/pro/dashboard'
     | '/pro/parametres'
     | '/debarras'
@@ -238,6 +249,7 @@ export interface FileRouteTypes {
     | '/sitemap.xml'
     | '/tarifs'
     | '/debarras/$ville'
+    | '/paiement/retour'
     | '/pro/dashboard'
     | '/pro/parametres'
     | '/debarras/'
@@ -259,6 +271,7 @@ export interface RootRouteChildren {
   SitemapDotxmlRoute: typeof SitemapDotxmlRoute
   TarifsRoute: typeof TarifsRoute
   DebarrasVilleRoute: typeof DebarrasVilleRoute
+  PaiementRetourRoute: typeof PaiementRetourRoute
   ProDashboardRoute: typeof ProDashboardRoute
   ProParametresRoute: typeof ProParametresRoute
   DebarrasIndexRoute: typeof DebarrasIndexRoute
@@ -372,6 +385,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof DebarrasVilleRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/paiement/retour': {
+      id: '/paiement/retour'
+      path: '/paiement/retour'
+      fullPath: '/paiement/retour'
+      preLoaderRoute: typeof PaiementRetourRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/pro/dashboard': {
       id: '/pro/dashboard'
       path: '/pro/dashboard'
@@ -411,6 +431,7 @@ const rootRouteChildren: RootRouteChildren = {
   SitemapDotxmlRoute: SitemapDotxmlRoute,
   TarifsRoute: TarifsRoute,
   DebarrasVilleRoute: DebarrasVilleRoute,
+  PaiementRetourRoute: PaiementRetourRoute,
   ProDashboardRoute: ProDashboardRoute,
   ProParametresRoute: ProParametresRoute,
   DebarrasIndexRoute: DebarrasIndexRoute,
