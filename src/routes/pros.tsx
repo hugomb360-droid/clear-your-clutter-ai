@@ -51,6 +51,7 @@ const BENEFITS = [
 ];
 
 function ProsLanding() {
+  const { user, isPro } = useAuth();
   return (
     <div>
       <section className="border-b border-border bg-brand-soft/60">
