@@ -101,26 +101,24 @@ function ClientAccount() {
     },
   });
 
-  const acceptBid = async (quoteId: string, bidId: string) => {
-    const { error } = await supabase
-      .from("bids")
-      .update({ status: "accepted" })
-      .eq("id", bidId)
-      .eq("quote_id", quoteId);
-    if (error) {
-      toast.error("Impossible d'accepter cette proposition");
-      return;
-    }
-    await supabase.from("quotes").update({ status: "matched" }).eq("id", quoteId);
-    toast.success("Proposition acceptée ! Le pro reçoit vos coordonnées.");
-    void queryClient.invalidateQueries({ queryKey: ["my-quotes"] });
-  };
+  const paymentsQuery = useQuery({
+    queryKey: ["my-payments", user?.id],
+    enabled: Boolean(user?.id),
+    queryFn: async () => {
+      const { data, error } = await supabase
+        .from("payments")
+        .select("bid_id, status, amount_total, released_at");
+      if (error) throw error;
+      return Object.fromEntries((data ?? []).map((p) => [p.bid_id, p]));
+    },
+  });
 
   if (loading || !user) {
     return <div className="mx-auto max-w-4xl px-4 py-20 text-muted-foreground">Chargement...</div>;
   }
 
   const quotes = quotesQuery.data ?? [];
+  const payments = paymentsQuery.data ?? {};
 
   return (
     <div className="mx-auto max-w-6xl px-4 py-14">
