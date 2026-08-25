@@ -1,5 +1,6 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { BadgeCheck, Euro, Target, Truck } from "lucide-react";
+import { useAuth } from "@/hooks/useAuth";
 import { Button } from "@/components/ui/button";
 
 export const Route = createFileRoute("/pros")({
@@ -78,9 +79,21 @@ function ProsLanding() {
                 Créer mon compte pro
               </Link>
             </Button>
-            <Button asChild size="lg" variant="outline">
-              <Link to="/pro/dashboard">Accéder à mon espace</Link>
-            </Button>
+            {isPro ? (
+              <Button asChild size="lg" variant="outline">
+                <Link to="/pro/dashboard">Accéder à mon espace pro</Link>
+              </Button>
+            ) : user ? (
+              <Button asChild size="lg" variant="outline">
+                <Link to="/compte">Accéder à mon espace client</Link>
+              </Button>
+            ) : (
+              <Button asChild size="lg" variant="outline">
+                <Link to="/auth" search={{ mode: "signin" }}>
+                  Se connecter
+                </Link>
+              </Button>
+            )}
           </div>
         </div>
       </section>
