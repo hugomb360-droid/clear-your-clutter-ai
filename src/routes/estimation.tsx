@@ -35,7 +35,7 @@ export const Route = createFileRoute("/estimation")({
     links: [{ rel: "canonical", href: "https://clearo.fr/estimation" }],
 
   }),
-  component: EstimationPage,
+  component: EstimationRoute,
 });
 
 const DRAFT_KEY = "clearo-draft";
@@ -1008,4 +1008,31 @@ function EstimationPage() {
       </div>
     </div>
   );
+}
+
+/** Un compte professionnel ne peut pas déposer de demande de devis client. */
+function EstimationRoute() {
+  const { user, isPro, isAdmin, rolesLoading } = useAuth();
+
+  if (user && !rolesLoading && isPro && !isAdmin) {
+    return (
+      <div className="mx-auto max-w-xl px-4 py-20 text-center">
+        <h1 className="text-2xl font-extrabold tracking-tight">Réservé aux clients</h1>
+        <p className="mt-3 text-sm leading-relaxed text-muted-foreground">
+          Vous êtes connecté avec un compte professionnel. Les demandes de devis sont réservées aux
+          comptes clients — retrouvez vos opportunités dans votre espace pro.
+        </p>
+        <div className="mt-7 flex flex-wrap justify-center gap-3">
+          <Button asChild>
+            <Link to="/pro/dashboard">Mon espace professionnel</Link>
+          </Button>
+          <Button asChild variant="outline">
+            <Link to="/">Retour à l'accueil</Link>
+          </Button>
+        </div>
+      </div>
+    );
+  }
+
+  return <EstimationPage />;
 }
