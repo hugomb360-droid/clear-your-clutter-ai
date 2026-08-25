@@ -19,6 +19,8 @@ export function BeforeAfterSlider({
   const containerRef = useRef<HTMLDivElement>(null);
   const [position, setPosition] = useState(50);
   const draggingRef = useRef(false);
+  const hasInteractedRef = useRef(false);
+  const rafRef = useRef<number | null>(null);
 
   const updateFromClientX = useCallback((clientX: number) => {
     const el = containerRef.current;
@@ -46,6 +48,49 @@ export function BeforeAfterSlider({
       window.removeEventListener("pointercancel", onUp);
     };
   }, [updateFromClientX]);
+
+  // Auto-intro: sweep divider from right to left on first mount, unless user interacts
+  useEffect(() => {
+    const duration = 1800;
+    const start = performance.now();
+    const startPos = 72;
+    const endPos = 28;
+    const settlePos = 50;
+    const settleDuration = 500;
+
+    const easeOutCubic = (t: number) => 1 - Math.pow(1 - t, 3);
+
+    const animate = (now: number) => {
+      if (hasInteractedRef.current) return;
+      const elapsed = now - start;
+      if (elapsed < duration) {
+        const progress = elapsed / duration;
+        const next = startPos - (startPos - endPos) * easeOutCubic(progress);
+        setPosition(next);
+        rafRef.current = requestAnimationFrame(animate);
+      } else if (elapsed < duration + settleDuration) {
+        const progress = (elapsed - duration) / settleDuration;
+        const next = endPos + (settlePos - endPos) * easeOutCubic(progress);
+        setPosition(next);
+        rafRef.current = requestAnimationFrame(animate);
+      } else {
+        setPosition(settlePos);
+      }
+    };
+
+    rafRef.current = requestAnimationFrame(animate);
+    return () => {
+      if (rafRef.current) cancelAnimationFrame(rafRef.current);
+    };
+  }, []);
+
+  const handleInteractionStart = useCallback(() => {
+    hasInteractedRef.current = true;
+    if (rafRef.current) {
+      cancelAnimationFrame(rafRef.current);
+      rafRef.current = null;
+    }
+  }, []);
 
   return (
     <div
