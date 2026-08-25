@@ -10,12 +10,15 @@ import { QuotePhotos } from "@/components/pro/quote-photos";
 import { supabase } from "@/integrations/supabase/client";
 import type { Quote } from "@/lib/pro-dashboard";
 import { commissionOf, formatDate, netOf, quoteTitle } from "@/lib/pro-dashboard";
+import { useFoundingStatus } from "@/hooks/useFoundingStatus";
 import { euro } from "@/lib/pricing";
 
 type Draft = { price: string; date: string; message: string };
 
 export function ProOpportunities({ quotes, proId }: { quotes: Quote[]; proId: string }) {
   const queryClient = useQueryClient();
+  const founding = useFoundingStatus();
+  const freeMission = founding.freeRemaining > 0;
   const [drafts, setDrafts] = useState<Record<string, Draft>>({});
   const [sending, setSending] = useState<string | null>(null);
 
@@ -161,7 +164,9 @@ export function ProOpportunities({ quotes, proId }: { quotes: Quote[]; proId: st
                 <div className="mt-5 flex flex-wrap items-center justify-between gap-3 border-t border-border pt-5">
                   <p className="font-body text-xs text-muted-foreground">
                     {Number.isFinite(price) && price > 0
-                      ? `Commission ${euro(commissionOf(price))} · vous percevez ${euro(netOf(price))}`
+                      ? freeMission
+                        ? `Offre fondateur : 0 € de commission · vous percevez ${euro(price)}`
+                        : `Commission ${euro(commissionOf(price))} · vous percevez ${euro(netOf(price))}`
                       : "Commission Clearo de 12 % uniquement si le client vous choisit."}
                   </p>
                   <Button

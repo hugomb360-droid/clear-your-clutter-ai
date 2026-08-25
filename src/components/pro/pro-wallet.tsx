@@ -1,6 +1,7 @@
 import { useQuery } from "@tanstack/react-query";
-import { Lock, Wallet } from "lucide-react";
+import { Gift, Lock, Wallet } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
+import { useFoundingStatus } from "@/hooks/useFoundingStatus";
 import type { BidWithQuote } from "@/lib/pro-dashboard";
 import {
   CLEARO_COMMISSION_RATE,
@@ -26,12 +27,16 @@ export function ProWallet({ bids }: { bids: BidWithQuote[] }) {
     queryFn: async () => {
       const { data, error } = await supabase
         .from("payments")
-        .select("bid_id, status, pro_amount");
+        .select("bid_id, status, pro_amount, commission_amount");
       if (error) throw error;
       return Object.fromEntries((data ?? []).map((p) => [p.bid_id, p]));
     },
   });
   const payments = paymentsQuery.data ?? {};
+  const founding = useFoundingStatus();
+  const freeMission = founding.freeRemaining > 0;
+  const rowCommission = (bidId: string, price: number) =>
+    payments[bidId] ? payments[bidId].commission_amount / 100 : commissionOf(price, freeMission);
   const secured = Object.values(payments)
     .filter((p) => p.status === "held")
     .reduce((sum, p) => sum + p.pro_amount / 100, 0);
@@ -40,14 +45,34 @@ export function ProWallet({ bids }: { bids: BidWithQuote[] }) {
   const pending = earning.filter((b) => b.status === "accepted");
 
   const gross = earning.reduce((sum, b) => sum + b.price, 0);
-  const commission = earning.reduce((sum, b) => sum + commissionOf(b.price), 0);
-  const paid = done.reduce((sum, b) => sum + netOf(b.price), 0);
-  const upcoming = pending.reduce((sum, b) => sum + netOf(b.price), 0);
+  const commission = earning.reduce((sum, b) => sum + rowCommission(b.id, b.price), 0);
+  const paid = done.reduce((sum, b) => sum + b.price - rowCommission(b.id, b.price), 0);
+  const upcoming = pending.reduce((sum, b) => sum + b.price - rowCommission(b.id, b.price), 0);
   const months = monthlyRevenue(earning);
   const best = Math.max(1, ...months.map((m) => m.gross));
 
   return (
     <div className="space-y-8">
+      {founding.isFounding && (
+        <div className="flex items-start gap-3 rounded-2xl border border-proposal-emerald/30 bg-proposal-emerald/5 p-4">
+          <Gift className="mt-0.5 size-4 shrink-0 text-proposal-emerald" />
+          <p className="text-sm leading-relaxed text-proposal-emerald">
+            <strong>Offre fondateur</strong> — vous faites partie des 20 premiers pros Clearo :{" "}
+            {founding.freeRemaining > 0 ? (
+              <>
+                <strong>
+                  {founding.freeRemaining} chantier{founding.freeRemaining > 1 ? "s" : ""} sans
+                  aucune commission
+                </strong>{" "}
+                ({founding.paidMissions}/5 utilisés). Vous encaissez 100 % du montant.
+              </>
+            ) : (
+              <>vos 5 chantiers offerts ont été utilisés, commission standard de 12 % désormais.</>
+            )}
+          </p>
+        </div>
+      )}
+
       <div className="flex items-start gap-3 rounded-2xl border border-proposal-gold/40 bg-proposal-gold/10 p-4">
         <Lock className="mt-0.5 size-4 shrink-0 text-proposal-emerald" />
         <p className="text-sm leading-relaxed text-proposal-emerald">
@@ -93,7 +118,7 @@ export function ProWallet({ bids }: { bids: BidWithQuote[] }) {
                   <span className="text-muted-foreground">
                     {month.count} mission(s) · {euro(month.gross)} brut ·{" "}
                     <span className="font-semibold text-foreground">
-                      {euro(month.gross - commissionOf(month.gross))} net
+                      {euro(month.gross - commissionOf(month.gross, freeMission))} net
                     </span>
                   </span>
                 </div>
@@ -135,9 +160,11 @@ export function ProWallet({ bids }: { bids: BidWithQuote[] }) {
                     </td>
                     <td className="py-2.5 text-right">{euro(bid.price)}</td>
                     <td className="py-2.5 text-right text-muted-foreground">
-                      −{euro(commissionOf(bid.price))}
+                      −{euro(rowCommission(bid.id, bid.price))}
                     </td>
-                    <td className="py-2.5 text-right font-semibold">{euro(netOf(bid.price))}</td>
+                    <td className="py-2.5 text-right font-semibold">
+                      {euro(bid.price - rowCommission(bid.id, bid.price))}
+                    </td>
                     <td className="py-2.5 text-right text-xs text-muted-foreground">
                       {PAYMENT_LABELS[payments[bid.id]?.status ?? ""] ?? "—"}
                     </td>

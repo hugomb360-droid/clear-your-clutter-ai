@@ -8,8 +8,13 @@ export type BidWithQuote = Bid & { quotes: Quote | null };
 /** Commission Clearo prélevée sur chaque mission réalisée. */
 export const CLEARO_COMMISSION_RATE = 0.12;
 
-export const commissionOf = (price: number) => Math.round(price * CLEARO_COMMISSION_RATE);
-export const netOf = (price: number) => price - commissionOf(price);
+/** Offre de lancement : les 20 premiers pros inscrits ne paient aucune commission sur leurs 5 premiers chantiers. */
+export const FOUNDING_PRO_LIMIT = 20;
+export const FOUNDING_FREE_MISSIONS = 5;
+
+export const commissionOf = (price: number, freeMission = false) =>
+  freeMission ? 0 : Math.round(price * CLEARO_COMMISSION_RATE);
+export const netOf = (price: number, freeMission = false) => price - commissionOf(price, freeMission);
 
 /** Normalise une saisie libre de codes postaux : « 75, 92100 » -> ["75", "92100"]. */
 export function parsePostalCodes(input: string) {
