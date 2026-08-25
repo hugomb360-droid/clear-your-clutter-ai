@@ -120,6 +120,7 @@ function AdminConsole() {
   const { user, loading, roles } = useAuth();
   const navigate = useNavigate();
   const isAdmin = roles.includes("admin");
+  const queryClient = useQueryClient();
 
   useEffect(() => {
     if (!loading && !user) navigate({ to: "/auth", search: { redirect: "/admin" } });
