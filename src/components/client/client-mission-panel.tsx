@@ -16,6 +16,7 @@ import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { supabase } from "@/integrations/supabase/client";
 import { DISPUTE_STATUS_LABELS, uploadMissionPhotos } from "@/lib/mission";
+import { releaseEscrow } from "@/lib/payments.functions";
 
 type Props = {
   bidId: string;
@@ -92,7 +93,14 @@ export function ClientMissionPanel({ bidId, quoteId, clientId, proId, status }: 
         comment: comment.trim() || null,
       });
       if (reviewError) throw reviewError;
-      toast.success("Chantier confirmé, merci pour votre avis !");
+      const release = await releaseEscrow({ data: { bidId } });
+      if ("error" in release) {
+        toast.warning("Chantier confirmé, libération du paiement en cours", {
+          description: release.error,
+        });
+      } else {
+        toast.success("Chantier confirmé — le paiement est libéré vers le professionnel.");
+      }
       setReviewOpen(false);
       refresh();
     } catch (error) {
