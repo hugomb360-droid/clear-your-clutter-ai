@@ -306,10 +306,16 @@ function ClientAccount() {
                               {bid.status === "pending" ? (
                                 <Button
                                   size="sm"
-                                  onClick={() => acceptBid(quote.id, bid.id)}
+                                  onClick={() =>
+                                    setCheckout({
+                                      bidId: bid.id,
+                                      price: bid.price,
+                                      companyName,
+                                    })
+                                  }
                                   className="w-full gap-2 bg-proposal-gold text-proposal-emerald hover:bg-proposal-gold/90 sm:w-auto"
                                 >
-                                  Accepter le devis
+                                  <Lock className="size-4" /> Accepter et payer en sécurité
                                 </Button>
                               ) : (
                                 <Badge
@@ -320,6 +326,35 @@ function ClientAccount() {
                                 </Badge>
                               )}
                             </div>
+
+                            {bid.status === "pending" && (
+                              <p className="mt-2 flex items-start gap-1.5 text-[11px] leading-relaxed text-muted-foreground">
+                                <ShieldCheck className="mt-0.5 size-3.5 shrink-0 text-proposal-emerald" />
+                                Paiement sécurisé : votre argent est bloqué par Clearo et n'est
+                                versé au pro qu'une fois le chantier terminé et validé par vous.
+                              </p>
+                            )}
+
+                            {payments[bid.id] && (
+                              <div
+                                className={`mt-3 flex items-center gap-2 rounded-xl px-3 py-2 text-xs font-medium ${
+                                  payments[bid.id]!.status === "released"
+                                    ? "bg-proposal-emerald/10 text-proposal-emerald"
+                                    : payments[bid.id]!.status === "refunded"
+                                      ? "bg-destructive/10 text-destructive"
+                                      : "bg-proposal-gold/15 text-proposal-emerald"
+                                }`}
+                              >
+                                <Lock className="size-3.5" />
+                                {payments[bid.id]!.status === "held" &&
+                                  `${euro(payments[bid.id]!.amount_total / 100)} bloqués en séquestre — versés au pro après votre validation`}
+                                {payments[bid.id]!.status === "released" &&
+                                  "Paiement libéré vers le professionnel"}
+                                {payments[bid.id]!.status === "refunded" && "Paiement remboursé"}
+                                {payments[bid.id]!.status === "pending" &&
+                                  "Paiement en cours de confirmation..."}
+                              </div>
+                            )}
 
                             {activeBid?.id === bid.id && (
                               <ClientMissionPanel
