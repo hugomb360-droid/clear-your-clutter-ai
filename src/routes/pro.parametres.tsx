@@ -3,6 +3,7 @@ import { createFileRoute, Link, useNavigate } from "@tanstack/react-router";
 import { ArrowLeft } from "lucide-react";
 import { useEffect } from "react";
 import { ProProfileForm } from "@/components/pro/pro-profile-form";
+import { RoleGuard } from "@/components/role-guard";
 import { useAuth } from "@/hooks/useAuth";
 import { supabase } from "@/integrations/supabase/client";
 
@@ -24,7 +25,7 @@ export const Route = createFileRoute("/pro/parametres")({
       { name: "twitter:card", content: "summary_large_image" },
     ],
   }),
-  component: ProSettings,
+  component: ProSettingsPage,
 });
 
 function ProSettings() {
@@ -76,5 +77,13 @@ function ProSettings() {
         />
       </div>
     </div>
+  );
+}
+
+function ProSettingsPage() {
+  return (
+    <RoleGuard role="pro" redirect="/pro/parametres">
+      <ProSettings />
+    </RoleGuard>
   );
 }
