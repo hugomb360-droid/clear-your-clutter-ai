@@ -1,10 +1,13 @@
 import { useQuery } from "@tanstack/react-query";
 import { Link } from "@tanstack/react-router";
 
-import { Gift, Lock, Wallet } from "lucide-react";
+import { AlertTriangle, BadgeCheck, Gift, Lock, Wallet } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
 import { useFoundingStatus } from "@/hooks/useFoundingStatus";
+import { getPayoutStatus } from "@/lib/payouts.functions";
+import { getStripeEnvironment, paymentsConfigured } from "@/lib/stripe";
 import type { BidWithQuote } from "@/lib/pro-dashboard";
+
 import {
   CLEARO_COMMISSION_RATE,
   commissionOf,
