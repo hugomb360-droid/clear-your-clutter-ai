@@ -69,13 +69,15 @@ function ProSettings() {
         </p>
       </header>
 
-      <div className="mt-8">
+      <div className="mt-8 space-y-8">
         <ProProfileForm
           profile={profileQuery.data ?? null}
           userId={user.id}
           hasProRole={roles.includes("pro")}
         />
+        <ProPayoutAccount />
       </div>
+
     </div>
   );
 }
