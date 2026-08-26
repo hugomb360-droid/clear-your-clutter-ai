@@ -113,7 +113,7 @@ export function ProOpportunities({ quotes, proId }: { quotes: Quote[]; proId: st
 
                 <div className="mt-8 border-t border-proposal-emerald-light/40 pt-5">
                   <p className="text-[10px] uppercase tracking-widest text-proposal-cream/50">
-                    Estimation Clearo
+                    Estimation Débarras France
                   </p>
                   <p className="font-display mt-1 text-xl font-bold">
                     {quote.price_min != null && quote.price_max != null
@@ -167,7 +167,7 @@ export function ProOpportunities({ quotes, proId }: { quotes: Quote[]; proId: st
                       ? freeMission
                         ? `Offre fondateur : 0 € de commission · vous percevez ${euro(price)}`
                         : `Commission ${euro(commissionOf(price))} · vous percevez ${euro(netOf(price))}`
-                      : "Commission Clearo de 12 % uniquement si le client vous choisit."}
+                      : "Commission Débarras France de 12 % uniquement si le client vous choisit."}
                   </p>
                   <Button
                     onClick={() => send(quote)}

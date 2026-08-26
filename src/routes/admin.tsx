@@ -21,14 +21,14 @@ import { refundEscrow, releaseEscrow } from "@/lib/payments.functions";
 export const Route = createFileRoute("/admin")({
   head: () => ({
     meta: [
-      { title: "Administration Clearo — pilotage de la plateforme" },
+      { title: "Administration Débarras France — pilotage de la plateforme" },
       {
         name: "description",
         content:
-          "Console interne Clearo : suivi en direct des demandes, chantiers, litiges, avis clients et professionnels partenaires.",
+          "Console interne Débarras France : suivi en direct des demandes, chantiers, litiges, avis clients et professionnels partenaires.",
       },
-      { property: "og:title", content: "Administration Clearo" },
-      { property: "og:description", content: "Pilotage en direct de la plateforme Clearo." },
+      { property: "og:title", content: "Administration Débarras France" },
+      { property: "og:description", content: "Pilotage en direct de la plateforme Débarras France." },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
     ],
@@ -221,7 +221,7 @@ function AdminConsole() {
       <div className="mx-auto max-w-2xl px-4 py-24 text-center">
         <h1 className="text-2xl font-extrabold">Accès réservé</h1>
         <p className="mt-2 text-sm text-muted-foreground">
-          Cet espace est réservé à l'équipe Clearo.
+          Cet espace est réservé à l'équipe Débarras France.
         </p>
       </div>
     );
@@ -250,7 +250,7 @@ function AdminConsole() {
       <header>
         <h1 className="text-2xl font-extrabold sm:text-3xl tracking-tight">Console d'administration</h1>
         <p className="mt-2 text-sm text-muted-foreground">
-          Toute l'activité Clearo en direct — actualisée automatiquement.
+          Toute l'activité Débarras France en direct — actualisée automatiquement.
         </p>
       </header>
 

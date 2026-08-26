@@ -16,13 +16,13 @@ import { euro } from "@/lib/pricing";
 export const Route = createFileRoute("/compte")({
   head: () => ({
     meta: [
-      { title: "Mes devis de débarras — Clearo" },
+      { title: "Mes devis de débarras — Débarras France" },
       {
         name: "description",
         content:
           "Retrouvez vos demandes de débarras, les propositions reçues des professionnels et le suivi de vos missions.",
       },
-      { property: "og:title", content: "Mon espace client Clearo" },
+      { property: "og:title", content: "Mon espace client Débarras France" },
       { property: "og:description", content: "Suivez vos devis et les propositions des pros." },
     ],
   }),
@@ -212,7 +212,7 @@ function ClientAccount() {
                   </div>
 
                   <div className="mt-10 border-t border-proposal-emerald-light/40 pt-6 md:mt-12">
-                    <p className="text-xs uppercase tracking-widest text-proposal-cream/50">Estimation Clearo</p>
+                    <p className="text-xs uppercase tracking-widest text-proposal-cream/50">Estimation Débarras France</p>
                     {quote.price_min != null && quote.price_max != null ? (
                       <p className="font-display mt-1 text-2xl font-bold">
                         {euro(quote.price_min)} – {euro(quote.price_max)}
@@ -333,7 +333,7 @@ function ClientAccount() {
                             {bid.status === "pending" && (
                               <p className="mt-2 flex items-start gap-1.5 text-[11px] leading-relaxed text-muted-foreground">
                                 <ShieldCheck className="mt-0.5 size-3.5 shrink-0 text-proposal-emerald" />
-                                Paiement sécurisé : votre argent est bloqué par Clearo et n'est
+                                Paiement sécurisé : votre argent est bloqué par Débarras France et n'est
                                 versé au pro qu'une fois le chantier terminé et validé par vous.
                               </p>
                             )}

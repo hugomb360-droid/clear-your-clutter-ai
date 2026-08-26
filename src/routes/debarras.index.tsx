@@ -11,9 +11,9 @@ const DESCRIPTION =
 export const Route = createFileRoute("/debarras/")({
   head: () => ({
     meta: [
-      { title: "Débarras par ville : prix et débarrasseurs près de chez vous | Clearo" },
+      { title: "Débarras par ville : prix et débarrasseurs près de chez vous | Débarras France" },
       { name: "description", content: DESCRIPTION },
-      { property: "og:title", content: "Débarras par ville — Clearo" },
+      { property: "og:title", content: "Débarras par ville — Débarras France" },
       { property: "og:description", content: DESCRIPTION },
       { property: "og:type", content: "website" },
       { property: "og:url", content: CANONICAL },

@@ -23,13 +23,13 @@ export const Route = createFileRoute("/auth")({
   validateSearch: searchSchema,
   head: () => ({
     meta: [
-      { title: "Connexion & inscription — Clearo" },
+      { title: "Connexion & inscription — Débarras France" },
       {
         name: "description",
         content:
-          "Connectez-vous à Clearo pour suivre vos devis de débarras ou rejoindre le réseau de professionnels vérifiés.",
+          "Connectez-vous à Débarras France pour suivre vos devis de débarras ou rejoindre le réseau de professionnels vérifiés.",
       },
-      { property: "og:title", content: "Votre espace Clearo" },
+      { property: "og:title", content: "Votre espace Débarras France" },
       { property: "og:description", content: "Suivez vos devis et vos missions de débarras." },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
@@ -216,7 +216,7 @@ function AuthPage() {
       });
       return;
     }
-    toast.success("Compte créé", { description: "Bienvenue chez Clearo !" });
+    toast.success("Compte créé", { description: "Bienvenue chez Débarras France !" });
     finish();
   };
 
@@ -270,7 +270,7 @@ function AuthPage() {
         </aside>
 
         <div className="mx-auto w-full max-w-xl">
-          <h1 className="text-2xl font-extrabold sm:text-3xl tracking-tight">Votre espace Clearo</h1>
+          <h1 className="text-2xl font-extrabold sm:text-3xl tracking-tight">Votre espace Débarras France</h1>
           <p className="mt-2 text-sm text-muted-foreground">
             Connexion en un clic, inscription en une minute.
           </p>
@@ -557,7 +557,7 @@ function AuthPage() {
             <Link to="/mentions-legales" className="underline">
               mentions légales
             </Link>{" "}
-            de Clearo.
+            de Débarras France.
           </p>
         </div>
       </div>

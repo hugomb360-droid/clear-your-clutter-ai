@@ -35,7 +35,7 @@ export const createEscrowCheckout = createServerFn({ method: "POST" })
     const amountTotal = Math.round(bid.price * 100);
     if (amountTotal < 100) return { error: "Montant invalide" };
 
-    // Offre de lancement : 20 premiers pros, 5 premiers chantiers sans commission Clearo.
+    // Offre de lancement : 20 premiers pros, 5 premiers chantiers sans commission Débarras France.
     const { getFoundingStatus } = await import("@/lib/founding.server");
     const founding = await getFoundingStatus(bid.pro_id);
     const commission = founding.freeRemaining > 0
@@ -58,14 +58,14 @@ export const createEscrowCheckout = createServerFn({ method: "POST" })
               product_data: {
                 name: `Débarras ${quote.property_type ?? ""} ${quote.city ?? quote.postal_code ?? ""}`.trim(),
                 description:
-                  "Paiement sécurisé Clearo — les fonds sont conservés jusqu'à la fin du chantier.",
+                  "Paiement sécurisé Débarras France — les fonds sont conservés jusqu'à la fin du chantier.",
               },
             },
             quantity: 1,
           },
         ],
         payment_intent_data: {
-          description: `Débarras Clearo — mission ${bid.id.slice(0, 8)}`,
+          description: `Débarras Débarras France — mission ${bid.id.slice(0, 8)}`,
         },
         ...(userData.user?.email && { customer_email: userData.user.email }),
         metadata: {
@@ -126,7 +126,7 @@ export const releaseEscrow = createServerFn({ method: "POST" })
 
     const { transferToPro, markReleased } = await import("@/lib/payout-transfer.server");
 
-    // Virement automatique vers le compte bancaire du pro (via son compte de versement Clearo).
+    // Virement automatique vers le compte bancaire du pro (via son compte de versement Débarras France).
     const result = await transferToPro({
       id: payment.id,
       pro_id: payment.pro_id,

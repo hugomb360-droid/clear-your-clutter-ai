@@ -8,11 +8,11 @@ const CANONICAL = "https://clearo.fr/debarras-appartement";
 export const Route = createFileRoute("/debarras-appartement")({
   head: () => ({
     meta: [
-      { title: "Débarras d'appartement : prix et estimation en 2 min | Clearo" },
+      { title: "Débarras d'appartement : prix et estimation en 2 min | Débarras France" },
       {
         name: "description",
         content:
-          "Estimez le prix du débarras de votre appartement en photos grâce à l'IA Clearo : volume, étage, ascenseur et accès pris en compte. Pros vérifiés près de chez vous.",
+          "Estimez le prix du débarras de votre appartement en photos grâce à l'IA Débarras France : volume, étage, ascenseur et accès pris en compte. Pros vérifiés près de chez vous.",
       },
       { property: "og:title", content: "Débarras d'appartement : prix et estimation immédiate" },
       {
@@ -36,7 +36,7 @@ export const Route = createFileRoute("/debarras-appartement")({
           areaServed: "France",
           provider: {
             "@type": "Organization",
-            name: "Clearo",
+            name: "Débarras France",
             url: "https://clearo.fr",
           },
           url: CANONICAL,
@@ -101,7 +101,7 @@ function ApartmentClearance() {
         </h1>
         <p className="mx-auto mt-5 max-w-2xl text-muted-foreground">
           En appartement, le prix d'un débarras dépend surtout du volume à évacuer, de l'étage et de
-          l'ascenseur. Clearo analyse vos photos, calcule le volume en m³, applique les contraintes
+          l'ascenseur. Débarras France analyse vos photos, calcule le volume en m³, applique les contraintes
           d'accès, puis transmet votre demande à des débarrasseurs vérifiés de votre secteur.
         </p>
         <div className="mt-8 flex flex-wrap justify-center gap-3">
@@ -130,7 +130,7 @@ function ApartmentClearance() {
       <section className="mt-16">
         <h2 className="text-2xl font-bold tracking-tight">Volumes courants selon le logement</h2>
         <p className="mt-2 text-sm text-muted-foreground">
-          Ces ordres de grandeur sont indicatifs : l'estimation Clearo affine le volume à partir de
+          Ces ordres de grandeur sont indicatifs : l'estimation Débarras France affine le volume à partir de
           vos photos et de vos réponses.
         </p>
         <div className="mt-6 grid gap-4 sm:grid-cols-2">

@@ -190,7 +190,7 @@ export function ClientMissionPanel({ bidId, quoteId, clientId, proId, status }: 
           </p>
           <p className="mt-1 text-muted-foreground">{dispute.reason}</p>
           {dispute.admin_note && (
-            <p className="mt-2 text-muted-foreground">Réponse Clearo : {dispute.admin_note}</p>
+            <p className="mt-2 text-muted-foreground">Réponse Débarras France : {dispute.admin_note}</p>
           )}
           <MissionPhotoGallery bidId={bidId} kind="dispute" label="Photos du litige" />
         </div>

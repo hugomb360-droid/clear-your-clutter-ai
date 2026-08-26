@@ -17,13 +17,13 @@ import { euro } from "@/lib/pricing";
 export const Route = createFileRoute("/pro/dashboard")({
   head: () => ({
     meta: [
-      { title: "Espace pro — propositions et planning des chantiers Clearo" },
+      { title: "Espace pro — propositions et planning des chantiers Débarras France" },
       {
         name: "description",
         content:
           "Chiffrez les demandes de vos zones, suivez vos propositions et retrouvez vos chantiers dans un agenda clair avec les coordonnées client.",
       },
-      { property: "og:title", content: "Espace professionnel Clearo" },
+      { property: "og:title", content: "Espace professionnel Débarras France" },
       {
         property: "og:description",
         content: "Propositions à chiffrer et agenda des chantiers dans un seul tableau de bord.",
@@ -182,7 +182,7 @@ function ProDashboard() {
               Espace professionnel
             </p>
             <h1 className="font-display mt-2 text-2xl font-extrabold sm:text-3xl tracking-tight lg:text-4xl">
-              {profile?.company_name ?? "Bienvenue sur Clearo"}
+              {profile?.company_name ?? "Bienvenue sur Débarras France"}
             </h1>
             <p className="mt-3 max-w-xl font-body text-sm text-proposal-cream/70">
               {profile

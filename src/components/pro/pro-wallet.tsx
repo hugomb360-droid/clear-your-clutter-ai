@@ -74,7 +74,7 @@ export function ProWallet({ bids }: { bids: BidWithQuote[] }) {
         <div className="flex items-start gap-3 rounded-2xl border border-proposal-emerald/30 bg-proposal-emerald/5 p-4">
           <Gift className="mt-0.5 size-4 shrink-0 text-proposal-emerald" />
           <p className="text-sm leading-relaxed text-proposal-emerald">
-            <strong>Offre fondateur</strong> — vous faites partie des 20 premiers pros Clearo :{" "}
+            <strong>Offre fondateur</strong> — vous faites partie des 20 premiers pros Débarras France :{" "}
             {founding.freeRemaining > 0 ? (
               <>
                 <strong>
@@ -93,7 +93,7 @@ export function ProWallet({ bids }: { bids: BidWithQuote[] }) {
       <div className="flex items-start gap-3 rounded-2xl border border-proposal-gold/40 bg-proposal-gold/10 p-4">
         <Lock className="mt-0.5 size-4 shrink-0 text-proposal-emerald" />
         <p className="text-sm leading-relaxed text-proposal-emerald">
-          <strong>{euro(secured)} sécurisés</strong> par Clearo pour vos missions en cours. Le
+          <strong>{euro(secured)} sécurisés</strong> par Débarras France pour vos missions en cours. Le
           client paie l'intégralité à l'acceptation du devis : les fonds sont bloqués en séquestre,
           puis virés automatiquement sur votre compte bancaire (montant net, commission déduite) dès
           que le client valide la fin de chantier.
@@ -145,7 +145,7 @@ export function ProWallet({ bids }: { bids: BidWithQuote[] }) {
         {[
           { label: "Chiffre d'affaires", value: euro(gross), hint: `${earning.length} mission(s)` },
           {
-            label: "Commission Clearo",
+            label: "Commission Débarras France",
             value: euro(commission),
             hint: `${Math.round(CLEARO_COMMISSION_RATE * 100)} % par mission`,
           },
@@ -235,8 +235,8 @@ export function ProWallet({ bids }: { bids: BidWithQuote[] }) {
         )}
         <p className="mt-4 text-xs text-muted-foreground">
           Les clients règlent 100 % du montant à l'acceptation du devis via le paiement sécurisé
-          Clearo. Les fonds sont bloqués puis libérés vers vous dès la validation du chantier,
-          commission Clearo déjà déduite.
+          Débarras France. Les fonds sont bloqués puis libérés vers vous dès la validation du chantier,
+          commission Débarras France déjà déduite.
         </p>
       </section>
     </div>

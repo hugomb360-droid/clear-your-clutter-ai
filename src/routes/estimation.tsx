@@ -18,7 +18,7 @@ import { PROPERTY_LABELS, euro, type EstimationResult, type PropertyType } from 
 export const Route = createFileRoute("/estimation")({
   head: () => ({
     meta: [
-      { title: "Estimation de débarras en photo — Clearo" },
+      { title: "Estimation de débarras en photo — Débarras France" },
       {
         name: "description",
         content:
@@ -366,7 +366,7 @@ function EstimationPage() {
             }`
           : null,
         manualEstimate
-          ? `Estimation Clearo : ${manualEstimate.volumeM3} m³ · ${euro(
+          ? `Estimation Débarras France : ${manualEstimate.volumeM3} m³ · ${euro(
               manualEstimate.priceMin,
             )} – ${euro(manualEstimate.priceMax)}`
           : null,
@@ -914,7 +914,7 @@ function EstimationPage() {
         <aside className="lg:sticky lg:top-24 lg:self-start">
           <div className="rounded-3xl border border-border bg-card p-5 sm:p-7 shadow-[var(--shadow-soft)]">
             <h2 className="text-lg font-bold">
-              {isPhoto ? "Votre devis Clearo" : "Votre demande de devis"}
+              {isPhoto ? "Votre devis Débarras France" : "Votre demande de devis"}
             </h2>
             {!isPhoto ? (
               <div className="mt-5 space-y-5">

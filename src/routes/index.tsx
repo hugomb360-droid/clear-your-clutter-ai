@@ -15,13 +15,13 @@ import { BeforeAfterSlider } from "@/components/before-after-slider";
 export const Route = createFileRoute("/")({
   head: () => ({
     meta: [
-      { title: "Clearo | Débarras France – Devis Rapide en Photo avec IA" },
+      { title: "Débarras France – Devis rapide en photo avec IA" },
       {
         name: "description",
         content:
           "Photographiez ce que vous voulez débarrasser : notre IA estime le volume et le prix en quelques secondes, puis vous met en relation avec un débarrasseur près de chez vous.",
       },
-      { property: "og:title", content: "Clearo | Débarras France – Devis Rapide en Photo avec IA" },
+      { property: "og:title", content: "Débarras France – Devis rapide en photo avec IA" },
       {
         property: "og:description",
         content:
@@ -141,7 +141,7 @@ function Home() {
               <span className="text-brand"> en une photo</span>
             </h1>
             <p className="mt-4 max-w-xl text-base text-muted-foreground sm:mt-5 sm:text-xl">
-              Clearo analyse vos photos, calcule le volume à évacuer et vous donne un prix immédiat.
+              Débarras France analyse vos photos, calcule le volume à évacuer et vous donne un prix immédiat.
               Puis on vous met en relation avec un débarrasseur près de chez vous.
             </p>
             <div className="mt-6 flex flex-col gap-3 sm:mt-7 sm:flex-row sm:flex-wrap">
@@ -223,7 +223,7 @@ function Home() {
               Chantiers réels
             </span>
             <h2 className="mt-4 text-2xl font-extrabold sm:text-3xl tracking-tight">
-              À quoi ressemble un débarras Clearo
+              À quoi ressemble un débarras Débarras France
             </h2>
             <p className="mx-auto mt-3 max-w-2xl text-muted-foreground">
               Appartements, caves, maisons : nos pros vident, trient et nettoient. Voici des
@@ -311,7 +311,7 @@ function Home() {
               <Star className="size-4" /> Avis clients
             </span>
             <h2 className="mt-4 text-2xl font-extrabold sm:text-3xl tracking-tight">
-              Ils ont fait de la place avec Clearo
+              Ils ont fait de la place avec Débarras France
             </h2>
             <p className="mx-auto mt-3 max-w-2xl text-muted-foreground">
               Des milliers de clients ont déjà estimé leur débarras par photo et trouvé un pro près de chez eux.

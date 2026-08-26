@@ -58,7 +58,7 @@ export function RoleGuard({ role, redirect, children }: Props) {
         <p className="mt-3 text-sm leading-relaxed text-muted-foreground">
           Cet {SPACE_LABEL[role]} n'est pas accessible avec votre compte
           {isPro ? " professionnel" : " client"}. Les espaces client et professionnel sont
-          totalement séparés sur Clearo.
+          totalement séparés sur Débarras France.
         </p>
         <div className="mt-7 flex flex-wrap justify-center gap-3">
           <Button asChild>

@@ -58,7 +58,7 @@ export const getPayoutStatus = createServerFn({ method: "POST" })
       if (message.includes("signed up for Connect")) {
         return {
           error:
-            "Les versements professionnels ne sont pas encore activés sur le compte de paiement Clearo. L’administrateur doit terminer l’activation de la plateforme de paiement avant que vous puissiez renseigner votre IBAN.",
+            "Les versements professionnels ne sont pas encore activés sur le compte de paiement Débarras France. L’administrateur doit terminer l’activation de la plateforme de paiement avant que vous puissiez renseigner votre IBAN.",
         };
       }
       return { error: message };
@@ -93,7 +93,7 @@ export const startPayoutOnboarding = createServerFn({ method: "POST" })
           capabilities: { transfers: { requested: true } },
           business_profile: {
             name: profile.company_name ?? undefined,
-            product_description: "Prestations de débarras via la plateforme Clearo",
+            product_description: "Prestations de débarras via la plateforme Débarras France",
           },
           metadata: { proId: userId },
         });
@@ -116,7 +116,7 @@ export const startPayoutOnboarding = createServerFn({ method: "POST" })
       if (message.includes("signed up for Connect")) {
         return {
           error:
-            "Les versements professionnels ne sont pas encore activés sur le compte de paiement Clearo. L’administrateur doit terminer l’activation de la plateforme de paiement avant que vous puissiez renseigner votre IBAN.",
+            "Les versements professionnels ne sont pas encore activés sur le compte de paiement Débarras France. L’administrateur doit terminer l’activation de la plateforme de paiement avant que vous puissiez renseigner votre IBAN.",
         };
       }
       return { error: message };

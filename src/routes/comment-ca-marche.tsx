@@ -5,13 +5,13 @@ import { Button } from "@/components/ui/button";
 export const Route = createFileRoute("/comment-ca-marche")({
   head: () => ({
     meta: [
-      { title: "Comment ça marche — Clearo débarras" },
+      { title: "Comment ça marche — Débarras France débarras" },
       {
         name: "description",
         content:
-          "Photos, estimation IA, devis et mise en relation avec un débarrasseur près de chez vous : découvrez les 4 étapes Clearo.",
+          "Photos, estimation IA, devis et mise en relation avec un débarrasseur près de chez vous : découvrez les 4 étapes Débarras France.",
       },
-      { property: "og:title", content: "Comment fonctionne Clearo" },
+      { property: "og:title", content: "Comment fonctionne Débarras France" },
       {
         property: "og:description",
         content: "Estimez votre débarras en photo et recevez des propositions de pros locaux.",
@@ -35,7 +35,7 @@ const STEPS = [
   {
     icon: Sparkles,
     title: "2. L'IA estime le volume",
-    text: "Notre IA identifie les objets, évalue le volume en m³ et applique la grille tarifaire Clearo pour un prix immédiat.",
+    text: "Notre IA identifie les objets, évalue le volume en m³ et applique la grille tarifaire Débarras France pour un prix immédiat.",
   },
   {
     icon: MapPin,
@@ -54,7 +54,7 @@ function HowItWorks() {
     <div className="mx-auto max-w-5xl px-4 py-12 sm:py-16">
       <h1 className="text-3xl font-extrabold sm:text-4xl tracking-tight sm:text-5xl">Comment ça marche</h1>
       <p className="mt-4 max-w-2xl text-lg text-muted-foreground">
-        Clearo remplace les visites d'estimation et les appels sans réponse par un parcours de deux
+        Débarras France remplace les visites d'estimation et les appels sans réponse par un parcours de deux
         minutes.
       </p>
 

@@ -7,7 +7,7 @@ export type FoundingInfo = {
   freeRemaining: number;
 };
 
-/** Offre de lancement : 20 premiers pros, 5 chantiers sans commission Clearo. */
+/** Offre de lancement : 20 premiers pros, 5 chantiers sans commission Débarras France. */
 export function useFoundingStatus(enabled = true) {
   const query = useQuery({
     queryKey: ["founding-status"],

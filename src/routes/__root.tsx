@@ -81,23 +81,23 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
     meta: [
       { charSet: "utf-8" },
       { name: "viewport", content: "width=device-width, initial-scale=1" },
-      { title: "Clearo — plateforme de débarras partout en France" },
+      { title: "Débarras France — plateforme de débarras partout en France" },
       {
         name: "description",
         content:
-          "Clearo estime votre débarras à partir de photos et vous met en relation avec des professionnels près de chez vous.",
+          "Débarras France estime votre débarras à partir de photos et vous met en relation avec des professionnels près de chez vous.",
       },
-      { name: "author", content: "Clearo" },
+      { name: "author", content: "Débarras France" },
       {
         name: "google-site-verification",
         content: "RgyPHeo6CE3U7SZb1HwIh9Hw8d3opJsmd6NPuS6i2vg",
       },
-      { property: "og:site_name", content: "Clearo" },
-      { property: "og:title", content: "Clearo — plateforme de débarras partout en France" },
+      { property: "og:site_name", content: "Débarras France" },
+      { property: "og:title", content: "Débarras France — plateforme de débarras partout en France" },
       {
         property: "og:description",
         content:
-          "Clearo estime votre débarras à partir de photos et vous met en relation avec des professionnels près de chez vous.",
+          "Débarras France estime votre débarras à partir de photos et vous met en relation avec des professionnels près de chez vous.",
       },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },

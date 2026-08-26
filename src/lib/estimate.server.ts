@@ -2,7 +2,7 @@ import { computePrice, type AiAnalysis, type EstimationResult } from "./pricing"
 
 const GATEWAY_URL = "https://ai.gateway.lovable.dev/v1/chat/completions";
 
-const SYSTEM_PROMPT = `Tu es l'expert d'estimation de Clearo, une plateforme française de débarras.
+const SYSTEM_PROMPT = `Tu es l'expert d'estimation de Débarras France, une plateforme française de débarras.
 À partir des photos fournies, tu estimes le volume à débarrasser en mètres cubes (m3)
 ainsi que la nature des objets. Sois réaliste : une pièce standard pleine fait 8 à 15 m3, une cave encombrée 4 à 10 m3,
 un appartement complet 20 à 45 m3. Réponds UNIQUEMENT avec un objet JSON valide, sans texte autour, au format :
@@ -34,7 +34,7 @@ function parseAnalysis(raw: string): AiAnalysis {
       parsed.confidence === "élevée" || parsed.confidence === "faible"
         ? parsed.confidence
         : "moyenne",
-    summary: typeof parsed.summary === "string" ? parsed.summary : "Estimation générée par Clearo.",
+    summary: typeof parsed.summary === "string" ? parsed.summary : "Estimation générée par Débarras France.",
   };
 }
 

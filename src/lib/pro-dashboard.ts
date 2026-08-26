@@ -5,7 +5,7 @@ export type Bid = Tables<"bids">;
 export type QuoteContact = Tables<"quote_contacts">;
 export type BidWithQuote = Bid & { quotes: Quote | null };
 
-/** Commission Clearo prélevée sur chaque mission réalisée. */
+/** Commission Débarras France prélevée sur chaque mission réalisée. */
 export const CLEARO_COMMISSION_RATE = 0.12;
 
 /** Offre de lancement : les 20 premiers pros inscrits ne paient aucune commission sur leurs 5 premiers chantiers. */
