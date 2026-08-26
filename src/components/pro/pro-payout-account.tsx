@@ -1,4 +1,5 @@
 import { useMutation, useQuery } from "@tanstack/react-query";
+import { useServerFn } from "@tanstack/react-start";
 import { BadgeCheck, Banknote, ExternalLink, ShieldCheck } from "lucide-react";
 import { toast } from "sonner";
 import { Badge } from "@/components/ui/badge";
@@ -9,12 +10,14 @@ import { getStripeEnvironment, paymentsConfigured } from "@/lib/stripe";
 /** Configuration des coordonnées bancaires du pro (IBAN saisi sur la page sécurisée Stripe). */
 export function ProPayoutAccount() {
   const configured = paymentsConfigured();
+  const getPayoutStatusFn = useServerFn(getPayoutStatus);
+  const startPayoutOnboardingFn = useServerFn(startPayoutOnboarding);
 
   const statusQuery = useQuery({
     queryKey: ["pro-payout-status"],
     enabled: configured,
     queryFn: async () => {
-      const res = await getPayoutStatus({ data: { environment: getStripeEnvironment() } });
+      const res = await getPayoutStatusFn({ data: { environment: getStripeEnvironment() } });
       if ("error" in res) throw new Error(res.error);
       return res;
     },
@@ -23,7 +26,7 @@ export function ProPayoutAccount() {
   const onboarding = useMutation({
     mutationFn: async () => {
       const url = window.location.href;
-      const res = await startPayoutOnboarding({
+      const res = await startPayoutOnboardingFn({
         data: { returnUrl: url, refreshUrl: url, environment: getStripeEnvironment() },
       });
       if ("error" in res) throw new Error(res.error);
@@ -101,6 +104,16 @@ export function ProPayoutAccount() {
                 : "Configurer mon IBAN"}
             <ExternalLink className="size-4" />
           </Button>
+
+          {onboarding.isError && (
+            <div
+              role="alert"
+              className="mt-4 rounded-2xl border border-destructive/30 bg-destructive/5 p-4 text-sm text-destructive"
+            >
+              <p className="font-semibold">Configuration bancaire temporairement indisponible</p>
+              <p className="mt-1 leading-relaxed">{onboarding.error.message}</p>
+            </div>
+          )}
 
           <p className="mt-4 flex items-start gap-2 text-xs text-muted-foreground">
             <ShieldCheck className="mt-0.5 size-3.5 shrink-0 text-proposal-emerald" />
