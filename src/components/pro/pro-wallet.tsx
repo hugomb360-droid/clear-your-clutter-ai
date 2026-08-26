@@ -1,4 +1,6 @@
 import { useQuery } from "@tanstack/react-query";
+import { Link } from "@tanstack/react-router";
+
 import { Gift, Lock, Wallet } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
 import { useFoundingStatus } from "@/hooks/useFoundingStatus";
@@ -78,9 +80,14 @@ export function ProWallet({ bids }: { bids: BidWithQuote[] }) {
         <p className="text-sm leading-relaxed text-proposal-emerald">
           <strong>{euro(secured)} sécurisés</strong> par Clearo pour vos missions en cours. Le
           client paie l'intégralité à l'acceptation du devis : vous êtes certain d'être payé, et les
-          fonds vous sont versés dès la validation de fin de chantier.
+          fonds sont virés sur votre compte bancaire dès la validation de fin de chantier.{" "}
+          <Link to="/pro/parametres" className="font-semibold underline underline-offset-2">
+            Renseignez votre IBAN dans vos paramètres
+          </Link>{" "}
+          pour recevoir vos virements.
         </p>
       </div>
+
 
       <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
         {[

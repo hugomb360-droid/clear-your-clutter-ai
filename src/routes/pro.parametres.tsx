@@ -2,7 +2,9 @@ import { useQuery } from "@tanstack/react-query";
 import { createFileRoute, Link, useNavigate } from "@tanstack/react-router";
 import { ArrowLeft } from "lucide-react";
 import { useEffect } from "react";
+import { ProPayoutAccount } from "@/components/pro/pro-payout-account";
 import { ProProfileForm } from "@/components/pro/pro-profile-form";
+
 import { RoleGuard } from "@/components/role-guard";
 import { useAuth } from "@/hooks/useAuth";
 import { supabase } from "@/integrations/supabase/client";
@@ -69,13 +71,15 @@ function ProSettings() {
         </p>
       </header>
 
-      <div className="mt-8">
+      <div className="mt-8 space-y-8">
         <ProProfileForm
           profile={profileQuery.data ?? null}
           userId={user.id}
           hasProRole={roles.includes("pro")}
         />
+        <ProPayoutAccount />
       </div>
+
     </div>
   );
 }
