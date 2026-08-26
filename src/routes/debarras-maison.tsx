@@ -8,7 +8,7 @@ const CANONICAL = "https://clearo.fr/debarras-maison";
 export const Route = createFileRoute("/debarras-maison")({
   head: () => ({
     meta: [
-      { title: "Débarras de maison : prix et estimation en photo | Clearo" },
+      { title: "Débarras de maison : prix et estimation en photo | Débarras France" },
       {
         name: "description",
         content:
@@ -34,7 +34,7 @@ export const Route = createFileRoute("/debarras-maison")({
           name: "Débarras de maison",
           serviceType: "Débarras de maison",
           areaServed: "France",
-          provider: { "@type": "Organization", name: "Clearo", url: "https://clearo.fr" },
+          provider: { "@type": "Organization", name: "Débarras France", url: "https://clearo.fr" },
           url: CANONICAL,
         }),
       },
@@ -97,7 +97,7 @@ function HouseClearance() {
         </h1>
         <p className="mx-auto mt-5 max-w-2xl text-muted-foreground">
           En maison, le volume à évacuer dépasse presque toujours celui d'un appartement : combles,
-          cave, garage et dépendances s'ajoutent aux pièces de vie. Clearo analyse vos photos,
+          cave, garage et dépendances s'ajoutent aux pièces de vie. Débarras France analyse vos photos,
           calcule le volume en m³, applique un tarif dégressif sur les gros volumes, puis transmet
           votre demande à des débarrasseurs vérifiés près de chez vous.
         </p>
@@ -127,7 +127,7 @@ function HouseClearance() {
       <section className="mt-16">
         <h2 className="text-2xl font-bold tracking-tight">Volumes courants selon la maison</h2>
         <p className="mt-2 text-sm text-muted-foreground">
-          Ces ordres de grandeur sont indicatifs : l'estimation Clearo affine le volume à partir de
+          Ces ordres de grandeur sont indicatifs : l'estimation Débarras France affine le volume à partir de
           vos photos et de vos réponses.
         </p>
         <div className="mt-6 grid gap-4 sm:grid-cols-2">

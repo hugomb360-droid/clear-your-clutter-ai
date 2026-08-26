@@ -31,7 +31,7 @@ const GUARANTEES = [
   {
     icon: ShieldCheck,
     title: "Paiement 100 % sécurisé",
-    text: "Le paiement est traité par Stripe (chiffrement bancaire, 3D Secure). Clearo ne voit jamais votre numéro de carte.",
+    text: "Le paiement est traité par Stripe (chiffrement bancaire, 3D Secure). Débarras France ne voit jamais votre numéro de carte.",
   },
   {
     icon: ScrollText,
@@ -77,7 +77,7 @@ export function EscrowCheckoutDialog({ open, onOpenChange, bidId, price, company
               Paiement sécurisé — {euro(price)}
             </DialogTitle>
             <DialogDescription className="text-proposal-cream/70">
-              Mission confiée à {companyName}. Votre argent est bloqué par Clearo jusqu'à la fin du
+              Mission confiée à {companyName}. Votre argent est bloqué par Débarras France jusqu'à la fin du
               chantier.
             </DialogDescription>
           </DialogHeader>
@@ -110,7 +110,7 @@ export function EscrowCheckoutDialog({ open, onOpenChange, bidId, price, company
                   </span>
                 </div>
                 <p className="mt-2 text-xs text-muted-foreground">
-                  Frais de service Clearo inclus. Aucun supplément le jour du chantier : le prix est
+                  Frais de service Débarras France inclus. Aucun supplément le jour du chantier : le prix est
                   ferme, sauf modification acceptée par vous.
                 </p>
               </div>

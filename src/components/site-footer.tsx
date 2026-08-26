@@ -9,8 +9,8 @@ export function SiteFooter() {
       <div className="mx-auto grid max-w-6xl gap-8 px-4 py-12 sm:grid-cols-2 lg:grid-cols-5">
         <div>
           <div className="flex items-center gap-2">
-            <img src={clearoLogo} alt="Logo Clearo" className="size-8 object-contain" />
-            <span className="text-lg font-extrabold tracking-tight">clearo</span>
+            <img src={clearoLogo} alt="Logo Débarras France" className="size-8 object-contain" />
+            <span className="text-lg font-extrabold tracking-tight">Débarras France</span>
           </div>
           <p className="mt-3 text-sm text-muted-foreground">
             Le débarras simple : estimez en 2 minutes, on trouve le pro près de chez vous.
@@ -84,7 +84,7 @@ export function SiteFooter() {
           </ul>
         </div>
         <div>
-          <h3 className="text-sm font-semibold">Clearo</h3>
+          <h3 className="text-sm font-semibold">Débarras France</h3>
           <ul className="mt-3 space-y-2 text-sm text-muted-foreground">
             <li>
               <Link to="/contact" className="hover:text-foreground">
@@ -100,7 +100,7 @@ export function SiteFooter() {
         </div>
       </div>
       <div className="border-t border-border/70 py-5 text-center text-xs text-muted-foreground">
-        © {new Date().getFullYear()} Clearo — Débarras responsable partout en France.
+        © {new Date().getFullYear()} Débarras France — Débarras responsable partout en France.
       </div>
     </footer>
   );

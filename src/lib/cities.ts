@@ -20,7 +20,7 @@ export const CITIES: CityPage[] = [
     postalCodes: "75001 à 75020",
     region: "Île-de-France",
     intro:
-      "Immeubles haussmanniens, escaliers étroits, rues en stationnement payant : le débarras parisien demande une logistique précise. Clearo estime le volume à partir de vos photos et transmet la demande aux débarrasseurs qui interviennent réellement dans votre arrondissement.",
+      "Immeubles haussmanniens, escaliers étroits, rues en stationnement payant : le débarras parisien demande une logistique précise. Débarras France estime le volume à partir de vos photos et transmet la demande aux débarrasseurs qui interviennent réellement dans votre arrondissement.",
     context: [
       "Étages sans ascenseur et cages d'escalier étroites : le portage pèse sur le prix, précisez-le dès l'estimation.",
       "Stationnement : une autorisation de voirie peut être nécessaire pour immobiliser le camion.",
@@ -42,7 +42,7 @@ export const CITIES: CityPage[] = [
     postalCodes: "13001 à 13016",
     region: "Provence-Alpes-Côte d'Azur",
     intro:
-      "Du centre-ville aux quartiers en collines, les accès marseillais varient énormément d'une rue à l'autre. Clearo calcule le volume en m³ depuis vos photos, applique les majorations d'accès et vous met en relation avec des débarrasseurs des 16 arrondissements.",
+      "Du centre-ville aux quartiers en collines, les accès marseillais varient énormément d'une rue à l'autre. Débarras France calcule le volume en m³ depuis vos photos, applique les majorations d'accès et vous met en relation avec des débarrasseurs des 16 arrondissements.",
     context: [
       "Rues en pente et voies étroites : le camion se gare parfois loin de l'entrée.",
       "Villas et cabanons avec dépendances, caves et extérieurs à intégrer au volume.",
@@ -64,7 +64,7 @@ export const CITIES: CityPage[] = [
     postalCodes: "69001 à 69009",
     region: "Auvergne-Rhône-Alpes",
     intro:
-      "Traboules de la Croix-Rousse, immeubles anciens de la Presqu'île, appartements récents de la Part-Dieu : Clearo adapte l'estimation à la réalité de votre logement lyonnais et diffuse la demande aux pros de la métropole.",
+      "Traboules de la Croix-Rousse, immeubles anciens de la Presqu'île, appartements récents de la Part-Dieu : Débarras France adapte l'estimation à la réalité de votre logement lyonnais et diffuse la demande aux pros de la métropole.",
     context: [
       "Immeubles anciens sans ascenseur sur les pentes de la Croix-Rousse.",
       "Zones à circulation réglementée : les pros anticipent le créneau d'intervention.",
@@ -102,7 +102,7 @@ export const CITIES: CityPage[] = [
     postalCodes: "06000, 06100, 06200, 06300",
     region: "Provence-Alpes-Côte d'Azur",
     intro:
-      "Entre le Vieux-Nice, les collines de Cimiez et les résidences du bord de mer, l'accès conditionne beaucoup le prix. Clearo estime votre débarras en photos et vous met en relation avec des pros locaux vérifiés.",
+      "Entre le Vieux-Nice, les collines de Cimiez et les résidences du bord de mer, l'accès conditionne beaucoup le prix. Débarras France estime votre débarras en photos et vous met en relation avec des pros locaux vérifiés.",
     context: [
       "Ruelles piétonnes du Vieux-Nice : portage à la main sur plusieurs dizaines de mètres.",
       "Résidences avec ascenseur : intervention plus rapide et moins chère.",
@@ -118,7 +118,7 @@ export const CITIES: CityPage[] = [
     postalCodes: "44000, 44100, 44200, 44300",
     region: "Pays de la Loire",
     intro:
-      "Maisons nantaises avec cave et jardin, immeubles du centre, logements neufs de l'Île de Nantes : l'estimation Clearo tient compte du volume réel et de l'accès, puis diffuse la demande aux débarrasseurs de la métropole.",
+      "Maisons nantaises avec cave et jardin, immeubles du centre, logements neufs de l'Île de Nantes : l'estimation Débarras France tient compte du volume réel et de l'accès, puis diffuse la demande aux débarrasseurs de la métropole.",
     context: [
       "Maisons de ville avec cave et grenier : le volume total dépasse souvent l'estimation à l'œil.",
       "Centre-ville avec voies réservées : créneau de chargement à planifier.",
@@ -150,7 +150,7 @@ export const CITIES: CityPage[] = [
     postalCodes: "67000, 67100, 67200",
     region: "Grand Est",
     intro:
-      "Immeubles anciens de la Grande Île, maisons alsaciennes avec grenier et cave : les volumes strasbourgeois sont souvent sous-estimés. Clearo les calcule à partir de vos photos et contacte les pros du secteur.",
+      "Immeubles anciens de la Grande Île, maisons alsaciennes avec grenier et cave : les volumes strasbourgeois sont souvent sous-estimés. Débarras France les calcule à partir de vos photos et contacte les pros du secteur.",
     context: [
       "Greniers aménageables chargés de mobilier ancien et de cartons.",
       "Grande Île classée : circulation et stationnement réglementés.",
@@ -182,7 +182,7 @@ export const CITIES: CityPage[] = [
     postalCodes: "59000, 59260, 59777, 59800",
     region: "Hauts-de-France",
     intro:
-      "Maisons 1930 avec cave et grenier, appartements du Vieux-Lille, logements étudiants : Clearo estime le volume en m³ depuis vos photos et transmet la demande aux débarrasseurs de la métropole lilloise.",
+      "Maisons 1930 avec cave et grenier, appartements du Vieux-Lille, logements étudiants : Débarras France estime le volume en m³ depuis vos photos et transmet la demande aux débarrasseurs de la métropole lilloise.",
     context: [
       "Maisons de ville sur trois niveaux : escaliers raides, portage plus long.",
       "Caves et greniers systématiques dans le parc ancien.",

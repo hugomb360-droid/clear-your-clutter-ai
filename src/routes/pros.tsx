@@ -6,13 +6,13 @@ import { Button } from "@/components/ui/button";
 export const Route = createFileRoute("/pros")({
   head: () => ({
     meta: [
-      { title: "Devenir débarrasseur partenaire — Clearo" },
+      { title: "Devenir débarrasseur partenaire — Débarras France" },
       {
         name: "description",
         content:
-          "Recevez des demandes de débarras qualifiées près de chez vous, avec volume estimé et photos. Inscription gratuite sur Clearo.",
+          "Recevez des demandes de débarras qualifiées près de chez vous, avec volume estimé et photos. Inscription gratuite sur Débarras France.",
       },
-      { property: "og:title", content: "Rejoindre le réseau de pros Clearo" },
+      { property: "og:title", content: "Rejoindre le réseau de pros Débarras France" },
       {
         property: "og:description",
         content: "Des missions de débarras qualifiées dans vos zones d'intervention.",
@@ -36,7 +36,7 @@ const BENEFITS = [
   {
     icon: Euro,
     title: "Vous fixez votre prix",
-    text: "L'estimation Clearo sert de repère, votre proposition reste la vôtre.",
+    text: "L'estimation Débarras France sert de repère, votre proposition reste la vôtre.",
   },
   {
     icon: Truck,
@@ -63,14 +63,14 @@ function ProsLanding() {
             Remplissez vos camions avec des missions de débarras près de chez vous
           </h1>
           <p className="mt-5 max-w-xl text-lg text-muted-foreground">
-            Clearo estime le volume et le budget avant de vous transmettre la demande. Vous
+            Débarras France estime le volume et le budget avant de vous transmettre la demande. Vous
             répondez, le client choisit.
           </p>
           <p className="mt-5 inline-flex max-w-xl items-start gap-2 rounded-2xl border border-brand/30 bg-brand/10 px-4 py-3 text-sm font-medium text-foreground">
             <span aria-hidden>🎁</span>
             <span>
               <strong>Offre fondateur</strong> — pour les 20 premiers pros inscrits :{" "}
-              <strong>0 % de commission Clearo sur vos 5 premiers chantiers</strong>. Vous encaissez
+              <strong>0 % de commission Débarras France sur vos 5 premiers chantiers</strong>. Vous encaissez
               100 % du montant.
             </span>
           </p>

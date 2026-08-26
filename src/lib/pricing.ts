@@ -15,7 +15,7 @@ export const PROPERTY_LABELS: Record<PropertyType, string> = {
   local: "Local professionnel",
 };
 
-/** Grille tarifaire Clearo — ajustable sans toucher au modèle IA. */
+/** Grille tarifaire Débarras France — ajustable sans toucher au modèle IA. */
 export const PRICING = {
   pricePerM3: 114,
   minimumPrice: 447,

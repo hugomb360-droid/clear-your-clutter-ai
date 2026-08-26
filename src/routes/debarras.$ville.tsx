@@ -13,18 +13,18 @@ export const Route = createFileRoute("/debarras/$ville")({
   head: ({ params, loaderData }) => {
     if (!loaderData) {
       return {
-        meta: [{ title: "Ville non couverte | Clearo" }, { name: "robots", content: "noindex" }],
+        meta: [{ title: "Ville non couverte | Débarras France" }, { name: "robots", content: "noindex" }],
       };
     }
     const { city } = loaderData;
     const canonical = `https://clearo.fr/debarras/${params.ville}`;
-    const title = `Débarras ${city.name} : devis en photo et prix immédiat | Clearo`;
+    const title = `Débarras ${city.name} : devis en photo et prix immédiat | Débarras France`;
     const description = `Débarras ${city.preposition} : envoyez vos photos, obtenez le volume en m³ et une fourchette de prix en 2 minutes, puis comparez les débarrasseurs vérifiés de ${city.department}.`;
     return {
       meta: [
         { title },
         { name: "description", content: description },
-        { property: "og:title", content: `Débarras ${city.name} — estimation en photo | Clearo` },
+        { property: "og:title", content: `Débarras ${city.name} — estimation en photo | Débarras France` },
         { property: "og:description", content: description },
         { property: "og:type", content: "article" },
         { property: "og:url", content: canonical },
@@ -49,7 +49,7 @@ export const Route = createFileRoute("/debarras/$ville")({
                 addressCountry: "FR",
               },
             },
-            provider: { "@type": "Organization", name: "Clearo", url: "https://clearo.fr" },
+            provider: { "@type": "Organization", name: "Débarras France", url: "https://clearo.fr" },
             url: canonical,
           }),
         },

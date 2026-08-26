@@ -6,13 +6,13 @@ import { PRICING, euro } from "@/lib/pricing";
 export const Route = createFileRoute("/tarifs")({
   head: () => ({
     meta: [
-      { title: "Tarifs débarras — Clearo" },
+      { title: "Tarifs débarras — Débarras France" },
       {
         name: "description",
         content:
-          "Prix au m³, majorations d'étage et d'accès : la grille tarifaire Clearo est transparente et sans frais cachés.",
+          "Prix au m³, majorations d'étage et d'accès : la grille tarifaire Débarras France est transparente et sans frais cachés.",
       },
-      { property: "og:title", content: "Tarifs Clearo : le débarras au m³" },
+      { property: "og:title", content: "Tarifs Débarras France : le débarras au m³" },
       {
         property: "og:description",
         content: "Une grille claire, un devis gratuit, aucune commission pour le particulier.",
@@ -39,7 +39,7 @@ function Pricing() {
       <h1 className="text-3xl font-extrabold sm:text-4xl tracking-tight sm:text-5xl">Des tarifs lisibles</h1>
       <p className="mt-4 max-w-2xl text-lg text-muted-foreground">
         Le prix d'un débarras dépend surtout du volume. Voici la base utilisée par l'estimation
-        Clearo, avant les propositions des pros de votre secteur.
+        Débarras France, avant les propositions des pros de votre secteur.
       </p>
 
       <div className="mt-10 grid gap-6 sm:grid-cols-3">

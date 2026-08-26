@@ -13,8 +13,8 @@ type PaymentRow = {
 export type TransferResult = { ok: true; transferId: string } | { ok: false; error: string };
 
 /**
- * Vire le montant net du pro depuis le solde séquestre Clearo vers son compte
- * bancaire (compte de versement Stripe Express). La commission Clearo reste
+ * Vire le montant net du pro depuis le solde séquestre Débarras France vers son compte
+ * bancaire (compte de versement Stripe Express). La commission Débarras France reste
  * sur le compte plateforme.
  */
 export async function transferToPro(payment: PaymentRow): Promise<TransferResult> {
@@ -31,7 +31,7 @@ export async function transferToPro(payment: PaymentRow): Promise<TransferResult
     .maybeSingle();
 
   if (!proProfile?.stripe_account_id || !proProfile.payouts_enabled) {
-    const error = "Le professionnel n'a pas encore renseigné ses coordonnées bancaires Clearo.";
+    const error = "Le professionnel n'a pas encore renseigné ses coordonnées bancaires Débarras France.";
     await supabaseAdmin.from("payments").update({ transfer_error: error }).eq("id", payment.id);
     return { ok: false, error };
   }

@@ -56,7 +56,7 @@ export function ProPayoutAccount() {
       </div>
 
       <p className="mt-3 text-sm leading-relaxed text-muted-foreground">
-        Renseignez une seule fois votre IBAN sur la page bancaire sécurisée Clearo. Dès que le
+        Renseignez une seule fois votre IBAN sur la page bancaire sécurisée Débarras France. Dès que le
         client valide la fin de chantier, votre montant net (commission déjà déduite) est viré
         automatiquement sur ce compte.
       </p>
@@ -118,7 +118,7 @@ export function ProPayoutAccount() {
           <p className="mt-4 flex items-start gap-2 text-xs text-muted-foreground">
             <ShieldCheck className="mt-0.5 size-3.5 shrink-0 text-proposal-emerald" />
             Vos coordonnées bancaires sont saisies et stockées par notre prestataire de paiement
-            certifié : Clearo ne voit jamais votre IBAN complet.
+            certifié : Débarras France ne voit jamais votre IBAN complet.
           </p>
         </>
       )}

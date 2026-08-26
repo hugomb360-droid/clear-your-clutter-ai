@@ -12,13 +12,13 @@ import { supabase } from "@/integrations/supabase/client";
 export const Route = createFileRoute("/pro/parametres")({
   head: () => ({
     meta: [
-      { title: "Paramètres pro — fiche entreprise et zones | Clearo" },
+      { title: "Paramètres pro — fiche entreprise et zones | Débarras France" },
       {
         name: "description",
         content:
-          "Modifiez votre fiche entreprise Clearo : nom, SIRET, téléphone, prestations et zones d'intervention.",
+          "Modifiez votre fiche entreprise Débarras France : nom, SIRET, téléphone, prestations et zones d'intervention.",
       },
-      { property: "og:title", content: "Paramètres professionnels Clearo" },
+      { property: "og:title", content: "Paramètres professionnels Débarras France" },
       {
         property: "og:description",
         content: "Gérez vos informations d'entreprise et vos secteurs de débarras.",

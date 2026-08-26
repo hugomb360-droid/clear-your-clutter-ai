@@ -5,13 +5,13 @@ import { Button } from "@/components/ui/button";
 export const Route = createFileRoute("/paiement/retour")({
   head: () => ({
     meta: [
-      { title: "Paiement confirmé — Clearo" },
+      { title: "Paiement confirmé — Débarras France" },
       {
         name: "description",
         content:
-          "Votre paiement est sécurisé : les fonds sont bloqués par Clearo jusqu'à la validation de votre chantier de débarras.",
+          "Votre paiement est sécurisé : les fonds sont bloqués par Débarras France jusqu'à la validation de votre chantier de débarras.",
       },
-      { property: "og:title", content: "Paiement sécurisé confirmé — Clearo" },
+      { property: "og:title", content: "Paiement sécurisé confirmé — Débarras France" },
       {
         property: "og:description",
         content: "Vos fonds sont bloqués jusqu'à la fin du chantier.",
@@ -39,7 +39,7 @@ function PaymentReturn() {
           {sessionId ? "Paiement confirmé" : "Paiement en cours de traitement"}
         </h1>
         <p className="mt-3 font-body text-sm leading-relaxed text-muted-foreground">
-          Votre argent est <strong>bloqué en toute sécurité</strong> par Clearo. Le professionnel
+          Votre argent est <strong>bloqué en toute sécurité</strong> par Débarras France. Le professionnel
           n'est payé qu'après la fin du chantier et votre validation. En cas de problème, vous
           pouvez ouvrir un litige avec photos depuis votre espace : les fonds restent bloqués
           jusqu'à résolution.

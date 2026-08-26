@@ -5,13 +5,13 @@ export type FoundingStatus = {
   isFounding: boolean;
   /** Nombre de chantiers déjà payés (commission offerte ou non). */
   paidMissions: number;
-  /** Chantiers restants sans commission Clearo. */
+  /** Chantiers restants sans commission Débarras France. */
   freeRemaining: number;
 };
 
 /**
  * Offre de lancement : les 20 premiers pros inscrits ne paient aucune commission
- * Clearo sur leurs 5 premiers chantiers encaissés.
+ * Débarras France sur leurs 5 premiers chantiers encaissés.
  */
 export async function getFoundingStatus(proId: string): Promise<FoundingStatus> {
   const { supabaseAdmin } = await import("@/integrations/supabase/client.server");

@@ -10,13 +10,13 @@ import { Textarea } from "@/components/ui/textarea";
 export const Route = createFileRoute("/contact")({
   head: () => ({
     meta: [
-      { title: "Contacter Clearo" },
+      { title: "Contacter Débarras France" },
       {
         name: "description",
         content:
-          "Une question sur un débarras, un devis ou un partenariat ? L'équipe Clearo vous répond sous 24 h ouvrées.",
+          "Une question sur un débarras, un devis ou un partenariat ? L'équipe Débarras France vous répond sous 24 h ouvrées.",
       },
-      { property: "og:title", content: "Contacter l'équipe Clearo" },
+      { property: "og:title", content: "Contacter l'équipe Débarras France" },
       { property: "og:description", content: "Réponse sous 24 h ouvrées, du lundi au samedi." },
       { property: "og:url", content: "https://clearo.fr/contact" },
       { property: "og:type", content: "website" },
@@ -70,7 +70,7 @@ function Contact() {
             setSending(false);
             (event.target as HTMLFormElement).reset();
             toast.success("Message envoyé", {
-              description: "L'équipe Clearo vous répond très vite.",
+              description: "L'équipe Débarras France vous répond très vite.",
             });
           }, 500);
         }}
