@@ -3,7 +3,7 @@ import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { Building2, Camera, Clock, Euro, MoveVertical, ShieldCheck } from "lucide-react";
 
-const CANONICAL = "https://clearo.fr/debarras-appartement";
+const CANONICAL = "https://debarrasfrance.fr/debarras-appartement";
 
 export const Route = createFileRoute("/debarras-appartement")({
   head: () => ({
@@ -37,7 +37,7 @@ export const Route = createFileRoute("/debarras-appartement")({
           provider: {
             "@type": "Organization",
             name: "Débarras France",
-            url: "https://clearo.fr",
+            url: "https://debarrasfrance.fr",
           },
           url: CANONICAL,
         }),

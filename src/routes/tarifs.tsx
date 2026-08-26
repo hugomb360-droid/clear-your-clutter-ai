@@ -17,11 +17,11 @@ export const Route = createFileRoute("/tarifs")({
         property: "og:description",
         content: "Une grille claire, un devis gratuit, aucune commission pour le particulier.",
       },
-      { property: "og:url", content: "https://clearo.fr/tarifs" },
+      { property: "og:url", content: "https://debarrasfrance.fr/tarifs" },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
     ],
-    links: [{ rel: "canonical", href: "https://clearo.fr/tarifs" }],
+    links: [{ rel: "canonical", href: "https://debarrasfrance.fr/tarifs" }],
 
   }),
   component: Pricing,

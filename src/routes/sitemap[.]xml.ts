@@ -3,7 +3,7 @@ import type {} from "@tanstack/react-start";
 import { CITIES } from "@/lib/cities";
 
 
-const BASE_URL = "https://clearo.fr";
+const BASE_URL = "https://debarrasfrance.fr";
 
 interface SitemapEntry {
   path: string;

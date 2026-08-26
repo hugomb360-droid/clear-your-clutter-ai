@@ -18,11 +18,11 @@ export const Route = createFileRoute("/contact")({
       },
       { property: "og:title", content: "Contacter l'équipe Débarras France" },
       { property: "og:description", content: "Réponse sous 24 h ouvrées, du lundi au samedi." },
-      { property: "og:url", content: "https://clearo.fr/contact" },
+      { property: "og:url", content: "https://debarrasfrance.fr/contact" },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
     ],
-    links: [{ rel: "canonical", href: "https://clearo.fr/contact" }],
+    links: [{ rel: "canonical", href: "https://debarrasfrance.fr/contact" }],
 
   }),
   component: Contact,
@@ -44,7 +44,7 @@ function Contact() {
             <span className="flex size-9 items-center justify-center rounded-xl bg-brand-soft text-brand">
               <Mail className="size-4" />
             </span>
-            bonjour@clearo.fr
+            clientclearo@gmail.com
           </li>
           <li className="flex items-center gap-3">
             <span className="flex size-9 items-center justify-center rounded-xl bg-brand-soft text-brand">

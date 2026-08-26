@@ -11,11 +11,11 @@ export const Route = createFileRoute("/mentions-legales")({
       },
       { property: "og:title", content: "Mentions légales Débarras France" },
       { property: "og:description", content: "Informations légales de la plateforme Débarras France." },
-      { property: "og:url", content: "https://clearo.fr/mentions-legales" },
+      { property: "og:url", content: "https://debarrasfrance.fr/mentions-legales" },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
     ],
-    links: [{ rel: "canonical", href: "https://clearo.fr/mentions-legales" }],
+    links: [{ rel: "canonical", href: "https://debarrasfrance.fr/mentions-legales" }],
 
   }),
   component: Legal,

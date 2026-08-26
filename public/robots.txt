@@ -13,4 +13,4 @@ Allow: /
 User-agent: *
 Allow: /
 
-Sitemap: https://clearo.fr/sitemap.xml
+Sitemap: https://debarrasfrance.fr/sitemap.xml
