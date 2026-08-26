@@ -38,6 +38,43 @@ async function fulfill(session: any, env: StripeEnv) {
   if (quoteId) await supabase.from("quotes").update({ status: "matched" }).eq("id", quoteId);
 }
 
+/** Synchronise le compte de versement du pro et relance les virements en attente. */
+async function syncConnectedAccount(account: any, env: StripeEnv) {
+  const proId = account.metadata?.proId;
+  const supabase = getSupabase();
+  const payoutsEnabled = Boolean(account.payouts_enabled);
+
+  const query = supabase
+    .from("pro_profiles")
+    .update({
+      payouts_enabled: payoutsEnabled,
+      payouts_ready_at: payoutsEnabled ? new Date().toISOString() : null,
+    });
+  await (proId
+    ? query.eq("user_id", proId)
+    : query.eq("stripe_account_id", account.id));
+
+  if (!payoutsEnabled) return;
+
+  // Le client avait validé le chantier mais le virement avait échoué : on relance.
+  const { data: pending } = await supabase
+    .from("payments")
+    .select(
+      "id, pro_id, pro_amount, environment, status, stripe_payment_intent_id, stripe_transfer_id, bids!inner(status)",
+    )
+    .eq("status", "held")
+    .eq("environment", env)
+    .not("transfer_error", "is", null);
+
+  const { transferToPro, markReleased } = await import("@/lib/payout-transfer.server");
+  for (const payment of pending ?? []) {
+    const bid = (payment as any).bids;
+    if (bid?.status !== "completed") continue;
+    const result = await transferToPro(payment as any);
+    if (result.ok) await markReleased(payment.id, result.transferId);
+  }
+}
+
 async function handleWebhook(req: Request, env: StripeEnv) {
   const event = await verifyWebhook(req, env);
 
@@ -57,6 +94,9 @@ async function handleWebhook(req: Request, env: StripeEnv) {
       }
       break;
     }
+    case "account.updated":
+      await syncConnectedAccount(event.data.object, env);
+      break;
     default:
       console.log("Unhandled event:", event.type);
   }
