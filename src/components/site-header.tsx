@@ -30,7 +30,10 @@ export function SiteHeader() {
       <div className="mx-auto flex h-16 max-w-6xl items-center justify-between px-4">
         <Link to="/" className="flex items-center gap-2">
           <img src={clearoLogo} alt="Logo Débarras France" className="size-9 object-contain" />
-          <span className="text-xl font-extrabold tracking-tight">Débarras France</span>
+          <div className="flex flex-col leading-none">
+            <span className="text-xl font-extrabold tracking-tight">Débarras</span>
+            <span className="text-sm font-semibold tracking-wide text-primary">France</span>
+          </div>
         </Link>
 
         <nav className="hidden items-center gap-1 md:flex">
