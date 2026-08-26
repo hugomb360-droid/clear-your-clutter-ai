@@ -176,6 +176,8 @@ export type Database = {
           status: string
           stripe_payment_intent_id: string | null
           stripe_session_id: string | null
+          stripe_transfer_id: string | null
+          transfer_error: string | null
           updated_at: string
         }
         Insert: {
@@ -196,6 +198,8 @@ export type Database = {
           status?: string
           stripe_payment_intent_id?: string | null
           stripe_session_id?: string | null
+          stripe_transfer_id?: string | null
+          transfer_error?: string | null
           updated_at?: string
         }
         Update: {
@@ -216,6 +220,8 @@ export type Database = {
           status?: string
           stripe_payment_intent_id?: string | null
           stripe_session_id?: string | null
+          stripe_transfer_id?: string | null
+          transfer_error?: string | null
           updated_at?: string
         }
         Relationships: [
@@ -240,10 +246,13 @@ export type Database = {
           company_name: string
           created_at: string
           description: string | null
+          payouts_enabled: boolean
+          payouts_ready_at: string | null
           phone: string | null
           postal_codes: string[]
           service_types: string[]
           siret: string | null
+          stripe_account_id: string | null
           updated_at: string
           user_id: string
           verified: boolean
@@ -252,10 +261,13 @@ export type Database = {
           company_name: string
           created_at?: string
           description?: string | null
+          payouts_enabled?: boolean
+          payouts_ready_at?: string | null
           phone?: string | null
           postal_codes?: string[]
           service_types?: string[]
           siret?: string | null
+          stripe_account_id?: string | null
           updated_at?: string
           user_id: string
           verified?: boolean
@@ -264,10 +276,13 @@ export type Database = {
           company_name?: string
           created_at?: string
           description?: string | null
+          payouts_enabled?: boolean
+          payouts_ready_at?: string | null
           phone?: string | null
           postal_codes?: string[]
           service_types?: string[]
           siret?: string | null
+          stripe_account_id?: string | null
           updated_at?: string
           user_id?: string
           verified?: boolean
