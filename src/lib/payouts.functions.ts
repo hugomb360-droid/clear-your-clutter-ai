@@ -112,6 +112,13 @@ export const startPayoutOnboarding = createServerFn({ method: "POST" })
       });
       return { url: link.url };
     } catch (error) {
-      return { error: getStripeErrorMessage(error) };
+      const message = getStripeErrorMessage(error);
+      if (message.includes("signed up for Connect")) {
+        return {
+          error:
+            "Les versements professionnels ne sont pas encore activés sur le compte de paiement Clearo. L’administrateur doit terminer l’activation de la plateforme de paiement avant que vous puissiez renseigner votre IBAN.",
+        };
+      }
+      return { error: message };
     }
   });
