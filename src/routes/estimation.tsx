@@ -29,11 +29,11 @@ export const Route = createFileRoute("/estimation")({
         property: "og:description",
         content: "Photos, volume estimé, prix immédiat et mise en relation avec un pro local.",
       },
-      { property: "og:url", content: "https://clearo.fr/estimation" },
+      { property: "og:url", content: "https://debarrasfrance.fr/estimation" },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
     ],
-    links: [{ rel: "canonical", href: "https://clearo.fr/estimation" }],
+    links: [{ rel: "canonical", href: "https://debarrasfrance.fr/estimation" }],
 
   }),
   component: EstimationRoute,

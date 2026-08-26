@@ -3,7 +3,7 @@ import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { Camera, Clock, Euro, Home, ShieldCheck, Warehouse } from "lucide-react";
 
-const CANONICAL = "https://clearo.fr/debarras-maison";
+const CANONICAL = "https://debarrasfrance.fr/debarras-maison";
 
 export const Route = createFileRoute("/debarras-maison")({
   head: () => ({
@@ -34,7 +34,7 @@ export const Route = createFileRoute("/debarras-maison")({
           name: "Débarras de maison",
           serviceType: "Débarras de maison",
           areaServed: "France",
-          provider: { "@type": "Organization", name: "Débarras France", url: "https://clearo.fr" },
+          provider: { "@type": "Organization", name: "Débarras France", url: "https://debarrasfrance.fr" },
           url: CANONICAL,
         }),
       },

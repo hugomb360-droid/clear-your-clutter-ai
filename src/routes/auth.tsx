@@ -34,7 +34,7 @@ export const Route = createFileRoute("/auth")({
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
     ],
-    links: [{ rel: "canonical", href: "https://clearo.fr/auth" }],
+    links: [{ rel: "canonical", href: "https://debarrasfrance.fr/auth" }],
   }),
   component: AuthPage,
 });

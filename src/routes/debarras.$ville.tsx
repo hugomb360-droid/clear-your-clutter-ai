@@ -17,7 +17,7 @@ export const Route = createFileRoute("/debarras/$ville")({
       };
     }
     const { city } = loaderData;
-    const canonical = `https://clearo.fr/debarras/${params.ville}`;
+    const canonical = `https://debarrasfrance.fr/debarras/${params.ville}`;
     const title = `Débarras ${city.name} : devis en photo et prix immédiat | Débarras France`;
     const description = `Débarras ${city.preposition} : envoyez vos photos, obtenez le volume en m³ et une fourchette de prix en 2 minutes, puis comparez les débarrasseurs vérifiés de ${city.department}.`;
     return {
@@ -49,7 +49,7 @@ export const Route = createFileRoute("/debarras/$ville")({
                 addressCountry: "FR",
               },
             },
-            provider: { "@type": "Organization", name: "Débarras France", url: "https://clearo.fr" },
+            provider: { "@type": "Organization", name: "Débarras France", url: "https://debarrasfrance.fr" },
             url: canonical,
           }),
         },
@@ -59,12 +59,12 @@ export const Route = createFileRoute("/debarras/$ville")({
             "@context": "https://schema.org",
             "@type": "BreadcrumbList",
             itemListElement: [
-              { "@type": "ListItem", position: 1, name: "Accueil", item: "https://clearo.fr" },
+              { "@type": "ListItem", position: 1, name: "Accueil", item: "https://debarrasfrance.fr" },
               {
                 "@type": "ListItem",
                 position: 2,
                 name: "Débarras par ville",
-                item: "https://clearo.fr/debarras",
+                item: "https://debarrasfrance.fr/debarras",
               },
               { "@type": "ListItem", position: 3, name: `Débarras ${city.name}`, item: canonical },
             ],

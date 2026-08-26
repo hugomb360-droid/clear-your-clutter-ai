@@ -28,10 +28,10 @@ export const Route = createFileRoute("/")({
           "Photographiez ce que vous voulez débarrasser : notre IA estime le volume et le prix en quelques secondes, puis vous met en relation avec un débarrasseur près de chez vous.",
       },
       { property: "og:type", content: "website" },
-      { property: "og:url", content: "https://clearo.fr/" },
+      { property: "og:url", content: "https://debarrasfrance.fr/" },
       { name: "twitter:card", content: "summary_large_image" },
     ],
-    links: [{ rel: "canonical", href: "https://clearo.fr/" }],
+    links: [{ rel: "canonical", href: "https://debarrasfrance.fr/" }],
     scripts: [
       {
         type: "application/ld+json",

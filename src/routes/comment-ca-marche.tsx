@@ -16,11 +16,11 @@ export const Route = createFileRoute("/comment-ca-marche")({
         property: "og:description",
         content: "Estimez votre débarras en photo et recevez des propositions de pros locaux.",
       },
-      { property: "og:url", content: "https://clearo.fr/comment-ca-marche" },
+      { property: "og:url", content: "https://debarrasfrance.fr/comment-ca-marche" },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
     ],
-    links: [{ rel: "canonical", href: "https://clearo.fr/comment-ca-marche" }],
+    links: [{ rel: "canonical", href: "https://debarrasfrance.fr/comment-ca-marche" }],
 
   }),
   component: HowItWorks,

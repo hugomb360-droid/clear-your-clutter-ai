@@ -4,7 +4,7 @@ import { Card } from "@/components/ui/card";
 import { MapPin } from "lucide-react";
 import { CITIES } from "@/lib/cities";
 
-const CANONICAL = "https://clearo.fr/debarras";
+const CANONICAL = "https://debarrasfrance.fr/debarras";
 const DESCRIPTION =
   "Trouvez un débarrasseur vérifié dans votre ville : Paris, Marseille, Lyon, Toulouse, Nice, Nantes, Montpellier, Strasbourg, Bordeaux, Lille. Estimation en photo en 2 minutes.";
 
@@ -31,7 +31,7 @@ export const Route = createFileRoute("/debarras/")({
             "@type": "ListItem",
             position: i + 1,
             name: `Débarras ${c.name}`,
-            url: `https://clearo.fr/debarras/${c.slug}`,
+            url: `https://debarrasfrance.fr/debarras/${c.slug}`,
           })),
         }),
       },
