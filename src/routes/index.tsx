@@ -15,13 +15,13 @@ import { BeforeAfterSlider } from "@/components/before-after-slider";
 export const Route = createFileRoute("/")({
   head: () => ({
     meta: [
-      { title: "Débarras France | Débarras France – Devis Rapide en Photo avec IA" },
+      { title: "Débarras France – Devis rapide en photo avec IA" },
       {
         name: "description",
         content:
           "Photographiez ce que vous voulez débarrasser : notre IA estime le volume et le prix en quelques secondes, puis vous met en relation avec un débarrasseur près de chez vous.",
       },
-      { property: "og:title", content: "Débarras France | Débarras France – Devis Rapide en Photo avec IA" },
+      { property: "og:title", content: "Débarras France – Devis rapide en photo avec IA" },
       {
         property: "og:description",
         content:
