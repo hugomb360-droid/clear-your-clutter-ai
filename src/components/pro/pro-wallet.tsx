@@ -94,14 +94,51 @@ export function ProWallet({ bids }: { bids: BidWithQuote[] }) {
         <Lock className="mt-0.5 size-4 shrink-0 text-proposal-emerald" />
         <p className="text-sm leading-relaxed text-proposal-emerald">
           <strong>{euro(secured)} sécurisés</strong> par Clearo pour vos missions en cours. Le
-          client paie l'intégralité à l'acceptation du devis : vous êtes certain d'être payé, et les
-          fonds sont virés sur votre compte bancaire dès la validation de fin de chantier.{" "}
-          <Link to="/pro/parametres" className="font-semibold underline underline-offset-2">
-            Renseignez votre IBAN dans vos paramètres
-          </Link>{" "}
-          pour recevoir vos virements.
+          client paie l'intégralité à l'acceptation du devis : les fonds sont bloqués en séquestre,
+          puis virés automatiquement sur votre compte bancaire (montant net, commission déduite) dès
+          que le client valide la fin de chantier.
         </p>
       </div>
+
+      {paymentsConfigured() &&
+        (payoutsReady ? (
+          <div className="flex items-start gap-3 rounded-2xl border border-proposal-emerald/30 bg-proposal-emerald/5 p-4">
+            <BadgeCheck className="mt-0.5 size-4 shrink-0 text-proposal-emerald" />
+            <p className="text-sm leading-relaxed text-proposal-emerald">
+              Vos coordonnées bancaires sont validées
+              {payoutQuery.data?.bankLast4 ? ` (IBAN •••• ${payoutQuery.data.bankLast4})` : ""} :
+              vos virements partent automatiquement à chaque fin de chantier validée.
+            </p>
+          </div>
+        ) : (
+          <div className="flex flex-col gap-3 rounded-2xl border border-destructive/30 bg-destructive/5 p-4 sm:flex-row sm:items-start">
+            <AlertTriangle className="mt-0.5 size-4 shrink-0 text-destructive" />
+            <p className="text-sm leading-relaxed">
+              <strong className="text-destructive">
+                Vous ne pouvez pas encore recevoir vos paiements.
+              </strong>{" "}
+              Renseignez votre IBAN sur la page bancaire sécurisée pour débloquer les virements.{" "}
+              <Link
+                to="/pro/parametres"
+                className="font-semibold underline underline-offset-2"
+              >
+                Configurer mon IBAN
+              </Link>
+            </p>
+          </div>
+        ))}
+
+      {transferIssue?.transfer_error && (
+        <div className="flex items-start gap-3 rounded-2xl border border-destructive/30 bg-destructive/5 p-4">
+          <AlertTriangle className="mt-0.5 size-4 shrink-0 text-destructive" />
+          <p className="text-sm leading-relaxed">
+            Un virement n'a pas pu être effectué : {transferIssue.transfer_error} Corrigez vos
+            informations bancaires, le virement sera relancé automatiquement.
+          </p>
+        </div>
+      )}
+
+
 
 
       <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
