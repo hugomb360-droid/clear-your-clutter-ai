@@ -124,69 +124,29 @@ export const releaseEscrow = createServerFn({ method: "POST" })
     if (payment.status === "released") return { ok: true };
     if (payment.status !== "held") return { error: "Les fonds ne sont pas encore encaissés" };
 
-    const { supabaseAdmin } = await import("@/integrations/supabase/client.server");
+    const { transferToPro, markReleased } = await import("@/lib/payout-transfer.server");
 
     // Virement automatique vers le compte bancaire du pro (via son compte de versement Clearo).
-    const { data: proProfile } = await supabaseAdmin
-      .from("pro_profiles")
-      .select("stripe_account_id, payouts_enabled")
-      .eq("user_id", payment.pro_id)
-      .maybeSingle();
+    const result = await transferToPro({
+      id: payment.id,
+      pro_id: payment.pro_id,
+      pro_amount: payment.pro_amount,
+      environment: payment.environment,
+      status: payment.status,
+      stripe_payment_intent_id: payment.stripe_payment_intent_id,
+      stripe_transfer_id: payment.stripe_transfer_id,
+    });
 
-    let transferId = payment.stripe_transfer_id;
-    if (!transferId) {
-      if (!proProfile?.stripe_account_id || !proProfile.payouts_enabled) {
-        await supabaseAdmin
-          .from("payments")
-          .update({
-            transfer_error:
-              "Le professionnel n'a pas encore renseigné ses coordonnées bancaires Clearo.",
-          })
-          .eq("id", payment.id);
-        return {
-          error:
-            "Le professionnel doit d'abord renseigner ses coordonnées bancaires dans ses paramètres pour recevoir le virement.",
-        };
-      }
-      try {
-        const stripe = createStripeClient(payment.environment as StripeEnv);
-        let sourceTransaction: string | undefined;
-        if (payment.stripe_payment_intent_id) {
-          const intent = await stripe.paymentIntents.retrieve(payment.stripe_payment_intent_id);
-          const latest = (intent as unknown as { latest_charge?: string | { id: string } })
-            .latest_charge;
-          sourceTransaction = typeof latest === "string" ? latest : latest?.id;
-        }
-        const transfer = await stripe.transfers.create({
-          amount: payment.pro_amount,
-          currency: "eur",
-          destination: proProfile.stripe_account_id,
-          ...(sourceTransaction && { source_transaction: sourceTransaction }),
-          metadata: { bidId: data.bidId, paymentId: payment.id },
-        });
-        transferId = transfer.id;
-      } catch (error) {
-        const message = getStripeErrorMessage(error);
-        await supabaseAdmin
-          .from("payments")
-          .update({ transfer_error: message })
-          .eq("id", payment.id);
-        return { error: `Virement impossible : ${message}` };
-      }
+    if (!result.ok) {
+      return {
+        error: `Virement impossible : ${result.error} Le professionnel doit compléter ses coordonnées bancaires ; le virement sera relancé automatiquement.`,
+      };
     }
 
-    const { error } = await supabaseAdmin
-      .from("payments")
-      .update({
-        status: "released",
-        released_at: new Date().toISOString(),
-        stripe_transfer_id: transferId,
-        transfer_error: null,
-      })
-      .eq("id", payment.id);
-    if (error) return { error: "Libération impossible" };
+    await markReleased(payment.id, result.transferId);
     return { ok: true };
   });
+
 
 
 /** Rembourse intégralement le client (résolution de litige, réservé à l'admin). */
