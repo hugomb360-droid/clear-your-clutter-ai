@@ -44,7 +44,7 @@ function Contact() {
             <span className="flex size-9 items-center justify-center rounded-xl bg-brand-soft text-brand">
               <Mail className="size-4" />
             </span>
-            bonjour@debarrasfrance.fr
+            clientclearo@gmail.com
           </li>
           <li className="flex items-center gap-3">
             <span className="flex size-9 items-center justify-center rounded-xl bg-brand-soft text-brand">
