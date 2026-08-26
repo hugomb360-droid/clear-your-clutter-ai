@@ -32,13 +32,25 @@ export function ProWallet({ bids }: { bids: BidWithQuote[] }) {
     queryFn: async () => {
       const { data, error } = await supabase
         .from("payments")
-        .select("bid_id, status, pro_amount, commission_amount");
+        .select("bid_id, status, pro_amount, commission_amount, transfer_error");
       if (error) throw error;
       return Object.fromEntries((data ?? []).map((p) => [p.bid_id, p]));
     },
   });
+  const payoutQuery = useQuery({
+    queryKey: ["pro-payout-status"],
+    enabled: paymentsConfigured(),
+    queryFn: async () => {
+      const res = await getPayoutStatus({ data: { environment: getStripeEnvironment() } });
+      if ("error" in res) throw new Error(res.error);
+      return res;
+    },
+  });
+  const payoutsReady = Boolean(payoutQuery.data?.payoutsEnabled);
   const payments = paymentsQuery.data ?? {};
+  const transferIssue = Object.values(payments).find((p) => p.transfer_error);
   const founding = useFoundingStatus();
+
   const freeMission = founding.freeRemaining > 0;
   const rowCommission = (bidId: string, price: number) =>
     payments[bidId] ? payments[bidId].commission_amount / 100 : commissionOf(price, freeMission);
