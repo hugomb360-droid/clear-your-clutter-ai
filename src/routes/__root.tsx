@@ -90,7 +90,7 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       { name: "author", content: "Débarras France" },
       {
         name: "google-site-verification",
-        content: "RgyPHeo6CE3U7SZb1HwIh9Hw8d3opJsmd6NPuS6i2vg",
+        content: "VALvt00uQdsavwInVMJXgyDLsw2jDJi9GtjsA9qzhpQ",
       },
       { property: "og:site_name", content: "Débarras France" },
       { property: "og:title", content: "Débarras France — plateforme de débarras partout en France" },
