@@ -16,12 +16,16 @@ import { Route as CommentCaMarcheRouteImport } from './routes/comment-ca-marche'
 import { Route as CompteRouteImport } from './routes/compte'
 import { Route as ContactRouteImport } from './routes/contact'
 import { Route as DebarrasAppartementRouteImport } from './routes/debarras-appartement'
+import { Route as DebarrasCaveGarageRouteImport } from './routes/debarras-cave-garage'
+import { Route as DebarrasDiogeneRouteImport } from './routes/debarras-diogene'
 import { Route as DebarrasMaisonRouteImport } from './routes/debarras-maison'
+import { Route as DebarrasSuccessionRouteImport } from './routes/debarras-succession'
 import { Route as EstimationRouteImport } from './routes/estimation'
 import { Route as MentionsLegalesRouteImport } from './routes/mentions-legales'
 import { Route as ProsRouteImport } from './routes/pros'
 import { Route as SitemapDotxmlRouteImport } from './routes/sitemap[.]xml'
 import { Route as TarifsRouteImport } from './routes/tarifs'
+import { Route as VideMaisonRouteImport } from './routes/vide-maison'
 import { Route as DebarrasIndexRouteImport } from './routes/debarras.index'
 import { Route as DebarrasVilleRouteImport } from './routes/debarras.$ville'
 import { Route as PaiementRetourRouteImport } from './routes/paiement.retour'
@@ -64,9 +68,24 @@ const DebarrasAppartementRoute = DebarrasAppartementRouteImport.update({
   path: '/debarras-appartement',
   getParentRoute: () => rootRouteImport,
 } as any)
+const DebarrasCaveGarageRoute = DebarrasCaveGarageRouteImport.update({
+  id: '/debarras-cave-garage',
+  path: '/debarras-cave-garage',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const DebarrasDiogeneRoute = DebarrasDiogeneRouteImport.update({
+  id: '/debarras-diogene',
+  path: '/debarras-diogene',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const DebarrasMaisonRoute = DebarrasMaisonRouteImport.update({
   id: '/debarras-maison',
   path: '/debarras-maison',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const DebarrasSuccessionRoute = DebarrasSuccessionRouteImport.update({
+  id: '/debarras-succession',
+  path: '/debarras-succession',
   getParentRoute: () => rootRouteImport,
 } as any)
 const EstimationRoute = EstimationRouteImport.update({
@@ -92,6 +111,11 @@ const SitemapDotxmlRoute = SitemapDotxmlRouteImport.update({
 const TarifsRoute = TarifsRouteImport.update({
   id: '/tarifs',
   path: '/tarifs',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const VideMaisonRoute = VideMaisonRouteImport.update({
+  id: '/vide-maison',
+  path: '/vide-maison',
   getParentRoute: () => rootRouteImport,
 } as any)
 const DebarrasIndexRoute = DebarrasIndexRouteImport.update({
@@ -134,12 +158,16 @@ export interface FileRoutesByFullPath {
   '/compte': typeof CompteRoute
   '/contact': typeof ContactRoute
   '/debarras-appartement': typeof DebarrasAppartementRoute
+  '/debarras-cave-garage': typeof DebarrasCaveGarageRoute
+  '/debarras-diogene': typeof DebarrasDiogeneRoute
   '/debarras-maison': typeof DebarrasMaisonRoute
+  '/debarras-succession': typeof DebarrasSuccessionRoute
   '/estimation': typeof EstimationRoute
   '/mentions-legales': typeof MentionsLegalesRoute
   '/pros': typeof ProsRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
   '/tarifs': typeof TarifsRoute
+  '/vide-maison': typeof VideMaisonRoute
   '/debarras/$ville': typeof DebarrasVilleRoute
   '/paiement/retour': typeof PaiementRetourRoute
   '/pro/dashboard': typeof ProDashboardRoute
@@ -155,12 +183,16 @@ export interface FileRoutesByTo {
   '/compte': typeof CompteRoute
   '/contact': typeof ContactRoute
   '/debarras-appartement': typeof DebarrasAppartementRoute
+  '/debarras-cave-garage': typeof DebarrasCaveGarageRoute
+  '/debarras-diogene': typeof DebarrasDiogeneRoute
   '/debarras-maison': typeof DebarrasMaisonRoute
+  '/debarras-succession': typeof DebarrasSuccessionRoute
   '/estimation': typeof EstimationRoute
   '/mentions-legales': typeof MentionsLegalesRoute
   '/pros': typeof ProsRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
   '/tarifs': typeof TarifsRoute
+  '/vide-maison': typeof VideMaisonRoute
   '/debarras/$ville': typeof DebarrasVilleRoute
   '/paiement/retour': typeof PaiementRetourRoute
   '/pro/dashboard': typeof ProDashboardRoute
@@ -177,12 +209,16 @@ export interface FileRoutesById {
   '/compte': typeof CompteRoute
   '/contact': typeof ContactRoute
   '/debarras-appartement': typeof DebarrasAppartementRoute
+  '/debarras-cave-garage': typeof DebarrasCaveGarageRoute
+  '/debarras-diogene': typeof DebarrasDiogeneRoute
   '/debarras-maison': typeof DebarrasMaisonRoute
+  '/debarras-succession': typeof DebarrasSuccessionRoute
   '/estimation': typeof EstimationRoute
   '/mentions-legales': typeof MentionsLegalesRoute
   '/pros': typeof ProsRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
   '/tarifs': typeof TarifsRoute
+  '/vide-maison': typeof VideMaisonRoute
   '/debarras/$ville': typeof DebarrasVilleRoute
   '/paiement/retour': typeof PaiementRetourRoute
   '/pro/dashboard': typeof ProDashboardRoute
@@ -200,12 +236,16 @@ export interface FileRouteTypes {
     | '/compte'
     | '/contact'
     | '/debarras-appartement'
+    | '/debarras-cave-garage'
+    | '/debarras-diogene'
     | '/debarras-maison'
+    | '/debarras-succession'
     | '/estimation'
     | '/mentions-legales'
     | '/pros'
     | '/sitemap.xml'
     | '/tarifs'
+    | '/vide-maison'
     | '/debarras/$ville'
     | '/paiement/retour'
     | '/pro/dashboard'
@@ -221,12 +261,16 @@ export interface FileRouteTypes {
     | '/compte'
     | '/contact'
     | '/debarras-appartement'
+    | '/debarras-cave-garage'
+    | '/debarras-diogene'
     | '/debarras-maison'
+    | '/debarras-succession'
     | '/estimation'
     | '/mentions-legales'
     | '/pros'
     | '/sitemap.xml'
     | '/tarifs'
+    | '/vide-maison'
     | '/debarras/$ville'
     | '/paiement/retour'
     | '/pro/dashboard'
@@ -242,12 +286,16 @@ export interface FileRouteTypes {
     | '/compte'
     | '/contact'
     | '/debarras-appartement'
+    | '/debarras-cave-garage'
+    | '/debarras-diogene'
     | '/debarras-maison'
+    | '/debarras-succession'
     | '/estimation'
     | '/mentions-legales'
     | '/pros'
     | '/sitemap.xml'
     | '/tarifs'
+    | '/vide-maison'
     | '/debarras/$ville'
     | '/paiement/retour'
     | '/pro/dashboard'
@@ -264,12 +312,16 @@ export interface RootRouteChildren {
   CompteRoute: typeof CompteRoute
   ContactRoute: typeof ContactRoute
   DebarrasAppartementRoute: typeof DebarrasAppartementRoute
+  DebarrasCaveGarageRoute: typeof DebarrasCaveGarageRoute
+  DebarrasDiogeneRoute: typeof DebarrasDiogeneRoute
   DebarrasMaisonRoute: typeof DebarrasMaisonRoute
+  DebarrasSuccessionRoute: typeof DebarrasSuccessionRoute
   EstimationRoute: typeof EstimationRoute
   MentionsLegalesRoute: typeof MentionsLegalesRoute
   ProsRoute: typeof ProsRoute
   SitemapDotxmlRoute: typeof SitemapDotxmlRoute
   TarifsRoute: typeof TarifsRoute
+  VideMaisonRoute: typeof VideMaisonRoute
   DebarrasVilleRoute: typeof DebarrasVilleRoute
   PaiementRetourRoute: typeof PaiementRetourRoute
   ProDashboardRoute: typeof ProDashboardRoute
@@ -329,11 +381,32 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof DebarrasAppartementRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/debarras-cave-garage': {
+      id: '/debarras-cave-garage'
+      path: '/debarras-cave-garage'
+      fullPath: '/debarras-cave-garage'
+      preLoaderRoute: typeof DebarrasCaveGarageRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/debarras-diogene': {
+      id: '/debarras-diogene'
+      path: '/debarras-diogene'
+      fullPath: '/debarras-diogene'
+      preLoaderRoute: typeof DebarrasDiogeneRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/debarras-maison': {
       id: '/debarras-maison'
       path: '/debarras-maison'
       fullPath: '/debarras-maison'
       preLoaderRoute: typeof DebarrasMaisonRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/debarras-succession': {
+      id: '/debarras-succession'
+      path: '/debarras-succession'
+      fullPath: '/debarras-succession'
+      preLoaderRoute: typeof DebarrasSuccessionRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/estimation': {
@@ -369,6 +442,13 @@ declare module '@tanstack/react-router' {
       path: '/tarifs'
       fullPath: '/tarifs'
       preLoaderRoute: typeof TarifsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/vide-maison': {
+      id: '/vide-maison'
+      path: '/vide-maison'
+      fullPath: '/vide-maison'
+      preLoaderRoute: typeof VideMaisonRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/debarras/': {
@@ -424,12 +504,16 @@ const rootRouteChildren: RootRouteChildren = {
   CompteRoute: CompteRoute,
   ContactRoute: ContactRoute,
   DebarrasAppartementRoute: DebarrasAppartementRoute,
+  DebarrasCaveGarageRoute: DebarrasCaveGarageRoute,
+  DebarrasDiogeneRoute: DebarrasDiogeneRoute,
   DebarrasMaisonRoute: DebarrasMaisonRoute,
+  DebarrasSuccessionRoute: DebarrasSuccessionRoute,
   EstimationRoute: EstimationRoute,
   MentionsLegalesRoute: MentionsLegalesRoute,
   ProsRoute: ProsRoute,
   SitemapDotxmlRoute: SitemapDotxmlRoute,
   TarifsRoute: TarifsRoute,
+  VideMaisonRoute: VideMaisonRoute,
   DebarrasVilleRoute: DebarrasVilleRoute,
   PaiementRetourRoute: PaiementRetourRoute,
   ProDashboardRoute: ProDashboardRoute,

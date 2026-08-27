@@ -6,7 +6,7 @@ import { CITIES } from "@/lib/cities";
 
 const CANONICAL = "https://debarrasfrance.fr/debarras";
 const DESCRIPTION =
-  "Trouvez un débarrasseur vérifié dans votre ville : Paris, Marseille, Lyon, Toulouse, Nice, Nantes, Montpellier, Strasbourg, Bordeaux, Lille. Estimation en photo en 2 minutes.";
+  "Débarras dans 40 villes de France : Paris, Marseille, Lyon, Toulouse, Bordeaux, Lille, Rennes, Nantes… Prix estimé en photo en 2 minutes et débarrasseurs vérifiés près de chez vous.";
 
 export const Route = createFileRoute("/debarras/")({
   head: () => ({

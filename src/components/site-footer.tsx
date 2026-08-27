@@ -48,6 +48,26 @@ export function SiteFooter() {
               </Link>
             </li>
             <li>
+              <Link to="/vide-maison" className="hover:text-foreground">
+                Vide-maison
+              </Link>
+            </li>
+            <li>
+              <Link to="/debarras-succession" className="hover:text-foreground">
+                Débarras après succession
+              </Link>
+            </li>
+            <li>
+              <Link to="/debarras-cave-garage" className="hover:text-foreground">
+                Débarras cave et garage
+              </Link>
+            </li>
+            <li>
+              <Link to="/debarras-diogene" className="hover:text-foreground">
+                Débarras syndrome de Diogène
+              </Link>
+            </li>
+            <li>
               <Link to="/debarras" className="hover:text-foreground">
                 Débarras par ville
               </Link>
@@ -57,7 +77,7 @@ export function SiteFooter() {
         <div>
           <h3 className="text-sm font-semibold">Villes</h3>
           <ul className="mt-3 grid grid-cols-2 gap-x-4 gap-y-2 text-sm text-muted-foreground">
-            {CITIES.map((city) => (
+            {CITIES.slice(0, 18).map((city) => (
               <li key={city.slug}>
                 <Link
                   to="/debarras/$ville"
@@ -68,6 +88,11 @@ export function SiteFooter() {
                 </Link>
               </li>
             ))}
+            <li className="col-span-2">
+              <Link to="/debarras" className="font-medium hover:text-foreground">
+                Toutes les villes ({CITIES.length})
+              </Link>
+            </li>
           </ul>
         </div>
 
