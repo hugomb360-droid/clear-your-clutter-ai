@@ -280,6 +280,26 @@ function CityPageView() {
               <Link to="/debarras-maison">Voir la page maison</Link>
             </Button>
           </Card>
+          <Card className="p-6">
+            <h3 className="font-semibold">Débarras après succession {city.preposition}</h3>
+            <p className="mt-2 text-sm text-muted-foreground">
+              Tri des affaires personnelles, valorisation du mobilier et évacuation complète, même
+              à distance.
+            </p>
+            <Button asChild variant="link" className="mt-2 px-0">
+              <Link to="/debarras-succession">Voir la page succession</Link>
+            </Button>
+          </Card>
+          <Card className="p-6">
+            <h3 className="font-semibold">Cave, garage et grenier {city.preposition}</h3>
+            <p className="mt-2 text-sm text-muted-foreground">
+              Les annexes représentent souvent 30 % du volume total : faites-les estimer en même
+              temps.
+            </p>
+            <Button asChild variant="link" className="mt-2 px-0">
+              <Link to="/debarras-cave-garage">Voir la page cave et garage</Link>
+            </Button>
+          </Card>
         </div>
       </section>
 
