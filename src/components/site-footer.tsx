@@ -88,6 +88,11 @@ export function SiteFooter() {
                 </Link>
               </li>
             ))}
+            <li className="col-span-2">
+              <Link to="/debarras" className="font-medium hover:text-foreground">
+                Toutes les villes ({CITIES.length})
+              </Link>
+            </li>
           </ul>
         </div>
 
