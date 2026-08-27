@@ -10,7 +10,10 @@ export function SiteFooter() {
         <div>
           <div className="flex items-center gap-2">
             <img src={clearoLogo} alt="Logo Débarras France" className="size-8 object-contain" />
-            <span className="text-lg font-extrabold tracking-tight">Débarras France</span>
+            <div className="flex flex-col -space-y-1.5 leading-none">
+              <span className="text-lg font-extrabold tracking-tight">Débarras</span>
+              <span className="text-[10px] font-semibold tracking-wide text-primary">France</span>
+            </div>
           </div>
           <p className="mt-3 text-sm text-muted-foreground">
             Le débarras simple : estimez en 2 minutes, on trouve le pro près de chez vous.
