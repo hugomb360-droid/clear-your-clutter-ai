@@ -123,6 +123,40 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       },
       { rel: "icon", href: "/favicon.png", type: "image/png" },
     ],
+    scripts: [
+      {
+        type: "application/ld+json",
+        children: JSON.stringify({
+          "@context": "https://schema.org",
+          "@type": "Organization",
+          name: "Débarras France",
+          url: "https://debarrasfrance.fr",
+          logo: "https://debarrasfrance.fr/favicon.png",
+          email: "clientclearo@gmail.com",
+          areaServed: { "@type": "Country", name: "France" },
+          description:
+            "Plateforme de débarras : estimation du volume et du prix à partir de photos, mise en relation avec des débarrasseurs vérifiés partout en France.",
+          contactPoint: [
+            {
+              "@type": "ContactPoint",
+              contactType: "customer support",
+              email: "clientclearo@gmail.com",
+              availableLanguage: ["French"],
+            },
+          ],
+        }),
+      },
+      {
+        type: "application/ld+json",
+        children: JSON.stringify({
+          "@context": "https://schema.org",
+          "@type": "WebSite",
+          name: "Débarras France",
+          url: "https://debarrasfrance.fr",
+          inLanguage: "fr-FR",
+        }),
+      },
+    ],
   }),
   shellComponent: RootShell,
   component: RootComponent,
