@@ -192,6 +192,72 @@ function CityPageView() {
       </section>
 
       <section className="mt-16">
+        <h2 className="text-2xl font-bold tracking-tight">
+          Prix d'un débarras {city.preposition} : fourchettes constatées
+        </h2>
+        <div className="mt-6 overflow-x-auto rounded-2xl border">
+          <table className="w-full min-w-[480px] text-left text-sm">
+            <thead>
+              <tr className="border-b bg-muted/40 text-xs uppercase tracking-wide text-muted-foreground">
+                <th className="px-4 py-3 font-semibold">Type de bien</th>
+                <th className="px-4 py-3 font-semibold">Volume estimé</th>
+                <th className="px-4 py-3 font-semibold">Budget indicatif</th>
+              </tr>
+            </thead>
+            <tbody>
+              {[
+                { l: "Studio / T1", v: "6 à 12 m³", p: "450 – 950 €" },
+                { l: "Appartement T2 / T3", v: "12 à 25 m³", p: "900 – 1 900 €" },
+                { l: "Maison 4 pièces", v: "30 à 50 m³", p: "2 000 – 3 600 €" },
+                { l: "Cave, garage ou grenier seul", v: "5 à 15 m³", p: "350 – 1 150 €" },
+              ].map((r) => (
+                <tr key={r.l} className="border-b last:border-0">
+                  <td className="px-4 py-3 font-medium">{r.l}</td>
+                  <td className="px-4 py-3 text-muted-foreground">{r.v}</td>
+                  <td className="px-4 py-3 font-semibold text-primary">{r.p}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+        <p className="mt-3 text-xs text-muted-foreground">
+          Fourchettes indicatives {city.preposition}, hors majorations d'accès et de salubrité.
+          Votre estimation en photo affiche votre fourchette personnalisée en moins de 2 minutes.
+        </p>
+      </section>
+
+      <section className="mt-16">
+        <h2 className="text-2xl font-bold tracking-tight">
+          Questions fréquentes sur le débarras {city.preposition}
+        </h2>
+        <div className="mt-6 space-y-4">
+          {[
+            {
+              q: `Combien coûte un débarras ${city.preposition} ?`,
+              a: `Le prix dépend avant tout du volume en m³, de l'étage et de la distance de portage. ${city.preposition.charAt(0).toUpperCase() + city.preposition.slice(1)}, comptez le plus souvent entre 450 € pour un studio et 3 600 € pour une maison complète.`,
+            },
+            {
+              q: `Sous quel délai un débarrasseur peut-il intervenir ${city.preposition} ?`,
+              a: `Les professionnels couvrant les codes postaux ${city.postalCodes} répondent en général sous 24 à 48 h, pour une intervention dans la semaine.`,
+            },
+            {
+              q: "Le débarras peut-il être gratuit ?",
+              a: "Il peut être réduit lorsque du mobilier, de l'outillage ou des métaux ont une valeur de revente : cette reprise vient diminuer le devis proposé par le professionnel.",
+            },
+            {
+              q: "Faut-il être présent pendant l'intervention ?",
+              a: "Non. Une remise de clés suffit : vous recevez un rapport photo de fin de chantier et validez le paiement uniquement une fois le logement vidé.",
+            },
+          ].map((f) => (
+            <Card key={f.q} className="p-6">
+              <h3 className="font-semibold">{f.q}</h3>
+              <p className="mt-2 text-sm text-muted-foreground">{f.a}</p>
+            </Card>
+          ))}
+        </div>
+      </section>
+
+      <section className="mt-16">
         <h2 className="text-2xl font-bold tracking-tight">Type de bien à débarrasser</h2>
         <div className="mt-6 grid gap-4 sm:grid-cols-2">
           <Card className="p-6">
