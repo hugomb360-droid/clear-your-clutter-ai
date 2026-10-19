@@ -8,7 +8,7 @@
 - [x] Délai moyen réel de réponse des autres pros du secteur, sans valeur inventée ; tests des règles réussis.
 - [x] Installation mobile et intégration des alertes push ; accès Firebase vérifié, affichage mobile vérifié.
 - [ ] Réception push réelle sur un téléphone : autorisation et enregistrement de l'appareil nécessaires, puis publication du site nécessaire pour la livraison automatique.
-- [ ] Alertes email (domaine d’envoi à configurer).
+- [x] Alertes email activables par les pros (envoi après vérification du domaine).
 - [x] Option SMS/WhatsApp : disponibilité et coûts précisés, aucun envoi ni dépense activés.
 - [x] Bouton secondaire « Notre réseau de pros » sur l'accueil vers l'annuaire ; affichage mobile sans débordement vérifié.
 - [x] Parcours succession relié aux demandes et au suivi des chantiers.
