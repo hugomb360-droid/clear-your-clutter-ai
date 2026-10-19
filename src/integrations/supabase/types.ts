@@ -361,12 +361,20 @@ export type Database = {
           company_name: string
           created_at: string
           description: string | null
+          insurance_document_path: string | null
+          insurance_verified: boolean
+          logo_path: string | null
           payouts_enabled: boolean
           payouts_ready_at: string | null
           phone: string | null
+          portfolio_paths: string[]
           postal_codes: string[]
+          public_enabled: boolean
+          public_slug: string | null
           service_types: string[]
           siret: string | null
+          siret_document_path: string | null
+          siret_verified: boolean
           stripe_account_id: string | null
           updated_at: string
           user_id: string
@@ -376,12 +384,20 @@ export type Database = {
           company_name: string
           created_at?: string
           description?: string | null
+          insurance_document_path?: string | null
+          insurance_verified?: boolean
+          logo_path?: string | null
           payouts_enabled?: boolean
           payouts_ready_at?: string | null
           phone?: string | null
+          portfolio_paths?: string[]
           postal_codes?: string[]
+          public_enabled?: boolean
+          public_slug?: string | null
           service_types?: string[]
           siret?: string | null
+          siret_document_path?: string | null
+          siret_verified?: boolean
           stripe_account_id?: string | null
           updated_at?: string
           user_id: string
@@ -391,12 +407,20 @@ export type Database = {
           company_name?: string
           created_at?: string
           description?: string | null
+          insurance_document_path?: string | null
+          insurance_verified?: boolean
+          logo_path?: string | null
           payouts_enabled?: boolean
           payouts_ready_at?: string | null
           phone?: string | null
+          portfolio_paths?: string[]
           postal_codes?: string[]
+          public_enabled?: boolean
+          public_slug?: string | null
           service_types?: string[]
           siret?: string | null
+          siret_document_path?: string | null
+          siret_verified?: boolean
           stripe_account_id?: string | null
           updated_at?: string
           user_id?: string
@@ -761,6 +785,8 @@ export type Database = {
         Args: { _bid_id: string; _user_id: string }
         Returns: boolean
       }
+      is_public_pro_media: { Args: { path: string }; Returns: boolean }
+      list_public_professionals: { Args: never; Returns: Json }
       pro_covers_postal: {
         Args: { _postal: string; _user_id: string }
         Returns: boolean
