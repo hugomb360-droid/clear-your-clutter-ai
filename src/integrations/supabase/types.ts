@@ -270,6 +270,92 @@ export type Database = {
           },
         ]
       }
+      pro_notification_preferences: {
+        Row: {
+          email_enabled: boolean
+          pro_id: string
+          push_enabled: boolean
+          updated_at: string
+        }
+        Insert: {
+          email_enabled?: boolean
+          pro_id: string
+          push_enabled?: boolean
+          updated_at?: string
+        }
+        Update: {
+          email_enabled?: boolean
+          pro_id?: string
+          push_enabled?: boolean
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "pro_notification_preferences_pro_id_fkey"
+            columns: ["pro_id"]
+            isOneToOne: true
+            referencedRelation: "pro_profiles"
+            referencedColumns: ["user_id"]
+          },
+        ]
+      }
+      pro_notifications: {
+        Row: {
+          attempted_at: string | null
+          attempts: number
+          created_at: string
+          delivery_token: string
+          id: string
+          pro_id: string
+          push_error: string | null
+          push_state: string
+          quote_id: string
+          read_at: string | null
+          summary: Json
+        }
+        Insert: {
+          attempted_at?: string | null
+          attempts?: number
+          created_at?: string
+          delivery_token?: string
+          id?: string
+          pro_id: string
+          push_error?: string | null
+          push_state?: string
+          quote_id: string
+          read_at?: string | null
+          summary: Json
+        }
+        Update: {
+          attempted_at?: string | null
+          attempts?: number
+          created_at?: string
+          delivery_token?: string
+          id?: string
+          pro_id?: string
+          push_error?: string | null
+          push_state?: string
+          quote_id?: string
+          read_at?: string | null
+          summary?: Json
+        }
+        Relationships: [
+          {
+            foreignKeyName: "pro_notifications_pro_id_fkey"
+            columns: ["pro_id"]
+            isOneToOne: false
+            referencedRelation: "pro_profiles"
+            referencedColumns: ["user_id"]
+          },
+          {
+            foreignKeyName: "pro_notifications_quote_id_fkey"
+            columns: ["quote_id"]
+            isOneToOne: false
+            referencedRelation: "quotes"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       pro_profiles: {
         Row: {
           company_name: string
@@ -317,6 +403,35 @@ export type Database = {
           verified?: boolean
         }
         Relationships: []
+      }
+      pro_push_devices: {
+        Row: {
+          created_at: string
+          id: string
+          pro_id: string
+          token: string
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          pro_id: string
+          token: string
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          pro_id?: string
+          token?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "pro_push_devices_pro_id_fkey"
+            columns: ["pro_id"]
+            isOneToOne: false
+            referencedRelation: "pro_profiles"
+            referencedColumns: ["user_id"]
+          },
+        ]
       }
       profiles: {
         Row: {
@@ -424,6 +539,7 @@ export type Database = {
           price_max: number | null
           price_min: number | null
           property_type: string
+          published_at: string | null
           status: string
           surface_m2: number | null
           updated_at: string
@@ -443,6 +559,7 @@ export type Database = {
           price_max?: number | null
           price_min?: number | null
           property_type: string
+          published_at?: string | null
           status?: string
           surface_m2?: number | null
           updated_at?: string
@@ -462,6 +579,7 @@ export type Database = {
           price_max?: number | null
           price_min?: number | null
           property_type?: string
+          published_at?: string | null
           status?: string
           surface_m2?: number | null
           updated_at?: string
@@ -647,6 +765,7 @@ export type Database = {
         Args: { _postal: string; _user_id: string }
         Returns: boolean
       }
+      sector_response_stats: { Args: { _postal: string }; Returns: Json }
     }
     Enums: {
       app_role: "client" | "pro" | "admin"
