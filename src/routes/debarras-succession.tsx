@@ -8,7 +8,7 @@ export const Route = createFileRoute("/debarras-succession")({
       path: "/debarras-succession",
       title: "Débarras après succession : prix, démarches et délais | Débarras France",
       description:
-        "Débarras de maison ou d'appartement après succession : estimation en photo en 2 minutes, tri des objets de valeur, évacuation complète par des professionnels vérifiés.",
+          "Organisez un débarras après succession : consignes pour les héritiers, clés à distance, don ou revente, date limite et rapport PDF avant/après destiné au notaire.",
       serviceName: "Débarras après succession",
       breadcrumb: "Débarras succession",
     }),
@@ -18,7 +18,7 @@ export const Route = createFileRoute("/debarras-succession")({
       succession
       eyebrow="Succession"
       h1="Débarras après succession : un logement vidé sans vous déplacer"
-      intro="Vider le logement d'un proche demande du temps que l'on n'a pas toujours, surtout à distance. Envoyez des photos des pièces : l'estimation du volume et du prix arrive en 2 minutes, et des débarrasseurs vérifiés de la ville concernée vous transmettent leurs propositions."
+       intro="Vider le logement d'un proche mérite une organisation attentive. Transmettez les photos, les consignes de conservation et votre échéance : les professionnels de votre secteur vous proposent un devis. À la fin du chantier, retrouvez un rapport PDF pour le notaire."
       blocksTitle="Ce que couvre un débarras de succession"
       blocks={[
         {
@@ -60,8 +60,8 @@ export const Route = createFileRoute("/debarras-succession")({
           a: "Il peut être fortement réduit, voire nul, lorsque la valeur des biens repris couvre le coût de la main-d'œuvre et de l'évacuation. C'est rare sur les logements standards, plus courant en présence de mobilier ancien.",
         },
       ]}
-      ctaTitle="Estimez le débarras du logement en 2 minutes"
-      ctaText="Photos, volume en m³, fourchette de prix, puis des propositions de professionnels vérifiés intervenant dans la commune du bien."
+       ctaTitle="Préparez votre dossier de succession"
+       ctaText="Adresse, clés, objets à conserver et date limite : vos consignes accompagnent le chantier jusqu'au rapport final."
     />
     <SuccessionForm />
     </>

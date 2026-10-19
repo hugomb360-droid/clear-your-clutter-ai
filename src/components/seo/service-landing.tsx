@@ -75,7 +75,12 @@ export function ServiceLanding(props: ServiceLandingProps) {
       <section className="mt-16">
         <h2 className="text-2xl font-bold tracking-tight">Comment ça marche</h2>
         <div className="mt-6 grid gap-4 sm:grid-cols-2">
-          {steps.map((s) => (
+          {(props.succession ? [
+            { icon: Camera, title: "1. Votre dossier", text: "Adresse, photos du logement, objets à conserver et échéance de vente ou de fin de bail." },
+            { icon: Euro, title: "2. Les propositions", text: "Les professionnels de votre secteur établissent un devis adapté au bien et aux consignes." },
+            { icon: Truck, title: "3. Le débarras", text: "Présence d'un héritier ou remise des clés à distance : l'intervention suit votre organisation." },
+            { icon: ShieldCheck, title: "4. Le rapport final", text: "Photos avant/après, volumes évacués et destinations déclarées par le professionnel dans un PDF pour le notaire." },
+          ] : steps).map((s) => (
             <Card key={s.title} className="p-6">
               <s.icon className="h-6 w-6 text-primary" />
               <h3 className="mt-3 font-semibold">{s.title}</h3>

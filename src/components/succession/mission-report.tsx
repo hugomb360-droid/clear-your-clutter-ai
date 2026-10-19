@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useQuery } from "@tanstack/react-query";
 import { useServerFn } from "@tanstack/react-start";
 import { Download, FileText, Loader2 } from "lucide-react";
@@ -32,6 +32,7 @@ export function MissionReportDownload({ bidId, quoteId, status }: { bidId: strin
   const getReport = useServerFn(getMissionReport);
   const [blob, setBlob] = useState<Blob | null>(null);
   const [busy, setBusy] = useState(false);
+  useEffect(() => { setBlob(null); }, [status, bidId]);
   const query = useQuery({ queryKey: ["succession", quoteId], queryFn: async () => {
     const { data, error } = await supabase.from("succession_details").select("quote_id").eq("quote_id", quoteId).maybeSingle();
     if (error) throw error; return data;
