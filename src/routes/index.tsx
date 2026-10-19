@@ -332,6 +332,14 @@ function Home() {
         </div>
       </section>
 
+      <section className="border-y border-border bg-secondary/40 py-12 sm:py-16">
+        <div className="mx-auto max-w-6xl px-4">
+          <h2 className="text-2xl font-extrabold sm:text-3xl">Débarras après succession</h2>
+          <p className="mt-4 max-w-3xl leading-relaxed text-muted-foreground">Une maison ou un appartement à vider après le décès d'un proche ? Préparez les consignes pour les héritiers, la remise des clés à distance, les objets à conserver et votre date limite. Retrouvez un rapport PDF avant/après destiné au notaire à la fin du chantier.</p>
+          <div className="mt-6"><Button asChild size="lg"><Link to="/debarras-succession">Organiser un débarras de succession</Link></Button></div>
+        </div>
+      </section>
+
       <RoomVolume3D />
 
 

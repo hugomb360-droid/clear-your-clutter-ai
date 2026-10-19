@@ -4,6 +4,7 @@ import { Card } from "@/components/ui/card";
 import { Camera, Euro, ShieldCheck, Truck } from "lucide-react";
 import { CITIES } from "@/lib/cities";
 import successionPhoto from "@/assets/gallery-apres.jpg";
+import type { ReactNode } from "react";
 
 export interface ServiceBlock {
   title: string;
@@ -12,6 +13,7 @@ export interface ServiceBlock {
 
 export interface ServiceLandingProps {
   succession?: boolean;
+  guide?: ReactNode;
   eyebrow: string;
   h1: string;
   intro: string;
@@ -125,11 +127,13 @@ export function ServiceLanding(props: ServiceLandingProps) {
           </table>
         </div>
         <p className="mt-4 text-xs text-muted-foreground">
-          Fourchettes indicatives constatées sur la plateforme. Le prix définitif dépend du volume
-          réel, de l'accès et du secteur ; votre estimation en photo affiche votre fourchette
-          personnalisée.
+          {props.succession
+            ? "Exemples de budgets indicatifs, sans garantie de tarif. Le professionnel établit le devis définitif selon le volume, l'accès, le tri et les éventuels biens repris."
+            : "Fourchettes indicatives constatées sur la plateforme. Le prix définitif dépend du volume réel, de l'accès et du secteur ; votre estimation en photo affiche votre fourchette personnalisée."}
         </p>
       </section>
+
+      {props.guide}
 
       <section className="mt-16">
         <h2 className="text-2xl font-bold tracking-tight">{props.faqTitle}</h2>
@@ -154,7 +158,7 @@ export function ServiceLanding(props: ServiceLandingProps) {
       </section>
 
       <section className="mt-16">
-        <h2 className="text-lg font-semibold">Nos villes les plus demandées</h2>
+        <h2 className="text-lg font-semibold">{props.succession ? "Débarras de succession : trouver un professionnel par ville" : "Nos villes les plus demandées"}</h2>
         <div className="mt-3 flex flex-wrap gap-2">
           {cities.map((c) => (
             <Link

@@ -9,6 +9,7 @@ import { useAuth } from "@/hooks/useAuth";
 const NAV = [
   { to: "/estimation", label: "Estimer mon débarras" },
   { to: "/comment-ca-marche", label: "Comment ça marche" },
+  { to: "/debarras-succession", label: "Succession" },
   { to: "/tarifs", label: "Tarifs" },
   { to: "/pros", label: "Devenir partenaire" },
 ] as const;
