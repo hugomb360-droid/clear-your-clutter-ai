@@ -1,9 +1,10 @@
 # Succession et prescripteurs
-- [ ] Notifications locales pro et contenu ville/volume/prix/accès.
-- [ ] Délai moyen réel de réponse des autres pros du secteur.
-- [ ] Installation mobile et alertes push (connexion Firebase nécessaire).
+- [x] Notifications locales pro et contenu ville/volume/prix/accès ; demande à Angoulême reçue et marquée lue sur le compte pro connecté.
+- [x] Délai moyen réel de réponse des autres pros du secteur, sans valeur inventée ; tests des règles réussis.
+- [x] Installation mobile et intégration des alertes push ; accès Firebase vérifié, affichage mobile vérifié.
+- [ ] Réception push réelle sur un téléphone : autorisation et enregistrement de l'appareil nécessaires, puis publication du site nécessaire pour la livraison automatique.
 - [ ] Alertes email (domaine d’envoi à configurer).
-- [ ] Option SMS/WhatsApp : préciser disponibilité et coûts, sans activer de dépenses sans configuration.
+- [x] Option SMS/WhatsApp : disponibilité et coûts précisés, aucun envoi ni dépense activés.
 - [x] Parcours succession relié aux demandes et au suivi des chantiers.
 - [x] Données réelles de fin de chantier et rapport PDF privé téléchargeable.
 - [x] Page prescripteurs et formulaire enregistré avec visibilité administrateur.
