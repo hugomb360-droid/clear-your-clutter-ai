@@ -16,3 +16,4 @@
 - Publish quotes only after contacts and photos persist; database publication triggers create private recipient-specific in-app notification events with a once-only publication timestamp.
 - Push delivery handles one professional event per signed-capability request through Firebase's connector; bounded retries run on subsequent publication or recipient dashboard access, not permanent polling, so quiet-period recovery can be delayed.
 - Mobile installation is manifest-only without offline caching; the Firebase messaging worker is separate and registers only on an explicit notification permission action.
+- SSR-rendered components must load browser-only push modules through createClientOnlyFn so their imports are stripped from the server graph.
