@@ -12,6 +12,21 @@ export type PayoutStatus = {
 type StatusResult = PayoutStatus | { error: string };
 type LinkResult = { url: string } | { error: string };
 
+/**
+ * Un compte de versement créé en mode test n'existe pas en mode réel (et
+ * inversement) : Stripe répond alors « account_invalid ». Dans ce cas on
+ * oublie l'identifiant enregistré et on en crée un nouveau dans
+ * l'environnement courant.
+ */
+function isUnknownConnectedAccount(message: string): boolean {
+  return (
+    message.includes("does not have access to account") ||
+    message.includes("account_invalid") ||
+    message.includes("not connected to your platform") ||
+    message.includes("No such account")
+  );
+}
+
 /** Statut du compte de versement (coordonnées bancaires) du pro connecté. */
 export const getPayoutStatus = createServerFn({ method: "POST" })
   .middleware([requireSupabaseAuth])
