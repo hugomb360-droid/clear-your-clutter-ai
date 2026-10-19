@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { Link } from "@tanstack/react-router";
-import { useServerFn } from "@tanstack/react-start";
+import { createClientOnlyFn, useServerFn } from "@tanstack/react-start";
 import { Bell, Check, Smartphone } from "lucide-react";
 import { toast } from "sonner";
 import { supabase } from "@/integrations/supabase/client";
@@ -9,6 +9,11 @@ import { Button } from "@/components/ui/button";
 import { Switch } from "@/components/ui/switch";
 import { notificationSummarySchema, notificationText, responseDelay } from "@/lib/pro-notifications";
 import { getSectorResponse, retryMyPush } from "@/lib/pro-notifications.functions";
+
+const registerPushInBrowser = createClientOnlyFn(async () => {
+  const { registerProPush } = await import("@/lib/pro-push.client");
+  return registerProPush();
+});
 
 export function ProNotificationInbox({ proId }: { proId: string }) {
   const queryClient = useQueryClient();
@@ -55,8 +60,8 @@ export function ProNotificationSettings({ proId }: { proId: string }) {
     setBusy(true); setNotice("");
     try {
       if (enable) {
-        const { registerProPush } = await import("@/lib/pro-push.client");
-        const result = await registerProPush();
+        const result = await registerPushInBrowser();
+        if (!result) return;
         if (result.status !== "registered") {
           const messages = { "not-configured": "Les alertes mobiles ne sont pas encore configurées.", "unsupported": "Ce navigateur ne prend pas en charge les alertes. Sur iPhone, ajoutez d'abord le site à l'écran d'accueil (iOS 16.4 ou plus récent).", "open-in-new-tab": "Ouvrez le site dans un nouvel onglet pour autoriser les notifications.", "denied": "Notifications refusées : autorisez-les dans les réglages du navigateur pour ce site." };
           setNotice(messages[result.status]); return;
