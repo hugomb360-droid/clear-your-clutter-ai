@@ -71,37 +71,33 @@ const steps = [
 
 const reviews = [
   {
-    name: "Sophie L.",
-    location: "Paris 12e",
-    rating: 5,
-    text: "J'ai envoyé 4 photos de mon appartement, j'ai eu un prix en moins d'une minute. Le pro est venu 2 jours après, tout était propre.",
+    name: "Paiement bloqué",
+    location: "Séquestre sécurisé",
+    text: "Vous payez en ligne, mais l'argent reste bloqué. Le professionnel n'est payé qu'une fois que vous avez validé la fin du chantier.",
   },
   {
-    name: "Marc D.",
-    location: "Bordeaux",
-    rating: 5,
-    text: "Génial pour vider la cave de ma mère. L'estimation IA était juste, et j'ai reçu 3 propositions de pros du coin.",
+    name: "Prix connu d'avance",
+    location: "Estimation photo",
+    text: "Le volume et la fourchette de prix sont calculés à partir de vos photos, avant tout déplacement. Pas de visite obligatoire.",
   },
   {
-    name: "Claire & Julien",
-    location: "Lyon",
-    rating: 4,
-    text: "Simple, rapide, pas d'appels insistants. On a comparé les offres et choisi le débarrasseur qui nous convenait.",
+    name: "Pros vérifiés",
+    location: "SIRET contrôlé",
+    text: "Chaque débarrasseur renseigne son numéro SIRET et ses zones d'intervention avant de pouvoir vous faire une proposition.",
   },
   {
-    name: "Karim B.",
-    location: "Nantes",
-    rating: 5,
-    text: "Service impeccable. J'ai pu suivre mon devis depuis mon espace client et valider la proposition en un clic.",
+    name: "Litige possible",
+    location: "Photos à l'appui",
+    text: "Un problème à la fin du chantier ? Ouvrez un litige avec photos : les fonds restent bloqués le temps de l'examen.",
   },
 ];
 
 
 const stats = [
-  { value: "800+", label: "débarras estimés" },
-  { value: "15+", label: "pros vérifiés" },
-  { value: "4,8/5", label: "note moyenne" },
-  { value: "2 min", label: "pour un devis IA" },
+  { value: "2 min", label: "pour une estimation photo" },
+  { value: "0 €", label: "estimation gratuite" },
+  { value: "100 %", label: "paiement sous séquestre" },
+  { value: "40+", label: "grandes villes couvertes" },
 ];
 
 const faq = [
@@ -308,13 +304,13 @@ function Home() {
         <div className="mx-auto max-w-6xl px-4">
           <div className="mb-10 text-center">
             <span className="inline-flex items-center gap-2 rounded-full bg-brand-soft px-4 py-1.5 text-sm font-semibold text-brand-ink">
-              <Star className="size-4" /> Avis clients
+              <Star className="size-4" /> Nos engagements
             </span>
             <h2 className="mt-4 text-2xl font-extrabold sm:text-3xl tracking-tight">
-              Ils ont fait de la place avec Débarras France
+              Un débarras sans mauvaise surprise
             </h2>
             <p className="mx-auto mt-3 max-w-2xl text-muted-foreground">
-              Des milliers de clients ont déjà estimé leur débarras par photo et trouvé un pro près de chez eux.
+              Arnaques, frais cachés, travail bâclé : voici comment nous vous protégeons à chaque étape.
             </p>
           </div>
 
@@ -325,32 +321,11 @@ function Home() {
                 className="relative flex flex-col rounded-3xl border border-border bg-card p-6 shadow-[var(--shadow-soft)]"
               >
                 <Quote className="absolute right-5 top-5 size-6 text-brand/30" />
-                <div className="flex gap-0.5">
-                  {Array.from({ length: 5 }).map((_, i) => (
-                    <Star
-                      key={i}
-                      className={`size-4 ${
-                        i < review.rating ? "fill-brand text-brand" : "text-muted-foreground/30"
-                      }`}
-                    />
-                  ))}
-                </div>
-                <p className="mt-4 flex-1 text-sm leading-relaxed text-foreground">
-                  "{review.text}"
+                <p className="text-base font-bold">{review.name}</p>
+                <p className="text-xs font-medium text-brand">{review.location}</p>
+                <p className="mt-4 flex-1 text-sm leading-relaxed text-muted-foreground">
+                  {review.text}
                 </p>
-                <div className="mt-6 flex items-center gap-3">
-                  <div className="flex size-10 items-center justify-center rounded-full bg-brand-soft font-bold text-brand-ink">
-                    {review.name
-                      .split(" ")
-                      .map((n) => n[0])
-                      .join("")
-                      .slice(0, 2)}
-                  </div>
-                  <div>
-                    <p className="text-sm font-semibold">{review.name}</p>
-                    <p className="text-xs text-muted-foreground">{review.location}</p>
-                  </div>
-                </div>
               </div>
             ))}
           </div>
