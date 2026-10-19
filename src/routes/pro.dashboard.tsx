@@ -6,6 +6,7 @@ import { ProBids } from "@/components/pro/pro-bids";
 import { ProCalendar } from "@/components/pro/pro-calendar";
 import { ProOpportunities } from "@/components/pro/pro-opportunities";
 import { ProWallet } from "@/components/pro/pro-wallet";
+import { ProNotificationInbox } from "@/components/pro/pro-notifications";
 import { Button } from "@/components/ui/button";
 import { RoleGuard } from "@/components/role-guard";
 import { useAuth } from "@/hooks/useAuth";
@@ -175,6 +176,7 @@ function ProDashboard() {
 
   return (
     <div className="mx-auto max-w-6xl px-4 py-10">
+      <ProNotificationInbox proId={user.id} />
       <header className="overflow-hidden rounded-[2rem] bg-proposal-emerald p-6 text-proposal-cream shadow-[var(--shadow-proposal)] sm:p-8 lg:p-10">
         <div className="flex flex-wrap items-start justify-between gap-4">
           <div>

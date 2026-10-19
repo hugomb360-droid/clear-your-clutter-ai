@@ -4,6 +4,7 @@ import { ArrowLeft } from "lucide-react";
 import { useEffect } from "react";
 import { ProPayoutAccount } from "@/components/pro/pro-payout-account";
 import { ProProfileForm } from "@/components/pro/pro-profile-form";
+import { ProNotificationSettings } from "@/components/pro/pro-notifications";
 
 import { RoleGuard } from "@/components/role-guard";
 import { useAuth } from "@/hooks/useAuth";
@@ -42,10 +43,11 @@ function ProSettings() {
     queryKey: ["pro-profile", user?.id],
     enabled: Boolean(user?.id),
     queryFn: async () => {
+      if (!user) return null;
       const { data, error } = await supabase
         .from("pro_profiles")
         .select("*")
-        .eq("user_id", user!.id)
+        .eq("user_id", user.id)
         .maybeSingle();
       if (error) throw error;
       return data;
@@ -78,6 +80,7 @@ function ProSettings() {
           hasProRole={roles.includes("pro")}
         />
         <ProPayoutAccount />
+        <ProNotificationSettings proId={user.id} />
       </div>
 
     </div>

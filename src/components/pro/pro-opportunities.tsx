@@ -12,6 +12,7 @@ import type { Quote } from "@/lib/pro-dashboard";
 import { commissionOf, formatDate, netOf, quoteTitle } from "@/lib/pro-dashboard";
 import { useFoundingStatus } from "@/hooks/useFoundingStatus";
 import { euro } from "@/lib/pricing";
+import { SectorResponse } from "@/components/pro/pro-notifications";
 
 type Draft = { price: string; date: string; message: string };
 
@@ -125,6 +126,7 @@ export function ProOpportunities({ quotes, proId }: { quotes: Quote[]; proId: st
 
               <div className="bg-white p-5 sm:p-7 md:col-span-8 lg:p-8">
                 <QuotePhotos quoteId={quote.id} />
+                <SectorResponse postal={quote.postal_code} />
 
                 <div className="mt-5 grid gap-4 sm:grid-cols-[8rem_12rem]">
                   <div className="grid gap-2">

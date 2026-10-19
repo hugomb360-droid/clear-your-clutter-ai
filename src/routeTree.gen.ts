@@ -33,6 +33,7 @@ import { Route as DebarrasVilleRouteImport } from './routes/debarras.$ville'
 import { Route as PaiementRetourRouteImport } from './routes/paiement.retour'
 import { Route as ProDashboardRouteImport } from './routes/pro.dashboard'
 import { Route as ProParametresRouteImport } from './routes/pro.parametres'
+import { Route as ApiPublicNotificationsNewRequestRouteImport } from './routes/api/public/notifications/new-request'
 import { Route as ApiPublicPaymentsWebhookRouteImport } from './routes/api/public/payments/webhook'
 
 const IndexRoute = IndexRouteImport.update({
@@ -156,6 +157,12 @@ const ProParametresRoute = ProParametresRouteImport.update({
   path: '/pro/parametres',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ApiPublicNotificationsNewRequestRoute =
+  ApiPublicNotificationsNewRequestRouteImport.update({
+    id: '/api/public/notifications/new-request',
+    path: '/api/public/notifications/new-request',
+    getParentRoute: () => rootRouteImport,
+  } as any)
 const ApiPublicPaymentsWebhookRoute =
   ApiPublicPaymentsWebhookRouteImport.update({
     id: '/api/public/payments/webhook',
@@ -188,6 +195,7 @@ export interface FileRoutesByFullPath {
   '/pro/dashboard': typeof ProDashboardRoute
   '/pro/parametres': typeof ProParametresRoute
   '/debarras/': typeof DebarrasIndexRoute
+  '/api/public/notifications/new-request': typeof ApiPublicNotificationsNewRequestRoute
   '/api/public/payments/webhook': typeof ApiPublicPaymentsWebhookRoute
 }
 export interface FileRoutesByTo {
@@ -215,6 +223,7 @@ export interface FileRoutesByTo {
   '/pro/dashboard': typeof ProDashboardRoute
   '/pro/parametres': typeof ProParametresRoute
   '/debarras': typeof DebarrasIndexRoute
+  '/api/public/notifications/new-request': typeof ApiPublicNotificationsNewRequestRoute
   '/api/public/payments/webhook': typeof ApiPublicPaymentsWebhookRoute
 }
 export interface FileRoutesById {
@@ -243,6 +252,7 @@ export interface FileRoutesById {
   '/pro/dashboard': typeof ProDashboardRoute
   '/pro/parametres': typeof ProParametresRoute
   '/debarras/': typeof DebarrasIndexRoute
+  '/api/public/notifications/new-request': typeof ApiPublicNotificationsNewRequestRoute
   '/api/public/payments/webhook': typeof ApiPublicPaymentsWebhookRoute
 }
 export interface FileRouteTypes {
@@ -272,6 +282,7 @@ export interface FileRouteTypes {
     | '/pro/dashboard'
     | '/pro/parametres'
     | '/debarras/'
+    | '/api/public/notifications/new-request'
     | '/api/public/payments/webhook'
   fileRoutesByTo: FileRoutesByTo
   to:
@@ -299,6 +310,7 @@ export interface FileRouteTypes {
     | '/pro/dashboard'
     | '/pro/parametres'
     | '/debarras'
+    | '/api/public/notifications/new-request'
     | '/api/public/payments/webhook'
   id:
     | '__root__'
@@ -326,6 +338,7 @@ export interface FileRouteTypes {
     | '/pro/dashboard'
     | '/pro/parametres'
     | '/debarras/'
+    | '/api/public/notifications/new-request'
     | '/api/public/payments/webhook'
   fileRoutesById: FileRoutesById
 }
@@ -354,6 +367,7 @@ export interface RootRouteChildren {
   ProDashboardRoute: typeof ProDashboardRoute
   ProParametresRoute: typeof ProParametresRoute
   DebarrasIndexRoute: typeof DebarrasIndexRoute
+  ApiPublicNotificationsNewRequestRoute: typeof ApiPublicNotificationsNewRequestRoute
   ApiPublicPaymentsWebhookRoute: typeof ApiPublicPaymentsWebhookRoute
 }
 
@@ -527,6 +541,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ProParametresRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/api/public/notifications/new-request': {
+      id: '/api/public/notifications/new-request'
+      path: '/api/public/notifications/new-request'
+      fullPath: '/api/public/notifications/new-request'
+      preLoaderRoute: typeof ApiPublicNotificationsNewRequestRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/api/public/payments/webhook': {
       id: '/api/public/payments/webhook'
       path: '/api/public/payments/webhook'
@@ -562,6 +583,7 @@ const rootRouteChildren: RootRouteChildren = {
   ProDashboardRoute: ProDashboardRoute,
   ProParametresRoute: ProParametresRoute,
   DebarrasIndexRoute: DebarrasIndexRoute,
+  ApiPublicNotificationsNewRequestRoute: ApiPublicNotificationsNewRequestRoute,
   ApiPublicPaymentsWebhookRoute: ApiPublicPaymentsWebhookRoute,
 }
 export const routeTree = rootRouteImport

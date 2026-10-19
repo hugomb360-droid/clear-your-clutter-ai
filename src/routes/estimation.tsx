@@ -350,7 +350,8 @@ function EstimationPage() {
     try {
       const surfaceValue = Number.parseInt(surface, 10);
       const manualAccessOption =
-        MANUAL_ACCESS_OPTIONS.find((o) => o.key === manualAccess) ?? MANUAL_ACCESS_OPTIONS[0]!;
+        MANUAL_ACCESS_OPTIONS.find((o) => o.key === manualAccess) ?? MANUAL_ACCESS_OPTIONS[0];
+      if (!manualAccessOption) throw new Error("Accès non renseigné");
       const annexSurfaceValue = Number.parseInt(annexSurface, 10);
       const manualSummary = [
         `Encombrement : ${CLUTTER_OPTIONS.find((o) => o.key === clutter)?.label}`,
@@ -395,29 +396,33 @@ function EstimationPage() {
           price_min: isPhoto ? (result?.price.priceMin ?? null) : (manualEstimate?.priceMin ?? null),
           price_max: isPhoto ? (result?.price.priceMax ?? null) : (manualEstimate?.priceMax ?? null),
           ai_analysis: result ? JSON.parse(JSON.stringify(result)) : null,
-          status: "published",
+          status: "draft",
         })
         .select("id")
         .single();
       if (error || !quote) throw error ?? new Error("Création impossible");
 
-      await supabase.from("quote_contacts").insert({
+      const contactResult = await supabase.from("quote_contacts").insert({
         quote_id: quote.id,
         full_name: fullName || null,
         phone: phone || null,
         email: session.user.email ?? null,
         address: address || null,
       });
+      if (contactResult.error) throw contactResult.error;
 
       for (const [index, dataUrl] of photos.entries()) {
         const path = `${session.user.id}/${quote.id}/${index}.jpg`;
         const { error: uploadError } = await supabase.storage
           .from("quote-photos")
           .upload(path, dataUrlToBlob(dataUrl), { contentType: "image/jpeg", upsert: true });
-        if (!uploadError) {
-          await supabase.from("quote_photos").insert({ quote_id: quote.id, storage_path: path });
-        }
+        if (uploadError) throw uploadError;
+        const photoResult = await supabase.from("quote_photos").insert({ quote_id: quote.id, storage_path: path });
+        if (photoResult.error) throw photoResult.error;
       }
+
+      const publication = await supabase.from("quotes").update({ status: "published" }).eq("id", quote.id);
+      if (publication.error) throw publication.error;
 
       sessionStorage.removeItem(DRAFT_KEY);
       toast.success("Demande envoyée aux pros de votre secteur !");
