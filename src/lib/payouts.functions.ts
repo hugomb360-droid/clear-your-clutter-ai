@@ -70,6 +70,15 @@ export const getPayoutStatus = createServerFn({ method: "POST" })
       };
     } catch (error) {
       const message = getStripeErrorMessage(error);
+      if (isUnknownConnectedAccount(message)) {
+        // Compte créé dans l'autre environnement (test/réel) : on l'oublie.
+        const { supabaseAdmin } = await import("@/integrations/supabase/client.server");
+        await supabaseAdmin
+          .from("pro_profiles")
+          .update({ stripe_account_id: null, payouts_enabled: false, payouts_ready_at: null })
+          .eq("user_id", userId);
+        return { connected: false, payoutsEnabled: false, detailsSubmitted: false, bankLast4: null };
+      }
       if (message.includes("signed up for Connect")) {
         return {
           error:
