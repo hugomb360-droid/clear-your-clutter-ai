@@ -8,6 +8,7 @@ import { MISSION_STATUS_LABELS } from "@/lib/mission";
 import { formatDate, isUpcoming, netOf, quoteTitle } from "@/lib/pro-dashboard";
 import { euro } from "@/lib/pricing";
 import { supabase } from "@/integrations/supabase/client";
+import { SuccessionDetails, MissionReportDownload } from "@/components/succession/mission-report";
 
 export function MissionCard({
   bid,
@@ -87,6 +88,8 @@ export function MissionCard({
         </div>
 
         <QuotePhotos quoteId={bid.quote_id} />
+        <SuccessionDetails quoteId={bid.quote_id} />
+        <MissionReportDownload bidId={bid.id} quoteId={bid.quote_id} status={bid.status} />
 
         <MissionPhotoGallery bidId={bid.id} kind="completion" label="Vos photos de fin de chantier" />
 

@@ -1,5 +1,6 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { ServiceLanding, serviceHead } from "@/components/seo/service-landing";
+import { SuccessionForm } from "@/components/succession/succession-form";
 
 export const Route = createFileRoute("/debarras-succession")({
   head: () =>
@@ -12,7 +13,9 @@ export const Route = createFileRoute("/debarras-succession")({
       breadcrumb: "Débarras succession",
     }),
   component: () => (
+    <>
     <ServiceLanding
+      succession
       eyebrow="Succession"
       h1="Débarras après succession : un logement vidé sans vous déplacer"
       intro="Vider le logement d'un proche demande du temps que l'on n'a pas toujours, surtout à distance. Envoyez des photos des pièces : l'estimation du volume et du prix arrive en 2 minutes, et des débarrasseurs vérifiés de la ville concernée vous transmettent leurs propositions."
@@ -60,5 +63,7 @@ export const Route = createFileRoute("/debarras-succession")({
       ctaTitle="Estimez le débarras du logement en 2 minutes"
       ctaText="Photos, volume en m³, fourchette de prix, puis des propositions de professionnels vérifiés intervenant dans la commune du bien."
     />
+    <SuccessionForm />
+    </>
   ),
 });

@@ -109,6 +109,7 @@ export function SiteFooter() {
                 Devenir partenaire
               </Link>
             </li>
+            <li><Link to="/partenaires-prescripteurs" className="hover:text-foreground">Notaires, agences et EHPAD</Link></li>
             <li>
               <Link to="/pro/dashboard" className="hover:text-foreground">
                 Espace pro

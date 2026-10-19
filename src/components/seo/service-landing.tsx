@@ -3,6 +3,7 @@ import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { Camera, Euro, ShieldCheck, Truck } from "lucide-react";
 import { CITIES } from "@/lib/cities";
+import successionPhoto from "@/assets/gallery-apres.jpg";
 
 export interface ServiceBlock {
   title: string;
@@ -10,6 +11,7 @@ export interface ServiceBlock {
 }
 
 export interface ServiceLandingProps {
+  succession?: boolean;
   eyebrow: string;
   h1: string;
   intro: string;
@@ -51,17 +53,18 @@ export function ServiceLanding(props: ServiceLandingProps) {
 
   return (
     <main className="mx-auto max-w-5xl px-4 py-12 sm:py-16">
-      <section className="text-center">
+      <section className={props.succession ? "relative isolate overflow-hidden rounded-lg px-5 py-12 text-center text-primary-foreground" : "text-center"}>
+        {props.succession && <><img src={successionPhoto} alt="Logement vidé après débarras" className="absolute inset-0 -z-20 size-full object-cover" /><div className="absolute inset-0 -z-10 bg-foreground/65" /></>}
         <span className="inline-flex items-center gap-2 rounded-full bg-primary/10 px-4 py-1.5 text-xs font-semibold uppercase tracking-wide text-primary">
           {props.eyebrow}
         </span>
         <h1 className="mt-5 text-3xl font-extrabold tracking-tight sm:text-4xl md:text-5xl">
           {props.h1}
         </h1>
-        <p className="mx-auto mt-5 max-w-2xl text-muted-foreground">{props.intro}</p>
+        <p className={`mx-auto mt-5 max-w-2xl ${props.succession ? "text-primary-foreground" : "text-muted-foreground"}`}>{props.intro}</p>
         <div className="mt-8 flex flex-wrap justify-center gap-3">
           <Button asChild size="lg">
-            <Link to="/estimation">Estimer en photo (2 min)</Link>
+            {props.succession ? <a href="#dossier-succession">Ouvrir mon dossier succession</a> : <Link to="/estimation">Estimer en photo (2 min)</Link>}
           </Button>
           <Button asChild size="lg" variant="outline">
             <Link to="/tarifs">Voir la grille tarifaire</Link>
@@ -140,7 +143,7 @@ export function ServiceLanding(props: ServiceLandingProps) {
         <p className="mx-auto mt-3 max-w-xl text-sm text-muted-foreground">{props.ctaText}</p>
         <div className="mt-6">
           <Button asChild size="lg">
-            <Link to="/estimation">Démarrer mon estimation</Link>
+            {props.succession ? <a href="#dossier-succession">Organiser le débarras de succession</a> : <Link to="/estimation">Démarrer mon estimation</Link>}
           </Button>
         </div>
       </section>
