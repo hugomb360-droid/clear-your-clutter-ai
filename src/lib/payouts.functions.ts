@@ -12,6 +12,21 @@ export type PayoutStatus = {
 type StatusResult = PayoutStatus | { error: string };
 type LinkResult = { url: string } | { error: string };
 
+/**
+ * Un compte de versement créé en mode test n'existe pas en mode réel (et
+ * inversement) : Stripe répond alors « account_invalid ». Dans ce cas on
+ * oublie l'identifiant enregistré et on en crée un nouveau dans
+ * l'environnement courant.
+ */
+function isUnknownConnectedAccount(message: string): boolean {
+  return (
+    message.includes("does not have access to account") ||
+    message.includes("account_invalid") ||
+    message.includes("not connected to your platform") ||
+    message.includes("No such account")
+  );
+}
+
 /** Statut du compte de versement (coordonnées bancaires) du pro connecté. */
 export const getPayoutStatus = createServerFn({ method: "POST" })
   .middleware([requireSupabaseAuth])
@@ -55,6 +70,15 @@ export const getPayoutStatus = createServerFn({ method: "POST" })
       };
     } catch (error) {
       const message = getStripeErrorMessage(error);
+      if (isUnknownConnectedAccount(message)) {
+        // Compte créé dans l'autre environnement (test/réel) : on l'oublie.
+        const { supabaseAdmin } = await import("@/integrations/supabase/client.server");
+        await supabaseAdmin
+          .from("pro_profiles")
+          .update({ stripe_account_id: null, payouts_enabled: false, payouts_ready_at: null })
+          .eq("user_id", userId);
+        return { connected: false, payoutsEnabled: false, detailsSubmitted: false, bankLast4: null };
+      }
       if (message.includes("signed up for Connect")) {
         return {
           error:
@@ -82,9 +106,8 @@ export const startPayoutOnboarding = createServerFn({ method: "POST" })
     try {
       const stripe = createStripeClient(data.environment);
       const { supabaseAdmin } = await import("@/integrations/supabase/client.server");
-      let accountId = profile.stripe_account_id;
 
-      if (!accountId) {
+      const createAccount = async (): Promise<string> => {
         const { data: userData } = await supabase.auth.getUser();
         const account = await stripe.accounts.create({
           type: "express",
@@ -97,20 +120,37 @@ export const startPayoutOnboarding = createServerFn({ method: "POST" })
           },
           metadata: { proId: userId },
         });
-        accountId = account.id;
         await supabaseAdmin
           .from("pro_profiles")
-          .update({ stripe_account_id: accountId })
+          .update({ stripe_account_id: account.id, payouts_enabled: false, payouts_ready_at: null })
           .eq("user_id", userId);
-      }
+        return account.id;
+      };
 
-      const link = await stripe.accountLinks.create({
-        account: accountId,
-        type: "account_onboarding",
-        return_url: data.returnUrl,
-        refresh_url: data.refreshUrl,
-      });
-      return { url: link.url };
+      let accountId = profile.stripe_account_id ?? (await createAccount());
+
+      try {
+        const link = await stripe.accountLinks.create({
+          account: accountId,
+          type: "account_onboarding",
+          return_url: data.returnUrl,
+          refresh_url: data.refreshUrl,
+        });
+        return { url: link.url };
+      } catch (linkError) {
+        const message = getStripeErrorMessage(linkError);
+        if (!isUnknownConnectedAccount(message)) throw linkError;
+        // L'identifiant enregistré vient de l'autre environnement (test/réel) :
+        // on crée un nouveau compte dans l'environnement courant et on réessaie.
+        accountId = await createAccount();
+        const link = await stripe.accountLinks.create({
+          account: accountId,
+          type: "account_onboarding",
+          return_url: data.returnUrl,
+          refresh_url: data.refreshUrl,
+        });
+        return { url: link.url };
+      }
     } catch (error) {
       const message = getStripeErrorMessage(error);
       if (message.includes("signed up for Connect")) {
