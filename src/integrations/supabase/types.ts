@@ -631,6 +631,10 @@ export type Database = {
         }
         Returns: boolean
       }
+      is_assigned_quote: {
+        Args: { _quote_id: string; _user_id: string }
+        Returns: boolean
+      }
       is_bid_client: {
         Args: { _bid_id: string; _user_id: string }
         Returns: boolean
