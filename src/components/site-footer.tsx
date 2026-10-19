@@ -53,6 +53,11 @@ export function SiteFooter() {
               </Link>
             </li>
             <li>
+              <Link to="/prix-debarras" className="hover:text-foreground">
+                Prix d'un débarras
+              </Link>
+            </li>
+            <li>
               <Link to="/debarras-succession" className="hover:text-foreground">
                 Débarras après succession
               </Link>
