@@ -1,5 +1,5 @@
 # Succession et prescripteurs
-- [ ] Corriger le chargement navigateur des alertes push qui bloque la compilation serveur.
+- [x] Chargement push isolé au navigateur ; compilation réussie, cinq tests réussis et paramètres pro ouverts sans erreur.
 - [x] Notifications locales pro et contenu ville/volume/prix/accès ; demande à Angoulême reçue et marquée lue sur le compte pro connecté.
 - [x] Délai moyen réel de réponse des autres pros du secteur, sans valeur inventée ; tests des règles réussis.
 - [x] Installation mobile et intégration des alertes push ; accès Firebase vérifié, affichage mobile vérifié.
