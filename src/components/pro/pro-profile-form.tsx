@@ -1,6 +1,6 @@
 import { useQueryClient } from "@tanstack/react-query";
 import { BadgeCheck, Building2, Check, FileText, MapPin, Wrench } from "lucide-react";
-import { useEffect, useState } from "react";
+import { useEffect, useState, type ReactNode } from "react";
 import { toast } from "sonner";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
@@ -187,11 +187,11 @@ function FormBlock({
   hint,
   children,
 }: {
-  icon: React.ReactNode;
+  icon: ReactNode;
   step: string;
   title: string;
   hint?: string;
-  children: React.ReactNode;
+  children: ReactNode;
 }) {
   return (
     <div className="grid gap-4 px-6 py-6 lg:grid-cols-[220px_minmax(0,1fr)] lg:gap-8">
