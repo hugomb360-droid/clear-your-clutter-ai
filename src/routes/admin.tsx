@@ -24,8 +24,8 @@ import { readAdminPages } from "@/lib/admin-data";
 
 export const Route = createFileRoute("/admin")({
   validateSearch: (search: Record<string, unknown>) => ({
-    tab: typeof search.tab === 'string' && ['chantiers', 'litiges', 'demandes', 'pros', 'paiements', 'avis', 'prescripteurs'].includes(search.tab) ? search.tab : 'chantiers',
-    environment: search.environment === 'sandbox' ? 'sandbox' : 'live',
+    tab: typeof search['tab'] === 'string' && ['chantiers', 'litiges', 'demandes', 'pros', 'paiements', 'avis', 'prescripteurs'].includes(search['tab']) ? search['tab'] : 'chantiers',
+    environment: search['environment'] === 'sandbox' ? 'sandbox' : 'live',
   }),
   head: () => ({
     meta: [
