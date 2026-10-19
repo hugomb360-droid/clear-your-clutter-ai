@@ -1,5 +1,5 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { Camera, MapPin, Quote, Sparkles, Star } from "lucide-react";
+import { Camera, MapPin, Quote, Sparkles, Star, Users } from "lucide-react";
 import heroBefore from "@/assets/hero-clearo-v2.jpg.asset.json";
 import heroAfter from "@/assets/hero-apres-v1.jpg.asset.json";
 import galleryEquipe from "@/assets/gallery-equipe.jpg";
@@ -152,6 +152,18 @@ function Home() {
             <p className="mt-4 text-sm text-muted-foreground">
               Gratuit, sans engagement · Réponse des pros sous 48 h
             </p>
+            <div className="mt-3">
+              <Button
+                asChild
+                size="sm"
+                variant="ghost"
+                className="rounded-full border border-border/70 bg-card/70 px-4 text-sm font-medium text-muted-foreground hover:border-brand/40 hover:text-brand-ink"
+              >
+                <Link to="/professionnels">
+                  <Users className="size-4" /> Notre réseau de pros
+                </Link>
+              </Button>
+            </div>
           </div>
           <div className="relative">
             <BeforeAfterSlider
