@@ -28,6 +28,7 @@ const entries: SitemapEntry[] = [
   { path: "/debarras-cave-garage", changefreq: "monthly", priority: "0.8" },
   { path: "/comment-ca-marche", changefreq: "monthly", priority: "0.7" },
   { path: "/tarifs", changefreq: "monthly", priority: "0.7" },
+  { path: "/prix-debarras", changefreq: "monthly", priority: "0.8" },
   { path: "/pros", changefreq: "monthly", priority: "0.7" },
   { path: "/contact", changefreq: "yearly", priority: "0.5" },
   { path: "/auth", changefreq: "yearly", priority: "0.3" },
