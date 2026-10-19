@@ -32,8 +32,8 @@ function PublicProfilePage() {
     <header className="border-b border-border bg-secondary/50">
       <div className="mx-auto max-w-6xl px-4 py-10 sm:py-14">
         <Link to="/professionnels" className="inline-flex items-center gap-2 text-sm text-muted-foreground"><ArrowLeft className="size-4" />Les professionnels</Link>
-        <div className="mt-8 flex flex-wrap items-start justify-between gap-6">
-          <div className="flex min-w-0 flex-1 items-start gap-4 sm:gap-6">
+        <div className="mt-8 flex flex-col items-start justify-between gap-6 sm:flex-row sm:flex-wrap">
+          <div className="flex w-full min-w-0 items-start gap-4 sm:w-auto sm:flex-1 sm:gap-6">
             {pro.logo_url ? <img src={pro.logo_url} alt={`Logo ${pro.company_name}`} className="size-20 shrink-0 rounded-lg bg-card object-contain sm:size-24" /> : <div className="flex size-20 shrink-0 items-center justify-center rounded-lg bg-card text-primary sm:size-24"><Building2 className="size-9" /></div>}
             <div className="min-w-0"><p className="text-xs font-semibold uppercase text-primary">Professionnel du débarras</p><h1 className="mt-2 break-words font-display text-3xl font-extrabold sm:text-4xl">{pro.company_name}</h1><p className="mt-3 text-sm text-muted-foreground">{regionsFor(pro.postal_codes).join(" · ")}</p>
               {verifiedBadge(pro) && <Badge className="mt-4 gap-1"><ShieldCheck className="size-4" />SIRET et assurance vérifiés</Badge>}
