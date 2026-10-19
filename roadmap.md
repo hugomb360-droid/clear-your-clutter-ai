@@ -1,5 +1,5 @@
 # Succession et prescripteurs
-- [ ] Tableau de bord administrateur : trois étapes financières, commissions réelles, alertes et actualisation automatique ; tests et vérification connectée.
+- [x] Tableau de bord administrateur : trois étapes financières, commissions réelles séparées des tests, alertes et actualisation toutes les 15 secondes ; 29 tests réussis, session admin, versements enregistrés, liens d’alertes et affichage mobile vérifiés sans transaction.
 - [x] Profils publics professionnels avec médias choisis, avis réels et chantiers confirmés.
 - [x] Complétion du profil, pièces privées et validation administrateur des justificatifs ; auto-vérification refusée en session pro.
 - [x] Annuaire régional classé selon les avis réels et liens depuis les propositions client.
