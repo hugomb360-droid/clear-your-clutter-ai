@@ -75,10 +75,11 @@ export default function ZonesMap({ zones }: { zones: string[] }) {
           center: [46.6, 2.4],
           zoom: 5,
           scrollWheelZoom: false,
-          attributionControl: false,
+          attributionControl: true,
         });
-        L.tileLayer("https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png", {
+        L.tileLayer("https://tile.openstreetmap.org/{z}/{x}/{y}.png", {
           maxZoom: 18,
+          attribution: "© OpenStreetMap",
         }).addTo(mapRef.current);
         layerRef.current = L.layerGroup().addTo(mapRef.current);
       }

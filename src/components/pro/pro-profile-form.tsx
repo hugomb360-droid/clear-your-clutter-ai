@@ -1,5 +1,5 @@
 import { useQueryClient } from "@tanstack/react-query";
-import { BadgeCheck } from "lucide-react";
+import { BadgeCheck, Building2, Check, FileText, MapPin, Wrench } from "lucide-react";
 import { useEffect, useState } from "react";
 import { toast } from "sonner";
 import { Badge } from "@/components/ui/badge";
@@ -83,56 +83,69 @@ export function ProProfileForm({
     void queryClient.invalidateQueries({ queryKey: ["pro-missions"] });
   };
 
+  const allServices = [...SERVICES, "Diogène", "Caves / garages"];
+
   return (
-    <section className="rounded-3xl border border-border bg-card p-6">
-      <div className="flex items-center justify-between">
-        <h2 className="text-lg font-bold">Ma fiche entreprise</h2>
+    <section className="overflow-hidden rounded-3xl border border-border bg-card">
+      <header className="flex flex-col gap-3 border-b border-border bg-secondary/40 px-6 py-5 sm:flex-row sm:items-center sm:justify-between">
+        <div className="flex min-w-0 items-center gap-3">
+          <div className="grid size-11 shrink-0 place-items-center rounded-2xl bg-primary text-primary-foreground">
+            <Building2 className="size-5" />
+          </div>
+          <div className="min-w-0">
+            <h2 className="truncate text-lg font-bold">Ma fiche entreprise</h2>
+            <p className="text-sm text-muted-foreground">Ce que les clients voient de vous.</p>
+          </div>
+        </div>
         {profile && verifiedBadge(profile) && (
-          <Badge className="gap-1">
+          <Badge className="w-fit gap-1">
             <BadgeCheck className="size-3.5" /> SIRET et assurance vérifiés
           </Badge>
         )}
-      </div>
+      </header>
 
-      <div className="mt-5 grid gap-4 sm:grid-cols-2">
-        <div className="grid gap-2">
-          <Label htmlFor="company">Nom de la société *</Label>
-          <Input id="company" value={companyName} onChange={(e) => setCompanyName(e.target.value)} />
-        </div>
-        <div className="grid gap-2">
-          <Label htmlFor="siret">SIRET</Label>
-          <Input id="siret" value={siret} onChange={(e) => setSiret(e.target.value)} />
-        </div>
-        <div className="grid gap-2">
-          <Label htmlFor="pro-phone">Téléphone</Label>
-          <Input id="pro-phone" value={phone} onChange={(e) => setPhone(e.target.value)} />
-        </div>
-        <div className="grid gap-2">
-          <Label htmlFor="zones">Zones d'intervention (codes postaux)</Label>
-          <Input
-            id="zones"
-            placeholder="75, 92100, 93"
-            value={zones}
-            onChange={(e) => setZones(e.target.value)}
-          />
-          {postalCodes.length > 0 ? (
-            <p className="text-xs text-muted-foreground">
-              Zones prises en compte : {postalCodes.join(", ")} — vous ne verrez que les demandes de
-              ces secteurs.
-            </p>
-          ) : (
-            <p className="text-xs text-destructive">
-              Renseignez au moins un code postal pour recevoir des demandes.
-            </p>
-          )}
-        </div>
-        <div className="sm:col-span-2">
-          <ZonesMapPanel zones={postalCodes} />
-        </div>
-        <div className="grid gap-2 sm:col-span-2">
-          <Label>Prestations proposées</Label>
+      <div className="divide-y divide-border">
+        <FormBlock icon={<Building2 className="size-4" />} step="1" title="Identité" hint="Informations légales et contact.">
+          <div className="grid gap-4 sm:grid-cols-3">
+            <div className="grid gap-2">
+              <Label htmlFor="company">Nom de la société *</Label>
+              <Input id="company" value={companyName} onChange={(e) => setCompanyName(e.target.value)} />
+            </div>
+            <div className="grid gap-2">
+              <Label htmlFor="siret">SIRET</Label>
+              <Input id="siret" inputMode="numeric" value={siret} onChange={(e) => setSiret(e.target.value)} />
+            </div>
+            <div className="grid gap-2">
+              <Label htmlFor="pro-phone">Téléphone</Label>
+              <Input id="pro-phone" type="tel" value={phone} onChange={(e) => setPhone(e.target.value)} />
+            </div>
+          </div>
+        </FormBlock>
+
+        <FormBlock icon={<MapPin className="size-4" />} step="2" title="Zones d'intervention" hint="« 75 » couvre tout Paris, « 92100 » une seule commune.">
+          <div className="grid gap-2">
+            <Label htmlFor="zones">Codes postaux ou départements</Label>
+            <Input id="zones" placeholder="75, 92100, 93" value={zones} onChange={(e) => setZones(e.target.value)} />
+            {postalCodes.length > 0 ? (
+              <div className="flex flex-wrap gap-1.5 pt-1">
+                {postalCodes.map((code) => (
+                  <span key={code} className="rounded-full bg-secondary px-2.5 py-0.5 text-xs font-medium text-secondary-foreground">
+                    {code}
+                  </span>
+                ))}
+              </div>
+            ) : (
+              <p className="text-xs text-destructive">Renseignez au moins un code postal pour recevoir des demandes.</p>
+            )}
+          </div>
+          <div className="mt-4">
+            <ZonesMapPanel zones={postalCodes} />
+          </div>
+        </FormBlock>
+
+        <FormBlock icon={<Wrench className="size-4" />} step="3" title="Prestations proposées" hint={`${services.length} sélectionnée${services.length > 1 ? "s" : ""}`}>
           <div className="flex flex-wrap gap-2">
-            {[...SERVICES, "Diogène", "Caves / garages"].map((service) => {
+            {allServices.map((service) => {
               const active = services.includes(service);
               return (
                 <Button
@@ -141,35 +154,56 @@ export function ProProfileForm({
                   variant={active ? "default" : "outline"}
                   size="sm"
                   onClick={() => toggleService(service)}
-                  className={`rounded-full border px-3.5 py-1.5 text-sm transition-colors ${
-                    active
-                      ? "border-primary bg-primary text-primary-foreground"
-                      : "border-border bg-background text-muted-foreground hover:bg-secondary"
-                  }`}
+                  className="rounded-full"
                 >
+                  {active && <Check className="size-3.5" />}
                   {service}
                 </Button>
               );
             })}
           </div>
-        </div>
-        <div className="grid gap-2 sm:col-span-2">
-          <Label htmlFor="desc">Présentation</Label>
-          <Textarea
-            id="desc"
-            rows={3}
-            value={description}
-            onChange={(e) => setDescription(e.target.value)}
-          />
-        </div>
+        </FormBlock>
+
+        <FormBlock icon={<FileText className="size-4" />} step="4" title="Présentation" hint="Quelques phrases sur votre équipe et votre savoir-faire.">
+          <Textarea id="desc" rows={4} value={description} onChange={(e) => setDescription(e.target.value)} />
+          <p className="mt-1 text-right text-xs text-muted-foreground">{description.length} caractères</p>
+        </FormBlock>
       </div>
 
-      <Button className="mt-5" onClick={save} disabled={saving || !companyName}>
-        {saving ? "Enregistrement..." : "Enregistrer ma fiche"}
-      </Button>
-      <p className="mt-3 text-xs text-muted-foreground">
-        Astuce : saisissez « 75 » pour couvrir tout Paris, ou « 92100 » pour une seule commune.
-      </p>
+      <footer className="flex flex-col gap-3 border-t border-border bg-secondary/40 px-6 py-4 sm:flex-row sm:items-center sm:justify-between">
+        <p className="text-xs text-muted-foreground">Vos modifications sont visibles par les clients après enregistrement.</p>
+        <Button onClick={save} disabled={saving || !companyName} className="sm:w-auto">
+          {saving ? "Enregistrement..." : "Enregistrer ma fiche"}
+        </Button>
+      </footer>
     </section>
+  );
+}
+
+function FormBlock({
+  icon,
+  step,
+  title,
+  hint,
+  children,
+}: {
+  icon: React.ReactNode;
+  step: string;
+  title: string;
+  hint?: string;
+  children: React.ReactNode;
+}) {
+  return (
+    <div className="grid gap-4 px-6 py-6 lg:grid-cols-[220px_minmax(0,1fr)] lg:gap-8">
+      <div className="flex items-start gap-3">
+        <div className="grid size-8 shrink-0 place-items-center rounded-full bg-primary/10 text-primary">{icon}</div>
+        <div className="min-w-0">
+          <p className="text-xs font-semibold uppercase tracking-wide text-muted-foreground">Étape {step}</p>
+          <h3 className="font-semibold">{title}</h3>
+          {hint && <p className="mt-0.5 text-xs text-muted-foreground">{hint}</p>}
+        </div>
+      </div>
+      <div className="min-w-0">{children}</div>
+    </div>
   );
 }
