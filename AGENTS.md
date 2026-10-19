@@ -17,3 +17,7 @@
 - Push delivery handles one professional event per signed-capability request through Firebase's connector; bounded retries run on subsequent publication or recipient dashboard access, not permanent polling, so quiet-period recovery can be delayed.
 - Mobile installation is manifest-only without offline caching; the Firebase messaging worker is separate and registers only on an explicit notification permission action.
 - SSR-rendered components must load browser-only push modules through createClientOnlyFn so their imports are stripped from the server graph.
+- Public professional profiles use a narrow security-definer read RPC returning only published portfolio metadata, anonymous reviews and confirmed mission counts; never grant public access to private professional or customer rows.
+- Professional verification flags and stable public slugs are protected by a database trigger; document changes invalidate their verification, and only administrators can approve evidence.
+- Public portfolio files use a private bucket with published-path read policies and expiring signed URLs, because workspace policy blocks public buckets; verification evidence uses a separate owner/admin-only bucket.
+- Regional professional ordering and profile completion rules live in a shared browser-safe module with rule tests so public listings and dashboard indicators stay consistent.

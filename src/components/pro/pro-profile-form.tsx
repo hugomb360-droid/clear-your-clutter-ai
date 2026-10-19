@@ -11,6 +11,7 @@ import { supabase } from "@/integrations/supabase/client";
 import type { Tables } from "@/integrations/supabase/types";
 import { parsePostalCodes, PRO_SERVICES as SERVICES } from "@/lib/pro-dashboard";
 import { ZonesMapPanel } from "@/components/pro/zones-map-panel";
+import { verifiedBadge } from "@/lib/public-profiles";
 
 export function ProProfileForm({
   profile,
@@ -86,9 +87,9 @@ export function ProProfileForm({
     <section className="rounded-3xl border border-border bg-card p-6">
       <div className="flex items-center justify-between">
         <h2 className="text-lg font-bold">Ma fiche entreprise</h2>
-        {profile?.verified && (
+        {profile && verifiedBadge(profile) && (
           <Badge className="gap-1">
-            <BadgeCheck className="size-3.5" /> Pro vérifié
+            <BadgeCheck className="size-3.5" /> SIRET et assurance vérifiés
           </Badge>
         )}
       </div>
@@ -131,12 +132,14 @@ export function ProProfileForm({
         <div className="grid gap-2 sm:col-span-2">
           <Label>Prestations proposées</Label>
           <div className="flex flex-wrap gap-2">
-            {SERVICES.map((service) => {
+            {[...SERVICES, "Diogène", "Caves / garages"].map((service) => {
               const active = services.includes(service);
               return (
-                <button
+                <Button
                   key={service}
                   type="button"
+                  variant={active ? "default" : "outline"}
+                  size="sm"
                   onClick={() => toggleService(service)}
                   className={`rounded-full border px-3.5 py-1.5 text-sm transition-colors ${
                     active
@@ -145,7 +148,7 @@ export function ProProfileForm({
                   }`}
                 >
                   {service}
-                </button>
+                </Button>
               );
             })}
           </div>

@@ -12,6 +12,8 @@ import { useAuth } from "@/hooks/useAuth";
 import { supabase } from "@/integrations/supabase/client";
 import { MISSION_STATUS_LABELS } from "@/lib/mission";
 import { euro } from "@/lib/pricing";
+import { getPublicProfessionals } from "@/lib/public-profiles.functions";
+import { averageRating, verifiedBadge } from "@/lib/public-profiles";
 
 export const Route = createFileRoute("/compte")({
   head: () => ({
@@ -24,6 +26,8 @@ export const Route = createFileRoute("/compte")({
       },
       { property: "og:title", content: "Mon espace client Débarras France" },
       { property: "og:description", content: "Suivez vos devis et les propositions des pros." },
+      { property: "og:type", content: "website" },
+      { name: "twitter:card", content: "summary_large_image" },
     ],
   }),
   component: ClientAccountPage,
@@ -81,11 +85,11 @@ function ClientAccount() {
       const bids = (quotes ?? []).flatMap((q) => q.bids ?? []);
       const proIds = Array.from(new Set(bids.map((b) => b.pro_id).filter(Boolean)));
 
-      let profilesById: Record<string, { company_name: string; verified: boolean; description: string | null }> = {};
+      let profilesById: Record<string, { company_name: string; verified: boolean; description: string | null; public_slug: string | null; public_enabled: boolean; siret_verified: boolean; insurance_verified: boolean }> = {};
       if (proIds.length > 0) {
         const { data: profiles, error: profilesError } = await supabase
           .from("pro_profiles")
-          .select("user_id, company_name, verified, description")
+          .select("user_id, company_name, verified, description, public_slug, public_enabled, siret_verified, insurance_verified")
           .in("user_id", proIds);
         if (!profilesError && profiles) {
           profilesById = Object.fromEntries(
@@ -94,11 +98,13 @@ function ClientAccount() {
         }
       }
 
+      const publicPros = await getPublicProfessionals();
       return (quotes ?? []).map((q) => ({
         ...q,
         bids: (q.bids ?? []).map((b) => ({
           ...b,
           pro_profiles: profilesById[b.pro_id] ?? null,
+          rating: averageRating(publicPros.find(p => p.slug === profilesById[b.pro_id]?.public_slug)?.reviews ?? []),
         })),
       }));
     },
@@ -159,9 +165,14 @@ function ClientAccount() {
             message: string | null;
             status: string;
             pro_id: string;
+            rating: number | null;
             pro_profiles?: {
               company_name: string;
               verified: boolean;
+              public_slug: string | null;
+              public_enabled: boolean;
+              siret_verified: boolean;
+              insurance_verified: boolean;
               description?: string | null;
             } | null;
           }>;
@@ -264,19 +275,17 @@ function ClientAccount() {
                             <div className="flex flex-col justify-between gap-4 sm:flex-row sm:items-start">
                               <div className="min-w-0 flex-1">
                                 <div className="flex flex-wrap items-center gap-2">
-                                  <span className="font-display font-bold text-proposal-emerald">
-                                    {companyName}
-                                  </span>
-                                  {pro?.verified && (
+                                  {pro?.public_slug && pro.public_enabled ? <Link to="/pro/$slug" params={{ slug: pro.public_slug }} className="font-display font-bold text-proposal-emerald underline-offset-4 hover:underline">{companyName}</Link> : <span className="font-display font-bold text-proposal-emerald">{companyName}</span>}
+                                  {pro && verifiedBadge(pro) && (
                                     <span className="inline-flex items-center gap-1 rounded-full bg-proposal-emerald/10 px-2 py-0.5 text-[10px] font-semibold text-proposal-emerald">
-                                      <ShieldCheck className="size-3" /> Vérifié
+                                      <ShieldCheck className="size-3" /> SIRET et assurance vérifiés
                                     </span>
                                   )}
                                 </div>
                                 <div className="mt-1 flex items-center gap-2">
-                                  <StarRating value={4.8} />
+                                  {bid.rating !== null && <StarRating value={bid.rating} />}
                                   <span className="text-[10px] font-medium text-proposal-emerald-light">
-                                    4.8
+                                    {bid.rating !== null ? `${bid.rating.toFixed(1)} / 5` : "Pas encore d’avis"}
                                   </span>
                                 </div>
                               </div>
