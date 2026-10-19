@@ -10,6 +10,7 @@
 - [ ] Réception push réelle sur un téléphone : autorisation et enregistrement de l'appareil nécessaires, puis publication du site nécessaire pour la livraison automatique.
 - [ ] Alertes email (domaine d’envoi à configurer).
 - [x] Option SMS/WhatsApp : disponibilité et coûts précisés, aucun envoi ni dépense activés.
+- [x] Bouton secondaire « Notre réseau de pros » sur l'accueil vers l'annuaire ; affichage mobile sans débordement vérifié.
 - [x] Parcours succession relié aux demandes et au suivi des chantiers.
 - [x] Données réelles de fin de chantier et rapport PDF privé téléchargeable.
 - [x] Page prescripteurs et formulaire enregistré avec visibilité administrateur.
