@@ -14,7 +14,7 @@ export function AdminProVerification({ pro }: { pro: Tables<"pro_profiles"> }) {
   }
   async function verify(field: "siret_verified" | "insurance_verified", value: boolean) {
     setBusy(true);
-    const { error } = await supabase.from("pro_profiles").update({ [field]: value }).eq("user_id", pro.user_id);
+    const { error } = await supabase.from("pro_profiles").update(field === "siret_verified" ? { siret_verified: value } : { insurance_verified: value }).eq("user_id", pro.user_id);
     setBusy(false);
     if (error) return void toast.error("Vérification impossible", { description: error.message });
     await queryClient.invalidateQueries({ queryKey: ["admin-pros"] });

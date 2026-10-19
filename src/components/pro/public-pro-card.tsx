@@ -1,7 +1,7 @@
 import { Link } from "@tanstack/react-router";
 import { ArrowUpRight, Building2, ShieldCheck, Star, MapPin } from "lucide-react";
 import { averageRating, verifiedBadge, type PublicPro } from "@/lib/public-profiles";
-export function PublicProCard({ pro, rank }: { pro: PublicPro; rank?: number }) {
+export function PublicProCard({ pro, rank }: { pro: PublicPro; rank?: number | undefined }) {
   const rating = averageRating(pro.reviews);
   return <article className="flex h-full flex-col rounded-lg border border-border bg-card p-6">
     <div className="flex items-start gap-4">{pro.logo_url ? <img src={pro.logo_url} alt={`Logo ${pro.company_name}`} className="size-14 shrink-0 rounded-lg object-contain" /> : <div className="flex size-14 shrink-0 items-center justify-center rounded-lg bg-secondary text-primary"><Building2 className="size-6" /></div>}

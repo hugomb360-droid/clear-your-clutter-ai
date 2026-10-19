@@ -31,8 +31,8 @@ export const getPublicProfessionals = createServerFn({ method: "GET" }).handler(
     if (!paths.length) return pro;
     const { data: signed, error: signError } = await s.storage.from("pro-public-media").createSignedUrls(paths, 3600);
     if (signError) return pro;
-    const browserOrigin = import.meta.env.VITE_SUPABASE_URL;
+    const browserOrigin = import.meta.env['VITE_SUPABASE_URL'];
     const urls = new Map((signed ?? []).map(row => [row.path, row.signedUrl?.replace(url, browserOrigin) ?? ""]));
-    return { ...pro, logo_url: pro.logo_path ? urls.get(pro.logo_path) : undefined, portfolio_urls: pro.portfolio_paths.map(p => urls.get(p) ?? "").filter(Boolean) };
+    return { ...pro, logo_url: (pro.logo_path ? urls.get(pro.logo_path) : "") ?? "", portfolio_urls: pro.portfolio_paths.map(p => urls.get(p) ?? "").filter(Boolean) };
   }));
 });
