@@ -19,7 +19,7 @@ export async function deliverProPush(eventId: string, deliveryToken: string) {
   const coverage = await db.rpc("pro_covers_postal", { _user_id: event.pro_id, _postal: quote.data?.postal_code ?? "" });
   if (coverage.error) throw coverage.error;
   const enabled = pref.data?.push_enabled && device.data && quote.data?.status === "published" && role.data && coverage.data;
-  if (!enabled) {
+  if (!enabled || !device.data) {
     const skipped = await db.from("pro_notifications").update({ push_state: "skipped" }).eq("id", eventId).eq("attempts", event.attempts);
     if (skipped.error) throw skipped.error;
     return { status: "skipped" };
