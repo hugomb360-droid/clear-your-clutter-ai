@@ -10,7 +10,7 @@ export async function deliverProPush(eventId: string, deliveryToken: string) {
   if (event.push_state === "sending" && event.attempted_at && Date.now() - Date.parse(event.attempted_at) < 120_000) return { status: "sending" };
   if (event.attempts >= 3) return { status: "failed" };
   const [pref, device, quote, role] = await Promise.all([
-    db.from("pro_notification_preferences").select("push_enabled").eq("pro_id", event.pro_id).maybeSingle(),
+    db.from("pro_notification_preferences").select("push_enabled,email_enabled").eq("pro_id", event.pro_id).maybeSingle(),
     db.from("pro_push_devices").select("id,token").eq("pro_id", event.pro_id).order("created_at", { ascending: false }).limit(1).maybeSingle(),
     db.from("quotes").select("status,postal_code").eq("id", event.quote_id).maybeSingle(),
     db.rpc("has_role", { _user_id: event.pro_id, _role: "pro" }),
@@ -18,7 +18,22 @@ export async function deliverProPush(eventId: string, deliveryToken: string) {
   for (const result of [pref, device, quote, role]) if (result.error) throw result.error;
   const coverage = await db.rpc("pro_covers_postal", { _user_id: event.pro_id, _postal: quote.data?.postal_code ?? "" });
   if (coverage.error) throw coverage.error;
-  const enabled = pref.data?.push_enabled && device.data && quote.data?.status === "published" && role.data && coverage.data;
+  const eligible = quote.data?.status === "published" && role.data && coverage.data;
+  if (eligible && pref.data?.email_enabled) {
+    try {
+      const user = await db.auth.admin.getUserById(event.pro_id);
+      const email = user.data.user?.email;
+      if (email) {
+        const { sendTemplateEmail } = await import("./email-templates/send-email");
+        const summary = notificationSummarySchema.safeParse(event.summary);
+        await sendTemplateEmail("pro-new-request", email, {
+          templateData: { summary: summary.success ? notificationText(summary.data) : undefined },
+          idempotencyKey: `pro-new-request-${event.id}`,
+        });
+      }
+    } catch (e) { console.error("Pro email alert failed", e instanceof Error ? e.message : e); }
+  }
+  const enabled = pref.data?.push_enabled && device.data && eligible;
   if (!enabled || !device.data) {
     const skipped = await db.from("pro_notifications").update({ push_state: "skipped" }).eq("id", eventId).eq("attempts", event.attempts);
     if (skipped.error) throw skipped.error;

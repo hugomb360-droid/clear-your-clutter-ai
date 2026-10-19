@@ -85,7 +85,14 @@ export function ProNotificationSettings({ proId }: { proId: string }) {
       <div className="flex items-center justify-between gap-4 py-4"><div><p className="font-semibold">Notifications push</p><p className="mt-1 text-sm text-muted-foreground">Ville, volume, estimation et accès · sur le dernier appareil enregistré.</p></div><Switch aria-label="Notifications push" checked={query.data?.push_enabled ?? false} disabled={busy || query.isPending || query.isError} onCheckedChange={togglePush} /></div>
       {notice && <p role="status" className="py-3 text-sm text-muted-foreground">{notice}{notice.includes("nouvel onglet") && <a href="https://debarrasfrance.fr/pro/parametres" target="_blank" rel="noopener noreferrer" className="ml-2 text-primary underline">Ouvrir Débarras France</a>}</p>}
       {query.isError && <p className="py-3 text-sm text-destructive">Impossible de charger vos préférences.</p>}
-      <div className="flex items-center justify-between gap-4 py-4"><div><p className="font-semibold">Email</p><p className="mt-1 text-sm text-muted-foreground">Disponible après configuration du domaine d'envoi de Débarras France.</p></div><Switch aria-label="Notifications email" disabled checked={false} /></div>
+      <div className="flex items-center justify-between gap-4 py-4"><div><p className="font-semibold">Email</p><p className="mt-1 text-sm text-muted-foreground">Ville, volume, estimation et accès · sur l'adresse de votre compte.</p></div><Switch aria-label="Notifications email" checked={query.data?.email_enabled ?? false} disabled={busy || query.isPending || query.isError} onCheckedChange={async (enable) => {
+        setBusy(true);
+        const saved = await supabase.from("pro_notification_preferences").upsert({ pro_id: proId, email_enabled: enable, updated_at: new Date().toISOString() });
+        setBusy(false);
+        if (saved.error) { toast.error("Impossible d'enregistrer la préférence."); return; }
+        await queryClient.invalidateQueries({ queryKey: ["pro-alert-preferences", proId] });
+        toast.success(enable ? "Alertes email activées" : "Alertes email désactivées");
+      }} /></div>
       <div className="py-4"><p className="font-semibold">SMS / WhatsApp</p><p className="mt-1 text-sm text-muted-foreground">Non activés : nécessitent un numéro professionnel, votre accord et un service d'envoi. Des frais peuvent s'appliquer.</p></div>
     </div>
     <div className="mt-4 flex items-start gap-3 bg-secondary/40 p-4"><Smartphone className="mt-1 size-5 shrink-0 text-primary" /><div><h3 className="font-semibold">Débarras France sur votre écran d'accueil</h3><p className="mt-2 text-sm text-muted-foreground">Sur iPhone : Safari → Partager → Sur l'écran d'accueil. Sur Android : menu du navigateur → Installer l'application ou Ajouter à l'écran d'accueil. Ouvrez ensuite l'application pour activer les notifications.</p><p className="mt-2 text-xs text-muted-foreground">Connexion internet nécessaire. Les alertes dépendent des autorisations du navigateur.</p></div></div>
