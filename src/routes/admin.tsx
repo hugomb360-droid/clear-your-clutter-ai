@@ -17,6 +17,7 @@ import { commissionOf, formatDate } from "@/lib/pro-dashboard";
 import { euro } from "@/lib/pricing";
 import { getStripeEnvironment } from "@/lib/stripe";
 import { refundEscrow, releaseEscrow } from "@/lib/payments.functions";
+import { ReferralInbox } from "@/components/succession/referral-inbox";
 
 export const Route = createFileRoute("/admin")({
   head: () => ({
@@ -281,7 +282,9 @@ function AdminConsole() {
           <TabsTrigger value="avis" className="rounded-xl">
             Avis ({reviews.length})
           </TabsTrigger>
+          <TabsTrigger value="prescripteurs" className="rounded-xl">Prescripteurs</TabsTrigger>
         </TabsList>
+        <TabsContent value="prescripteurs" className="mt-6"><ReferralInbox /></TabsContent>
 
         <TabsContent value="chantiers" className="mt-6 space-y-4">
           {missions.length === 0 && (

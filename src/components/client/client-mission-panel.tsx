@@ -17,6 +17,7 @@ import { Textarea } from "@/components/ui/textarea";
 import { supabase } from "@/integrations/supabase/client";
 import { DISPUTE_STATUS_LABELS, uploadMissionPhotos } from "@/lib/mission";
 import { releaseEscrow } from "@/lib/payments.functions";
+import { MissionReportDownload, SuccessionDetails } from "@/components/succession/mission-report";
 
 type Props = {
   bidId: string;
@@ -152,6 +153,8 @@ export function ClientMissionPanel({ bidId, quoteId, clientId, proId, status }: 
 
   return (
     <div className="mt-4 rounded-2xl border border-border p-4">
+      <SuccessionDetails quoteId={quoteId} />
+      <MissionReportDownload bidId={bidId} quoteId={quoteId} status={status} />
       {status === "accepted" && (
         <p className="text-sm text-muted-foreground">
           Mission planifiée. Le pro confirmera la fin de chantier avec des photos.

@@ -157,6 +157,35 @@ export type Database = {
           },
         ]
       }
+      mission_reports: {
+        Row: {
+          bid_id: string
+          created_at: string
+          recycling: string
+          volume_m3: number
+        }
+        Insert: {
+          bid_id: string
+          created_at?: string
+          recycling: string
+          volume_m3: number
+        }
+        Update: {
+          bid_id?: string
+          created_at?: string
+          recycling?: string
+          volume_m3?: number
+        }
+        Relationships: [
+          {
+            foreignKeyName: "mission_reports_bid_id_fkey"
+            columns: ["bid_id"]
+            isOneToOne: true
+            referencedRelation: "bids"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       payments: {
         Row: {
           amount_total: number
@@ -440,6 +469,39 @@ export type Database = {
         }
         Relationships: []
       }
+      referral_contacts: {
+        Row: {
+          created_at: string
+          email: string
+          id: string
+          message: string
+          name: string
+          organization: string
+          phone: string
+          profession: string
+        }
+        Insert: {
+          created_at?: string
+          email: string
+          id?: string
+          message: string
+          name: string
+          organization: string
+          phone?: string
+          profession: string
+        }
+        Update: {
+          created_at?: string
+          email?: string
+          id?: string
+          message?: string
+          name?: string
+          organization?: string
+          phone?: string
+          profession?: string
+        }
+        Relationships: []
+      }
       reviews: {
         Row: {
           bid_id: string
@@ -491,6 +553,50 @@ export type Database = {
           },
         ]
       }
+      succession_details: {
+        Row: {
+          created_at: string
+          deadline: string
+          deadline_reason: string
+          furniture_choice: string
+          heir_present: boolean
+          key_instructions: string
+          quote_id: string
+          remote_keys: boolean
+          valuables: string
+        }
+        Insert: {
+          created_at?: string
+          deadline: string
+          deadline_reason: string
+          furniture_choice: string
+          heir_present: boolean
+          key_instructions?: string
+          quote_id: string
+          remote_keys: boolean
+          valuables?: string
+        }
+        Update: {
+          created_at?: string
+          deadline?: string
+          deadline_reason?: string
+          furniture_choice?: string
+          heir_present?: boolean
+          key_instructions?: string
+          quote_id?: string
+          remote_keys?: boolean
+          valuables?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "succession_details_quote_id_fkey"
+            columns: ["quote_id"]
+            isOneToOne: true
+            referencedRelation: "quotes"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       user_roles: {
         Row: {
           created_at: string
@@ -517,11 +623,16 @@ export type Database = {
       [_ in never]: never
     }
     Functions: {
+      create_succession_request: { Args: { payload: Json }; Returns: string }
       has_role: {
         Args: {
           _role: Database["public"]["Enums"]["app_role"]
           _user_id: string
         }
+        Returns: boolean
+      }
+      is_assigned_quote: {
+        Args: { _quote_id: string; _user_id: string }
         Returns: boolean
       }
       is_bid_client: {

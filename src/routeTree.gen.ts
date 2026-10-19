@@ -22,6 +22,7 @@ import { Route as DebarrasMaisonRouteImport } from './routes/debarras-maison'
 import { Route as DebarrasSuccessionRouteImport } from './routes/debarras-succession'
 import { Route as EstimationRouteImport } from './routes/estimation'
 import { Route as MentionsLegalesRouteImport } from './routes/mentions-legales'
+import { Route as PartenairesPrescripteursRouteImport } from './routes/partenaires-prescripteurs'
 import { Route as PrixDebarrasRouteImport } from './routes/prix-debarras'
 import { Route as ProsRouteImport } from './routes/pros'
 import { Route as SitemapDotxmlRouteImport } from './routes/sitemap[.]xml'
@@ -99,6 +100,12 @@ const MentionsLegalesRoute = MentionsLegalesRouteImport.update({
   path: '/mentions-legales',
   getParentRoute: () => rootRouteImport,
 } as any)
+const PartenairesPrescripteursRoute =
+  PartenairesPrescripteursRouteImport.update({
+    id: '/partenaires-prescripteurs',
+    path: '/partenaires-prescripteurs',
+    getParentRoute: () => rootRouteImport,
+  } as any)
 const PrixDebarrasRoute = PrixDebarrasRouteImport.update({
   id: '/prix-debarras',
   path: '/prix-debarras',
@@ -170,6 +177,7 @@ export interface FileRoutesByFullPath {
   '/debarras-succession': typeof DebarrasSuccessionRoute
   '/estimation': typeof EstimationRoute
   '/mentions-legales': typeof MentionsLegalesRoute
+  '/partenaires-prescripteurs': typeof PartenairesPrescripteursRoute
   '/prix-debarras': typeof PrixDebarrasRoute
   '/pros': typeof ProsRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
@@ -196,6 +204,7 @@ export interface FileRoutesByTo {
   '/debarras-succession': typeof DebarrasSuccessionRoute
   '/estimation': typeof EstimationRoute
   '/mentions-legales': typeof MentionsLegalesRoute
+  '/partenaires-prescripteurs': typeof PartenairesPrescripteursRoute
   '/prix-debarras': typeof PrixDebarrasRoute
   '/pros': typeof ProsRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
@@ -223,6 +232,7 @@ export interface FileRoutesById {
   '/debarras-succession': typeof DebarrasSuccessionRoute
   '/estimation': typeof EstimationRoute
   '/mentions-legales': typeof MentionsLegalesRoute
+  '/partenaires-prescripteurs': typeof PartenairesPrescripteursRoute
   '/prix-debarras': typeof PrixDebarrasRoute
   '/pros': typeof ProsRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
@@ -251,6 +261,7 @@ export interface FileRouteTypes {
     | '/debarras-succession'
     | '/estimation'
     | '/mentions-legales'
+    | '/partenaires-prescripteurs'
     | '/prix-debarras'
     | '/pros'
     | '/sitemap.xml'
@@ -277,6 +288,7 @@ export interface FileRouteTypes {
     | '/debarras-succession'
     | '/estimation'
     | '/mentions-legales'
+    | '/partenaires-prescripteurs'
     | '/prix-debarras'
     | '/pros'
     | '/sitemap.xml'
@@ -303,6 +315,7 @@ export interface FileRouteTypes {
     | '/debarras-succession'
     | '/estimation'
     | '/mentions-legales'
+    | '/partenaires-prescripteurs'
     | '/prix-debarras'
     | '/pros'
     | '/sitemap.xml'
@@ -330,6 +343,7 @@ export interface RootRouteChildren {
   DebarrasSuccessionRoute: typeof DebarrasSuccessionRoute
   EstimationRoute: typeof EstimationRoute
   MentionsLegalesRoute: typeof MentionsLegalesRoute
+  PartenairesPrescripteursRoute: typeof PartenairesPrescripteursRoute
   PrixDebarrasRoute: typeof PrixDebarrasRoute
   ProsRoute: typeof ProsRoute
   SitemapDotxmlRoute: typeof SitemapDotxmlRoute
@@ -436,6 +450,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof MentionsLegalesRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/partenaires-prescripteurs': {
+      id: '/partenaires-prescripteurs'
+      path: '/partenaires-prescripteurs'
+      fullPath: '/partenaires-prescripteurs'
+      preLoaderRoute: typeof PartenairesPrescripteursRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/prix-debarras': {
       id: '/prix-debarras'
       path: '/prix-debarras'
@@ -530,6 +551,7 @@ const rootRouteChildren: RootRouteChildren = {
   DebarrasSuccessionRoute: DebarrasSuccessionRoute,
   EstimationRoute: EstimationRoute,
   MentionsLegalesRoute: MentionsLegalesRoute,
+  PartenairesPrescripteursRoute: PartenairesPrescripteursRoute,
   PrixDebarrasRoute: PrixDebarrasRoute,
   ProsRoute: ProsRoute,
   SitemapDotxmlRoute: SitemapDotxmlRoute,
