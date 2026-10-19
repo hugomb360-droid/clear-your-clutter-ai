@@ -153,7 +153,10 @@ export const startPayoutOnboarding = createServerFn({ method: "POST" })
       }
     } catch (error) {
       const message = getStripeErrorMessage(error);
-      if (message.includes("signed up for Connect")) {
+      if (
+        message.includes("signed up for Connect") ||
+        message.includes("complete your platform profile")
+      ) {
         return {
           error:
             "Les versements professionnels ne sont pas encore activés sur le compte de paiement Débarras France. L’administrateur doit terminer l’activation de la plateforme de paiement avant que vous puissiez renseigner votre IBAN.",
