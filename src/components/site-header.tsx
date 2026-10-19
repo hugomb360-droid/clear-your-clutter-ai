@@ -9,6 +9,7 @@ import { useAuth } from "@/hooks/useAuth";
 const NAV = [
   { to: "/estimation", label: "Estimer mon débarras" },
   { to: "/comment-ca-marche", label: "Comment ça marche" },
+  { to: "/debarras-succession", label: "Succession" },
   { to: "/tarifs", label: "Tarifs" },
   { to: "/pros", label: "Devenir partenaire" },
 ] as const;
@@ -28,7 +29,7 @@ export function SiteHeader() {
   return (
     <header className="sticky top-0 z-50 border-b border-border/70 bg-background/85 backdrop-blur">
       <div className="mx-auto flex h-16 max-w-6xl items-center justify-between px-4">
-        <Link to="/" className="flex items-center gap-2">
+        <Link to="/" className="flex shrink-0 items-center gap-2">
           <img src={clearoLogo} alt="Logo Débarras France" className="size-9 object-contain" />
           <div className="flex flex-col -space-y-2 leading-none">
             <span className="text-xl font-extrabold tracking-tight">Débarras</span>
@@ -36,7 +37,7 @@ export function SiteHeader() {
           </div>
         </Link>
 
-        <nav className="hidden items-center gap-1 md:flex">
+        <nav className="hidden items-center gap-1 lg:flex">
           {NAV.map((item) => (
             <Link
               key={item.to}
@@ -49,7 +50,7 @@ export function SiteHeader() {
           ))}
         </nav>
 
-        <div className="hidden items-center gap-2 md:flex">
+        <div className="hidden items-center gap-2 lg:flex">
           {user ? (
             <>
               <Button asChild variant="ghost" size="sm">
@@ -72,7 +73,7 @@ export function SiteHeader() {
         </div>
 
         <Sheet open={open} onOpenChange={setOpen}>
-          <SheetTrigger asChild className="md:hidden">
+          <SheetTrigger asChild className="lg:hidden">
             <Button variant="ghost" size="icon" aria-label="Ouvrir le menu">
               <Menu className="size-5" />
             </Button>
