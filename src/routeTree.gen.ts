@@ -24,6 +24,7 @@ import { Route as EstimationRouteImport } from './routes/estimation'
 import { Route as MentionsLegalesRouteImport } from './routes/mentions-legales'
 import { Route as PartenairesPrescripteursRouteImport } from './routes/partenaires-prescripteurs'
 import { Route as PrixDebarrasRouteImport } from './routes/prix-debarras'
+import { Route as ProfessionnelsRouteImport } from './routes/professionnels'
 import { Route as ProsRouteImport } from './routes/pros'
 import { Route as SitemapDotxmlRouteImport } from './routes/sitemap[.]xml'
 import { Route as TarifsRouteImport } from './routes/tarifs'
@@ -31,6 +32,7 @@ import { Route as VideMaisonRouteImport } from './routes/vide-maison'
 import { Route as DebarrasIndexRouteImport } from './routes/debarras.index'
 import { Route as DebarrasVilleRouteImport } from './routes/debarras.$ville'
 import { Route as PaiementRetourRouteImport } from './routes/paiement.retour'
+import { Route as ProSlugRouteImport } from './routes/pro.$slug'
 import { Route as ProDashboardRouteImport } from './routes/pro.dashboard'
 import { Route as ProParametresRouteImport } from './routes/pro.parametres'
 import { Route as ApiPublicNotificationsNewRequestRouteImport } from './routes/api/public/notifications/new-request'
@@ -112,6 +114,11 @@ const PrixDebarrasRoute = PrixDebarrasRouteImport.update({
   path: '/prix-debarras',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ProfessionnelsRoute = ProfessionnelsRouteImport.update({
+  id: '/professionnels',
+  path: '/professionnels',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const ProsRoute = ProsRouteImport.update({
   id: '/pros',
   path: '/pros',
@@ -145,6 +152,11 @@ const DebarrasVilleRoute = DebarrasVilleRouteImport.update({
 const PaiementRetourRoute = PaiementRetourRouteImport.update({
   id: '/paiement/retour',
   path: '/paiement/retour',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ProSlugRoute = ProSlugRouteImport.update({
+  id: '/pro/$slug',
+  path: '/pro/$slug',
   getParentRoute: () => rootRouteImport,
 } as any)
 const ProDashboardRoute = ProDashboardRouteImport.update({
@@ -186,12 +198,14 @@ export interface FileRoutesByFullPath {
   '/mentions-legales': typeof MentionsLegalesRoute
   '/partenaires-prescripteurs': typeof PartenairesPrescripteursRoute
   '/prix-debarras': typeof PrixDebarrasRoute
+  '/professionnels': typeof ProfessionnelsRoute
   '/pros': typeof ProsRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
   '/tarifs': typeof TarifsRoute
   '/vide-maison': typeof VideMaisonRoute
   '/debarras/$ville': typeof DebarrasVilleRoute
   '/paiement/retour': typeof PaiementRetourRoute
+  '/pro/$slug': typeof ProSlugRoute
   '/pro/dashboard': typeof ProDashboardRoute
   '/pro/parametres': typeof ProParametresRoute
   '/debarras/': typeof DebarrasIndexRoute
@@ -214,12 +228,14 @@ export interface FileRoutesByTo {
   '/mentions-legales': typeof MentionsLegalesRoute
   '/partenaires-prescripteurs': typeof PartenairesPrescripteursRoute
   '/prix-debarras': typeof PrixDebarrasRoute
+  '/professionnels': typeof ProfessionnelsRoute
   '/pros': typeof ProsRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
   '/tarifs': typeof TarifsRoute
   '/vide-maison': typeof VideMaisonRoute
   '/debarras/$ville': typeof DebarrasVilleRoute
   '/paiement/retour': typeof PaiementRetourRoute
+  '/pro/$slug': typeof ProSlugRoute
   '/pro/dashboard': typeof ProDashboardRoute
   '/pro/parametres': typeof ProParametresRoute
   '/debarras': typeof DebarrasIndexRoute
@@ -243,12 +259,14 @@ export interface FileRoutesById {
   '/mentions-legales': typeof MentionsLegalesRoute
   '/partenaires-prescripteurs': typeof PartenairesPrescripteursRoute
   '/prix-debarras': typeof PrixDebarrasRoute
+  '/professionnels': typeof ProfessionnelsRoute
   '/pros': typeof ProsRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
   '/tarifs': typeof TarifsRoute
   '/vide-maison': typeof VideMaisonRoute
   '/debarras/$ville': typeof DebarrasVilleRoute
   '/paiement/retour': typeof PaiementRetourRoute
+  '/pro/$slug': typeof ProSlugRoute
   '/pro/dashboard': typeof ProDashboardRoute
   '/pro/parametres': typeof ProParametresRoute
   '/debarras/': typeof DebarrasIndexRoute
@@ -273,12 +291,14 @@ export interface FileRouteTypes {
     | '/mentions-legales'
     | '/partenaires-prescripteurs'
     | '/prix-debarras'
+    | '/professionnels'
     | '/pros'
     | '/sitemap.xml'
     | '/tarifs'
     | '/vide-maison'
     | '/debarras/$ville'
     | '/paiement/retour'
+    | '/pro/$slug'
     | '/pro/dashboard'
     | '/pro/parametres'
     | '/debarras/'
@@ -301,12 +321,14 @@ export interface FileRouteTypes {
     | '/mentions-legales'
     | '/partenaires-prescripteurs'
     | '/prix-debarras'
+    | '/professionnels'
     | '/pros'
     | '/sitemap.xml'
     | '/tarifs'
     | '/vide-maison'
     | '/debarras/$ville'
     | '/paiement/retour'
+    | '/pro/$slug'
     | '/pro/dashboard'
     | '/pro/parametres'
     | '/debarras'
@@ -329,12 +351,14 @@ export interface FileRouteTypes {
     | '/mentions-legales'
     | '/partenaires-prescripteurs'
     | '/prix-debarras'
+    | '/professionnels'
     | '/pros'
     | '/sitemap.xml'
     | '/tarifs'
     | '/vide-maison'
     | '/debarras/$ville'
     | '/paiement/retour'
+    | '/pro/$slug'
     | '/pro/dashboard'
     | '/pro/parametres'
     | '/debarras/'
@@ -358,12 +382,14 @@ export interface RootRouteChildren {
   MentionsLegalesRoute: typeof MentionsLegalesRoute
   PartenairesPrescripteursRoute: typeof PartenairesPrescripteursRoute
   PrixDebarrasRoute: typeof PrixDebarrasRoute
+  ProfessionnelsRoute: typeof ProfessionnelsRoute
   ProsRoute: typeof ProsRoute
   SitemapDotxmlRoute: typeof SitemapDotxmlRoute
   TarifsRoute: typeof TarifsRoute
   VideMaisonRoute: typeof VideMaisonRoute
   DebarrasVilleRoute: typeof DebarrasVilleRoute
   PaiementRetourRoute: typeof PaiementRetourRoute
+  ProSlugRoute: typeof ProSlugRoute
   ProDashboardRoute: typeof ProDashboardRoute
   ProParametresRoute: typeof ProParametresRoute
   DebarrasIndexRoute: typeof DebarrasIndexRoute
@@ -478,6 +504,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof PrixDebarrasRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/professionnels': {
+      id: '/professionnels'
+      path: '/professionnels'
+      fullPath: '/professionnels'
+      preLoaderRoute: typeof ProfessionnelsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/pros': {
       id: '/pros'
       path: '/pros'
@@ -527,6 +560,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof PaiementRetourRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/pro/$slug': {
+      id: '/pro/$slug'
+      path: '/pro/$slug'
+      fullPath: '/pro/$slug'
+      preLoaderRoute: typeof ProSlugRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/pro/dashboard': {
       id: '/pro/dashboard'
       path: '/pro/dashboard'
@@ -574,12 +614,14 @@ const rootRouteChildren: RootRouteChildren = {
   MentionsLegalesRoute: MentionsLegalesRoute,
   PartenairesPrescripteursRoute: PartenairesPrescripteursRoute,
   PrixDebarrasRoute: PrixDebarrasRoute,
+  ProfessionnelsRoute: ProfessionnelsRoute,
   ProsRoute: ProsRoute,
   SitemapDotxmlRoute: SitemapDotxmlRoute,
   TarifsRoute: TarifsRoute,
   VideMaisonRoute: VideMaisonRoute,
   DebarrasVilleRoute: DebarrasVilleRoute,
   PaiementRetourRoute: PaiementRetourRoute,
+  ProSlugRoute: ProSlugRoute,
   ProDashboardRoute: ProDashboardRoute,
   ProParametresRoute: ProParametresRoute,
   DebarrasIndexRoute: DebarrasIndexRoute,

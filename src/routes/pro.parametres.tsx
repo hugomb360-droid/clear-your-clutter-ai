@@ -5,6 +5,7 @@ import { useEffect } from "react";
 import { ProPayoutAccount } from "@/components/pro/pro-payout-account";
 import { ProProfileForm } from "@/components/pro/pro-profile-form";
 import { ProNotificationSettings } from "@/components/pro/pro-notifications";
+import { ProPublicProfileEditor } from "@/components/pro/pro-public-profile-editor";
 
 import { RoleGuard } from "@/components/role-guard";
 import { useAuth } from "@/hooks/useAuth";
@@ -80,6 +81,7 @@ function ProSettings() {
           hasProRole={roles.includes("pro")}
         />
         <ProPayoutAccount />
+        {profileQuery.data && <ProPublicProfileEditor profile={profileQuery.data} />}
         <ProNotificationSettings proId={user.id} />
       </div>
 

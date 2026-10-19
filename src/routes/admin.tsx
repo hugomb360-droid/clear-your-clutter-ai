@@ -18,6 +18,7 @@ import { euro } from "@/lib/pricing";
 import { getStripeEnvironment } from "@/lib/stripe";
 import { refundEscrow, releaseEscrow } from "@/lib/payments.functions";
 import { ReferralInbox } from "@/components/succession/referral-inbox";
+import { AdminProVerification } from "@/components/pro/admin-pro-verification";
 
 export const Route = createFileRoute("/admin")({
   head: () => ({
@@ -356,9 +357,7 @@ function AdminConsole() {
                   {pro.siret ? `SIRET ${pro.siret} · ` : ""}Zones : {pro.postal_codes.join(", ") || "—"}
                 </p>
               </div>
-              <Badge variant={pro.verified ? "default" : "secondary"}>
-                {pro.verified ? "Vérifié" : "À vérifier"}
-              </Badge>
+              <AdminProVerification pro={pro} />
             </div>
           ))}
         </TabsContent>

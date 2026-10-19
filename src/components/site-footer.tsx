@@ -104,6 +104,7 @@ export function SiteFooter() {
         <div>
           <h3 className="text-sm font-semibold">Professionnels</h3>
           <ul className="mt-3 space-y-2 text-sm text-muted-foreground">
+            <li><Link to="/professionnels" className="hover:text-foreground">Les pros par région</Link></li>
             <li>
               <Link to="/pros" className="hover:text-foreground">
                 Devenir partenaire

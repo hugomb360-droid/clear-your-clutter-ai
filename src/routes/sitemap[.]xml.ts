@@ -1,6 +1,7 @@
 import { createFileRoute } from "@tanstack/react-router";
 import type {} from "@tanstack/react-start";
 import { CITIES } from "@/lib/cities";
+import { getPublicProfessionals } from "@/lib/public-profiles.functions";
 
 
 const BASE_URL = "https://debarrasfrance.fr";
@@ -30,6 +31,7 @@ const entries: SitemapEntry[] = [
   { path: "/tarifs", changefreq: "monthly", priority: "0.7" },
   { path: "/prix-debarras", changefreq: "monthly", priority: "0.8" },
   { path: "/pros", changefreq: "monthly", priority: "0.7" },
+  { path: "/professionnels", changefreq: "weekly", priority: "0.8" },
   { path: "/partenaires-prescripteurs", changefreq: "monthly", priority: "0.7" },
   { path: "/contact", changefreq: "yearly", priority: "0.5" },
   { path: "/auth", changefreq: "yearly", priority: "0.3" },
@@ -41,7 +43,8 @@ export const Route = createFileRoute("/sitemap.xml")({
   server: {
     handlers: {
       GET: async () => {
-        const urls = entries.map((e) =>
+        const pros = await getPublicProfessionals();
+        const urls = [...entries, ...pros.map(p => ({ path: `/pro/${p.slug}`, changefreq: "weekly" as const, priority: "0.6" }))].map((e) =>
           [
             `  <url>`,
             `    <loc>${BASE_URL}${e.path}</loc>`,
