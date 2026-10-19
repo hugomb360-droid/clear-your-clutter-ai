@@ -7,6 +7,7 @@ import { Button } from "@/components/ui/button";
 import { supabase } from "@/integrations/supabase/client";
 import { getMissionReport } from "@/lib/succession.functions";
 import { reportAvailable } from "@/lib/succession.schemas";
+import { deliverReport } from "@/lib/report-pdf";
 
 export function SuccessionDetails({ quoteId }: { quoteId: string }) {
   const query = useQuery({ queryKey: ["succession", quoteId], queryFn: async () => {
@@ -39,7 +40,7 @@ export function MissionReportDownload({ bidId, quoteId, status }: { bidId: strin
   return <div className="mt-5 border-t border-border pt-4">
     <p className="mb-3 flex items-center gap-2 text-sm font-semibold"><FileText className="size-4 text-primary" />Rapport pour le notaire</p>
     <Button variant="outline" disabled={busy} className="max-w-full whitespace-normal" onClick={async () => {
-      if (blob) { const { deliverReport } = await import("@/lib/report-pdf"); await deliverReport(blob, `rapport-succession-${quoteId.slice(0, 8)}.pdf`); return; }
+      if (blob) { await deliverReport(blob, `rapport-succession-${quoteId.slice(0, 8)}.pdf`); return; }
       setBusy(true);
       try { const data = await getReport({ data: { bidId } }); const { buildReportPdf } = await import("@/lib/report-pdf"); setBlob(await buildReportPdf(data)); }
       catch (e) { toast.error(e instanceof Error ? e.message : "Rapport indisponible"); }

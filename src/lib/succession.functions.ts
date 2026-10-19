@@ -54,7 +54,7 @@ export const getMissionReport = createServerFn({ method: "POST" })
   .inputValidator((input: unknown) => idSchema.parse(input))
   .handler(async ({ data, context }) => {
     const s = context.supabase;
-    const { data: bid, error } = await s.from("bids").select("id,quote_id,pro_id,status,updated_at").eq("id", data.bidId).single();
+    const { data: bid, error } = await s.from("bids").select("id,quote_id,pro_id,status").eq("id", data.bidId).single();
     if (error || !bid || !reportAvailable(bid.status)) throw new Error("Le rapport sera disponible après la fin du chantier, hors litige.");
     const [{ data: quote }, { data: report }, { data: contact }, { data: before, error: beforeError }, { data: after, error: afterError }] = await Promise.all([
       s.from("quotes").select("client_id,property_type,city,postal_code").eq("id", bid.quote_id).single(),
@@ -69,7 +69,7 @@ export const getMissionReport = createServerFn({ method: "POST" })
     const sign = async (bucket: string, rows: { storage_path: string }[]) => {
       const result = await s.storage.from(bucket).createSignedUrls(rows.map(r => r.storage_path), 300);
       if (result.error || result.data?.some(r => !r.signedUrl)) throw new Error("Impossible de charger les photos du rapport.");
-      return result.data?.map(r => r.signedUrl) ?? [];
+      return result.data?.map(r => r.signedUrl).filter((url): url is string => typeof url === "string") ?? [];
     };
     return { bidId: bid.id, quoteId: bid.quote_id, status: bid.status, address: contact?.address ?? "Adresse non renseignée", city: quote.city ?? "", postalCode: quote.postal_code, propertyType: quote.property_type, volumeM3: Number(report.volume_m3), recycling: report.recycling, date: report.created_at, before: await sign("quote-photos", before), after: await sign("mission-photos", after) };
   });
