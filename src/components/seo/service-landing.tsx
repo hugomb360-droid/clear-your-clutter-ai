@@ -68,7 +68,7 @@ export function ServiceLanding(props: ServiceLandingProps) {
           <Button asChild size="lg">
             {props.succession ? <a href="#dossier-succession">Ouvrir mon dossier succession</a> : <Link to="/estimation">Estimer en photo (2 min)</Link>}
           </Button>
-          <Button asChild size="lg" variant="outline">
+          <Button asChild size="lg" variant="outline" className={props.succession ? "text-foreground" : undefined}>
             <Link to="/tarifs">Voir la grille tarifaire</Link>
           </Button>
         </div>

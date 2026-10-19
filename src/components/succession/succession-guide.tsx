@@ -13,6 +13,7 @@ export function SuccessionGuide() {
           <li><strong className="text-foreground">Photographier les espaces concernés.</strong> Ajoutez des vues des pièces, sans oublier cave, garage ou grenier si ces espaces font partie du débarras. Ces images accompagnent la demande de devis et constituent les photos avant du rapport.</li>
           <li><strong className="text-foreground">Préparer l'accès et l'échéance.</strong> Indiquez l'adresse du bien, la présence d'un héritier, les modalités de remise des clés et la date limite liée à une vente ou une fin de bail. La date effective reste à convenir avec le professionnel.</li>
         </ol>
+        <p className="mt-5 text-sm text-muted-foreground">Repères officiels : <a href="https://www.notaires.fr/fr/article/linventaire-successoral-quand-comment" target="_blank" rel="noopener noreferrer" className="text-primary underline underline-offset-4">l'inventaire successoral, Notaires de France</a> et <a href="https://www.service-public.fr/particuliers/vosdroits/F1296" target="_blank" rel="noopener noreferrer" className="text-primary underline underline-offset-4">l'indivision entre héritiers, Service-Public</a>. Ces informations générales ne remplacent pas les conseils du notaire pour votre dossier.</p>
       </section>
 
       <section aria-labelledby="succession-budget">
