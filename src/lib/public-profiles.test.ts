@@ -3,12 +3,12 @@ import { averageRating, profileCompletion, rankProfessionals, regionsFor, verifi
 const pro = (name: string, rating: number[], completed = 0): PublicPro => ({ slug: name, company_name: name, description: null, postal_codes: ["75"], service_types: [], logo_path: null, portfolio_paths: [], siret_verified: false, insurance_verified: false, completed_count: completed, reviews: rating.map(r => ({ rating: r, comment: null, created_at: "2026-10-19" })) });
 describe("public professional rules", () => {
   it("requires 3 portfolio photos to complete the photo checklist", () => {
-    expect(profileCompletion({ portfolio_paths: ["a", "b"] }).items[1].done).toBe(false);
-    expect(profileCompletion({ portfolio_paths: ["a", "b", "c"] }).items[1].done).toBe(true);
+    expect(profileCompletion({ portfolio_paths: ["a", "b"] }).items[1]?.done).toBe(false);
+    expect(profileCompletion({ portfolio_paths: ["a", "b", "c"] }).items[1]?.done).toBe(true);
   });
   it("requires both verification documents for completion", () => {
-    expect(profileCompletion({ siret_document_path: "siret" }).items[4].done).toBe(false);
-    expect(profileCompletion({ siret_document_path: "siret", insurance_document_path: "assurance" }).items[4].done).toBe(true);
+    expect(profileCompletion({ siret_document_path: "siret" }).items[4]?.done).toBe(false);
+    expect(profileCompletion({ siret_document_path: "siret", insurance_document_path: "assurance" }).items[4]?.done).toBe(true);
   });
   it("calculates five equally weighted completion items", () => {
     expect(profileCompletion(null).percent).toBe(0);
