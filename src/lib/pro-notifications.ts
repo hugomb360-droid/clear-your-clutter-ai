@@ -12,8 +12,9 @@ export function notificationText(s: NotificationSummary) {
     `${s.city || "Ville non renseignée"}${s.postalCode ? ` (${s.postalCode})` : ""}`,
     s.volumeM3 == null ? "Volume non estimé" : `${s.volumeM3} m³`,
     s.priceMin == null || s.priceMax == null ? "Sur devis" : `${s.isAi ? "IA" : "Estimation"} : ${euro(s.priceMin)} – ${euro(s.priceMax)}`,
-    s.access || (s.floor == null ? "Accès non renseigné" : `Étage ${s.floor}${s.hasElevator == null ? "" : s.hasElevator ? " avec ascenseur" : " sans ascenseur"}`),
-  ].join(" · ");
+    s.access || (s.floor == null ? "Accès non renseigné" : ""),
+    s.floor == null ? "" : `Étage ${s.floor}${s.hasElevator == null ? "" : s.hasElevator ? " avec ascenseur" : " sans ascenseur"}`,
+  ].filter(Boolean).join(" · ");
 }
 export function responseDelay(minutes: number | null, sampleCount: number) {
   if (minutes == null || sampleCount === 0 || !Number.isFinite(minutes)) return null;
