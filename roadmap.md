@@ -1,4 +1,8 @@
 # Succession et prescripteurs
+- [ ] Profils publics professionnels avec médias choisis, avis réels et chantiers confirmés.
+- [ ] Complétion du profil, pièces privées et validation administrateur des justificatifs.
+- [ ] Annuaire régional classé selon les avis réels et liens depuis les propositions client.
+- [ ] Tests des règles et vérification des parcours connecté et public sur ordinateur et téléphone.
 - [x] Chargement push isolé au navigateur ; compilation réussie, cinq tests réussis et paramètres pro ouverts sans erreur.
 - [x] Notifications locales pro et contenu ville/volume/prix/accès ; demande à Angoulême reçue et marquée lue sur le compte pro connecté.
 - [x] Délai moyen réel de réponse des autres pros du secteur, sans valeur inventée ; tests des règles réussis.
