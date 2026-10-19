@@ -22,6 +22,7 @@ import { Route as DebarrasMaisonRouteImport } from './routes/debarras-maison'
 import { Route as DebarrasSuccessionRouteImport } from './routes/debarras-succession'
 import { Route as EstimationRouteImport } from './routes/estimation'
 import { Route as MentionsLegalesRouteImport } from './routes/mentions-legales'
+import { Route as PrixDebarrasRouteImport } from './routes/prix-debarras'
 import { Route as ProsRouteImport } from './routes/pros'
 import { Route as SitemapDotxmlRouteImport } from './routes/sitemap[.]xml'
 import { Route as TarifsRouteImport } from './routes/tarifs'
@@ -98,6 +99,11 @@ const MentionsLegalesRoute = MentionsLegalesRouteImport.update({
   path: '/mentions-legales',
   getParentRoute: () => rootRouteImport,
 } as any)
+const PrixDebarrasRoute = PrixDebarrasRouteImport.update({
+  id: '/prix-debarras',
+  path: '/prix-debarras',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const ProsRoute = ProsRouteImport.update({
   id: '/pros',
   path: '/pros',
@@ -164,6 +170,7 @@ export interface FileRoutesByFullPath {
   '/debarras-succession': typeof DebarrasSuccessionRoute
   '/estimation': typeof EstimationRoute
   '/mentions-legales': typeof MentionsLegalesRoute
+  '/prix-debarras': typeof PrixDebarrasRoute
   '/pros': typeof ProsRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
   '/tarifs': typeof TarifsRoute
@@ -189,6 +196,7 @@ export interface FileRoutesByTo {
   '/debarras-succession': typeof DebarrasSuccessionRoute
   '/estimation': typeof EstimationRoute
   '/mentions-legales': typeof MentionsLegalesRoute
+  '/prix-debarras': typeof PrixDebarrasRoute
   '/pros': typeof ProsRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
   '/tarifs': typeof TarifsRoute
@@ -215,6 +223,7 @@ export interface FileRoutesById {
   '/debarras-succession': typeof DebarrasSuccessionRoute
   '/estimation': typeof EstimationRoute
   '/mentions-legales': typeof MentionsLegalesRoute
+  '/prix-debarras': typeof PrixDebarrasRoute
   '/pros': typeof ProsRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
   '/tarifs': typeof TarifsRoute
@@ -242,6 +251,7 @@ export interface FileRouteTypes {
     | '/debarras-succession'
     | '/estimation'
     | '/mentions-legales'
+    | '/prix-debarras'
     | '/pros'
     | '/sitemap.xml'
     | '/tarifs'
@@ -267,6 +277,7 @@ export interface FileRouteTypes {
     | '/debarras-succession'
     | '/estimation'
     | '/mentions-legales'
+    | '/prix-debarras'
     | '/pros'
     | '/sitemap.xml'
     | '/tarifs'
@@ -292,6 +303,7 @@ export interface FileRouteTypes {
     | '/debarras-succession'
     | '/estimation'
     | '/mentions-legales'
+    | '/prix-debarras'
     | '/pros'
     | '/sitemap.xml'
     | '/tarifs'
@@ -318,6 +330,7 @@ export interface RootRouteChildren {
   DebarrasSuccessionRoute: typeof DebarrasSuccessionRoute
   EstimationRoute: typeof EstimationRoute
   MentionsLegalesRoute: typeof MentionsLegalesRoute
+  PrixDebarrasRoute: typeof PrixDebarrasRoute
   ProsRoute: typeof ProsRoute
   SitemapDotxmlRoute: typeof SitemapDotxmlRoute
   TarifsRoute: typeof TarifsRoute
@@ -423,6 +436,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof MentionsLegalesRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/prix-debarras': {
+      id: '/prix-debarras'
+      path: '/prix-debarras'
+      fullPath: '/prix-debarras'
+      preLoaderRoute: typeof PrixDebarrasRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/pros': {
       id: '/pros'
       path: '/pros'
@@ -510,6 +530,7 @@ const rootRouteChildren: RootRouteChildren = {
   DebarrasSuccessionRoute: DebarrasSuccessionRoute,
   EstimationRoute: EstimationRoute,
   MentionsLegalesRoute: MentionsLegalesRoute,
+  PrixDebarrasRoute: PrixDebarrasRoute,
   ProsRoute: ProsRoute,
   SitemapDotxmlRoute: SitemapDotxmlRoute,
   TarifsRoute: TarifsRoute,
