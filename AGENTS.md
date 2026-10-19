@@ -21,3 +21,4 @@
 - Professional verification flags and stable public slugs are protected by a database trigger; document changes invalidate their verification, and only administrators can approve evidence.
 - Public portfolio files use a private bucket with published-path read policies and expiring signed URLs, because workspace policy blocks public buckets; verification evidence uses a separate owner/admin-only bucket.
 - Regional professional ordering and profile completion rules live in a shared browser-safe module with rule tests so public listings and dashboard indicators stay consistent.
+- Administrator financial metrics use a tested browser-safe ledger aggregator: isolate payment environments, use stored commissions and require a transfer ID for professional receipts; estimates are not cash. Administrator lists page through all records under existing RLS and refresh every 15 seconds while visible so totals are not truncated or silently stale.
