@@ -14,6 +14,8 @@ export const createEscrowCheckout = createServerFn({ method: "POST" })
   .middleware([requireSupabaseAuth])
   .inputValidator((data: { bidId: string; returnUrl: string; environment: StripeEnv }) => data)
   .handler(async ({ data, context }): Promise<CheckoutResult> => {
+    const { PAYMENTS_ENABLED, PAYMENTS_PAUSED_MESSAGE } = await import("@/lib/payments-availability");
+    if (!PAYMENTS_ENABLED) return { error: PAYMENTS_PAUSED_MESSAGE };
     const { supabase, userId } = context;
 
     const { data: bid, error: bidError } = await supabase

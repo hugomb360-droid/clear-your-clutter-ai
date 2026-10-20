@@ -13,6 +13,7 @@ import {
 import { createEscrowCheckout } from "@/lib/payments.functions";
 import { getStripe, getStripeEnvironment, paymentsConfigured } from "@/lib/stripe";
 import { euro } from "@/lib/pricing";
+import { PAYMENTS_ENABLED, PAYMENTS_PAUSED_MESSAGE } from "@/lib/payments-availability";
 
 type Props = {
   open: boolean;
@@ -115,7 +116,11 @@ export function EscrowCheckoutDialog({ open, onOpenChange, bidId, price, company
                 </p>
               </div>
 
-              {paymentsConfigured() ? (
+              {!PAYMENTS_ENABLED ? (
+                <p className="mt-6 rounded-xl bg-proposal-gold/15 p-4 text-sm font-medium text-proposal-emerald">
+                  {PAYMENTS_PAUSED_MESSAGE}
+                </p>
+              ) : paymentsConfigured() ? (
                 <Button
                   className="mt-6 w-full bg-proposal-gold text-proposal-emerald hover:bg-proposal-gold/90"
                   onClick={() => setStarted(true)}
