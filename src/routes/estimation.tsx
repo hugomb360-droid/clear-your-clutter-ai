@@ -1,8 +1,18 @@
 import { createFileRoute, Link, useNavigate } from "@tanstack/react-router";
 import { useServerFn } from "@tanstack/react-start";
-import { Camera, Check, Loader2, PencilLine, Sparkles, Trash2 } from "lucide-react";
-import { useEffect, useMemo, useRef, useState } from "react";
+import {
+  Camera,
+  Check,
+  Loader2,
+  Lock,
+  PencilLine,
+  ShieldCheck,
+  Sparkles,
+  Trash2,
+} from "lucide-react";
+import { useEffect, useMemo, useRef, useState, type ReactNode } from "react";
 import { toast } from "sonner";
+import { z } from "zod";
 import { Badge } from "@/components/ui/badge";
 import { useAuth } from "@/hooks/useAuth";
 import { Button } from "@/components/ui/button";
@@ -15,7 +25,13 @@ import { dataUrlToBlob, fileToDataUrl } from "@/lib/image";
 import { estimateManualPrice } from "@/lib/manual-estimate";
 import { PROPERTY_LABELS, euro, type EstimationResult, type PropertyType } from "@/lib/pricing";
 
+const searchSchema = z.object({
+  /** Ouvre directement un parcours : "photo" (devis IA) ou "manuel" (devis classique). */
+  type: z.enum(["photo", "manuel"]).optional(),
+});
+
 export const Route = createFileRoute("/estimation")({
+  validateSearch: searchSchema,
   head: () => ({
     meta: [
       { title: "Estimation de débarras en photo — Débarras France" },
@@ -34,7 +50,6 @@ export const Route = createFileRoute("/estimation")({
       { name: "twitter:card", content: "summary_large_image" },
     ],
     links: [{ rel: "canonical", href: "https://debarrasfrance.fr/estimation" }],
-
   }),
   component: EstimationRoute,
 });
@@ -48,10 +63,17 @@ type AccessLevel = "facile" | "moyen" | "difficile";
 const ACCESS_OPTIONS: { key: AccessLevel; label: string; hint: string }[] = [
   { key: "facile", label: "Accès facile", hint: "Plain-pied, ascenseur ou camion à proximité" },
   { key: "moyen", label: "Accès moyen", hint: "Quelques étages, couloirs étroits" },
-  { key: "difficile", label: "Accès difficile", hint: "Étages sans ascenseur, cour, stationnement compliqué" },
+  {
+    key: "difficile",
+    label: "Accès difficile",
+    hint: "Étages sans ascenseur, cour, stationnement compliqué",
+  },
 ];
 
-const ACCESS_PRICING: Record<AccessLevel, { floor: number; hasElevator: boolean; hardAccess: boolean }> = {
+const ACCESS_PRICING: Record<
+  AccessLevel,
+  { floor: number; hasElevator: boolean; hardAccess: boolean }
+> = {
   facile: { floor: 0, hasElevator: true, hardAccess: false },
   moyen: { floor: 2, hasElevator: false, hardAccess: false },
   difficile: { floor: 3, hasElevator: false, hardAccess: true },
@@ -95,7 +117,13 @@ const MANUAL_ACCESS_OPTIONS: {
 }[] = [
   { key: "facile", label: "Facile", hint: "Rez-de-chaussée", floor: 0, hasElevator: true },
   { key: "moyen", label: "Moyen", hint: "Étage avec ascenseur", floor: 2, hasElevator: true },
-  { key: "complique", label: "Compliqué", hint: "Étage sans ascenseur", floor: 2, hasElevator: false },
+  {
+    key: "complique",
+    label: "Compliqué",
+    hint: "Étage sans ascenseur",
+    floor: 2,
+    hasElevator: false,
+  },
   {
     key: "tres_complique",
     label: "Très compliqué",
@@ -139,7 +167,6 @@ function OptionCard({
   );
 }
 
-
 type Draft = {
   mode: Mode;
   photos: string[];
@@ -165,6 +192,7 @@ type Draft = {
 
 function EstimationPage() {
   const navigate = useNavigate();
+  const { type: requestedMode } = Route.useSearch();
   const estimate = useServerFn(estimateClearance);
   const fileInput = useRef<HTMLInputElement>(null);
 
@@ -194,10 +222,13 @@ function EstimationPage() {
 
   useEffect(() => {
     const raw = sessionStorage.getItem(DRAFT_KEY);
-    if (!raw) return;
+    if (!raw) {
+      if (requestedMode) setMode(requestedMode);
+      return;
+    }
     try {
       const draft = JSON.parse(raw) as Draft;
-      setMode(draft.mode ?? null);
+      setMode(draft.mode ?? requestedMode ?? null);
       setPhotos(draft.photos ?? []);
       setPropertyType(draft.propertyType ?? "appartement");
       setSurface(draft.surface ?? "");
@@ -220,6 +251,8 @@ function EstimationPage() {
     } catch {
       sessionStorage.removeItem(DRAFT_KEY);
     }
+    // Restauration du brouillon au premier affichage uniquement.
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const currentDraft = (): Draft => ({
@@ -263,7 +296,6 @@ function EstimationPage() {
     setMode(next);
     setResult(null);
   };
-
 
   const handleFiles = async (files: FileList | null) => {
     if (!files?.length) return;
@@ -342,7 +374,10 @@ function EstimationPage() {
     if (!session) {
       sessionStorage.setItem(DRAFT_KEY, JSON.stringify(currentDraft()));
       toast.info("Créez votre compte pour envoyer la demande aux pros de votre secteur.");
-      navigate({ to: "/auth", search: { mode: "signup", role: "client", redirect: "/estimation" } });
+      navigate({
+        to: "/auth",
+        search: { mode: "signup", role: "client", redirect: "/estimation" },
+      });
       return;
     }
 
@@ -392,9 +427,15 @@ function EstimationPage() {
           notes: isPhoto
             ? `Accès : ${ACCESS_OPTIONS.find((o) => o.key === accessLevel)?.label ?? accessLevel}`
             : manualSummary,
-          volume_m3: isPhoto ? (result?.analysis.volumeM3 ?? null) : (manualEstimate?.volumeM3 ?? null),
-          price_min: isPhoto ? (result?.price.priceMin ?? null) : (manualEstimate?.priceMin ?? null),
-          price_max: isPhoto ? (result?.price.priceMax ?? null) : (manualEstimate?.priceMax ?? null),
+          volume_m3: isPhoto
+            ? (result?.analysis.volumeM3 ?? null)
+            : (manualEstimate?.volumeM3 ?? null),
+          price_min: isPhoto
+            ? (result?.price.priceMin ?? null)
+            : (manualEstimate?.priceMin ?? null),
+          price_max: isPhoto
+            ? (result?.price.priceMax ?? null)
+            : (manualEstimate?.priceMax ?? null),
           ai_analysis: result ? JSON.parse(JSON.stringify(result)) : null,
           status: "draft",
         })
@@ -417,11 +458,16 @@ function EstimationPage() {
           .from("quote-photos")
           .upload(path, dataUrlToBlob(dataUrl), { contentType: "image/jpeg", upsert: true });
         if (uploadError) throw uploadError;
-        const photoResult = await supabase.from("quote_photos").insert({ quote_id: quote.id, storage_path: path });
+        const photoResult = await supabase
+          .from("quote_photos")
+          .insert({ quote_id: quote.id, storage_path: path });
         if (photoResult.error) throw photoResult.error;
       }
 
-      const publication = await supabase.from("quotes").update({ status: "published" }).eq("id", quote.id);
+      const publication = await supabase
+        .from("quotes")
+        .update({ status: "published" })
+        .eq("id", quote.id);
       if (publication.error) throw publication.error;
 
       sessionStorage.removeItem(DRAFT_KEY);
@@ -437,67 +483,7 @@ function EstimationPage() {
   };
 
   if (!mode) {
-    return (
-      <div className="mx-auto max-w-5xl px-4 py-12 sm:py-16">
-        <h1 className="text-3xl font-extrabold tracking-tight sm:text-4xl lg:text-5xl">
-          Comment voulez-vous votre devis ?
-        </h1>
-        <p className="mt-3 max-w-2xl text-muted-foreground">
-          Deux façons d'obtenir un prix : l'estimation instantanée par photos grâce à notre IA, ou
-          la demande de devis classique en décrivant vous-même le débarras.
-        </p>
-
-        <div className="mt-10 grid gap-6 lg:grid-cols-2">
-          <button
-            type="button"
-            onClick={() => chooseMode("photo")}
-            className="group relative rounded-3xl border-2 border-primary bg-brand-soft/40 p-8 text-left shadow-[var(--shadow-soft)] transition-transform hover:-translate-y-1"
-          >
-            <Badge className="absolute right-6 top-6">Recommandé</Badge>
-            <div className="flex size-12 items-center justify-center rounded-2xl bg-primary text-primary-foreground">
-              <Sparkles className="size-6" />
-            </div>
-            <h2 className="mt-5 text-2xl font-bold">Estimation IA par photos</h2>
-            <p className="mt-2 text-sm text-muted-foreground">
-              Prenez vos pièces en photo, notre IA calcule le volume, la nature des objets et vous
-              donne une fourchette de prix immédiate.
-            </p>
-            <ul className="mt-5 space-y-2 text-sm">
-              <li>• Résultat en quelques secondes</li>
-              <li>• Prix chiffré avant même de parler à un pro</li>
-              <li>• Les pros voient vos photos et répondent plus vite</li>
-            </ul>
-            <span className="mt-6 inline-flex items-center gap-2 font-semibold text-brand">
-              Démarrer avec mes photos →
-            </span>
-          </button>
-
-          <button
-            type="button"
-            onClick={() => chooseMode("manuel")}
-            className="rounded-3xl border border-border bg-card p-8 text-left shadow-[var(--shadow-soft)] transition-colors hover:border-primary/40"
-          >
-            <div className="flex size-12 items-center justify-center rounded-2xl bg-secondary text-foreground">
-              <PencilLine className="size-6" />
-            </div>
-            <h2 className="mt-5 text-2xl font-bold">Devis classique</h2>
-            <p className="mt-2 text-sm text-muted-foreground">
-              Pas besoin d'estimation automatique ? Ajoutez vos photos, décrivez la surface et ce
-              qu'il y a à débarrasser : les pros de votre secteur vous envoient leurs propositions.
-
-            </p>
-            <ul className="mt-5 space-y-2 text-sm text-muted-foreground">
-              <li>• Photos + description de votre bien</li>
-              <li>• Prix communiqué par les professionnels</li>
-              <li>• Réponses sous 24 à 48 h</li>
-            </ul>
-            <span className="mt-6 inline-flex items-center gap-2 font-semibold">
-              Décrire mon débarras →
-            </span>
-          </button>
-        </div>
-      </div>
-    );
+    return <ModeChoice onChoose={chooseMode} />;
   }
 
   const isPhoto = mode === "photo";
@@ -528,7 +514,7 @@ function EstimationPage() {
 
       <div className="mt-10 grid gap-8 lg:grid-cols-[1.1fr_0.9fr]">
         <div className="space-y-8">
-          {(
+          {
             <section className="rounded-3xl border border-border bg-card p-5 sm:p-7 shadow-[var(--shadow-soft)]">
               <h2 className="text-lg font-bold">1. Vos photos</h2>
               <p className="mt-1 text-sm text-muted-foreground">
@@ -578,7 +564,7 @@ function EstimationPage() {
                 )}
               </div>
             </section>
-          )}
+          }
 
           {!isPhoto && (
             <section className="rounded-3xl border border-border bg-card p-5 sm:p-7 shadow-[var(--shadow-soft)]">
@@ -648,7 +634,9 @@ function EstimationPage() {
                         >
                           <span
                             className={`flex size-5 shrink-0 items-center justify-center rounded-md border ${
-                              checked ? "border-primary bg-primary text-primary-foreground" : "border-border"
+                              checked
+                                ? "border-primary bg-primary text-primary-foreground"
+                                : "border-border"
                             }`}
                           >
                             {checked && <Check className="size-3.5" />}
@@ -660,7 +648,9 @@ function EstimationPage() {
                   </div>
                   {annexes.length > 0 && (
                     <div className="grid gap-2 pt-1">
-                      <Label htmlFor="annex-surface">Si oui, surface totale de ces espaces (m²)</Label>
+                      <Label htmlFor="annex-surface">
+                        Si oui, surface totale de ces espaces (m²)
+                      </Label>
                       <Input
                         id="annex-surface"
                         inputMode="numeric"
@@ -738,7 +728,6 @@ function EstimationPage() {
               </div>
             </section>
           )}
-
 
           {isPhoto && (
             <section className="rounded-3xl border border-border bg-card p-5 sm:p-7 shadow-[var(--shadow-soft)]">
@@ -842,7 +831,8 @@ function EstimationPage() {
                       {euro(manualEstimate.priceMin)} – {euro(manualEstimate.priceMax)}
                     </p>
                     <p className="mt-1 text-sm text-muted-foreground">
-                      Volume estimé : {manualEstimate.volumeM3} m³ · {manualEstimate.pricePerM3} €/m³
+                      Volume estimé : {manualEstimate.volumeM3} m³ · {manualEstimate.pricePerM3}{" "}
+                      €/m³
                     </p>
                   </div>
                   <div className="rounded-2xl bg-secondary/60 p-4 text-sm">
@@ -1017,6 +1007,218 @@ function EstimationPage() {
 }
 
 /** Un compte professionnel ne peut pas déposer de demande de devis client. */
+const CHOICE_STEPS: Record<Mode, string[]> = {
+  photo: [
+    "Vos photos, jusqu'à 8",
+    "Votre logement : surface, étage, ascenseur",
+    "Votre estimation, affichée tout de suite",
+    "Où et quand : code postal et date souhaitée",
+  ],
+  manuel: [
+    "Vos photos et la description du bien",
+    "Type de logement et accès",
+    "Où et quand : code postal et date souhaitée",
+  ],
+};
+
+const CHECKLIST = [
+  "Le code postal du lieu à vider",
+  "L'étage et la présence d'un ascenseur",
+  "La surface approximative en m²",
+  "Cave, grenier ou garage en plus ?",
+  "Les objets lourds : piano, électroménager",
+  "Votre date souhaitée",
+];
+
+function ModeChoice({ onChoose }: { onChoose: (mode: Mode) => void }) {
+  return (
+    <div className="bg-[#F2FAF4]">
+      <div className="mx-auto w-full max-w-[1240px] px-4 pb-24 pt-8 sm:px-6 lg:px-10">
+        <nav aria-label="Fil d'Ariane" className="text-[15px]">
+          <Link to="/" className="text-primary hover:underline">
+            Accueil
+          </Link>
+          <span className="mx-2 text-muted-foreground" aria-hidden="true">
+            /
+          </span>
+          <span className="text-muted-foreground" aria-current="page">
+            Estimation
+          </span>
+        </nav>
+
+        <h1 className="mt-6 max-w-[16ch] text-[34px] font-black leading-[1.05] tracking-[-0.03em] text-brand-ink sm:text-[52px]">
+          Comment voulez-vous obtenir votre prix ?
+        </h1>
+        <p className="mt-4 max-w-[40em] text-lg leading-relaxed text-muted-foreground">
+          Deux façons, toutes deux gratuites et sans engagement. Dans les deux cas, les
+          débarrasseurs vérifiés de votre secteur reçoivent votre demande.
+        </p>
+
+        <div className="mt-10 grid gap-6 lg:grid-cols-2">
+          <ChoiceCard
+            highlighted
+            icon={<Camera className="size-7" />}
+            badge="Prix immédiat"
+            title="Devis rapide par IA"
+            text="Prenez vos pièces en photo : notre IA calcule le volume, le type d'objets et la fourchette de prix en quelques secondes."
+            steps={CHOICE_STEPS.photo}
+            footnote="Environ 2 minutes"
+            cta="Démarrer avec mes photos"
+            onClick={() => onChoose("photo")}
+          />
+          <ChoiceCard
+            icon={<PencilLine className="size-7" />}
+            badge="Réponses sous 24 à 48 h"
+            title="Devis classique"
+            text="Décrivez vous-même ce qu'il y a à débarrasser. Les pros de votre secteur vous envoient leur prix."
+            steps={CHOICE_STEPS.manuel}
+            footnote="Prix communiqué par les pros"
+            cta="Décrire mon débarras"
+            onClick={() => onChoose("manuel")}
+          />
+        </div>
+
+        <div className="mt-6 grid items-start gap-6 lg:grid-cols-[1.4fr_1fr]">
+          <section className="rounded-3xl bg-white p-6 sm:p-8">
+            <h2 className="text-[22px] font-extrabold text-brand-ink">
+              Ayez ces informations sous la main
+            </h2>
+            <ul className="mt-5 grid gap-x-7 gap-y-3.5 sm:grid-cols-2">
+              {CHECKLIST.map((item) => (
+                <li key={item} className="flex items-start gap-3 text-base leading-snug">
+                  <Check
+                    className="mt-0.5 size-[22px] shrink-0 text-primary"
+                    strokeWidth={2.6}
+                    aria-hidden="true"
+                  />
+                  {item}
+                </li>
+              ))}
+            </ul>
+            <p className="mt-5 text-[15px] leading-relaxed text-muted-foreground">
+              Votre adresse exacte n'est visible que par le pro que vous retenez.
+            </p>
+          </section>
+
+          <aside className="flex flex-col gap-4">
+            <div className="rounded-3xl bg-brand-ink p-7 text-white">
+              <h2 className="text-xl font-extrabold">Vous êtes protégé</h2>
+              <ul className="mt-4 flex flex-col gap-3 text-[15px] leading-snug text-[#CFE5D7]">
+                <li className="flex gap-2.5">
+                  <Lock className="size-5 shrink-0 text-[#6EDC97]" aria-hidden="true" />
+                  Paiement sous séquestre via Stripe Connect, bloqué jusqu'à votre validation
+                </li>
+                <li className="flex gap-2.5">
+                  <ShieldCheck className="size-5 shrink-0 text-[#6EDC97]" aria-hidden="true" />
+                  Pros avec SIRET et assurance vérifiés
+                </li>
+                <li className="flex gap-2.5">
+                  <Check className="size-5 shrink-0 text-[#6EDC97]" aria-hidden="true" />
+                  Aucun engagement avant d'accepter une offre
+                </li>
+              </ul>
+            </div>
+            <div className="rounded-3xl bg-white p-7">
+              <h2 className="text-xl font-extrabold text-brand-ink">
+                Une situation particulière ?
+              </h2>
+              <p className="mt-2 text-[15px] leading-relaxed text-muted-foreground">
+                Ces débarras ont un parcours adapté.
+              </p>
+              <div className="mt-4 flex flex-col gap-2.5 font-bold text-primary">
+                <Link to="/debarras-succession" className="hover:underline">
+                  Ouvrir un dossier succession
+                </Link>
+                <Link to="/debarras-diogene" className="hover:underline">
+                  Débarras syndrome de Diogène
+                </Link>
+                <Link to="/contact" className="hover:underline">
+                  Je préfère être recontacté
+                </Link>
+              </div>
+            </div>
+          </aside>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+function ChoiceCard({
+  highlighted = false,
+  icon,
+  badge,
+  title,
+  text,
+  steps,
+  footnote,
+  cta,
+  onClick,
+}: {
+  highlighted?: boolean;
+  icon: ReactNode;
+  badge: string;
+  title: string;
+  text: string;
+  steps: string[];
+  footnote: string;
+  cta: string;
+  onClick: () => void;
+}) {
+  return (
+    <button
+      type="button"
+      onClick={onClick}
+      className={`group flex flex-col rounded-3xl border-2 bg-white p-6 text-left text-brand-ink transition-colors focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-brand-bright sm:p-8 ${
+        highlighted
+          ? "border-primary shadow-[0_18px_40px_-22px_rgba(0,127,61,0.55)]"
+          : "border-border hover:border-primary"
+      }`}
+    >
+      <span className="flex w-full items-start justify-between gap-4">
+        <span
+          className={`flex size-14 items-center justify-center rounded-2xl ${
+            highlighted ? "bg-primary text-primary-foreground" : "bg-secondary text-primary"
+          }`}
+        >
+          {icon}
+        </span>
+        <span
+          className={`rounded-full px-3 py-1.5 text-sm font-bold ${
+            highlighted ? "bg-brand-soft" : "bg-secondary"
+          }`}
+        >
+          {badge}
+        </span>
+      </span>
+      <span className="mt-5 text-[28px] font-black tracking-[-0.01em]">{title}</span>
+      <span className="mt-2.5 text-[17px] leading-relaxed text-muted-foreground">{text}</span>
+      <ol className="mt-5 w-full">
+        {steps.map((step, index) => (
+          <li key={step} className="flex items-start gap-3.5 border-t border-border py-3 text-base">
+            <span className="flex size-7 shrink-0 items-center justify-center rounded-full bg-secondary text-sm font-extrabold text-primary">
+              {index + 1}
+            </span>
+            {step}
+          </li>
+        ))}
+      </ol>
+      <span className="mt-auto flex w-full flex-wrap items-center justify-between gap-4 pt-6">
+        <span className="text-[15px] text-muted-foreground">{footnote}</span>
+        <span
+          className={`inline-flex min-h-[52px] items-center rounded-full px-[26px] font-bold ${
+            highlighted
+              ? "bg-primary text-primary-foreground group-hover:bg-primary/90"
+              : "border-2 border-brand-ink group-hover:bg-brand-ink group-hover:text-white"
+          }`}
+        >
+          {cta}
+        </span>
+      </span>
+    </button>
+  );
+}
+
 function EstimationRoute() {
   const { user, isPro, isAdmin, rolesLoading } = useAuth();
 

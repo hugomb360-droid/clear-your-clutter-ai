@@ -95,7 +95,10 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
         content: "VALvt00uQdsavwInVMJXgyDLsw2jDJi9GtjsA9qzhpQ",
       },
       { property: "og:site_name", content: "Débarras France" },
-      { property: "og:title", content: "Débarras France — plateforme de débarras partout en France" },
+      {
+        property: "og:title",
+        content: "Débarras France — plateforme de débarras partout en France",
+      },
       {
         property: "og:description",
         content:
@@ -121,7 +124,7 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       },
       {
         rel: "stylesheet",
-        href: "https://fonts.googleapis.com/css2?family=Urbanist:wght@400;500;600;700;800&family=Epilogue:wght@300;400;500;600;700&display=swap",
+        href: "https://fonts.googleapis.com/css2?family=Figtree:wght@400;500;600;700;800;900&display=swap",
       },
       { rel: "icon", href: "/favicon.png", type: "image/png" },
       { rel: "manifest", href: "/manifest.webmanifest" },
