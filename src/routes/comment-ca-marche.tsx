@@ -1,6 +1,18 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { Camera, Handshake, MapPin, Sparkles } from "lucide-react";
-import { Button } from "@/components/ui/button";
+import { Camera, CircleCheck, Lock, MessageSquareWarning, PencilLine } from "lucide-react";
+import heroPhoto from "@/assets/gallery-equipe.jpg";
+import {
+  CtaBand,
+  InfoGrid,
+  NumberedSteps,
+  PageHero,
+  Section,
+  SectionHeading,
+  btnOutline,
+  btnPrimary,
+  btnSoft,
+  btnWhite,
+} from "@/components/site/page-kit";
 
 export const Route = createFileRoute("/comment-ca-marche")({
   head: () => ({
@@ -21,29 +33,24 @@ export const Route = createFileRoute("/comment-ca-marche")({
       { name: "twitter:card", content: "summary_large_image" },
     ],
     links: [{ rel: "canonical", href: "https://debarrasfrance.fr/comment-ca-marche" }],
-
   }),
   component: HowItWorks,
 });
 
 const STEPS = [
   {
-    icon: Camera,
     title: "1. Prenez vos photos",
     text: "Cave, garage, appartement complet : photographiez ce qu'il y a à débarrasser. 1 à 8 photos suffisent.",
   },
   {
-    icon: Sparkles,
     title: "2. L'IA estime le volume",
     text: "Notre IA identifie les objets, évalue le volume en m³ et applique la grille tarifaire Débarras France pour un prix immédiat.",
   },
   {
-    icon: MapPin,
     title: "3. Vous validez votre demande",
     text: "Ajoutez l'étage, l'accès, la date souhaitée et votre code postal. Le devis est enregistré dans votre espace.",
   },
   {
-    icon: Handshake,
     title: "4. Les pros du coin répondent",
     text: "Les débarrasseurs de votre zone envoient leur proposition. Vous comparez, vous acceptez, vos coordonnées ne sont partagées qu'à ce moment.",
   },
@@ -51,38 +58,74 @@ const STEPS = [
 
 function HowItWorks() {
   return (
-    <div className="mx-auto max-w-5xl px-4 py-12 sm:py-16">
-      <h1 className="text-3xl font-extrabold sm:text-4xl tracking-tight sm:text-5xl">Comment ça marche</h1>
-      <p className="mt-4 max-w-2xl text-lg text-muted-foreground">
-        Débarras France remplace les visites d'estimation et les appels sans réponse par un parcours de deux
-        minutes.
-      </p>
+    <main>
+      <PageHero
+        crumbs={[{ label: "Comment ça marche" }]}
+        title="Comment ça marche"
+        subtitle="Un parcours de deux minutes, de la photo à la proposition"
+        intro="Débarras France remplace les visites d'estimation et les appels sans réponse par un parcours de deux minutes."
+        image={heroPhoto}
+        imageAlt="Deux débarrasseurs évacuent cartons et fauteuil d'un appartement"
+        actions={
+          <>
+            <Link to="/estimation" search={{ type: "photo" }} className={btnPrimary}>
+              <Camera className="size-5" aria-hidden="true" />
+              Lancer mon devis IA
+            </Link>
+            <Link to="/estimation" search={{ type: "manuel" }} className={btnOutline}>
+              Devis classique
+            </Link>
+          </>
+        }
+      />
 
-      <ol className="mt-12 grid gap-6 sm:grid-cols-2">
-        {STEPS.map((step) => (
-          <li
-            key={step.title}
-            className="rounded-3xl border border-border bg-card p-7 shadow-[var(--shadow-soft)]"
-          >
-            <span className="flex size-11 items-center justify-center rounded-2xl bg-brand-soft text-brand">
-              <step.icon className="size-5" />
-            </span>
-            <h2 className="mt-5 text-lg font-bold">{step.title}</h2>
-            <p className="mt-2 text-sm text-muted-foreground">{step.text}</p>
-          </li>
-        ))}
-      </ol>
+      <Section tone="tint">
+        <SectionHeading
+          title="Votre demande, en 4 étapes"
+          lead="Gratuit et sans engagement tant que vous n'avez pas accepté une proposition."
+        />
+        <NumberedSteps steps={STEPS} />
+      </Section>
 
-      <div className="mt-12 rounded-3xl bg-brand-soft p-8 text-center">
-        <h2 className="text-2xl font-bold">Pas de photo sous la main ?</h2>
-        <p className="mx-auto mt-2 max-w-xl text-sm text-muted-foreground">
-          Le formulaire déclaratif fonctionne aussi : décrivez le bien et le contenu, l'estimation
-          reste gratuite et sans engagement.
-        </p>
-        <Button asChild className="mt-6" size="lg">
-          <Link to="/estimation">Démarrer mon estimation</Link>
-        </Button>
-      </div>
-    </div>
+      <Section>
+        <SectionHeading
+          title="Et après avoir accepté une proposition ?"
+          lead="Le chantier se suit depuis votre espace client, jusqu'au paiement du professionnel."
+        />
+        <InfoGrid
+          columns={3}
+          items={[
+            {
+              icon: <Lock className="size-6" aria-hidden="true" />,
+              title: "Paiement sous séquestre",
+              text: "Vous payez en ligne via Stripe Connect. L'argent reste bloqué pendant toute la durée du chantier.",
+            },
+            {
+              icon: <CircleCheck className="size-6" aria-hidden="true" />,
+              title: "Vous validez la fin du chantier",
+              text: "Le professionnel envoie ses photos de fin de chantier. Il n'est payé qu'après votre validation.",
+            },
+            {
+              icon: <MessageSquareWarning className="size-6" aria-hidden="true" />,
+              title: "Un litige si besoin",
+              text: "Un problème ? Ouvrez un litige avec photos depuis votre espace : les fonds restent bloqués jusqu'à résolution.",
+            },
+          ]}
+        />
+      </Section>
+
+      <CtaBand
+        title="Pas de photo sous la main ?"
+        text="Le formulaire déclaratif fonctionne aussi : décrivez le bien et le contenu, l'estimation reste gratuite et sans engagement."
+      >
+        <Link to="/estimation" search={{ type: "manuel" }} className={btnSoft}>
+          <PencilLine className="size-5" aria-hidden="true" />
+          Démarrer mon estimation
+        </Link>
+        <Link to="/tarifs" className={btnWhite}>
+          Voir les tarifs
+        </Link>
+      </CtaBand>
+    </main>
   );
 }

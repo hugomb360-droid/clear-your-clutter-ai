@@ -1,5 +1,6 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { ServiceLanding, serviceHead } from "@/components/seo/service-landing";
+import prixHero from "@/assets/gallery-camion.jpg";
 
 export const Route = createFileRoute("/prix-debarras")({
   head: () =>
@@ -14,6 +15,8 @@ export const Route = createFileRoute("/prix-debarras")({
   component: () => (
     <ServiceLanding
       eyebrow="Guide des prix"
+      image={prixHero}
+      imageAlt="Camion de débarras chargé de meubles et d'un matelas"
       h1="Combien coûte un débarras ? Prix au m³ et exemples concrets"
       intro="Le prix d'un débarras dépend surtout du volume à évacuer (en m³), de l'accès (étage, ascenseur, portage) et de la valeur de revente des objets. Voici comment le calculer, puis obtenez votre propre fourchette en photographiant simplement vos pièces."
       blocksTitle="Ce qui fait varier le prix d'un débarras"

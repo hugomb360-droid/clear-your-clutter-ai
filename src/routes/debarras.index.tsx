@@ -1,8 +1,17 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { Button } from "@/components/ui/button";
-import { Card } from "@/components/ui/card";
-import { MapPin } from "lucide-react";
+import { Camera, MapPin } from "lucide-react";
+import hubPhoto from "@/assets/gallery-equipe.jpg";
 import { CITIES } from "@/lib/cities";
+import {
+  CtaBand,
+  PageHero,
+  Section,
+  SectionHeading,
+  btnOutline,
+  btnPrimary,
+  btnSoft,
+  btnWhite,
+} from "@/components/site/page-kit";
 
 const CANONICAL = "https://debarrasfrance.fr/debarras";
 const DESCRIPTION =
@@ -40,54 +49,83 @@ export const Route = createFileRoute("/debarras/")({
   component: CitiesHub,
 });
 
+const REGIONS = [...new Set(CITIES.map((city) => city.region))].sort((a, b) =>
+  a.localeCompare(b, "fr"),
+);
+
 function CitiesHub() {
   return (
-    <main className="mx-auto max-w-5xl px-4 py-12 sm:py-16">
-      <section className="text-center">
-        <span className="inline-flex items-center gap-2 rounded-full bg-primary/10 px-4 py-1.5 text-xs font-semibold uppercase tracking-wide text-primary">
-          <MapPin className="h-4 w-4" /> Partout en France
-        </span>
-        <h1 className="mt-5 text-3xl font-extrabold sm:text-4xl tracking-tight sm:text-5xl">
-          Débarras par ville : trouvez un pro près de chez vous
-        </h1>
-        <p className="mx-auto mt-5 max-w-2xl text-muted-foreground">
-          Photographiez ce que vous voulez débarrasser, obtenez le volume en m³ et une fourchette de
-          prix, puis comparez les propositions des débarrasseurs vérifiés de votre secteur.
-        </p>
-        <div className="mt-8">
-          <Button asChild size="lg">
-            <Link to="/estimation">Estimer mon débarras</Link>
-          </Button>
-        </div>
-      </section>
+    <main>
+      <PageHero
+        crumbs={[{ label: "Débarras par ville" }]}
+        title="Débarras par ville : trouvez un pro près de chez vous"
+        subtitle={`Partout en France, ${CITIES.length} grandes villes dans ${REGIONS.length} régions`}
+        intro="Photographiez ce que vous voulez débarrasser, obtenez le volume en m³ et une fourchette de prix, puis comparez les propositions des débarrasseurs vérifiés de votre secteur."
+        image={hubPhoto}
+        imageAlt="Deux débarrasseurs évacuent cartons et fauteuil d'un appartement"
+        actions={
+          <>
+            <Link to="/estimation" search={{ type: "photo" }} className={btnPrimary}>
+              <Camera className="size-5" aria-hidden="true" />
+              Estimer mon débarras
+            </Link>
+            <Link to="/professionnels" className={btnOutline}>
+              Voir les pros par région
+            </Link>
+          </>
+        }
+      />
 
-      <section className="mt-14 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-        {CITIES.map((city) => (
-          <Card key={city.slug} className="p-6">
-            <h2 className="font-semibold">Débarras {city.name}</h2>
-            <p className="mt-1 text-xs text-muted-foreground">{city.department}</p>
-            <p className="mt-3 line-clamp-3 text-sm text-muted-foreground">{city.intro}</p>
-            <Button asChild variant="link" className="mt-2 px-0">
-              <Link to="/debarras/$ville" params={{ ville: city.slug }}>
-                Voir les prix {city.preposition}
-              </Link>
-            </Button>
-          </Card>
-        ))}
-      </section>
+      {REGIONS.map((region, index) => {
+        const cities = CITIES.filter((city) => city.region === region);
+        return (
+          <Section
+            key={region}
+            tone={index % 2 === 0 ? "tint" : "white"}
+            className="!py-12 sm:!py-16"
+          >
+            <SectionHeading
+              title={region}
+              lead={`${cities.length} ville${cities.length > 1 ? "s" : ""} avec une page dédiée`}
+            />
+            <div className="mt-8 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
+              {cities.map((city) => (
+                <Link
+                  key={city.slug}
+                  to="/debarras/$ville"
+                  params={{ ville: city.slug }}
+                  className="group flex flex-col rounded-[20px] border border-border bg-card p-6 text-brand-ink transition-colors hover:border-primary"
+                >
+                  <span className="flex items-center gap-2 text-sm font-semibold text-muted-foreground">
+                    <MapPin className="size-4 text-primary" aria-hidden="true" />
+                    {city.department}
+                  </span>
+                  <h2 className="mt-3 text-[21px] font-extrabold">Débarras {city.name}</h2>
+                  <p className="mt-2 line-clamp-3 text-[15px] leading-relaxed text-muted-foreground">
+                    {city.intro}
+                  </p>
+                  <span className="mt-auto pt-4 text-[15px] font-bold text-primary group-hover:underline">
+                    Voir les prix {city.preposition}
+                  </span>
+                </Link>
+              ))}
+            </div>
+          </Section>
+        );
+      })}
 
-      <section className="mt-14 rounded-2xl bg-muted/40 p-8 text-center">
-        <h2 className="text-2xl font-bold tracking-tight">Votre ville n'est pas listée ?</h2>
-        <p className="mx-auto mt-3 max-w-xl text-sm text-muted-foreground">
-          Nos partenaires interviennent dans toute la France. Lancez votre estimation : la demande
-          est diffusée aux débarrasseurs couvrant votre code postal.
-        </p>
-        <div className="mt-6">
-          <Button asChild size="lg">
-            <Link to="/estimation">Démarrer mon estimation</Link>
-          </Button>
-        </div>
-      </section>
+      <CtaBand
+        title="Votre ville n'est pas listée ?"
+        text="Nos partenaires interviennent dans toute la France. Lancez votre estimation : la demande est diffusée aux débarrasseurs couvrant votre code postal."
+      >
+        <Link to="/estimation" search={{ type: "photo" }} className={btnSoft}>
+          <Camera className="size-5" aria-hidden="true" />
+          Démarrer mon estimation
+        </Link>
+        <Link to="/contact" className={btnWhite}>
+          Nous contacter
+        </Link>
+      </CtaBand>
     </main>
   );
 }

@@ -1,5 +1,7 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { ServiceLanding, serviceHead } from "@/components/seo/service-landing";
+import diogeneAvant from "@/assets/avis-sophie-avant.jpg";
+import diogeneApres from "@/assets/avis-sophie-apres.jpg";
 
 export const Route = createFileRoute("/debarras-diogene")({
   head: () =>
@@ -14,6 +16,16 @@ export const Route = createFileRoute("/debarras-diogene")({
   component: () => (
     <ServiceLanding
       eyebrow="Nettoyage extrême"
+      image={diogeneAvant}
+      imageAlt="Salon très encombré de cartons, sacs et vêtements"
+      beforeAfter={{
+        before: diogeneAvant,
+        after: diogeneApres,
+        beforeAlt: "Pièce très encombrée avant l'intervention",
+        afterAlt: "La même pièce vidée et nettoyée",
+        title: "Du logement encombré à la pièce assainie",
+        text: "Débarras intégral, nettoyage et désinfection : le logement est rendu vide et sain, en toute discrétion.",
+      }}
       h1="Débarras syndrome de Diogène : intervention discrète et complète"
       intro="Un logement en accumulation extrême demande des équipes équipées, un protocole d'hygiène et beaucoup de discrétion. Photographiez ce que vous pouvez : l'estimation prend en compte le volume, l'insalubrité et l'accès, puis seuls des professionnels formés à ce type de chantier reçoivent la demande."
       blocksTitle="Le déroulé d'une intervention Diogène"
@@ -39,8 +51,16 @@ export const Route = createFileRoute("/debarras-diogene")({
       priceRows={[
         { label: "Studio ou T1 très encombré", volume: "10 à 20 m³", price: "1 200 – 2 400 €" },
         { label: "Appartement T3 en accumulation", volume: "25 à 40 m³", price: "2 600 – 4 800 €" },
-        { label: "Maison en syndrome de Diogène", volume: "50 m³ et plus", price: "à partir de 5 500 €" },
-        { label: "Désinfection / désinsectisation", volume: "Selon surface", price: "300 – 1 500 €" },
+        {
+          label: "Maison en syndrome de Diogène",
+          volume: "50 m³ et plus",
+          price: "à partir de 5 500 €",
+        },
+        {
+          label: "Désinfection / désinsectisation",
+          volume: "Selon surface",
+          price: "300 – 1 500 €",
+        },
       ]}
       faqTitle="Questions fréquentes"
       faq={[

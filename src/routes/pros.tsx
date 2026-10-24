@@ -1,7 +1,21 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { BadgeCheck, Euro, Target, Truck } from "lucide-react";
+import { BadgeCheck, Euro, Gift, Lock, Target, Truck } from "lucide-react";
+import heroPhoto from "@/assets/gallery-camion.jpg";
 import { useAuth } from "@/hooks/useAuth";
-import { Button } from "@/components/ui/button";
+import {
+  CtaBand,
+  InfoGrid,
+  NumberedSteps,
+  PageHero,
+  Section,
+  SectionHeading,
+  btnOutline,
+  btnPrimary,
+  btnSoft,
+  btnWhite,
+  h2Class,
+  onDarkMuted,
+} from "@/components/site/page-kit";
 
 export const Route = createFileRoute("/pros")({
   head: () => ({
@@ -22,29 +36,28 @@ export const Route = createFileRoute("/pros")({
       { name: "twitter:card", content: "summary_large_image" },
     ],
     links: [{ rel: "canonical", href: "https://debarrasfrance.fr/pros" }],
-
   }),
   component: ProsLanding,
 });
 
 const BENEFITS = [
   {
-    icon: Target,
+    icon: <Target className="size-6" aria-hidden="true" />,
     title: "Des demandes qualifiées",
     text: "Photos, volume estimé en m³, étage et accès : vous savez à quoi vous engager avant de répondre.",
   },
   {
-    icon: Euro,
+    icon: <Euro className="size-6" aria-hidden="true" />,
     title: "Vous fixez votre prix",
     text: "L'estimation Débarras France sert de repère, votre proposition reste la vôtre.",
   },
   {
-    icon: Truck,
+    icon: <Truck className="size-6" aria-hidden="true" />,
     title: "Vos zones, vos règles",
     text: "Renseignez vos codes postaux et vos types de débarras : vous ne recevez que ce qui vous concerne.",
   },
   {
-    icon: BadgeCheck,
+    icon: <BadgeCheck className="size-6" aria-hidden="true" />,
     title: "Badge pro vérifié",
     text: "SIRET et assurance contrôlés : les clients choisissent en confiance.",
   },
@@ -52,82 +65,106 @@ const BENEFITS = [
 
 function ProsLanding() {
   const { user, isPro } = useAuth();
+
+  const secondary = isPro ? (
+    <Link to="/pro/dashboard" className={btnOutline}>
+      Accéder à mon espace pro
+    </Link>
+  ) : user ? (
+    <Link to="/compte" className={btnOutline}>
+      Accéder à mon espace client
+    </Link>
+  ) : (
+    <Link to="/auth" search={{ mode: "signin" }} className={btnOutline}>
+      Se connecter
+    </Link>
+  );
+
   return (
-    <div>
-      <section className="border-b border-border bg-brand-soft/60">
-        <div className="mx-auto max-w-5xl px-4 py-20">
-          <p className="text-sm font-semibold uppercase tracking-widest text-brand">
-            Espace professionnels
-          </p>
-          <h1 className="mt-3 max-w-2xl text-3xl font-extrabold sm:text-4xl tracking-tight sm:text-5xl">
-            Remplissez vos camions avec des missions de débarras près de chez vous
-          </h1>
-          <p className="mt-5 max-w-xl text-lg text-muted-foreground">
-            Débarras France estime le volume et le budget avant de vous transmettre la demande. Vous
-            répondez, le client choisit.
-          </p>
-          <p className="mt-5 inline-flex max-w-xl items-start gap-2 rounded-2xl border border-brand/30 bg-brand/10 px-4 py-3 text-sm font-medium text-foreground">
-            <span aria-hidden>🎁</span>
-            <span>
-              <strong>Offre fondateur</strong> — pour les 20 premiers pros inscrits :{" "}
-              <strong>0 % de commission Débarras France sur vos 5 premiers chantiers</strong>. Vous encaissez
-              100 % du montant.
-            </span>
-          </p>
-          <div className="mt-8 flex flex-wrap gap-3">
-            <Button asChild size="lg">
-              <Link to="/auth" search={{ mode: "signup", role: "pro" }}>
-                Créer mon compte pro
-              </Link>
-            </Button>
-            {isPro ? (
-              <Button asChild size="lg" variant="outline">
-                <Link to="/pro/dashboard">Accéder à mon espace pro</Link>
-              </Button>
-            ) : user ? (
-              <Button asChild size="lg" variant="outline">
-                <Link to="/compte">Accéder à mon espace client</Link>
-              </Button>
-            ) : (
-              <Button asChild size="lg" variant="outline">
-                <Link to="/auth" search={{ mode: "signin" }}>
-                  Se connecter
-                </Link>
-              </Button>
-            )}
+    <main>
+      <PageHero
+        crumbs={[{ label: "Devenir débarrasseur partenaire" }]}
+        title="Remplissez vos camions avec des missions de débarras près de chez vous"
+        subtitle="Espace professionnels"
+        intro="Débarras France estime le volume et le budget avant de vous transmettre la demande. Vous répondez, le client choisit."
+        image={heroPhoto}
+        imageAlt="Débarrasseurs chargeant un camion de meubles"
+        trustCard={false}
+        actions={
+          <>
+            <Link to="/auth" search={{ mode: "signup", role: "pro" }} className={btnPrimary}>
+              Créer mon compte pro
+            </Link>
+            {secondary}
+          </>
+        }
+        floating={
+          <div className="rounded-2xl bg-brand-ink p-5 text-white shadow-[0_18px_40px_rgba(12,61,34,0.3)]">
+            <p className="flex items-center gap-2 text-[15px] font-extrabold">
+              <Gift className="size-[18px] text-[#6EDC97]" aria-hidden="true" />
+              Offre fondateur
+            </p>
+            <p className={`mt-2 text-sm leading-relaxed ${onDarkMuted}`}>
+              Pour les 20 premiers pros inscrits :{" "}
+              <strong className="text-white">
+                0 % de commission Débarras France sur vos 5 premiers chantiers
+              </strong>
+              . Vous encaissez 100 % du montant.
+            </p>
+          </div>
+        }
+      />
+
+      <Section tone="tint">
+        <SectionHeading title="Pourquoi rejoindre le réseau" />
+        <InfoGrid items={BENEFITS} columns={4} />
+      </Section>
+
+      <Section>
+        <SectionHeading title="Comment ça se passe" />
+        <NumberedSteps
+          columns={3}
+          steps={[
+            {
+              title: "Inscription",
+              text: "Créez votre compte pro et renseignez vos zones d'intervention.",
+            },
+            { title: "Demandes", text: "Consultez les demandes publiées dans vos codes postaux." },
+            {
+              title: "Proposition",
+              text: "Envoyez votre prix et votre date ; les coordonnées arrivent dès l'acceptation.",
+            },
+          ]}
+        />
+      </Section>
+
+      <Section tone="dark">
+        <div className="grid items-center gap-10 lg:grid-cols-[auto_1fr] lg:gap-14">
+          <span className="flex size-20 items-center justify-center rounded-3xl bg-[#134A2B] text-[#6EDC97]">
+            <Lock className="size-10" aria-hidden="true" />
+          </span>
+          <div>
+            <h2 className={`${h2Class} text-white`}>Un paiement garanti via Stripe Connect</h2>
+            <p className={`mt-4 max-w-[44em] text-lg leading-relaxed ${onDarkMuted}`}>
+              Le client paie en ligne avant le chantier et l'argent reste bloqué sous séquestre. Une
+              fois la fin du chantier validée, les fonds sont versés directement sur votre compte
+              Stripe Connect.
+            </p>
           </div>
         </div>
-      </section>
+      </Section>
 
-      <section className="mx-auto max-w-5xl px-4 py-12 sm:py-16">
-        <div className="grid gap-6 sm:grid-cols-2">
-          {BENEFITS.map((benefit) => (
-            <div key={benefit.title} className="rounded-3xl border border-border bg-card p-7">
-              <span className="flex size-11 items-center justify-center rounded-2xl bg-brand-soft text-brand">
-                <benefit.icon className="size-5" />
-              </span>
-              <h2 className="mt-5 text-lg font-bold">{benefit.title}</h2>
-              <p className="mt-2 text-sm text-muted-foreground">{benefit.text}</p>
-            </div>
-          ))}
-        </div>
-
-        <div className="mt-14 rounded-3xl border border-border bg-card p-8">
-          <h2 className="text-2xl font-bold">Comment ça se passe</h2>
-          <ol className="mt-6 grid gap-5 sm:grid-cols-3">
-            {[
-              "Créez votre compte pro et renseignez vos zones d'intervention.",
-              "Consultez les demandes publiées dans vos codes postaux.",
-              "Envoyez votre prix et votre date ; les coordonnées arrivent dès l'acceptation.",
-            ].map((step, index) => (
-              <li key={step} className="rounded-2xl bg-secondary/60 p-5 text-sm">
-                <span className="text-2xl font-extrabold text-brand">{index + 1}</span>
-                <p className="mt-2 text-muted-foreground">{step}</p>
-              </li>
-            ))}
-          </ol>
-        </div>
-      </section>
-    </div>
+      <CtaBand
+        title="Prêt à recevoir vos premières demandes ?"
+        text="Inscription gratuite. Vous choisissez vos zones et vos types de débarras."
+      >
+        <Link to="/auth" search={{ mode: "signup", role: "pro" }} className={btnSoft}>
+          Créer mon compte pro
+        </Link>
+        <Link to="/professionnels" className={btnWhite}>
+          Voir le réseau de pros
+        </Link>
+      </CtaBand>
+    </main>
   );
 }

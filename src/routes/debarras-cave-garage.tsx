@@ -1,5 +1,8 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { ServiceLanding, serviceHead } from "@/components/seo/service-landing";
+import caveAvant from "@/assets/avis-karim-avant.jpg";
+import caveApres from "@/assets/avis-karim-apres.jpg";
+import caveHero from "@/assets/gallery-cave.jpg";
 
 export const Route = createFileRoute("/debarras-cave-garage")({
   head: () =>
@@ -14,6 +17,16 @@ export const Route = createFileRoute("/debarras-cave-garage")({
   component: () => (
     <ServiceLanding
       eyebrow="Cave, garage, grenier"
+      image={caveHero}
+      imageAlt="Cave encombrée en cours de débarras"
+      beforeAfter={{
+        before: caveAvant,
+        after: caveApres,
+        beforeAlt: "Garage encombré de vélos, cartons et outillage",
+        afterAlt: "Le même garage vidé et balayé",
+        title: "Un garage rendu vide et balayé",
+        text: "Outillage, vélos, cartons et ferraille sont évacués et triés. Le sol est balayé avant la remise des clés.",
+      }}
       h1="Débarras de cave, garage et grenier : prix au m³ en 2 minutes"
       intro="Ce sont les espaces les plus sous-estimés : une cave de 6 m² contient souvent 8 à 10 m³ d'encombrants. Photographiez l'espace tel qu'il est, notre IA calcule le volume réel et vous obtenez une fourchette de prix avant même la visite d'un professionnel."
       blocksTitle="Ce qui fait varier le prix"

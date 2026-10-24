@@ -702,9 +702,9 @@ function Home() {
             </h2>
             <p className={`${lead} text-[#34433A]`}>
               <strong className="text-brand-ink">
-                0 % de commission sur vos 5 premiers chantiers.
+                Offre fondateur : 0 % de commission sur vos 5 premiers chantiers
               </strong>{" "}
-              Vous encaissez 100 % du montant.
+              pour les 20 premiers pros inscrits. Vous encaissez 100 % du montant.
             </p>
             <div className="mt-7 flex flex-wrap gap-3">
               <Link to="/pros" className={`${btn} bg-brand-ink text-white hover:bg-brand-ink/90`}>

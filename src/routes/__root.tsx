@@ -17,19 +17,27 @@ import { Toaster } from "@/components/ui/sonner";
 
 function NotFoundComponent() {
   return (
-    <div className="flex min-h-screen items-center justify-center bg-background px-4">
-      <div className="max-w-md text-center">
-        <h1 className="text-7xl font-bold text-foreground">404</h1>
-        <h2 className="mt-4 text-xl font-semibold text-foreground">Page not found</h2>
-        <p className="mt-2 text-sm text-muted-foreground">
-          The page you're looking for doesn't exist or has been moved.
+    <div className="flex min-h-[70vh] items-center justify-center bg-[#F2FAF4] px-4 py-20">
+      <div className="max-w-lg text-center">
+        <p className="text-7xl font-black tracking-tight text-primary">404</p>
+        <h1 className="mt-4 text-[30px] font-black leading-tight tracking-[-0.02em] text-brand-ink sm:text-[38px]">
+          Cette page est introuvable
+        </h1>
+        <p className="mt-3 text-lg leading-relaxed text-muted-foreground">
+          Elle a peut-être été déplacée ou n'existe plus.
         </p>
-        <div className="mt-6">
+        <div className="mt-8 flex flex-col justify-center gap-3 sm:flex-row">
           <Link
             to="/"
-            className="inline-flex items-center justify-center rounded-md bg-primary px-4 py-2 text-sm font-medium text-primary-foreground transition-colors hover:bg-primary/90"
+            className="inline-flex min-h-[52px] items-center justify-center rounded-full bg-primary px-[26px] font-bold text-primary-foreground hover:bg-primary/90"
           >
-            Go home
+            Retour à l'accueil
+          </Link>
+          <Link
+            to="/estimation"
+            className="inline-flex min-h-[52px] items-center justify-center rounded-full border-2 border-brand-ink px-[26px] font-bold text-brand-ink hover:bg-brand-ink hover:text-white"
+          >
+            Estimer mon débarras
           </Link>
         </div>
       </div>
@@ -47,11 +55,11 @@ function ErrorComponent({ error, reset }: { error: unknown; reset: () => void })
   return (
     <div className="flex min-h-screen items-center justify-center bg-background px-4">
       <div className="max-w-md text-center">
-        <h1 className="text-xl font-semibold tracking-tight text-foreground">
-          This page didn't load
+        <h1 className="text-2xl font-extrabold tracking-tight text-brand-ink">
+          Cette page n'a pas pu s'afficher
         </h1>
-        <p className="mt-2 text-sm text-muted-foreground">
-          Something went wrong on our end. You can try refreshing or head back home.
+        <p className="mt-2 text-base text-muted-foreground">
+          Un problème est survenu de notre côté. Vous pouvez réessayer ou revenir à l'accueil.
         </p>
         <div className="mt-6 flex flex-wrap justify-center gap-2">
           <button
@@ -59,15 +67,15 @@ function ErrorComponent({ error, reset }: { error: unknown; reset: () => void })
               router.invalidate();
               reset();
             }}
-            className="inline-flex items-center justify-center rounded-md bg-primary px-4 py-2 text-sm font-medium text-primary-foreground transition-colors hover:bg-primary/90"
+            className="inline-flex min-h-11 items-center justify-center rounded-full bg-primary px-5 font-bold text-primary-foreground transition-colors hover:bg-primary/90"
           >
-            Try again
+            Réessayer
           </button>
           <a
             href="/"
-            className="inline-flex items-center justify-center rounded-md border border-input bg-background px-4 py-2 text-sm font-medium text-foreground transition-colors hover:bg-accent"
+            className="inline-flex min-h-11 items-center justify-center rounded-full border-2 border-brand-ink px-5 font-bold text-brand-ink transition-colors hover:bg-brand-ink hover:text-white"
           >
-            Go home
+            Retour à l'accueil
           </a>
         </div>
       </div>
@@ -80,7 +88,7 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
     meta: [
       { charSet: "utf-8" },
       { name: "viewport", content: "width=device-width, initial-scale=1" },
-      { name: "theme-color", content: "#064e3b" },
+      { name: "theme-color", content: "#0c3d22" },
       { name: "apple-mobile-web-app-capable", content: "yes" },
       { name: "apple-mobile-web-app-title", content: "Débarras France" },
       { title: "Débarras France — plateforme de débarras partout en France" },

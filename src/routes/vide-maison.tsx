@@ -1,5 +1,7 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { ServiceLanding, serviceHead } from "@/components/seo/service-landing";
+import videAvant from "@/assets/avis-claire-avant.jpg";
+import videApres from "@/assets/avis-claire-apres.jpg";
 
 export const Route = createFileRoute("/vide-maison")({
   head: () =>
@@ -14,6 +16,16 @@ export const Route = createFileRoute("/vide-maison")({
   component: () => (
     <ServiceLanding
       eyebrow="Vide-maison"
+      image={videAvant}
+      imageAlt="Grenier rempli de meubles, matelas et malles"
+      beforeAfter={{
+        before: videAvant,
+        after: videApres,
+        beforeAlt: "Grenier rempli de meubles et de cartons",
+        afterAlt: "Le même grenier entièrement vidé",
+        title: "Ce qui ne s'est pas vendu part avec le pro",
+        text: "Après votre vide-maison, les invendus sont évacués, donnés ou recyclés, et les pièces rendues vides.",
+      }}
       h1="Vide-maison : vendez ce qui a de la valeur, faites débarrasser le reste"
       intro="Un vide-maison permet d'écouler une partie du mobilier, mais il reste presque toujours 10 à 40 m³ d'invendus à évacuer. Photographiez ce qui reste : notre IA calcule le volume et vous donne une fourchette de prix immédiate, puis des débarrasseurs vérifiés de votre secteur vous font une proposition."
       blocksTitle="Bien organiser son vide-maison"
@@ -39,8 +51,16 @@ export const Route = createFileRoute("/vide-maison")({
       priceRows={[
         { label: "Invendus d'un appartement", volume: "8 à 15 m³", price: "600 – 1 200 €" },
         { label: "Invendus d'une maison", volume: "20 à 40 m³", price: "1 400 – 2 900 €" },
-        { label: "Maison entière sans vide-maison", volume: "40 à 80 m³", price: "2 600 – 5 200 €" },
-        { label: "Cave, grenier et dépendances seules", volume: "10 à 25 m³", price: "750 – 1 900 €" },
+        {
+          label: "Maison entière sans vide-maison",
+          volume: "40 à 80 m³",
+          price: "2 600 – 5 200 €",
+        },
+        {
+          label: "Cave, grenier et dépendances seules",
+          volume: "10 à 25 m³",
+          price: "750 – 1 900 €",
+        },
       ]}
       faqTitle="Questions fréquentes sur le vide-maison"
       faq={[

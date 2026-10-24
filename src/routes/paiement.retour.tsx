@@ -1,6 +1,6 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { CheckCircle2, Lock } from "lucide-react";
-import { Button } from "@/components/ui/button";
+import { CheckCircle2, Clock, Lock } from "lucide-react";
+import { btnOutline, btnPrimary, wrap } from "@/components/site/page-kit";
 
 export const Route = createFileRoute("/paiement/retour")({
   head: () => ({
@@ -21,7 +21,7 @@ export const Route = createFileRoute("/paiement/retour")({
     ],
   }),
   validateSearch: (search: Record<string, unknown>): { session_id?: string | undefined } => ({
-    session_id: typeof search['session_id'] === "string" ? search['session_id'] : undefined,
+    session_id: typeof search["session_id"] === "string" ? search["session_id"] : undefined,
   }),
   component: PaymentReturn,
 });
@@ -30,29 +30,39 @@ function PaymentReturn() {
   const { session_id: sessionId } = Route.useSearch();
 
   return (
-    <div className="mx-auto max-w-2xl px-4 py-16">
-      <div className="rounded-[2rem] bg-white p-8 text-center shadow-[var(--shadow-proposal)] ring-1 ring-proposal-emerald/10 sm:p-12">
-        <div className="mx-auto flex size-14 items-center justify-center rounded-full bg-proposal-emerald/10">
-          <CheckCircle2 className="size-7 text-proposal-emerald" />
-        </div>
-        <h1 className="font-display mt-6 text-2xl font-extrabold tracking-tight text-proposal-emerald sm:text-3xl">
-          {sessionId ? "Paiement confirmé" : "Paiement en cours de traitement"}
-        </h1>
-        <p className="mt-3 font-body text-sm leading-relaxed text-muted-foreground">
-          Votre argent est <strong>bloqué en toute sécurité</strong> par Débarras France. Le professionnel
-          n'est payé qu'après la fin du chantier et votre validation. En cas de problème, vous
-          pouvez ouvrir un litige avec photos depuis votre espace : les fonds restent bloqués
-          jusqu'à résolution.
-        </p>
-        <div className="mt-6 inline-flex items-center gap-2 rounded-full bg-proposal-emerald/10 px-4 py-2 text-xs font-semibold text-proposal-emerald">
-          <Lock className="size-3.5" /> Fonds séquestrés — paiement protégé
-        </div>
-        <div className="mt-8">
-          <Button asChild className="w-full sm:w-auto">
-            <Link to="/compte">Voir ma mission</Link>
-          </Button>
+    <main className="bg-[#F2FAF4] py-16 sm:py-24">
+      <div className={`${wrap} max-w-2xl`}>
+        <div className="rounded-[28px] bg-white p-8 text-center shadow-[0_18px_40px_-22px_rgba(0,127,61,0.45)] sm:p-12">
+          <div className="mx-auto flex size-16 items-center justify-center rounded-full bg-brand-soft text-primary">
+            {sessionId ? (
+              <CheckCircle2 className="size-8" aria-hidden="true" />
+            ) : (
+              <Clock className="size-8" aria-hidden="true" />
+            )}
+          </div>
+          <h1 className="mt-6 text-[30px] font-black leading-tight tracking-[-0.02em] text-brand-ink sm:text-[38px]">
+            {sessionId ? "Paiement confirmé" : "Paiement en cours de traitement"}
+          </h1>
+          <p className="mt-4 text-base leading-relaxed text-muted-foreground">
+            Votre argent est <strong className="text-brand-ink">bloqué en toute sécurité</strong>{" "}
+            par Débarras France. Le professionnel n'est payé qu'après la fin du chantier et votre
+            validation. En cas de problème, vous pouvez ouvrir un litige avec photos depuis votre
+            espace : les fonds restent bloqués jusqu'à résolution.
+          </p>
+          <p className="mt-6 inline-flex items-center gap-2 rounded-full bg-brand-soft px-4 py-2 text-sm font-bold text-brand-ink">
+            <Lock className="size-4" aria-hidden="true" /> Fonds séquestrés via Stripe Connect —
+            paiement protégé
+          </p>
+          <div className="mt-8 flex flex-col justify-center gap-3 sm:flex-row">
+            <Link to="/compte" className={btnPrimary}>
+              Voir ma mission
+            </Link>
+            <Link to="/" className={btnOutline}>
+              Retour à l'accueil
+            </Link>
+          </div>
         </div>
       </div>
-    </div>
+    </main>
   );
 }

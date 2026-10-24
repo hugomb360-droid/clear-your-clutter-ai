@@ -1,7 +1,21 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { Check } from "lucide-react";
-import { Button } from "@/components/ui/button";
-import { PRICING, euro } from "@/lib/pricing";
+import { Camera } from "lucide-react";
+import heroPhoto from "@/assets/gallery-camion.jpg";
+import { PRICING, computePrice, euro } from "@/lib/pricing";
+import {
+  CheckList,
+  CtaBand,
+  PageHero,
+  Section,
+  SectionHeading,
+  btnOutline,
+  btnPrimary,
+  btnSoft,
+  btnWhite,
+  h2Class,
+  onDarkAccent,
+  onDarkMuted,
+} from "@/components/site/page-kit";
 
 export const Route = createFileRoute("/tarifs")({
   head: () => ({
@@ -22,7 +36,6 @@ export const Route = createFileRoute("/tarifs")({
       { name: "twitter:card", content: "summary_large_image" },
     ],
     links: [{ rel: "canonical", href: "https://debarrasfrance.fr/tarifs" }],
-
   }),
   component: Pricing,
 });
@@ -31,82 +44,133 @@ const EXAMPLES = [
   { label: "Cave ou box", volume: 6, detail: "Cartons, vieux meubles, vélos" },
   { label: "Studio / T2", volume: 16, detail: "Mobilier, électroménager, effets personnels" },
   { label: "Maison complète", volume: 38, detail: "Débarras total avant vente ou succession" },
+].map((example) => ({
+  ...example,
+  price: computePrice({
+    volumeM3: example.volume,
+    floor: 0,
+    hasElevator: true,
+    bulkyItems: false,
+    hardAccess: false,
+  }),
+}));
+
+const pct = (rate: number) => `${Math.round(rate * 100)} %`;
+const num = (value: number) => new Intl.NumberFormat("fr-FR").format(value);
+
+const FACTORS = [
+  {
+    label: "Prix de base",
+    value: `${euro(PRICING.pricePerM3)}/m³`,
+    detail: `Minimum d'intervention ${euro(PRICING.minimumPrice)}`,
+  },
+  {
+    label: "Étage sans ascenseur",
+    value: `+${pct(PRICING.floorSurchargeRate)}`,
+    detail: `Par étage, plafonné à ${pct(PRICING.maxFloorSurcharge)}`,
+  },
+  {
+    label: "Encombrants",
+    value: `+${pct(PRICING.bulkySurchargeRate)}`,
+    detail: "Piano, gravats, électroménager",
+  },
+  {
+    label: "Accès difficile",
+    value: `+${pct(PRICING.hardAccessSurchargeRate)}`,
+    detail: "Rue étroite, portage long",
+  },
 ];
 
 function Pricing() {
   return (
-    <div className="mx-auto max-w-5xl px-4 py-12 sm:py-16">
-      <h1 className="text-3xl font-extrabold sm:text-4xl tracking-tight sm:text-5xl">Des tarifs lisibles</h1>
-      <p className="mt-4 max-w-2xl text-lg text-muted-foreground">
-        Le prix d'un débarras dépend surtout du volume. Voici la base utilisée par l'estimation
-        Débarras France, avant les propositions des pros de votre secteur.
-      </p>
+    <main>
+      <PageHero
+        crumbs={[{ label: "Tarifs" }]}
+        title="Des tarifs lisibles"
+        subtitle="Aucune commission pour le particulier"
+        intro="Le prix d'un débarras dépend surtout du volume. Voici la base utilisée par l'estimation Débarras France, avant les propositions des pros de votre secteur."
+        image={heroPhoto}
+        imageAlt="Camion de débarras chargé de meubles et d'un matelas"
+        actions={
+          <>
+            <Link to="/estimation" search={{ type: "photo" }} className={btnPrimary}>
+              <Camera className="size-5" aria-hidden="true" />
+              Obtenir mon prix
+            </Link>
+            <Link to="/prix-debarras" className={btnOutline}>
+              Guide des prix
+            </Link>
+          </>
+        }
+      />
 
-      <div className="mt-10 grid gap-6 sm:grid-cols-3">
-        <div className="rounded-3xl border border-border bg-card p-7">
-          <p className="text-sm text-muted-foreground">Prix de base</p>
-          <p className="mt-2 text-2xl font-extrabold sm:text-3xl">{euro(PRICING.pricePerM3)}/m³</p>
-          <p className="mt-2 text-sm text-muted-foreground">
-            Minimum d'intervention {euro(PRICING.minimumPrice)}
-          </p>
-        </div>
-        <div className="rounded-3xl border border-border bg-card p-7">
-          <p className="text-sm text-muted-foreground">Étage sans ascenseur</p>
-          <p className="mt-2 text-2xl font-extrabold sm:text-3xl">
-            +{Math.round(PRICING.floorSurchargeRate * 100)}%
-          </p>
-          <p className="mt-2 text-sm text-muted-foreground">
-            Par étage, plafonné à {Math.round(PRICING.maxFloorSurcharge * 100)}%
-          </p>
-        </div>
-        <div className="rounded-3xl border border-border bg-card p-7">
-          <p className="text-sm text-muted-foreground">Encombrants / accès difficile</p>
-          <p className="mt-2 text-2xl font-extrabold sm:text-3xl">
-            +{Math.round(PRICING.bulkySurchargeRate * 100)}%
-          </p>
-          <p className="mt-2 text-sm text-muted-foreground">
-            Piano, gravats, électroménager, rue étroite
-          </p>
-        </div>
-      </div>
-
-      <h2 className="mt-14 text-2xl font-bold">Exemples courants</h2>
-      <div className="mt-6 grid gap-6 sm:grid-cols-3">
-        {EXAMPLES.map((example) => {
-          const base = Math.max(PRICING.minimumPrice, example.volume * PRICING.pricePerM3);
-          return (
-            <div
-              key={example.label}
-              className="rounded-3xl border border-border bg-card p-7 shadow-[var(--shadow-soft)]"
-            >
-              <h3 className="text-lg font-bold">{example.label}</h3>
-              <p className="mt-1 text-sm text-muted-foreground">≈ {example.volume} m³</p>
-              <p className="mt-4 text-2xl font-extrabold text-brand">
-                {euro(Math.round(base * 0.85))} – {euro(Math.round(base * 1.15))}
-              </p>
-              <p className="mt-3 text-sm text-muted-foreground">{example.detail}</p>
+      <Section tone="dark">
+        <h2 className={`${h2Class} text-white`}>La grille de calcul</h2>
+        <dl className="mt-10 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+          {FACTORS.map((factor) => (
+            <div key={factor.label} className="rounded-[20px] bg-[#134A2B] p-6">
+              <dt className={`text-[15px] font-semibold ${onDarkMuted}`}>{factor.label}</dt>
+              <dd>
+                <span
+                  className={`mt-2 block text-[34px] font-black tracking-tight ${onDarkAccent}`}
+                >
+                  {factor.value}
+                </span>
+                <span className={`mt-1 block text-[15px] ${onDarkMuted}`}>{factor.detail}</span>
+              </dd>
             </div>
-          );
-        })}
-      </div>
+          ))}
+        </dl>
+      </Section>
 
-      <ul className="mt-12 grid gap-3 sm:grid-cols-2">
-        {[
-          "Estimation et devis 100% gratuits",
-          "Aucun engagement tant que vous n'acceptez pas une proposition",
-          "Objets réutilisables donnés ou revendus, déduction possible",
-          "Tri et dépôt en déchetterie inclus par les pros partenaires",
-        ].map((item) => (
-          <li key={item} className="flex items-start gap-3 text-sm">
-            <Check className="mt-0.5 size-4 shrink-0 text-brand" />
-            {item}
-          </li>
-        ))}
-      </ul>
+      <Section tone="tint">
+        <SectionHeading
+          title="Exemples courants"
+          lead="Au rez-de-chaussée ou avec ascenseur. Votre prix exact dépend de vos photos ou de votre description."
+        />
+        <div className="mt-10 grid gap-5 md:grid-cols-3">
+          {EXAMPLES.map((example) => (
+            <div key={example.label} className="rounded-[20px] bg-white p-7 text-brand-ink">
+              <h3 className="text-xl font-extrabold">{example.label}</h3>
+              <p className="mt-1 text-[15px] text-muted-foreground">≈ {example.volume} m³</p>
+              <p className="mt-5 text-[28px] font-black tabular-nums text-primary">
+                {num(example.price.priceMin)} – {euro(example.price.priceMax)}
+              </p>
+              <p className="mt-3 text-[15px] leading-relaxed text-muted-foreground">
+                {example.detail}
+              </p>
+            </div>
+          ))}
+        </div>
+      </Section>
 
-      <Button asChild size="lg" className="mt-10">
-        <Link to="/estimation">Obtenir mon prix</Link>
-      </Button>
-    </div>
+      <Section>
+        <div className="grid items-start gap-10 lg:grid-cols-2 lg:gap-14">
+          <h2 className={`${h2Class} text-brand-ink`}>Ce qui est inclus, sans surprise</h2>
+          <CheckList
+            items={[
+              "Estimation et devis 100 % gratuits",
+              "Aucun engagement tant que vous n'acceptez pas une proposition",
+              "Objets réutilisables donnés ou revendus, déduction possible",
+              "Tri et dépôt en déchetterie inclus par les pros partenaires",
+              "Paiement bloqué via Stripe Connect jusqu'à la fin du chantier",
+            ]}
+          />
+        </div>
+      </Section>
+
+      <CtaBand
+        title="Combien pour votre débarras ?"
+        text="Envoyez vos photos : volume en m³ et fourchette de prix en 2 minutes."
+      >
+        <Link to="/estimation" search={{ type: "photo" }} className={btnSoft}>
+          <Camera className="size-5" aria-hidden="true" />
+          Obtenir mon prix
+        </Link>
+        <Link to="/comment-ca-marche" className={btnWhite}>
+          Comment ça marche
+        </Link>
+      </CtaBand>
+    </main>
   );
 }
