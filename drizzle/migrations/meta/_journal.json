@@ -36,6 +36,13 @@
       "when": 1794434035810,
       "tag": "0004_bind_quote_photos_storage_read",
       "breakpoints": true
+    },
+    {
+      "idx": 5,
+      "version": "7",
+      "when": 1794434051673,
+      "tag": "0005_restrict_reviews_select",
+      "breakpoints": true
     }
   ]
 }
