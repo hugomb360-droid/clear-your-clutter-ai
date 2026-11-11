@@ -29,6 +29,13 @@
       "when": 1792437676598,
       "tag": "0003_public_professional_profiles",
       "breakpoints": true
+    },
+    {
+      "idx": 4,
+      "version": "7",
+      "when": 1794434035810,
+      "tag": "0004_bind_quote_photos_storage_read",
+      "breakpoints": true
     }
   ]
 }
