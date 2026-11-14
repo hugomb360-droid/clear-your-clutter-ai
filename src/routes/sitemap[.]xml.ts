@@ -3,7 +3,6 @@ import type {} from "@tanstack/react-start";
 import { CITIES } from "@/lib/cities";
 import { getPublicProfessionals } from "@/lib/public-profiles.functions";
 
-
 const BASE_URL = "https://debarrasfrance.fr";
 
 interface SitemapEntry {
@@ -36,15 +35,23 @@ const entries: SitemapEntry[] = [
   { path: "/contact", changefreq: "yearly", priority: "0.5" },
   { path: "/auth", changefreq: "yearly", priority: "0.3" },
   { path: "/mentions-legales", changefreq: "yearly", priority: "0.3" },
+  { path: "/conditions-generales", changefreq: "yearly", priority: "0.3" },
+  { path: "/confidentialite", changefreq: "yearly", priority: "0.3" },
 ];
-
 
 export const Route = createFileRoute("/sitemap.xml")({
   server: {
     handlers: {
       GET: async () => {
         const pros = await getPublicProfessionals();
-        const urls = [...entries, ...pros.map(p => ({ path: `/pro/${p.slug}`, changefreq: "weekly" as const, priority: "0.6" }))].map((e) =>
+        const urls = [
+          ...entries,
+          ...pros.map((p) => ({
+            path: `/pro/${p.slug}`,
+            changefreq: "weekly" as const,
+            priority: "0.6",
+          })),
+        ].map((e) =>
           [
             `  <url>`,
             `    <loc>${BASE_URL}${e.path}</loc>`,

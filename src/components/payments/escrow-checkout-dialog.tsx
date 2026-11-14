@@ -2,6 +2,7 @@ import { EmbeddedCheckout, EmbeddedCheckoutProvider } from "@stripe/react-stripe
 import { Lock, ScrollText, ShieldCheck, Wallet } from "lucide-react";
 import { useCallback, useMemo, useState } from "react";
 import { PaymentTestModeBanner } from "@/components/payments/payment-test-banner";
+import { Link } from "@tanstack/react-router";
 import { Button } from "@/components/ui/button";
 import {
   Dialog,
@@ -48,6 +49,8 @@ const GUARANTEES = [
 
 export function EscrowCheckoutDialog({ open, onOpenChange, bidId, price, companyName }: Props) {
   const [started, setStarted] = useState(false);
+  const [agreed, setAgreed] = useState(false);
+  const [waiver, setWaiver] = useState(false);
 
   const fetchClientSecret = useCallback(async (): Promise<string> => {
     const result = await createEscrowCheckout({
@@ -78,8 +81,8 @@ export function EscrowCheckoutDialog({ open, onOpenChange, bidId, price, company
               Paiement sécurisé — {euro(price)}
             </DialogTitle>
             <DialogDescription className="text-proposal-cream/70">
-              Mission confiée à {companyName}. Votre argent est bloqué par Débarras France jusqu'à la fin du
-              chantier.
+              Mission confiée à {companyName}. Votre argent est bloqué par Débarras France jusqu'à
+              la fin du chantier.
             </DialogDescription>
           </DialogHeader>
         </div>
@@ -97,7 +100,9 @@ export function EscrowCheckoutDialog({ open, onOpenChange, bidId, price, company
                     </div>
                     <div>
                       <p className="font-semibold text-proposal-emerald">{g.title}</p>
-                      <p className="mt-0.5 text-sm leading-relaxed text-muted-foreground">{g.text}</p>
+                      <p className="mt-0.5 text-sm leading-relaxed text-muted-foreground">
+                        {g.text}
+                      </p>
                     </div>
                   </li>
                 ))}
@@ -111,8 +116,8 @@ export function EscrowCheckoutDialog({ open, onOpenChange, bidId, price, company
                   </span>
                 </div>
                 <p className="mt-2 text-xs text-muted-foreground">
-                  Frais de service Débarras France inclus. Aucun supplément le jour du chantier : le prix est
-                  ferme, sauf modification acceptée par vous.
+                  Frais de service Débarras France inclus. Aucun supplément le jour du chantier : le
+                  prix est ferme, sauf modification acceptée par vous.
                 </p>
               </div>
 
@@ -121,12 +126,51 @@ export function EscrowCheckoutDialog({ open, onOpenChange, bidId, price, company
                   {PAYMENTS_PAUSED_MESSAGE}
                 </p>
               ) : paymentsConfigured() ? (
-                <Button
-                  className="mt-6 w-full bg-proposal-gold text-proposal-emerald hover:bg-proposal-gold/90"
-                  onClick={() => setStarted(true)}
-                >
-                  <Lock className="mr-1 size-4" /> Payer et bloquer les fonds
-                </Button>
+                <>
+                  <div className="mt-6 flex flex-col gap-3 text-sm leading-snug">
+                    <label className="flex cursor-pointer items-start gap-3">
+                      <input
+                        id="escrow-terms"
+                        type="checkbox"
+                        checked={agreed}
+                        onChange={(e) => setAgreed(e.target.checked)}
+                        className="mt-0.5 size-4 shrink-0 accent-primary"
+                      />
+                      <span>
+                        J'accepte les{" "}
+                        <Link
+                          to="/conditions-generales"
+                          className="font-semibold text-primary underline"
+                        >
+                          conditions générales
+                        </Link>{" "}
+                        et je comprends que mon paiement reste bloqué jusqu'à ma validation de la
+                        fin du chantier.
+                      </span>
+                    </label>
+                    <label className="flex cursor-pointer items-start gap-3">
+                      <input
+                        id="escrow-waiver"
+                        type="checkbox"
+                        checked={waiver}
+                        onChange={(e) => setWaiver(e.target.checked)}
+                        className="mt-0.5 size-4 shrink-0 accent-primary"
+                      />
+                      <span>
+                        Je demande expressément que le chantier puisse avoir lieu avant la fin de
+                        mon délai de rétractation de 14 jours, et je reconnais qu'une fois le
+                        chantier entièrement réalisé, je ne pourrai plus me rétracter.
+                      </span>
+                    </label>
+                  </div>
+                  <Button
+                    className="mt-4 w-full bg-proposal-gold text-proposal-emerald hover:bg-proposal-gold/90"
+                    onClick={() => setStarted(true)}
+                    disabled={!agreed || !waiver}
+                  >
+                    <Lock className="mr-1 size-4" /> Payer et bloquer les fonds
+                  </Button>
+                </>
               ) : (
                 <p className="mt-6 rounded-xl bg-destructive/10 p-3 text-sm text-destructive">
                   Le paiement en ligne est en cours d'activation, réessayez dans quelques instants.

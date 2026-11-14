@@ -14,6 +14,8 @@ import { Route as AdminRouteImport } from './routes/admin'
 import { Route as AuthRouteImport } from './routes/auth'
 import { Route as CommentCaMarcheRouteImport } from './routes/comment-ca-marche'
 import { Route as CompteRouteImport } from './routes/compte'
+import { Route as ConditionsGeneralesRouteImport } from './routes/conditions-generales'
+import { Route as ConfidentialiteRouteImport } from './routes/confidentialite'
 import { Route as ContactRouteImport } from './routes/contact'
 import { Route as DebarrasAppartementRouteImport } from './routes/debarras-appartement'
 import { Route as DebarrasCaveGarageRouteImport } from './routes/debarras-cave-garage'
@@ -62,6 +64,16 @@ const CommentCaMarcheRoute = CommentCaMarcheRouteImport.update({
 const CompteRoute = CompteRouteImport.update({
   id: '/compte',
   path: '/compte',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ConditionsGeneralesRoute = ConditionsGeneralesRouteImport.update({
+  id: '/conditions-generales',
+  path: '/conditions-generales',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ConfidentialiteRoute = ConfidentialiteRouteImport.update({
+  id: '/confidentialite',
+  path: '/confidentialite',
   getParentRoute: () => rootRouteImport,
 } as any)
 const ContactRoute = ContactRouteImport.update({
@@ -195,6 +207,8 @@ export interface FileRoutesByFullPath {
   '/auth': typeof AuthRoute
   '/comment-ca-marche': typeof CommentCaMarcheRoute
   '/compte': typeof CompteRoute
+  '/conditions-generales': typeof ConditionsGeneralesRoute
+  '/confidentialite': typeof ConfidentialiteRoute
   '/contact': typeof ContactRoute
   '/debarras-appartement': typeof DebarrasAppartementRoute
   '/debarras-cave-garage': typeof DebarrasCaveGarageRoute
@@ -226,6 +240,8 @@ export interface FileRoutesByTo {
   '/auth': typeof AuthRoute
   '/comment-ca-marche': typeof CommentCaMarcheRoute
   '/compte': typeof CompteRoute
+  '/conditions-generales': typeof ConditionsGeneralesRoute
+  '/confidentialite': typeof ConfidentialiteRoute
   '/contact': typeof ContactRoute
   '/debarras-appartement': typeof DebarrasAppartementRoute
   '/debarras-cave-garage': typeof DebarrasCaveGarageRoute
@@ -258,6 +274,8 @@ export interface FileRoutesById {
   '/auth': typeof AuthRoute
   '/comment-ca-marche': typeof CommentCaMarcheRoute
   '/compte': typeof CompteRoute
+  '/conditions-generales': typeof ConditionsGeneralesRoute
+  '/confidentialite': typeof ConfidentialiteRoute
   '/contact': typeof ContactRoute
   '/debarras-appartement': typeof DebarrasAppartementRoute
   '/debarras-cave-garage': typeof DebarrasCaveGarageRoute
@@ -291,6 +309,8 @@ export interface FileRouteTypes {
     | '/auth'
     | '/comment-ca-marche'
     | '/compte'
+    | '/conditions-generales'
+    | '/confidentialite'
     | '/contact'
     | '/debarras-appartement'
     | '/debarras-cave-garage'
@@ -322,6 +342,8 @@ export interface FileRouteTypes {
     | '/auth'
     | '/comment-ca-marche'
     | '/compte'
+    | '/conditions-generales'
+    | '/confidentialite'
     | '/contact'
     | '/debarras-appartement'
     | '/debarras-cave-garage'
@@ -353,6 +375,8 @@ export interface FileRouteTypes {
     | '/auth'
     | '/comment-ca-marche'
     | '/compte'
+    | '/conditions-generales'
+    | '/confidentialite'
     | '/contact'
     | '/debarras-appartement'
     | '/debarras-cave-garage'
@@ -385,6 +409,8 @@ export interface RootRouteChildren {
   AuthRoute: typeof AuthRoute
   CommentCaMarcheRoute: typeof CommentCaMarcheRoute
   CompteRoute: typeof CompteRoute
+  ConditionsGeneralesRoute: typeof ConditionsGeneralesRoute
+  ConfidentialiteRoute: typeof ConfidentialiteRoute
   ContactRoute: typeof ContactRoute
   DebarrasAppartementRoute: typeof DebarrasAppartementRoute
   DebarrasCaveGarageRoute: typeof DebarrasCaveGarageRoute
@@ -446,6 +472,20 @@ declare module '@tanstack/react-router' {
       path: '/compte'
       fullPath: '/compte'
       preLoaderRoute: typeof CompteRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/conditions-generales': {
+      id: '/conditions-generales'
+      path: '/conditions-generales'
+      fullPath: '/conditions-generales'
+      preLoaderRoute: typeof ConditionsGeneralesRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/confidentialite': {
+      id: '/confidentialite'
+      path: '/confidentialite'
+      fullPath: '/confidentialite'
+      preLoaderRoute: typeof ConfidentialiteRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/contact': {
@@ -625,6 +665,8 @@ const rootRouteChildren: RootRouteChildren = {
   AuthRoute: AuthRoute,
   CommentCaMarcheRoute: CommentCaMarcheRoute,
   CompteRoute: CompteRoute,
+  ConditionsGeneralesRoute: ConditionsGeneralesRoute,
+  ConfidentialiteRoute: ConfidentialiteRoute,
   ContactRoute: ContactRoute,
   DebarrasAppartementRoute: DebarrasAppartementRoute,
   DebarrasCaveGarageRoute: DebarrasCaveGarageRoute,

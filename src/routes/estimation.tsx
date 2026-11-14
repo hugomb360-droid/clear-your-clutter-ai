@@ -219,6 +219,7 @@ function EstimationPage() {
   const [showManualEstimate, setShowManualEstimate] = useState(false);
   const [analyzing, setAnalyzing] = useState(false);
   const [publishing, setPublishing] = useState(false);
+  const [termsAccepted, setTermsAccepted] = useState(false);
 
   useEffect(() => {
     const raw = sessionStorage.getItem(DRAFT_KEY);
@@ -943,7 +944,35 @@ function EstimationPage() {
                     <Sparkles className="mr-2 size-4" /> Essayer l'estimation IA
                   </Button>
                 </div>
-                <Button size="lg" className="w-full" onClick={publish} disabled={publishing}>
+                <label className="flex cursor-pointer items-start gap-3 rounded-xl border border-border bg-secondary/40 p-3 text-sm leading-snug">
+                  <input
+                    id="terms-manuel"
+                    type="checkbox"
+                    checked={termsAccepted}
+                    onChange={(e) => setTermsAccepted(e.target.checked)}
+                    className="mt-0.5 size-4 shrink-0 accent-primary"
+                  />
+                  <span>
+                    J'accepte les{" "}
+                    <Link
+                      to="/conditions-generales"
+                      className="font-semibold text-primary underline"
+                    >
+                      conditions générales
+                    </Link>{" "}
+                    et la{" "}
+                    <Link to="/confidentialite" className="font-semibold text-primary underline">
+                      politique de confidentialité
+                    </Link>
+                    , et je confirme avoir le droit de faire débarrasser ce lieu.
+                  </span>
+                </label>
+                <Button
+                  size="lg"
+                  className="w-full"
+                  onClick={publish}
+                  disabled={publishing || !termsAccepted}
+                >
                   {publishing ? "Envoi..." : "Envoyer ma demande aux pros"}
                 </Button>
                 <p className="text-xs text-muted-foreground">
@@ -990,7 +1019,35 @@ function EstimationPage() {
                   ))}
                 </div>
                 <p className="text-sm text-muted-foreground">{result.analysis.summary}</p>
-                <Button size="lg" className="w-full" onClick={publish} disabled={publishing}>
+                <label className="flex cursor-pointer items-start gap-3 rounded-xl border border-border bg-secondary/40 p-3 text-sm leading-snug">
+                  <input
+                    id="terms-photo"
+                    type="checkbox"
+                    checked={termsAccepted}
+                    onChange={(e) => setTermsAccepted(e.target.checked)}
+                    className="mt-0.5 size-4 shrink-0 accent-primary"
+                  />
+                  <span>
+                    J'accepte les{" "}
+                    <Link
+                      to="/conditions-generales"
+                      className="font-semibold text-primary underline"
+                    >
+                      conditions générales
+                    </Link>{" "}
+                    et la{" "}
+                    <Link to="/confidentialite" className="font-semibold text-primary underline">
+                      politique de confidentialité
+                    </Link>
+                    , et je confirme avoir le droit de faire débarrasser ce lieu.
+                  </span>
+                </label>
+                <Button
+                  size="lg"
+                  className="w-full"
+                  onClick={publish}
+                  disabled={publishing || !termsAccepted}
+                >
                   {publishing ? "Envoi..." : "Envoyer aux pros de mon secteur"}
                 </Button>
                 <p className="text-xs text-muted-foreground">

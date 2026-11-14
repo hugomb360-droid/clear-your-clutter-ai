@@ -82,7 +82,6 @@ const PRO_STEPS = [
   },
 ];
 
-
 function AuthPage() {
   const search = Route.useSearch();
   const navigate = useNavigate();
@@ -144,7 +143,6 @@ function AuthPage() {
     }
     setStep((s) => s + 1);
   };
-
 
   const handleSignIn = async (event: React.FormEvent) => {
     event.preventDefault();
@@ -270,7 +268,9 @@ function AuthPage() {
         </aside>
 
         <div className="mx-auto w-full max-w-xl">
-          <h1 className="text-2xl font-extrabold sm:text-3xl tracking-tight">Votre espace Débarras France</h1>
+          <h1 className="text-2xl font-extrabold sm:text-3xl tracking-tight">
+            Votre espace Débarras France
+          </h1>
           <p className="mt-2 text-sm text-muted-foreground">
             Connexion en un clic, inscription en une minute.
           </p>
@@ -534,7 +534,6 @@ function AuthPage() {
                   </div>
                 </form>
               </TabsContent>
-
             </Tabs>
 
             <div className="my-6 flex items-center gap-3 text-xs text-muted-foreground">
@@ -554,8 +553,12 @@ function AuthPage() {
 
           <p className="mt-6 text-center text-xs text-muted-foreground">
             En continuant, vous acceptez les{" "}
-            <Link to="/mentions-legales" className="underline">
-              mentions légales
+            <Link to="/conditions-generales" className="underline">
+              conditions générales
+            </Link>{" "}
+            et la{" "}
+            <Link to="/confidentialite" className="underline">
+              politique de confidentialité
             </Link>{" "}
             de Débarras France.
           </p>

@@ -40,6 +40,12 @@ export function SiteFooter() {
             <Link to="/mentions-legales" className={linkClass}>
               Mentions légales
             </Link>
+            <Link to="/conditions-generales" className={linkClass}>
+              Conditions générales
+            </Link>
+            <Link to="/confidentialite" className={linkClass}>
+              Confidentialité
+            </Link>
           </nav>
         </div>
 

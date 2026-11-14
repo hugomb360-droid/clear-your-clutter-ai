@@ -1,5 +1,5 @@
-import { createFileRoute } from "@tanstack/react-router";
-import { Breadcrumb, wrap } from "@/components/site/page-kit";
+import { createFileRoute, Link } from "@tanstack/react-router";
+import { EDITOR, LegalPage } from "@/components/site/legal-page";
 
 export const Route = createFileRoute("/mentions-legales")({
   head: () => ({
@@ -8,16 +8,12 @@ export const Route = createFileRoute("/mentions-legales")({
       {
         name: "description",
         content:
-          "Éditeur, hébergement, données personnelles et rôle d'intermédiaire de la plateforme Débarras France.",
+          "Éditeur, hébergeur, rôle de la plateforme, médiation de la consommation et propriété intellectuelle du site Débarras France.",
       },
-      { property: "og:title", content: "Mentions légales Débarras France" },
-      {
-        property: "og:description",
-        content: "Informations légales de la plateforme Débarras France.",
-      },
+      { property: "og:title", content: "Mentions légales — Débarras France" },
       { property: "og:url", content: "https://debarrasfrance.fr/mentions-legales" },
       { property: "og:type", content: "website" },
-      { name: "twitter:card", content: "summary_large_image" },
+      { name: "robots", content: "noindex, follow" },
     ],
     links: [{ rel: "canonical", href: "https://debarrasfrance.fr/mentions-legales" }],
   }),
@@ -26,60 +22,159 @@ export const Route = createFileRoute("/mentions-legales")({
 
 function Legal() {
   return (
-    <main className="bg-[#F2FAF4] pb-16 pt-6 sm:pb-24">
-      <div className={wrap}>
-        <Breadcrumb items={[{ label: "Mentions légales" }]} />
-        <h1 className="mt-6 text-[31px] font-black leading-[1.05] tracking-[-0.03em] text-brand-ink sm:text-[45px]">
-          Mentions légales
-        </h1>
-        <div className="mt-10 max-w-3xl space-y-4 text-base leading-relaxed text-muted-foreground">
-          <section className="rounded-[20px] bg-white p-6 sm:p-8">
-            <h2 className="text-xl font-extrabold text-brand-ink">Éditeur</h2>
-            <p className="mt-3">
-              Le site Débarras France est édité par l'auto-entreprise{" "}
-              <strong className="text-brand-ink">Monsallut Barranger</strong>, SIREN 105 524 110,
-              dont le siège est situé 27 rue Marcel Pointeau, 16000 Angoulême, France.
-              <br />
-              Contact :{" "}
-              <a className="text-primary underline" href="mailto:clientclearo@gmail.com">
-                clientclearo@gmail.com
-              </a>{" "}
-              —{" "}
-              <a className="text-primary underline" href="tel:+33609957915">
-                06 09 95 79 15
+    <LegalPage
+      crumb="Mentions légales"
+      title="Mentions légales"
+      updated="14 novembre 2026"
+      sections={[
+        {
+          id: "editeur",
+          title: "Éditeur du site",
+          body: (
+            <>
+              <p>
+                Le site {EDITOR.brand} ({EDITOR.site}) est édité par <strong>{EDITOR.name}</strong>,{" "}
+                {EDITOR.form}, immatriculée sous le numéro SIREN {EDITOR.siren}, dont le siège est
+                situé {EDITOR.address}.
+              </p>
+              <p>
+                Téléphone : <a href={EDITOR.phoneHref}>{EDITOR.phone}</a>
+                <br />
+                Courriel : <a href={`mailto:${EDITOR.email}`}>{EDITOR.email}</a>
+                <br />
+                Directeur de la publication : {EDITOR.name}.
+              </p>
+              <p>TVA non applicable, article 293 B du Code général des impôts.</p>
+            </>
+          ),
+        },
+        {
+          id: "hebergeur",
+          title: "Hébergement",
+          body: (
+            <p>
+              Le site est hébergé par <strong>Lovable</strong>, éditeur de la plateforme
+              lovable.dev, dont les coordonnées sont publiées sur{" "}
+              <a href="https://lovable.dev" target="_blank" rel="noopener noreferrer">
+                lovable.dev
               </a>
-              <br />
-              Directeur de la publication : Monsallut Barranger.
+              . Les données sont stockées sur une infrastructure cloud opérée pour le compte de
+              l'hébergeur ; le prestataire de paiement est Stripe (voir la{" "}
+              <Link to="/confidentialite">politique de confidentialité</Link>).
             </p>
-          </section>
-          <section className="rounded-[20px] bg-white p-6 sm:p-8">
-            <h2 className="text-xl font-extrabold text-brand-ink">Rôle de la plateforme</h2>
-            <p className="mt-3">
-              Débarras France est un intermédiaire technique. Les prestations de débarras sont
-              réalisées par des professionnels indépendants qui contractent directement avec le
-              client. Les estimations affichées sont indicatives et ne constituent pas un devis
-              contractuel tant qu'un professionnel n'a pas confirmé son offre.
+          ),
+        },
+        {
+          id: "plateforme",
+          title: "Rôle de la plateforme",
+          body: (
+            <>
+              <p>
+                {EDITOR.brand} est un <strong>opérateur de plateforme en ligne</strong> au sens de
+                l'article L111-7 du Code de la consommation : il met en relation des personnes
+                souhaitant faire débarrasser un lieu (« clients ») et des professionnels
+                indépendants du débarras (« professionnels »).
+              </p>
+              <p>
+                {EDITOR.brand} n'est pas le prestataire du débarras. Le contrat de prestation est
+                conclu directement entre le client et le professionnel qu'il choisit. Les
+                estimations affichées sont indicatives et ne constituent pas un devis contractuel
+                tant qu'un professionnel n'a pas confirmé son offre.
+              </p>
+              <h3>Référencement et classement des professionnels</h3>
+              <ul>
+                <li>
+                  Un professionnel est référencé après création d'un compte, renseignement de son
+                  numéro SIRET, de son attestation d'assurance et de ses zones d'intervention, puis
+                  validation par notre équipe. Le référencement est gratuit.
+                </li>
+                <li>
+                  Dans l'annuaire public, les professionnels sont classés par note moyenne des avis
+                  clients, puis par nombre d'avis, puis par nombre de chantiers confirmés. Les
+                  professionnels sans avis sont affichés sans classement. Aucune rémunération
+                  n'influence cet ordre.
+                </li>
+                <li>
+                  Lorsqu'un client reçoit des propositions, elles lui sont présentées avec le prix,
+                  la date et le profil de chaque professionnel ; le client choisit librement.
+                </li>
+                <li>
+                  {EDITOR.brand} se rémunère par une commission prélevée sur le professionnel lors
+                  du versement du prix du chantier (voir les{" "}
+                  <Link to="/conditions-generales">conditions générales</Link>). Le service est
+                  gratuit pour le client.
+                </li>
+              </ul>
+            </>
+          ),
+        },
+        {
+          id: "mediation",
+          title: "Médiation de la consommation",
+          body: (
+            <>
+              <p>
+                Conformément aux articles L612-1 et suivants du Code de la consommation, tout client
+                consommateur a le droit de recourir gratuitement à un médiateur de la consommation
+                en vue de la résolution amiable d'un litige l'opposant à {EDITOR.brand}, après avoir
+                tenté de le résoudre directement auprès de nous par écrit à {EDITOR.email}.
+              </p>
+              <p>
+                Médiateur désigné : <strong>en cours de désignation</strong>. Ses coordonnées seront
+                publiées sur cette page dès l'adhésion effective. Vous pouvez également utiliser la
+                plateforme européenne de règlement en ligne des litiges :{" "}
+                <a
+                  href="https://ec.europa.eu/consumers/odr"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  ec.europa.eu/consumers/odr
+                </a>
+                .
+              </p>
+            </>
+          ),
+        },
+        {
+          id: "donnees",
+          title: "Données personnelles et cookies",
+          body: (
+            <p>
+              Le traitement de vos données est décrit dans la{" "}
+              <Link to="/confidentialite">politique de confidentialité</Link>. Le site n'utilise que
+              des cookies et stockages techniques nécessaires à son fonctionnement (session de
+              connexion, brouillon de demande) ; aucun cookie publicitaire ni outil de mesure
+              d'audience tiers n'est déposé.
             </p>
-          </section>
-          <section className="rounded-[20px] bg-white p-6 sm:p-8">
-            <h2 className="text-xl font-extrabold text-brand-ink">Données personnelles</h2>
-            <p className="mt-3">
-              Les photos et informations transmises servent uniquement à estimer le débarras et à
-              mettre le client en relation avec des professionnels de sa zone. Les coordonnées
-              précises (adresse, téléphone) ne sont communiquées au professionnel qu'après
-              acceptation de sa proposition. Vous pouvez demander la suppression de vos données
-              depuis la page contact.
+          ),
+        },
+        {
+          id: "propriete",
+          title: "Propriété intellectuelle",
+          body: (
+            <p>
+              L'ensemble des éléments du site (nom {EDITOR.brand}, logo, textes, interface,
+              illustrations, code) est protégé par le droit de la propriété intellectuelle. Toute
+              reproduction ou représentation, totale ou partielle, sans autorisation écrite
+              préalable est interdite. Les photographies transmises par les utilisateurs restent
+              leur propriété ; ils accordent à {EDITOR.brand} et aux professionnels concernés le
+              droit de les utiliser pour les seuls besoins de l'estimation, de la mise en relation
+              et du suivi du chantier.
             </p>
-          </section>
-          <section className="rounded-[20px] bg-white p-6 sm:p-8">
-            <h2 className="text-xl font-extrabold text-brand-ink">Propriété intellectuelle</h2>
-            <p className="mt-3">
-              L'ensemble des éléments du site (marque Débarras France, contenus, interface) est
-              protégé. Toute reproduction sans autorisation est interdite.
+          ),
+        },
+        {
+          id: "contact",
+          title: "Nous contacter",
+          body: (
+            <p>
+              Pour toute question : <a href={`mailto:${EDITOR.email}`}>{EDITOR.email}</a>,{" "}
+              <a href={EDITOR.phoneHref}>{EDITOR.phone}</a>, ou par courrier à {EDITOR.address}.
+              Voir aussi la <Link to="/contact">page contact</Link>.
             </p>
-          </section>
-        </div>
-      </div>
-    </main>
+          ),
+        },
+      ]}
+    />
   );
 }
