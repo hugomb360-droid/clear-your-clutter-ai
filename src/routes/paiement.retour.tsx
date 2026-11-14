@@ -50,8 +50,7 @@ function PaymentReturn() {
             espace : les fonds restent bloqués jusqu'à résolution.
           </p>
           <p className="mt-6 inline-flex items-center gap-2 rounded-full bg-brand-soft px-4 py-2 text-sm font-bold text-brand-ink">
-            <Lock className="size-4" aria-hidden="true" /> Fonds séquestrés via Stripe Connect —
-            paiement protégé
+            <Lock className="size-4" aria-hidden="true" /> Fonds bloqués — paiement protégé
           </p>
           <div className="mt-8 flex flex-col justify-center gap-3 sm:flex-row">
             <Link to="/compte" className={btnPrimary}>

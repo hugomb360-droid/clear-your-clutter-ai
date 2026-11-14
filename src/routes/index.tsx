@@ -1,17 +1,27 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { Camera, Check, Clock, Hammer, Lock, MapPin, Minus, Plus, ShieldCheck } from "lucide-react";
+import {
+  Camera,
+  Check,
+  Clock,
+  EyeOff,
+  Hammer,
+  Lock,
+  MapPin,
+  Minus,
+  Plus,
+  ShieldCheck,
+  Tag,
+} from "lucide-react";
 import galleryEquipe from "@/assets/gallery-equipe.jpg";
 import galleryAvant from "@/assets/gallery-avant.jpg";
 import galleryApres from "@/assets/gallery-apres.jpg";
 import galleryCamion from "@/assets/gallery-camion.jpg";
 import galleryCave from "@/assets/gallery-cave.jpg";
-import photoVideMaison from "@/assets/avis-claire-avant.jpg";
-import photoDiogene from "@/assets/avis-sophie-avant.jpg";
 import { CITIES } from "@/lib/cities";
 import { PRICING, computePrice, euro } from "@/lib/pricing";
 
 const DESCRIPTION =
-  "Devis rapide par IA à partir de vos photos, propositions de débarrasseurs vérifiés près de chez vous et paiement sous séquestre via Stripe Connect.";
+  "Devis rapide par IA à partir de vos photos, propositions de débarrasseurs vérifiés près de chez vous et paiement bloqué jusqu'à la fin du chantier.";
 
 export const Route = createFileRoute("/")({
   head: () => ({
@@ -79,13 +89,13 @@ const services = [
     to: "/vide-maison",
     title: "Vide-maison",
     text: "Vendez ce qui peut l'être, puis faites évacuer et nettoyer le reste.",
-    image: photoVideMaison,
+    icon: Tag,
   },
   {
     to: "/debarras-diogene",
     title: "Syndrome de Diogène",
     text: "Débarras intégral, nettoyage et désinfection, en toute discrétion.",
-    image: photoDiogene,
+    icon: EyeOff,
     dark: true,
   },
 ] as const;
@@ -101,7 +111,7 @@ const steps = [
   },
   {
     title: "Réservation",
-    text: "Vous choisissez une offre et payez en ligne. L'argent est bloqué sous séquestre via Stripe Connect.",
+    text: "Vous choisissez une offre et payez en ligne. L'argent reste bloqué jusqu'à la fin du chantier.",
   },
   {
     title: "Validation",
@@ -148,7 +158,7 @@ const comparison = [
   },
   {
     row: "Paiement",
-    us: "Bloqué via Stripe Connect jusqu'à votre validation",
+    us: "Bloqué jusqu'à votre validation",
     them: "Acompte ou paiement direct",
   },
   {
@@ -171,7 +181,7 @@ const proBenefits = [
   { title: "Vos zones, vos règles", text: "Codes postaux et types de débarras choisis par vous." },
   {
     title: "Paiement garanti",
-    text: "Le client paie avant le chantier, les fonds vous sont versés via Stripe Connect à la validation.",
+    text: "Le client paie avant le chantier, les fonds vous sont versés à la validation.",
   },
 ];
 
@@ -198,7 +208,7 @@ const faq = [
   {
     question: "Quand le pro est-il payé ?",
     answer:
-      "Seulement après que vous avez validé la fin du chantier. D'ici là, l'argent reste bloqué sous séquestre via Stripe Connect, puis il est versé directement sur le compte du pro.",
+      "Seulement après que vous avez validé la fin du chantier. D'ici là, l'argent reste bloqué, puis il est versé au pro.",
   },
   {
     question: "Et si le chantier se passe mal ?",
@@ -259,18 +269,6 @@ function Home() {
               height={960}
               className="absolute right-0 top-0 h-[92%] w-full rounded-[28px] object-cover sm:w-[90%]"
             />
-            <div className="absolute left-0 top-[150px] hidden max-w-[300px] items-center gap-3.5 rounded-[18px] bg-white p-4 shadow-[0_12px_32px_rgba(12,61,34,0.16)] sm:flex">
-              <span className="flex size-12 shrink-0 items-center justify-center rounded-[14px] bg-brand-soft text-brand-ink">
-                <Lock className="size-6" aria-hidden="true" />
-              </span>
-              <span className="text-[15px] leading-snug">
-                <strong>Paiement bloqué</strong>
-                <br />
-                <span className="text-muted-foreground">
-                  via Stripe Connect, jusqu'à la fin du chantier
-                </span>
-              </span>
-            </div>
             <div className="absolute bottom-0 left-3 right-3 rounded-2xl bg-brand-ink p-4 text-white shadow-[0_18px_40px_rgba(12,61,34,0.3)] sm:left-auto sm:right-[18px] sm:w-[290px]">
               <div className="flex items-center justify-between gap-3">
                 <span className="inline-flex items-center gap-1.5 whitespace-nowrap text-[13px] font-extrabold">
@@ -301,11 +299,7 @@ function Home() {
         <ul className={`${wrap} grid gap-6 sm:grid-cols-2 lg:grid-cols-4`}>
           <ProofItem icon={Camera} title="2 minutes" text="pour un devis rapide par IA" />
           <ProofItem icon={Clock} title="48 heures" text="pour recevoir les propositions" />
-          <ProofItem
-            icon={Lock}
-            title="100 % sous séquestre"
-            text="paiement bloqué via Stripe Connect"
-          />
+          <ProofItem icon={Lock} title="Paiement bloqué" text="jusqu'à la validation du chantier" />
           <ProofItem
             icon={MapPin}
             title={`${CITIES.length} grandes villes`}
@@ -341,12 +335,26 @@ function Home() {
                       : "border-border bg-card text-brand-ink hover:border-primary"
                   }`}
                 >
-                  <img
-                    src={service.image}
-                    alt=""
-                    loading="lazy"
-                    className="aspect-[16/10] w-full object-cover"
-                  />
+                  {"image" in service ? (
+                    <img
+                      src={service.image}
+                      alt=""
+                      loading="lazy"
+                      className="aspect-[16/10] w-full object-cover"
+                    />
+                  ) : (
+                    <div
+                      className={`flex aspect-[16/10] w-full items-center justify-center ${
+                        dark ? "bg-[#134A2B]" : "bg-brand-soft"
+                      }`}
+                    >
+                      <service.icon
+                        className={`size-16 ${dark ? "text-[#6EDC97]" : "text-primary"}`}
+                        strokeWidth={1.4}
+                        aria-hidden="true"
+                      />
+                    </div>
+                  )}
                   <div className="px-6 pb-6 pt-5">
                     <h3 className="text-[21px] font-extrabold">{service.title}</h3>
                     <p

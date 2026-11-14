@@ -12,7 +12,7 @@ import {
 } from "lucide-react";
 import {
   InfoGrid,
-  PageHero,
+  Breadcrumb,
   Section,
   SectionHeading,
   btnOnDark,
@@ -21,13 +21,13 @@ import {
   btnSm,
   h2Class,
   onDarkMuted,
+  wrap,
 } from "@/components/site/page-kit";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { contactReferral } from "@/lib/succession.functions";
 import { referralSchema } from "@/lib/succession.schemas";
-import partnerPhoto from "@/assets/gallery-equipe.jpg";
 
 export const Route = createFileRoute("/partenaires-prescripteurs")({
   head: () => ({
@@ -59,24 +59,44 @@ function Partners() {
   const [error, setError] = useState("");
   return (
     <main>
-      <PageHero
-        crumbs={[{ label: "Partenaires prescripteurs" }]}
-        title="Partenaires prescripteurs Débarras France"
-        subtitle="Notaires, agences immobilières et EHPAD"
-        intro="Accompagnez vos clients jusqu'à la remise d'un logement vidé, même à distance."
-        image={partnerPhoto}
-        imageAlt="Équipe de professionnels du débarras"
-        actions={
-          <>
-            <a href="#devenir-partenaire" className={btnPrimary}>
-              Devenir partenaire
-            </a>
-            <Link to="/debarras-succession" className={btnOutline}>
-              Ouvrir un dossier succession
-            </Link>
-          </>
-        }
-      />
+      <section className="border-b border-border pb-14 pt-8">
+        <div className={`${wrap} grid items-end gap-10 lg:grid-cols-[1.2fr_0.8fr]`}>
+          <div>
+            <Breadcrumb items={[{ label: "Partenaires prescripteurs" }]} />
+            <p className="mt-8 text-lg font-bold text-primary">
+              Notaires, agences immobilières et EHPAD
+            </p>
+            <h1 className="mt-2 text-[36px] font-black leading-[1.05] tracking-[-0.03em] text-brand-ink sm:text-[50px]">
+              Partenaires prescripteurs Débarras France
+            </h1>
+            <p className="mt-5 max-w-[36em] text-lg leading-relaxed text-[#34433A]">
+              Accompagnez vos clients jusqu'à la remise d'un logement vidé, même à distance.
+            </p>
+            <div className="mt-8 flex flex-col gap-3.5 sm:flex-row sm:flex-wrap">
+              <a href="#devenir-partenaire" className={btnPrimary}>
+                Devenir partenaire
+              </a>
+              <Link to="/debarras-succession" className={btnOutline}>
+                Ouvrir un dossier succession
+              </Link>
+            </div>
+          </div>
+          <dl className="grid grid-cols-3 gap-4 border-t-2 border-brand-ink pt-5 lg:grid-cols-1 lg:gap-6">
+            {[
+              ["1 dossier", "par logement, avec consignes et échéance"],
+              ["48 h", "pour recevoir les propositions des pros"],
+              ["1 PDF", "avant/après à transmettre au notaire"],
+            ].map(([k, v]) => (
+              <div key={k}>
+                <dt className="text-[28px] font-black tracking-tight text-brand-ink sm:text-[34px]">
+                  {k}
+                </dt>
+                <dd className="text-[15px] text-muted-foreground">{v}</dd>
+              </div>
+            ))}
+          </dl>
+        </div>
+      </section>
       <Section tone="tint">
         <SectionHeading title="Pour qui ?" />
         <InfoGrid

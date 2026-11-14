@@ -4,7 +4,7 @@
  * grands titres serrés, photos arrondies, sections alternées blanc / vert pâle / vert foncé.
  */
 import { Link } from "@tanstack/react-router";
-import { Check, Lock, Minus, Plus } from "lucide-react";
+import { Check, Minus, Plus } from "lucide-react";
 import type { ReactNode } from "react";
 import { CITIES, type CityPage } from "@/lib/cities";
 
@@ -40,7 +40,10 @@ export function Breadcrumb({ items, dark = false }: { items: Crumb[]; dark?: boo
     <nav aria-label="Fil d'Ariane" className="text-[15px]">
       <ol className="flex flex-wrap items-center gap-x-2 gap-y-1">
         <li>
-          <Link to="/" className={dark ? `${onDarkAccent} hover:underline` : "text-primary hover:underline"}>
+          <Link
+            to="/"
+            className={dark ? `${onDarkAccent} hover:underline` : "text-primary hover:underline"}
+          >
             Accueil
           </Link>
         </li>
@@ -50,7 +53,12 @@ export function Breadcrumb({ items, dark = false }: { items: Crumb[]; dark?: boo
               /
             </span>
             {item.to ? (
-              <Link to={item.to} className={dark ? `${onDarkAccent} hover:underline` : "text-primary hover:underline"}>
+              <Link
+                to={item.to}
+                className={
+                  dark ? `${onDarkAccent} hover:underline` : "text-primary hover:underline"
+                }
+              >
                 {item.label}
               </Link>
             ) : (
@@ -76,7 +84,6 @@ export function PageHero({
   note,
   image,
   imageAlt = "",
-  trustCard = true,
   floating,
 }: {
   crumbs: Crumb[];
@@ -88,26 +95,30 @@ export function PageHero({
   note?: ReactNode;
   image?: string | undefined;
   imageAlt?: string | undefined;
-  /** Affiche la carte « Paiement bloqué via Stripe Connect » sur la photo. */
-  trustCard?: boolean | undefined;
   /** Carte personnalisée posée en bas à droite de la photo. */
   floating?: ReactNode;
 }) {
   return (
     <section className={image ? "pb-14 pt-8 sm:pb-20" : "bg-[#F2FAF4] pb-14 pt-8 sm:pb-16"}>
-      <div className={`${wrap} ${image ? "grid items-center gap-10 lg:grid-cols-2 lg:gap-14" : ""}`}>
+      <div
+        className={`${wrap} ${image ? "grid items-center gap-10 lg:grid-cols-2 lg:gap-14" : ""}`}
+      >
         <div>
           <Breadcrumb items={crumbs} />
           <h1 className="mt-6 max-w-[18ch] text-[36px] font-black leading-[1.05] tracking-[-0.03em] text-brand-ink sm:text-[48px] lg:text-[54px]">
             {title}
           </h1>
           {subtitle && (
-            <p className="mt-4 text-lg font-extrabold leading-snug text-primary sm:text-xl">{subtitle}</p>
+            <p className="mt-4 text-lg font-extrabold leading-snug text-primary sm:text-xl">
+              {subtitle}
+            </p>
           )}
           {intro && (
             <div className="mt-5 max-w-[36em] text-lg leading-relaxed text-[#34433A]">{intro}</div>
           )}
-          {actions && <div className="mt-8 flex flex-col gap-3.5 sm:flex-row sm:flex-wrap">{actions}</div>}
+          {actions && (
+            <div className="mt-8 flex flex-col gap-3.5 sm:flex-row sm:flex-wrap">{actions}</div>
+          )}
           {note && <p className="mt-4 text-[15px] text-muted-foreground">{note}</p>}
         </div>
         {image && (
@@ -117,18 +128,6 @@ export function PageHero({
               alt={imageAlt}
               className="absolute right-0 top-0 h-[92%] w-full rounded-[28px] object-cover sm:w-[90%]"
             />
-            {trustCard && (
-              <div className="absolute left-0 top-[120px] hidden max-w-[290px] items-center gap-3.5 rounded-[18px] bg-white p-4 shadow-[0_12px_32px_rgba(12,61,34,0.16)] sm:flex">
-                <span className="flex size-12 shrink-0 items-center justify-center rounded-[14px] bg-brand-soft text-brand-ink">
-                  <Lock className="size-6" aria-hidden="true" />
-                </span>
-                <span className="text-[15px] leading-snug">
-                  <strong>Paiement bloqué</strong>
-                  <br />
-                  <span className="text-muted-foreground">via Stripe Connect, jusqu'à la fin du chantier</span>
-                </span>
-              </div>
-            )}
             {floating && (
               <div className="absolute bottom-0 left-3 right-3 sm:left-auto sm:right-[18px] sm:w-[290px]">
                 {floating}
@@ -185,7 +184,9 @@ export function SectionHeading({
     <div className="flex flex-wrap items-end justify-between gap-6">
       <div>
         <h2 className={`${h2Class} ${dark ? "text-white" : "text-brand-ink"}`}>{title}</h2>
-        {lead && <p className={`${leadClass} ${dark ? onDarkMuted : "text-muted-foreground"}`}>{lead}</p>}
+        {lead && (
+          <p className={`${leadClass} ${dark ? onDarkMuted : "text-muted-foreground"}`}>{lead}</p>
+        )}
       </div>
       {action}
     </div>
@@ -211,7 +212,9 @@ export function NumberedSteps({
         <li key={step.title} className="rounded-[20px] bg-white p-7 text-brand-ink">
           <span
             className={`flex size-11 items-center justify-center rounded-full text-lg font-extrabold ${
-              index === steps.length - 1 ? "bg-brand-soft text-brand-ink" : "bg-primary text-primary-foreground"
+              index === steps.length - 1
+                ? "bg-brand-soft text-brand-ink"
+                : "bg-primary text-primary-foreground"
             }`}
           >
             {index + 1}
@@ -235,7 +238,11 @@ export function InfoGrid({
   columns?: 2 | 3 | 4;
   dark?: boolean;
 }) {
-  const cols = { 2: "sm:grid-cols-2", 3: "sm:grid-cols-2 lg:grid-cols-3", 4: "sm:grid-cols-2 lg:grid-cols-4" }[columns];
+  const cols = {
+    2: "sm:grid-cols-2",
+    3: "sm:grid-cols-2 lg:grid-cols-3",
+    4: "sm:grid-cols-2 lg:grid-cols-4",
+  }[columns];
   return (
     <div className={`mt-10 grid gap-5 ${cols}`}>
       {items.map((item, index) => (
@@ -255,7 +262,9 @@ export function InfoGrid({
             </span>
           )}
           <h3 className="text-[19px] font-extrabold">{item.title}</h3>
-          <p className={`mt-2 text-base leading-relaxed ${dark ? onDarkMuted : "text-muted-foreground"}`}>
+          <p
+            className={`mt-2 text-base leading-relaxed ${dark ? onDarkMuted : "text-muted-foreground"}`}
+          >
             {item.text}
           </p>
           {item.footer && <div className="mt-auto pt-4">{item.footer}</div>}
@@ -309,7 +318,9 @@ export function PriceTable({
     <div className="overflow-x-auto rounded-[20px] bg-white px-6 pb-6 pt-3 sm:px-7">
       <table className="w-full min-w-[440px] border-collapse">
         {caption && (
-          <caption className="pb-3 pt-4 text-left text-xl font-extrabold text-brand-ink">{caption}</caption>
+          <caption className="pb-3 pt-4 text-left text-xl font-extrabold text-brand-ink">
+            {caption}
+          </caption>
         )}
         <thead>
           <tr className="text-sm text-muted-foreground">
@@ -328,8 +339,12 @@ export function PriceTable({
           {rows.map((row, index) => (
             <tr key={index} className="border-t border-border">
               <td className="py-[15px] pr-4">{row.label}</td>
-              <td className="py-[15px] pr-4 text-right tabular-nums text-muted-foreground">{row.volume}</td>
-              <td className="py-[15px] text-right font-bold tabular-nums text-brand-ink">{row.price}</td>
+              <td className="py-[15px] pr-4 text-right tabular-nums text-muted-foreground">
+                {row.volume}
+              </td>
+              <td className="py-[15px] text-right font-bold tabular-nums text-brand-ink">
+                {row.price}
+              </td>
             </tr>
           ))}
         </tbody>
@@ -355,13 +370,23 @@ export function BeforeAfter({
   return (
     <div className="grid grid-cols-2 gap-3.5">
       <figure className="relative">
-        <img src={before} alt={beforeAlt} loading="lazy" className="aspect-[3/4] w-full rounded-[22px] object-cover" />
+        <img
+          src={before}
+          alt={beforeAlt}
+          loading="lazy"
+          className="aspect-[3/4] w-full rounded-[22px] object-cover"
+        />
         <figcaption className="absolute bottom-3.5 left-3.5 rounded-full bg-white px-3.5 py-2 text-[15px] font-extrabold text-brand-ink">
           Avant
         </figcaption>
       </figure>
       <figure className="relative">
-        <img src={after} alt={afterAlt} loading="lazy" className="aspect-[3/4] w-full rounded-[22px] object-cover" />
+        <img
+          src={after}
+          alt={afterAlt}
+          loading="lazy"
+          className="aspect-[3/4] w-full rounded-[22px] object-cover"
+        />
         <figcaption className="absolute bottom-3.5 left-3.5 rounded-full bg-brand-soft px-3.5 py-2 text-[15px] font-extrabold text-brand-ink">
           Après
         </figcaption>
@@ -372,9 +397,16 @@ export function BeforeAfter({
 
 /* ---------- FAQ ---------- */
 
-export function FaqList({ items, twoColumns = true }: { items: { q: string; a: ReactNode }[]; twoColumns?: boolean }) {
+export function FaqList({
+  items,
+  twoColumns = true,
+}: {
+  items: { q: string; a: ReactNode }[];
+  twoColumns?: boolean;
+}) {
   const half = Math.ceil(items.length / 2);
-  const columns = twoColumns && items.length > 3 ? [items.slice(0, half), items.slice(half)] : [items];
+  const columns =
+    twoColumns && items.length > 3 ? [items.slice(0, half), items.slice(half)] : [items];
   return (
     <div className={`mt-9 grid items-start gap-3.5 ${columns.length > 1 ? "md:grid-cols-2" : ""}`}>
       {columns.map((column, columnIndex) => (
@@ -387,8 +419,14 @@ export function FaqList({ items, twoColumns = true }: { items: { q: string; a: R
             >
               <summary className="flex cursor-pointer list-none items-center justify-between gap-5 py-5 text-[17px] font-bold text-brand-ink [&::-webkit-details-marker]:hidden">
                 {item.q}
-                <Plus className="size-[22px] shrink-0 text-primary group-open:hidden" aria-hidden="true" />
-                <Minus className="hidden size-[22px] shrink-0 text-primary group-open:block" aria-hidden="true" />
+                <Plus
+                  className="size-[22px] shrink-0 text-primary group-open:hidden"
+                  aria-hidden="true"
+                />
+                <Minus
+                  className="hidden size-[22px] shrink-0 text-primary group-open:block"
+                  aria-hidden="true"
+                />
               </summary>
               <div className="pb-5 text-base leading-relaxed text-muted-foreground">{item.a}</div>
             </details>
@@ -401,7 +439,15 @@ export function FaqList({ items, twoColumns = true }: { items: { q: string; a: R
 
 /* ---------- Bandeau d'appel à l'action ---------- */
 
-export function CtaBand({ title, text, children }: { title: ReactNode; text?: ReactNode; children: ReactNode }) {
+export function CtaBand({
+  title,
+  text,
+  children,
+}: {
+  title: ReactNode;
+  text?: ReactNode;
+  children: ReactNode;
+}) {
   return (
     <section className="py-16 sm:py-24">
       <div className={wrap}>
@@ -451,7 +497,11 @@ export function CityLinks({
 
 /* ---------- Bandeau de garanties ---------- */
 
-export function ProofBand({ items }: { items: { icon: ReactNode; title: string; text: string }[] }) {
+export function ProofBand({
+  items,
+}: {
+  items: { icon: ReactNode; title: string; text: string }[];
+}) {
   return (
     <section className="bg-brand-ink py-9 text-white">
       <ul className={`${wrap} grid gap-6 sm:grid-cols-2 lg:grid-cols-4`}>
