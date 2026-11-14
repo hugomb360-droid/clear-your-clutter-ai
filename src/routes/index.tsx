@@ -65,7 +65,7 @@ const services = [
     to: "/debarras-appartement",
     title: "Débarras d'appartement",
     text: "Studio ou T5, avec ou sans ascenseur. Le portage est intégré au prix.",
-    image: galleryAvant,
+    image: galleryEquipe,
   },
   {
     to: "/debarras-maison",
@@ -137,13 +137,16 @@ const priceExamples = [
   }),
 }));
 
-const aiExample = computePrice({
-  volumeM3: 12,
-  floor: 0,
-  hasElevator: true,
-  bulkyItems: false,
-  hardAccess: false,
-});
+const aiExample = {
+  volumeM3: 14,
+  price: computePrice({
+    volumeM3: 14,
+    floor: 2,
+    hasElevator: false,
+    bulkyItems: false,
+    hardAccess: false,
+  }),
+};
 
 const pct = (rate: number) => `${Math.round(rate * 100)} %`;
 const num = (value: number) => new Intl.NumberFormat("fr-FR").format(value);
@@ -239,16 +242,17 @@ function Home() {
     <div className="bg-background text-foreground">
       {/* Hero */}
       <section className="pb-12 pt-8 sm:pb-16 sm:pt-12">
-        <div className={`${wrap} grid items-center gap-10 lg:grid-cols-2 lg:gap-14`}>
+        <div className={`${wrap} grid items-center gap-10 lg:grid-cols-[1.05fr_0.95fr] lg:gap-14`}>
           <div>
-            <h1 className="text-[34px] font-black leading-[1.04] tracking-[-0.03em] text-brand-ink sm:text-[45px] lg:text-[48px]">
-              Votre logement vidé, trié et nettoyé, sans mauvaise surprise.
+            <h1 className="max-w-[15ch] text-[34px] font-black leading-[1.04] tracking-[-0.03em] text-brand-ink sm:text-[45px] lg:text-[48px]">
+              Des débarrasseurs vérifiés, partout en France.
             </h1>
             <p className="mt-5 text-lg font-extrabold leading-snug text-primary">
-              Appartement, maison, cave, garage, succession, syndrome de Diogène
+              Appartement, maison, cave, garage, succession : le prix en 2 minutes.
             </p>
-            <p className="mt-5 max-w-[32em] text-[17px] leading-relaxed text-[#34433A]">
-              Des débarrasseurs vérifiés près de chez vous, un prix connu avant toute visite.
+            <p className="mt-5 max-w-[34em] text-[17px] leading-relaxed text-[#34433A]">
+              Envoyez quelques photos, notre IA calcule le volume et vous donne un prix. Puis les
+              débarrasseurs vérifiés de votre secteur vous font leurs propositions.
             </p>
             <div className="mt-8 flex flex-col gap-3.5 sm:flex-row sm:flex-wrap">
               <Link to="/estimation" search={{ type: "photo" }} className={btnPrimary}>
@@ -259,34 +263,55 @@ function Home() {
                 Devis classique
               </Link>
             </div>
+            <ul className="mt-7 flex flex-wrap gap-x-5 gap-y-2 text-[14px] font-semibold text-[#34433A]">
+              {[
+                "Pros vérifiés : SIRET et assurance",
+                "Prix connu avant toute visite",
+                "Paiement bloqué jusqu'à votre validation",
+                "Gratuit, sans engagement",
+              ].map((item) => (
+                <li key={item} className="inline-flex items-center gap-2">
+                  <span className="size-2 rounded-full bg-brand-bright" aria-hidden="true" />
+                  {item}
+                </li>
+              ))}
+            </ul>
           </div>
 
-          <div className="relative h-[400px] sm:h-[520px]">
+          <div className="relative h-[380px] sm:h-[480px]">
             <img
-              src={galleryEquipe}
-              alt="Deux débarrasseurs évacuent cartons et fauteuil d'un appartement"
+              src={galleryAvant}
+              alt="Appartement encombré photographié avant le débarras"
               width={1280}
               height={960}
-              className="absolute right-0 top-0 h-[92%] w-full rounded-[28px] object-cover sm:w-[90%]"
+              className="absolute right-0 top-0 h-[78%] w-full rounded-[24px] object-cover sm:w-[88%]"
             />
-            <div className="absolute bottom-0 left-3 right-3 rounded-2xl bg-brand-ink p-4 text-white shadow-[0_18px_40px_rgba(12,61,34,0.3)] sm:left-auto sm:right-[18px] sm:w-[290px]">
+            <div className="absolute bottom-0 left-0 w-[86%] rounded-[18px] border border-border bg-white p-4 shadow-[0_20px_50px_-24px_rgba(12,61,34,0.45)] sm:w-[62%]">
               <div className="flex items-center justify-between gap-3">
-                <span className="inline-flex items-center gap-1.5 whitespace-nowrap text-[13px] font-extrabold">
-                  <Camera className="size-[15px] text-[#6EDC97]" aria-hidden="true" />
-                  Analyse IA de vos photos
+                <span className="inline-flex items-center gap-1.5 whitespace-nowrap text-[13px] font-extrabold text-brand-ink">
+                  <Camera className="size-[15px] text-primary" aria-hidden="true" />
+                  Exemple d'estimation
                 </span>
-                <span className="text-xs text-[#BFD8C8]">Exemple</span>
+                <span className="rounded-full bg-[#F2FAF4] px-2 py-0.5 text-[11px] font-bold text-muted-foreground">
+                  T2 à Angoulême
+                </span>
               </div>
-              <dl className="mt-2.5 grid grid-cols-[auto_1fr] gap-x-3 gap-y-1.5 text-[13px]">
-                <dt className="text-[#BFD8C8]">Volume</dt>
-                <dd className="text-right font-bold">12 m³</dd>
-                <dt className="text-[#BFD8C8]">Objets</dt>
-                <dd className="text-right font-semibold">mobilier, cartons, électroménager</dd>
+              <dl className="mt-2 grid grid-cols-[auto_1fr] gap-x-3 gap-y-1 text-[12px]">
+                <dt className="text-muted-foreground">Volume mesuré</dt>
+                <dd className="text-right font-bold text-brand-ink">{aiExample.volumeM3} m³</dd>
+                <dt className="text-muted-foreground">Objets</dt>
+                <dd className="text-right font-semibold text-brand-ink">
+                  mobilier, cartons, électroménager
+                </dd>
+                <dt className="text-muted-foreground">Accès</dt>
+                <dd className="text-right font-semibold text-brand-ink">2e étage sans ascenseur</dd>
               </dl>
-              <div className="mt-2.5 flex items-baseline justify-between gap-3 border-t border-white/15 pt-2.5">
-                <span className="whitespace-nowrap text-[13px] text-[#BFD8C8]">Prix estimé</span>
-                <span className="whitespace-nowrap text-[18px] font-black tabular-nums text-[#6EDC97]">
-                  {num(aiExample.priceMin)} – {euro(aiExample.priceMax)}
+              <div className="mt-2.5 flex items-baseline justify-between gap-3 rounded-xl bg-brand-ink px-3 py-2 text-white">
+                <span className="whitespace-nowrap text-[12px] text-[#BFD8C8]">
+                  Fourchette de prix
+                </span>
+                <span className="whitespace-nowrap text-[16px] font-black tabular-nums text-[#6EDC97]">
+                  {num(aiExample.price.priceMin)} – {euro(aiExample.price.priceMax)}
                 </span>
               </div>
             </div>
