@@ -95,10 +95,10 @@ function CaveGarage() {
           <Breadcrumb items={[{ label: "Cave, garage, grenier" }]} dark />
           <div className="mt-6 grid items-end gap-8 lg:grid-cols-[1.2fr_0.8fr]">
             <div>
-              <h1 className="text-[36px] font-black leading-[1.05] tracking-[-0.03em] sm:text-[52px]">
+              <h1 className="text-[31px] font-black leading-[1.05] tracking-[-0.03em] sm:text-[45px]">
                 Débarras de cave, garage et grenier : prix au m³ en 2 minutes
               </h1>
-              <p className={`mt-5 max-w-[38em] text-lg leading-relaxed ${onDarkMuted}`}>
+              <p className={`mt-5 max-w-[38em] text-[17px] leading-relaxed ${onDarkMuted}`}>
                 Ce sont les espaces les plus sous-estimés : une cave de 6 m² contient souvent 8 à 10
                 m³ d'encombrants. Photographiez l'espace tel qu'il est, notre IA calcule le volume
                 réel et vous obtenez une fourchette de prix avant même la visite d'un professionnel.
@@ -138,7 +138,7 @@ function CaveGarage() {
             >
               <VolumeCubes count={space.cubes} label={space.volume} />
               <h3 className="mt-3 text-lg font-extrabold text-brand-ink">{space.label}</h3>
-              <p className="mt-1 text-[22px] font-black tabular-nums text-primary">{space.price}</p>
+              <p className="mt-1 text-[20px] font-black tabular-nums text-primary">{space.price}</p>
             </li>
           ))}
         </ul>
@@ -165,7 +165,7 @@ function CaveGarage() {
         <div className="grid gap-10 lg:grid-cols-[0.8fr_1.2fr] lg:gap-14">
           <div>
             <h2 className={`${h2Class} text-white`}>Où part chaque chose</h2>
-            <p className={`mt-4 text-lg leading-relaxed ${onDarkMuted}`}>
+            <p className={`mt-4 text-[17px] leading-relaxed ${onDarkMuted}`}>
               Les pros trient sur place. Chaque filière a son coût, c'est pour ça qu'un garage plein
               de pneus ne vaut pas un garage plein de cartons.
             </p>

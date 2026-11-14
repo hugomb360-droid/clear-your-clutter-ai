@@ -127,10 +127,10 @@ function ApartmentClearance() {
       <section className="pb-6 pt-8">
         <div className={wrap}>
           <Breadcrumb items={[{ label: "Débarras d'appartement" }]} />
-          <h1 className="mt-6 max-w-[22ch] text-[36px] font-black leading-[1.05] tracking-[-0.03em] text-brand-ink sm:text-[52px] lg:text-[60px]">
+          <h1 className="mt-6 max-w-[22ch] text-[31px] font-black leading-[1.05] tracking-[-0.03em] text-brand-ink sm:text-[45px] lg:text-[48px]">
             Débarras d'appartement : le prix estimé en 2 minutes, en photos
           </h1>
-          <p className="mt-6 max-w-[40em] text-lg leading-relaxed text-[#34433A]">
+          <p className="mt-6 max-w-[40em] text-[17px] leading-relaxed text-[#34433A]">
             En appartement, le prix d'un débarras dépend surtout du volume à évacuer, de l'étage et
             de l'ascenseur. Débarras France analyse vos photos, calcule le volume en m³, applique
             les contraintes d'accès, puis transmet votre demande à des débarrasseurs vérifiés de
@@ -185,7 +185,7 @@ function ApartmentClearance() {
             </label>
             <div className="mt-7 rounded-[20px] bg-white p-6">
               <p className="text-sm font-bold text-muted-foreground">Exemple pour 20 m³</p>
-              <p className="mt-1 text-[34px] font-black tabular-nums text-brand-ink">
+              <p className="mt-1 text-[29px] font-black tabular-nums text-brand-ink">
                 {euro(sample.priceMin)} – {euro(sample.priceMax)}
               </p>
               <p className="mt-1 text-[15px] text-muted-foreground">
@@ -242,7 +242,7 @@ function ApartmentClearance() {
           <ol className="flex flex-col divide-y divide-white/15">
             {STEPS.map((step, index) => (
               <li key={step.title} className="flex gap-5 py-5 first:pt-0 last:pb-0">
-                <span className="text-[28px] font-black leading-none text-[#6EDC97] tabular-nums">
+                <span className="text-[25px] font-black leading-none text-[#6EDC97] tabular-nums">
                   {index + 1}
                 </span>
                 <span>

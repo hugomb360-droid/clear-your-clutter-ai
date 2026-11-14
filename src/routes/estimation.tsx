@@ -1033,7 +1033,7 @@ const CHECKLIST = [
 function ModeChoice({ onChoose }: { onChoose: (mode: Mode) => void }) {
   return (
     <div className="bg-[#F2FAF4]">
-      <div className="mx-auto w-full max-w-[1240px] px-4 pb-24 pt-8 sm:px-6 lg:px-10">
+      <div className="mx-auto w-full max-w-[1160px] px-4 pb-24 pt-8 sm:px-6 lg:px-10">
         <nav aria-label="Fil d'Ariane" className="text-[15px]">
           <Link to="/" className="text-primary hover:underline">
             Accueil
@@ -1046,10 +1046,10 @@ function ModeChoice({ onChoose }: { onChoose: (mode: Mode) => void }) {
           </span>
         </nav>
 
-        <h1 className="mt-6 max-w-[16ch] text-[34px] font-black leading-[1.05] tracking-[-0.03em] text-brand-ink sm:text-[52px]">
+        <h1 className="mt-6 max-w-[16ch] text-[29px] font-black leading-[1.05] tracking-[-0.03em] text-brand-ink sm:text-[45px]">
           Comment voulez-vous obtenir votre prix ?
         </h1>
-        <p className="mt-4 max-w-[40em] text-lg leading-relaxed text-muted-foreground">
+        <p className="mt-4 max-w-[40em] text-[17px] leading-relaxed text-muted-foreground">
           Deux façons, toutes deux gratuites et sans engagement. Dans les deux cas, les
           débarrasseurs vérifiés de votre secteur reçoivent votre demande.
         </p>
@@ -1080,7 +1080,7 @@ function ModeChoice({ onChoose }: { onChoose: (mode: Mode) => void }) {
 
         <div className="mt-6 grid items-start gap-6 lg:grid-cols-[1.4fr_1fr]">
           <section className="rounded-3xl bg-white p-6 sm:p-8">
-            <h2 className="text-[22px] font-extrabold text-brand-ink">
+            <h2 className="text-[20px] font-extrabold text-brand-ink">
               Ayez ces informations sous la main
             </h2>
             <ul className="mt-5 grid gap-x-7 gap-y-3.5 sm:grid-cols-2">
@@ -1174,7 +1174,7 @@ function ChoiceCard({
           {badge}
         </span>
       </span>
-      <span className="mt-5 text-[28px] font-black tracking-[-0.01em]">{title}</span>
+      <span className="mt-5 text-[25px] font-black tracking-[-0.01em]">{title}</span>
       <span className="mt-2.5 text-[17px] leading-relaxed text-muted-foreground">{text}</span>
       <ol className="mt-5 w-full">
         {steps.map((step, index) => (
@@ -1189,7 +1189,7 @@ function ChoiceCard({
       <span className="mt-auto flex w-full flex-wrap items-center justify-between gap-4 pt-6">
         <span className="text-[15px] text-muted-foreground">{footnote}</span>
         <span
-          className={`inline-flex min-h-[52px] items-center rounded-full px-[26px] font-bold ${
+          className={`inline-flex min-h-12 items-center rounded-full px-[22px] text-[15px] font-bold ${
             highlighted
               ? "bg-primary text-primary-foreground group-hover:bg-primary/90"
               : "border-2 border-brand-ink group-hover:bg-brand-ink group-hover:text-white"

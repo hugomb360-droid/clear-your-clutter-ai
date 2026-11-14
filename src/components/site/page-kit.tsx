@@ -10,10 +10,10 @@ import { CITIES, type CityPage } from "@/lib/cities";
 
 /* ---------- Classes réutilisables ---------- */
 
-export const wrap = "mx-auto w-full max-w-[1240px] px-4 sm:px-6 lg:px-10";
+export const wrap = "mx-auto w-full max-w-[1160px] px-4 sm:px-6 lg:px-10";
 
 const btnBase =
-  "inline-flex min-h-[52px] items-center justify-center gap-2.5 rounded-full px-[26px] text-base font-bold transition-colors focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-brand-bright focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-60";
+  "inline-flex min-h-12 items-center justify-center gap-2.5 rounded-full px-[22px] text-[15px] font-bold transition-colors focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-brand-bright focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-60";
 export const btn = btnBase;
 export const btnPrimary = `${btnBase} bg-primary text-primary-foreground hover:bg-primary/90`;
 export const btnOutline = `${btnBase} border-2 border-brand-ink text-brand-ink hover:bg-brand-ink hover:text-white`;
@@ -24,8 +24,8 @@ export const btnOnDark = `${btnBase} border-2 border-white text-white hover:bg-w
 export const btnSm = "min-h-11 px-5 text-[15px]";
 
 export const h2Class =
-  "text-[30px] font-extrabold leading-[1.08] tracking-[-0.02em] sm:text-[42px]";
-export const leadClass = "mt-4 max-w-[40em] text-lg leading-relaxed";
+  "text-[26px] font-extrabold leading-[1.08] tracking-[-0.02em] sm:text-[36px]";
+export const leadClass = "mt-4 max-w-[40em] text-[17px] leading-relaxed";
 
 /** Couleurs de texte sur fond vert foncé. */
 export const onDarkMuted = "text-[#BFD8C8]";
@@ -99,13 +99,13 @@ export function PageHero({
   floating?: ReactNode;
 }) {
   return (
-    <section className={image ? "pb-14 pt-8 sm:pb-20" : "bg-[#F2FAF4] pb-14 pt-8 sm:pb-16"}>
+    <section className={image ? "pb-10 pt-6 sm:pb-16" : "bg-[#F2FAF4] pb-14 pt-8 sm:pb-16"}>
       <div
         className={`${wrap} ${image ? "grid items-center gap-10 lg:grid-cols-2 lg:gap-14" : ""}`}
       >
         <div>
           <Breadcrumb items={crumbs} />
-          <h1 className="mt-6 max-w-[18ch] text-[36px] font-black leading-[1.05] tracking-[-0.03em] text-brand-ink sm:text-[48px] lg:text-[54px]">
+          <h1 className="mt-6 max-w-[18ch] text-[31px] font-black leading-[1.05] tracking-[-0.03em] text-brand-ink sm:text-[41px] lg:text-[46px]">
             {title}
           </h1>
           {subtitle && (
@@ -114,7 +114,9 @@ export function PageHero({
             </p>
           )}
           {intro && (
-            <div className="mt-5 max-w-[36em] text-lg leading-relaxed text-[#34433A]">{intro}</div>
+            <div className="mt-5 max-w-[36em] text-[17px] leading-relaxed text-[#34433A]">
+              {intro}
+            </div>
           )}
           {actions && (
             <div className="mt-8 flex flex-col gap-3.5 sm:flex-row sm:flex-wrap">{actions}</div>
@@ -163,7 +165,7 @@ export function Section({
   children: ReactNode;
 }) {
   return (
-    <section id={id} className={`scroll-mt-20 py-16 sm:py-24 ${toneClass[tone]} ${className}`}>
+    <section id={id} className={`scroll-mt-20 py-12 sm:py-20 ${toneClass[tone]} ${className}`}>
       <div className={wrap}>{children}</div>
     </section>
   );
@@ -261,7 +263,7 @@ export function InfoGrid({
               {item.icon}
             </span>
           )}
-          <h3 className="text-[19px] font-extrabold">{item.title}</h3>
+          <h3 className="text-[18px] font-extrabold">{item.title}</h3>
           <p
             className={`mt-2 text-base leading-relaxed ${dark ? onDarkMuted : "text-muted-foreground"}`}
           >
@@ -449,12 +451,12 @@ export function CtaBand({
   children: ReactNode;
 }) {
   return (
-    <section className="py-16 sm:py-24">
+    <section className="py-12 sm:py-20">
       <div className={wrap}>
         <div className="flex flex-wrap items-center justify-between gap-8 rounded-[28px] bg-primary px-7 py-12 text-primary-foreground sm:px-14 sm:py-14">
           <div className="max-w-[34em]">
             <h2 className={`${h2Class} text-white`}>{title}</h2>
-            {text && <p className="mt-3.5 text-lg leading-relaxed text-white/85">{text}</p>}
+            {text && <p className="mt-3.5 text-[17px] leading-relaxed text-white/85">{text}</p>}
           </div>
           <div className="flex flex-wrap gap-3">{children}</div>
         </div>

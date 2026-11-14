@@ -41,7 +41,7 @@ export const Route = createFileRoute("/professionnels")({
   errorComponent: () => (
     <div
       role="alert"
-      className="mx-auto max-w-[1240px] px-4 py-20 text-lg text-brand-ink sm:px-6 lg:px-10"
+      className="mx-auto max-w-[1160px] px-4 py-20 text-lg text-brand-ink sm:px-6 lg:px-10"
     >
       Les professionnels ne peuvent pas être chargés pour le moment.
     </div>
@@ -61,12 +61,12 @@ function ProfessionalsPage() {
           <Breadcrumb items={[{ label: "Nos pros" }]} />
           <div className="mt-6 flex flex-wrap items-end justify-between gap-6">
             <div className="max-w-2xl">
-              <h1 className="text-[36px] font-black leading-[1.05] tracking-[-0.03em] text-brand-ink sm:text-[52px]">
+              <h1 className="text-[31px] font-black leading-[1.05] tracking-[-0.03em] text-brand-ink sm:text-[45px]">
                 Les professionnels du débarras
                 <br className="hidden sm:block" /> dans votre région
               </h1>
               <p className="mt-4 text-lg font-extrabold text-primary">Le réseau Débarras France</p>
-              <p className="mt-3 text-lg leading-relaxed text-[#34433A]">
+              <p className="mt-3 text-[17px] leading-relaxed text-[#34433A]">
                 Retrouvez les entreprises partenaires, leurs spécialités et les avis de leurs
                 clients.
               </p>
@@ -111,7 +111,7 @@ function ProfessionalsPage() {
           return (
             <section key={r.name}>
               <div className="mb-6 flex flex-wrap items-baseline gap-3 border-b border-border pb-4">
-                <h2 className="text-[28px] font-extrabold tracking-[-0.02em] text-brand-ink">
+                <h2 className="text-[25px] font-extrabold tracking-[-0.02em] text-brand-ink">
                   {r.name}
                 </h2>
                 <span className="text-[15px] text-muted-foreground">

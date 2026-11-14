@@ -66,10 +66,10 @@ function Partners() {
             <p className="mt-8 text-lg font-bold text-primary">
               Notaires, agences immobilières et EHPAD
             </p>
-            <h1 className="mt-2 text-[36px] font-black leading-[1.05] tracking-[-0.03em] text-brand-ink sm:text-[50px]">
+            <h1 className="mt-2 text-[31px] font-black leading-[1.05] tracking-[-0.03em] text-brand-ink sm:text-[43px]">
               Partenaires prescripteurs Débarras France
             </h1>
-            <p className="mt-5 max-w-[36em] text-lg leading-relaxed text-[#34433A]">
+            <p className="mt-5 max-w-[36em] text-[17px] leading-relaxed text-[#34433A]">
               Accompagnez vos clients jusqu'à la remise d'un logement vidé, même à distance.
             </p>
             <div className="mt-8 flex flex-col gap-3.5 sm:flex-row sm:flex-wrap">
@@ -88,7 +88,7 @@ function Partners() {
               ["1 PDF", "avant/après à transmettre au notaire"],
             ].map(([k, v]) => (
               <div key={k}>
-                <dt className="text-[28px] font-black tracking-tight text-brand-ink sm:text-[34px]">
+                <dt className="text-[25px] font-black tracking-tight text-brand-ink sm:text-[29px]">
                   {k}
                 </dt>
                 <dd className="text-[15px] text-muted-foreground">{v}</dd>
@@ -127,7 +127,7 @@ function Partners() {
           </span>
           <div>
             <h2 className={`${h2Class} text-white`}>Un suivi multi-dossiers pour votre équipe</h2>
-            <p className={`mt-4 max-w-[44em] text-lg leading-relaxed ${onDarkMuted}`}>
+            <p className={`mt-4 max-w-[44em] text-[17px] leading-relaxed ${onDarkMuted}`}>
               Notre engagement : réunir les adresses, échéances, propositions et rapports de vos
               dossiers dans un même espace. Ce tableau de bord prescripteur est en préparation ;
               contactez-nous pour participer à son lancement.
@@ -138,11 +138,11 @@ function Partners() {
           </div>
         </div>
       </Section>
-      <section id="devenir-partenaire" className="scroll-mt-20 bg-[#F2FAF4] py-16 sm:py-24">
-        <div className="mx-auto grid w-full max-w-[1240px] items-start gap-10 px-4 sm:px-6 lg:grid-cols-[0.8fr_1.2fr] lg:gap-14 lg:px-10">
+      <section id="devenir-partenaire" className="scroll-mt-20 bg-[#F2FAF4] py-12 sm:py-20">
+        <div className="mx-auto grid w-full max-w-[1160px] items-start gap-10 px-4 sm:px-6 lg:grid-cols-[0.8fr_1.2fr] lg:gap-14 lg:px-10">
           <div>
             <h2 className={`${h2Class} text-brand-ink`}>Devenir partenaire</h2>
-            <p className="mt-4 text-lg leading-relaxed text-muted-foreground">
+            <p className="mt-4 text-[17px] leading-relaxed text-muted-foreground">
               Échangeons sur votre secteur et vos besoins de débarras.
             </p>
             <a

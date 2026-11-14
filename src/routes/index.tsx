@@ -221,13 +221,13 @@ const FEATURED_CITIES = CITIES.slice(0, 15);
 
 /* ---------- Styles réutilisés ---------- */
 
-const wrap = "mx-auto w-full max-w-[1240px] px-4 sm:px-6 lg:px-10";
-const section = "py-16 sm:py-24";
+const wrap = "mx-auto w-full max-w-[1160px] px-4 sm:px-6 lg:px-10";
+const section = "py-12 sm:py-20";
 const h2 =
-  "text-[30px] font-extrabold leading-[1.08] tracking-[-0.02em] text-brand-ink sm:text-[42px]";
-const lead = "mt-4 max-w-[40em] text-lg leading-relaxed text-muted-foreground";
+  "text-[26px] font-extrabold leading-[1.08] tracking-[-0.02em] text-brand-ink sm:text-[36px]";
+const lead = "mt-4 max-w-[40em] text-[17px] leading-relaxed text-muted-foreground";
 const btn =
-  "inline-flex min-h-[52px] items-center justify-center gap-2.5 rounded-full px-[26px] text-base font-bold transition-colors focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-brand-bright focus-visible:ring-offset-2";
+  "inline-flex min-h-12 items-center justify-center gap-2.5 rounded-full px-[22px] text-[15px] font-bold transition-colors focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-brand-bright focus-visible:ring-offset-2";
 const btnPrimary = `${btn} bg-primary text-primary-foreground hover:bg-primary/90`;
 const btnOutline = `${btn} border-2 border-brand-ink text-brand-ink hover:bg-brand-ink hover:text-white`;
 const btnSoft = `${btn} bg-brand-soft text-brand-ink shadow-[inset_0_0_0_2px_var(--brand-bright)] hover:bg-brand-soft/70`;
@@ -238,16 +238,16 @@ function Home() {
   return (
     <div className="bg-background text-foreground">
       {/* Hero */}
-      <section className="pb-16 pt-10 sm:pb-[72px] sm:pt-16">
+      <section className="pb-12 pt-8 sm:pb-16 sm:pt-12">
         <div className={`${wrap} grid items-center gap-10 lg:grid-cols-2 lg:gap-14`}>
           <div>
-            <h1 className="text-[40px] font-black leading-[1.04] tracking-[-0.03em] text-brand-ink sm:text-[52px] lg:text-[60px]">
+            <h1 className="text-[34px] font-black leading-[1.04] tracking-[-0.03em] text-brand-ink sm:text-[45px] lg:text-[48px]">
               Votre logement vidé, trié et nettoyé, sans mauvaise surprise.
             </h1>
-            <p className="mt-5 text-xl font-extrabold leading-snug text-primary sm:text-[22px]">
+            <p className="mt-5 text-lg font-extrabold leading-snug text-primary">
               Appartement, maison, cave, garage, succession, syndrome de Diogène
             </p>
-            <p className="mt-5 max-w-[32em] text-lg leading-relaxed text-[#34433A]">
+            <p className="mt-5 max-w-[32em] text-[17px] leading-relaxed text-[#34433A]">
               Des débarrasseurs vérifiés près de chez vous, un prix connu avant toute visite.
             </p>
             <div className="mt-8 flex flex-col gap-3.5 sm:flex-row sm:flex-wrap">
@@ -285,7 +285,7 @@ function Home() {
               </dl>
               <div className="mt-2.5 flex items-baseline justify-between gap-3 border-t border-white/15 pt-2.5">
                 <span className="whitespace-nowrap text-[13px] text-[#BFD8C8]">Prix estimé</span>
-                <span className="whitespace-nowrap text-[19px] font-black tabular-nums text-[#6EDC97]">
+                <span className="whitespace-nowrap text-[18px] font-black tabular-nums text-[#6EDC97]">
                   {num(aiExample.priceMin)} – {euro(aiExample.priceMax)}
                 </span>
               </div>
@@ -302,8 +302,8 @@ function Home() {
           <ProofItem icon={Lock} title="Paiement bloqué" text="jusqu'à la validation du chantier" />
           <ProofItem
             icon={MapPin}
-            title={`${CITIES.length} grandes villes`}
-            text={`dans ${REGION_COUNT} régions`}
+            title="Partout en France"
+            text={`${CITIES.length} pages villes, ${REGION_COUNT} régions`}
           />
         </ul>
       </section>
@@ -356,7 +356,7 @@ function Home() {
                     </div>
                   )}
                   <div className="px-6 pb-6 pt-5">
-                    <h3 className="text-[21px] font-extrabold">{service.title}</h3>
+                    <h3 className="text-[19px] font-extrabold">{service.title}</h3>
                     <p
                       className={`mb-3.5 mt-2 text-base leading-relaxed ${
                         dark ? "text-[#BFD8C8]" : "text-muted-foreground"
@@ -602,7 +602,7 @@ function Home() {
           <div className="grid items-center gap-10 lg:grid-cols-[0.9fr_1.1fr] lg:gap-14">
             <div>
               <h2 className={`${h2} text-white`}>Débarras après succession, même à distance</h2>
-              <p className="mt-4 text-lg leading-relaxed text-[#BFD8C8]">
+              <p className="mt-4 text-[17px] leading-relaxed text-[#BFD8C8]">
                 Une maison ou un appartement à vider après le décès d'un proche ? Préparez les
                 consignes pour les héritiers, la remise des clés, les objets à conserver et votre
                 date limite.
@@ -650,7 +650,7 @@ function Home() {
               ["EHPAD", "Vider un logement lors d'une entrée en établissement."],
             ].map(([title, text]) => (
               <div key={title}>
-                <h3 className="text-[19px] font-extrabold">{title}</h3>
+                <h3 className="text-[18px] font-extrabold">{title}</h3>
                 <p className="mt-2 text-base leading-relaxed text-[#BFD8C8]">{text}</p>
               </div>
             ))}
@@ -671,7 +671,7 @@ function Home() {
             <div>
               <h2 className={h2}>Débarras dans votre ville</h2>
               <p className={lead}>
-                {CITIES.length} grandes villes, avec les contraintes locales : stationnement,
+                {CITIES.length} villes ont leur page, avec les contraintes locales : stationnement,
                 étages, quartiers.
               </p>
             </div>
@@ -772,12 +772,12 @@ function Home() {
       </section>
 
       {/* Dernier appel */}
-      <section className="pb-16 sm:pb-24">
+      <section className="pb-12 sm:pb-20">
         <div className={wrap}>
           <div className="flex flex-wrap items-center justify-between gap-8 rounded-[28px] bg-primary px-7 py-12 text-primary-foreground sm:px-14 sm:py-14">
             <div className="max-w-[34em]">
               <h2 className={`${h2} text-white`}>Prêt à faire de la place ?</h2>
-              <p className="mt-3.5 text-lg leading-relaxed text-white/85">
+              <p className="mt-3.5 text-[17px] leading-relaxed text-white/85">
                 Estimez votre débarras en 2 minutes, ou laissez-nous un message et nous revenons
                 vers vous.
               </p>

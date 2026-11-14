@@ -30,7 +30,7 @@ function PaymentReturn() {
   const { session_id: sessionId } = Route.useSearch();
 
   return (
-    <main className="bg-[#F2FAF4] py-16 sm:py-24">
+    <main className="bg-[#F2FAF4] py-12 sm:py-20">
       <div className={`${wrap} max-w-2xl`}>
         <div className="rounded-[28px] bg-white p-8 text-center shadow-[0_18px_40px_-22px_rgba(0,127,61,0.45)] sm:p-12">
           <div className="mx-auto flex size-16 items-center justify-center rounded-full bg-brand-soft text-primary">
@@ -40,7 +40,7 @@ function PaymentReturn() {
               <Clock className="size-8" aria-hidden="true" />
             )}
           </div>
-          <h1 className="mt-6 text-[30px] font-black leading-tight tracking-[-0.02em] text-brand-ink sm:text-[38px]">
+          <h1 className="mt-6 text-[26px] font-black leading-tight tracking-[-0.02em] text-brand-ink sm:text-[33px]">
             {sessionId ? "Paiement confirmé" : "Paiement en cours de traitement"}
           </h1>
           <p className="mt-4 text-base leading-relaxed text-muted-foreground">

@@ -58,15 +58,15 @@ function Contact() {
   const [sending, setSending] = useState(false);
 
   return (
-    <main className="bg-[#F2FAF4] pb-20 pt-8 sm:pb-28">
+    <main className="bg-[#F2FAF4] pb-16 pt-6 sm:pb-24">
       <div className={wrap}>
         <Breadcrumb items={[{ label: "Contact" }]} />
         <div className="mt-6 grid items-start gap-10 lg:grid-cols-[1fr_1.15fr] lg:gap-14">
           <div>
-            <h1 className="max-w-[14ch] text-[36px] font-black leading-[1.05] tracking-[-0.03em] text-brand-ink sm:text-[52px]">
+            <h1 className="max-w-[14ch] text-[31px] font-black leading-[1.05] tracking-[-0.03em] text-brand-ink sm:text-[45px]">
               Parlons de votre débarras
             </h1>
-            <p className="mt-5 max-w-[34em] text-lg leading-relaxed text-[#34433A]">
+            <p className="mt-5 max-w-[34em] text-[17px] leading-relaxed text-[#34433A]">
               Pour une estimation, passez plutôt par le parcours en photo : c'est immédiat. Pour
               tout le reste, écrivez-nous.
             </p>

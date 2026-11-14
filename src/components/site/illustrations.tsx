@@ -22,12 +22,12 @@ export function BuildingSection({
   const totalH = top + floors * h + 60;
   return (
     <svg
-      viewBox={`0 0 420 ${totalH}`}
+      viewBox={`0 0 470 ${totalH}`}
       role="img"
       aria-label={`Coupe d'un immeuble de ${floors} étages avec la majoration par étage sans ascenseur`}
-      className="h-auto w-full max-w-[420px]"
+      className="h-auto w-full max-w-[470px]"
     >
-      <rect x="20" y={totalH - 60} width="380" height="60" fill={SOFT} />
+      <rect x="20" y={totalH - 60} width="430" height="60" fill={SOFT} />
       <rect
         x="70"
         y={top - 16}
@@ -81,7 +81,7 @@ export function BuildingSection({
               {level === 0 ? "RDC" : `${level}e`}
             </text>
             <text x="310" y={y + 45} fontSize="13" fill={level === 0 ? GREEN : "#56635A"}>
-              {level === 0 ? "pas de majoration" : `+${pct} % sans ascenseur`}
+              {level === 0 ? "pas de majoration" : `+${pct} % sans asc.`}
             </text>
           </g>
         );

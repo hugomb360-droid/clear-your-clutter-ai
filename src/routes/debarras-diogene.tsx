@@ -87,10 +87,10 @@ function Diogene() {
             <EyeOff className="size-4" aria-hidden="true" />
             Intervention discrète, sans signalétique sur demande
           </p>
-          <h1 className="mt-5 text-[34px] font-black leading-[1.08] tracking-[-0.03em] text-brand-ink sm:text-[46px]">
+          <h1 className="mt-5 text-[29px] font-black leading-[1.08] tracking-[-0.03em] text-brand-ink sm:text-[40px]">
             Débarras syndrome de Diogène : intervention discrète et complète
           </h1>
-          <p className="mt-6 text-lg leading-relaxed text-[#34433A]">
+          <p className="mt-6 text-[17px] leading-relaxed text-[#34433A]">
             Un logement en accumulation extrême demande des équipes équipées, un protocole d'hygiène
             et beaucoup de discrétion. Photographiez ce que vous pouvez : l'estimation prend en
             compte le volume, l'insalubrité et l'accès, puis seuls des professionnels formés à ce
@@ -113,7 +113,7 @@ function Diogene() {
 
       <Section tone="tint" className="!py-14">
         <div className={`mx-auto max-w-[880px]`}>
-          <h2 className="text-[26px] font-extrabold tracking-[-0.02em] text-brand-ink sm:text-[32px]">
+          <h2 className="text-[23px] font-extrabold tracking-[-0.02em] text-brand-ink sm:text-[28px]">
             Le protocole, étape par étape
           </h2>
           <ol className="mt-8 flex flex-col gap-4">
@@ -137,7 +137,7 @@ function Diogene() {
       <Section className="!py-14">
         <div className="mx-auto grid max-w-[880px] gap-10 md:grid-cols-[1fr_1fr]">
           <div>
-            <h2 className="text-[26px] font-extrabold tracking-[-0.02em] text-brand-ink">
+            <h2 className="text-[23px] font-extrabold tracking-[-0.02em] text-brand-ink">
               Qui peut faire la demande
             </h2>
             <ul className="mt-5 divide-y divide-border">
@@ -149,7 +149,7 @@ function Diogene() {
             </ul>
           </div>
           <div>
-            <h2 className="text-[26px] font-extrabold tracking-[-0.02em] text-brand-ink">
+            <h2 className="text-[23px] font-extrabold tracking-[-0.02em] text-brand-ink">
               Ce que vous recevez
             </h2>
             <ul className="mt-5 divide-y divide-border">
@@ -170,7 +170,7 @@ function Diogene() {
 
       <Section tone="tint" className="!py-14">
         <div className="mx-auto max-w-[880px]">
-          <h2 className="text-[26px] font-extrabold tracking-[-0.02em] text-brand-ink sm:text-[32px]">
+          <h2 className="text-[23px] font-extrabold tracking-[-0.02em] text-brand-ink sm:text-[28px]">
             Prix d'un débarras Diogène
           </h2>
           <p className="mt-3 text-base leading-relaxed text-muted-foreground">
@@ -185,7 +185,7 @@ function Diogene() {
 
       <Section className="!py-14">
         <div className="mx-auto max-w-[880px]">
-          <h2 className="text-[26px] font-extrabold tracking-[-0.02em] text-brand-ink sm:text-[32px]">
+          <h2 className="text-[23px] font-extrabold tracking-[-0.02em] text-brand-ink sm:text-[28px]">
             Questions fréquentes
           </h2>
           <FaqList items={FAQ} twoColumns={false} />

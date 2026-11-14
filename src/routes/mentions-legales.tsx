@@ -26,10 +26,10 @@ export const Route = createFileRoute("/mentions-legales")({
 
 function Legal() {
   return (
-    <main className="bg-[#F2FAF4] pb-20 pt-8 sm:pb-28">
+    <main className="bg-[#F2FAF4] pb-16 pt-6 sm:pb-24">
       <div className={wrap}>
         <Breadcrumb items={[{ label: "Mentions légales" }]} />
-        <h1 className="mt-6 text-[36px] font-black leading-[1.05] tracking-[-0.03em] text-brand-ink sm:text-[52px]">
+        <h1 className="mt-6 text-[31px] font-black leading-[1.05] tracking-[-0.03em] text-brand-ink sm:text-[45px]">
           Mentions légales
         </h1>
         <div className="mt-10 max-w-3xl space-y-4 text-base leading-relaxed text-muted-foreground">

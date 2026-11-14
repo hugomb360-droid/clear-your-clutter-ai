@@ -110,14 +110,14 @@ function Succession() {
   return (
     <main>
       {/* En-tête : ton posé, dossier illustré à droite */}
-      <section className="pb-16 pt-8 sm:pb-20">
+      <section className="pb-12 pt-6 sm:pb-16">
         <div className={`${wrap} grid items-center gap-10 lg:grid-cols-[1.1fr_0.9fr] lg:gap-16`}>
           <div>
             <Breadcrumb items={[{ label: "Succession" }]} />
-            <h1 className="mt-6 text-[36px] font-black leading-[1.05] tracking-[-0.03em] text-brand-ink sm:text-[50px]">
+            <h1 className="mt-6 text-[31px] font-black leading-[1.05] tracking-[-0.03em] text-brand-ink sm:text-[43px]">
               Débarras après succession de maison et d'appartement
             </h1>
-            <p className="mt-6 max-w-[38em] text-lg leading-relaxed text-[#34433A]">
+            <p className="mt-6 max-w-[38em] text-[17px] leading-relaxed text-[#34433A]">
               Vider le logement d'un proche mérite une organisation attentive. Transmettez les
               photos, les consignes de conservation et votre échéance : les professionnels de votre
               secteur vous proposent un devis. À la fin du chantier, retrouvez un rapport PDF pour

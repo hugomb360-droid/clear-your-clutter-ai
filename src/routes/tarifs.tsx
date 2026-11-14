@@ -71,10 +71,10 @@ function Pricing() {
       <section className="bg-[#F2FAF4] pb-16 pt-8 sm:pb-24">
         <div className={wrap}>
           <Breadcrumb items={[{ label: "Tarifs" }]} />
-          <h1 className="mt-6 text-[36px] font-black leading-[1.05] tracking-[-0.03em] text-brand-ink sm:text-[52px]">
+          <h1 className="mt-6 text-[31px] font-black leading-[1.05] tracking-[-0.03em] text-brand-ink sm:text-[45px]">
             Des tarifs lisibles
           </h1>
-          <p className="mt-4 max-w-[40em] text-lg leading-relaxed text-[#34433A]">
+          <p className="mt-4 max-w-[40em] text-[17px] leading-relaxed text-[#34433A]">
             Le prix d'un débarras dépend surtout du volume. Voici la base utilisée par l'estimation
             Débarras France, avant les propositions des pros de votre secteur. Réglez les curseurs
             pour voir le prix bouger.
@@ -156,7 +156,7 @@ function Pricing() {
 
             <aside className="rounded-[28px] bg-brand-ink p-6 text-white sm:p-8" aria-live="polite">
               <p className="text-sm font-bold text-[#BFD8C8]">Fourchette estimée</p>
-              <p className="mt-2 text-[40px] font-black leading-none tabular-nums text-[#6EDC97] sm:text-[48px]">
+              <p className="mt-2 text-[34px] font-black leading-none tabular-nums text-[#6EDC97] sm:text-[41px]">
                 {euro(result.priceMin)} – {euro(result.priceMax)}
               </p>
               <dl className="mt-7 divide-y divide-white/15 text-[15px]">
@@ -201,10 +201,10 @@ function Pricing() {
       </section>
 
       {/* La grille, en lecture simple */}
-      <section className="py-16 sm:py-24">
+      <section className="py-12 sm:py-20">
         <div className={`${wrap} grid gap-12 lg:grid-cols-2`}>
           <div>
-            <h2 className="text-[30px] font-extrabold tracking-[-0.02em] text-brand-ink sm:text-[38px]">
+            <h2 className="text-[26px] font-extrabold tracking-[-0.02em] text-brand-ink sm:text-[33px]">
               La grille de calcul
             </h2>
             <dl className="mt-8 divide-y divide-border border-y border-border">
@@ -229,7 +229,7 @@ function Pricing() {
             </dl>
           </div>
           <div>
-            <h2 className="text-[30px] font-extrabold tracking-[-0.02em] text-brand-ink sm:text-[38px]">
+            <h2 className="text-[26px] font-extrabold tracking-[-0.02em] text-brand-ink sm:text-[33px]">
               Ce qui est inclus
             </h2>
             <CheckList

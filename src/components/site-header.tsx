@@ -21,7 +21,7 @@ const NAV = [
 ] as const;
 
 const navLinkClass =
-  "whitespace-nowrap border-b-2 border-transparent px-0.5 py-2 text-[15px] font-medium text-foreground transition-colors hover:border-brand-bright";
+  "whitespace-nowrap border-b-2 border-transparent px-0.5 py-2 text-[14px] font-medium text-foreground transition-colors hover:border-brand-bright";
 const navActiveClass = "border-primary text-primary";
 
 function Logo({ onClick }: { onClick?: () => void }) {
@@ -52,12 +52,12 @@ export function SiteHeader() {
 
   return (
     <header className="sticky top-0 z-50 border-b border-border bg-background/95 backdrop-blur">
-      <div className="mx-auto flex h-[72px] max-w-[1240px] items-center gap-6 px-4 sm:px-6 lg:px-10">
+      <div className="mx-auto flex h-16 max-w-[1160px] items-center gap-5 px-4 sm:px-6 lg:px-10">
         <Logo />
 
         <nav
           aria-label="Navigation principale"
-          className="hidden min-w-0 flex-1 items-center gap-4 lg:flex xl:gap-6"
+          className="hidden min-w-0 flex-1 items-center gap-3 lg:flex xl:gap-5"
         >
           <Link
             to="/"
@@ -116,11 +116,14 @@ export function SiteHeader() {
               <Button
                 asChild
                 variant="outline"
-                className="h-11 rounded-full border-2 border-brand-ink px-5 font-bold text-brand-ink"
+                className="h-10 rounded-full border-2 border-brand-ink px-4 text-[14px] font-bold text-brand-ink"
               >
                 <Link to={accountLink}>{isAdmin ? "Administration" : "Mon espace"}</Link>
               </Button>
-              <Button onClick={handleSignOut} className="h-11 rounded-full px-5 font-bold">
+              <Button
+                onClick={handleSignOut}
+                className="h-10 rounded-full px-4 text-[14px] font-bold"
+              >
                 Déconnexion
               </Button>
             </>
@@ -129,13 +132,13 @@ export function SiteHeader() {
               <Button
                 asChild
                 variant="outline"
-                className="h-11 rounded-full border-2 border-brand-ink px-5 font-bold text-brand-ink"
+                className="h-10 rounded-full border-2 border-brand-ink px-4 text-[14px] font-bold text-brand-ink"
               >
                 <Link to="/auth" search={{ mode: "signin" }}>
                   Se connecter
                 </Link>
               </Button>
-              <Button asChild className="h-11 rounded-full px-5 font-bold">
+              <Button asChild className="h-10 rounded-full px-4 text-[14px] font-bold">
                 <Link to="/auth" search={{ mode: "signup" }}>
                   S'inscrire
                 </Link>

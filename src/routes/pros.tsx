@@ -96,13 +96,13 @@ function ProsLanding() {
           className="absolute inset-0 -z-10 bg-gradient-to-r from-brand-ink via-brand-ink/90 to-brand-ink/40"
           aria-hidden="true"
         />
-        <div className={`${wrap} pb-20 pt-8 sm:pb-28`}>
+        <div className={`${wrap} pb-16 pt-6 sm:pb-24`}>
           <Breadcrumb items={[{ label: "Devenir débarrasseur partenaire" }]} dark />
           <p className="mt-10 text-lg font-bold text-[#6EDC97]">Espace professionnels</p>
-          <h1 className="mt-2 max-w-[16ch] text-[40px] font-black leading-[1.02] tracking-[-0.03em] sm:text-[64px]">
+          <h1 className="mt-2 max-w-[16ch] text-[34px] font-black leading-[1.02] tracking-[-0.03em] sm:text-[51px]">
             Remplissez vos camions avec des missions de débarras près de chez vous
           </h1>
-          <p className={`mt-6 max-w-[34em] text-lg leading-relaxed ${onDarkMuted}`}>
+          <p className={`mt-6 max-w-[34em] text-[17px] leading-relaxed ${onDarkMuted}`}>
             Débarras France estime le volume et le budget avant de vous transmettre la demande. Vous
             répondez, le client choisit.
           </p>
@@ -119,14 +119,14 @@ function ProsLanding() {
       <section className="bg-brand-soft py-14 sm:py-20">
         <div className={`${wrap} grid items-center gap-8 lg:grid-cols-[auto_1fr]`}>
           <p
-            className="text-[96px] font-black leading-none tracking-[-0.05em] text-brand-ink sm:text-[140px]"
+            className="text-[77px] font-black leading-none tracking-[-0.05em] text-brand-ink sm:text-[112px]"
             aria-hidden="true"
           >
             0 %
           </p>
           <div>
             <h2 className={`${h2Class} text-brand-ink`}>Offre fondateur</h2>
-            <p className="mt-3 max-w-[40em] text-lg leading-relaxed text-[#34433A]">
+            <p className="mt-3 max-w-[40em] text-[17px] leading-relaxed text-[#34433A]">
               Pour les 20 premiers pros inscrits :{" "}
               <strong className="text-brand-ink">
                 0 % de commission Débarras France sur vos 5 premiers chantiers
@@ -167,11 +167,11 @@ function ProsLanding() {
             {STEPS.map((step, index) => (
               <li key={step} className="flex items-start gap-5 border-l-2 border-[#6EDC97] pl-6">
                 <span
-                  className={`text-[40px] font-black leading-none tabular-nums ${onDarkAccent}`}
+                  className={`text-[34px] font-black leading-none tabular-nums ${onDarkAccent}`}
                 >
                   {index + 1}
                 </span>
-                <span className="pt-2 text-lg leading-relaxed">{step}</span>
+                <span className="pt-2 text-[17px] leading-relaxed">{step}</span>
               </li>
             ))}
           </ol>

@@ -68,10 +68,10 @@ function CitiesHub() {
           <Breadcrumb items={[{ label: "Débarras par ville" }]} />
           <div className="mt-6 flex flex-wrap items-end justify-between gap-6">
             <div>
-              <h1 className="text-[36px] font-black leading-[1.05] tracking-[-0.03em] text-brand-ink sm:text-[50px]">
+              <h1 className="text-[31px] font-black leading-[1.05] tracking-[-0.03em] text-brand-ink sm:text-[43px]">
                 Débarras par ville
               </h1>
-              <p className="mt-4 max-w-[36em] text-lg leading-relaxed text-[#34433A]">
+              <p className="mt-4 max-w-[36em] text-[17px] leading-relaxed text-[#34433A]">
                 {CITIES.length} villes ont leur page, avec les contraintes locales : stationnement,
                 étages, quartiers. Partout ailleurs, votre demande part aux pros qui couvrent votre
                 code postal.

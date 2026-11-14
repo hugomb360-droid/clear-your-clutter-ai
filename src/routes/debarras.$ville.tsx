@@ -112,15 +112,15 @@ export const Route = createFileRoute("/debarras/$ville")({
 
 function CityNotFound() {
   return (
-    <main className="bg-[#F2FAF4] py-20 sm:py-28">
+    <main className="bg-[#F2FAF4] py-16 sm:py-24">
       <div className={`${wrap} max-w-3xl text-center`}>
         <span className="mx-auto flex size-14 items-center justify-center rounded-2xl bg-white text-primary">
           <MapPin className="size-7" aria-hidden="true" />
         </span>
-        <h1 className="mt-6 text-[34px] font-black leading-[1.05] tracking-[-0.03em] text-brand-ink sm:text-[46px]">
+        <h1 className="mt-6 text-[29px] font-black leading-[1.05] tracking-[-0.03em] text-brand-ink sm:text-[40px]">
           Ville non encore couverte
         </h1>
-        <p className="mx-auto mt-5 max-w-xl text-lg leading-relaxed text-muted-foreground">
+        <p className="mx-auto mt-5 max-w-xl text-[17px] leading-relaxed text-muted-foreground">
           Nous n'avons pas encore de page dédiée pour cette ville, mais nos débarrasseurs
           interviennent partout en France : lancez votre estimation, nous cherchons un pro près de
           chez vous.
@@ -186,10 +186,10 @@ function CityPageView() {
           <div className="mt-8 grid items-end gap-8 lg:grid-cols-[1fr_auto]">
             <div>
               <p className="text-lg font-bold text-[#6EDC97]">Débarras {city.preposition}</p>
-              <h1 className="mt-1 text-[56px] font-black leading-[0.95] tracking-[-0.04em] sm:text-[88px]">
+              <h1 className="mt-1 text-[48px] font-black leading-[0.95] tracking-[-0.04em] sm:text-[70px]">
                 {city.name}
               </h1>
-              <p className={`mt-6 max-w-[40em] text-lg leading-relaxed ${onDarkMuted}`}>
+              <p className={`mt-6 max-w-[40em] text-[17px] leading-relaxed ${onDarkMuted}`}>
                 {city.intro}
               </p>
             </div>
@@ -215,7 +215,7 @@ function CityPageView() {
             </Link>
             <Link
               to="/tarifs"
-              className="inline-flex min-h-[52px] items-center justify-center rounded-full border-2 border-white px-[26px] font-bold text-white hover:bg-white hover:text-brand-ink"
+              className="inline-flex min-h-12 items-center justify-center rounded-full border-2 border-white px-[22px] text-[15px] font-bold text-white hover:bg-white hover:text-brand-ink"
             >
               Voir la grille tarifaire
             </Link>
@@ -277,7 +277,7 @@ function CityPageView() {
         <ul className="mt-10 grid gap-5 md:grid-cols-3">
           {city.context.map((item, index) => (
             <li key={item} className="rounded-[20px] bg-white p-6">
-              <span className="text-[34px] font-black leading-none text-primary tabular-nums">
+              <span className="text-[29px] font-black leading-none text-primary tabular-nums">
                 {index + 1}
               </span>
               <p className="mt-3 text-base leading-relaxed text-brand-ink">{item}</p>

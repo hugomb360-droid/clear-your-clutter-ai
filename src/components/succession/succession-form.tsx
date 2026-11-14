@@ -43,7 +43,7 @@ export function SuccessionForm() {
   });
   const selectClass = "h-10 w-full rounded-md border border-input bg-background px-3 text-sm";
   return (
-    <section id="dossier-succession" className="scroll-mt-20 bg-[#F2FAF4] py-16 sm:py-24">
+    <section id="dossier-succession" className="scroll-mt-20 bg-[#F2FAF4] py-12 sm:py-20">
       <div className="mx-auto max-w-3xl px-4">
         <div className="rounded-[28px] bg-white p-6 shadow-[0_18px_40px_-22px_rgba(0,127,61,0.45)] sm:p-10">
           <div className="flex items-center gap-3 text-primary">
@@ -52,7 +52,7 @@ export function SuccessionForm() {
             </span>
             <p className="text-[15px] font-bold">Dossier succession, étape {step} sur 2</p>
           </div>
-          <h2 className="mt-5 text-[30px] font-extrabold leading-[1.08] tracking-[-0.02em] text-brand-ink sm:text-[38px]">
+          <h2 className="mt-5 text-[26px] font-extrabold leading-[1.08] tracking-[-0.02em] text-brand-ink sm:text-[33px]">
             Organiser le débarras du bien
           </h2>
           {isPro ? (

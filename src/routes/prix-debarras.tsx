@@ -95,10 +95,10 @@ function PriceGuide() {
         <div className={wrap}>
           <Breadcrumb items={[{ label: "Prix d'un débarras" }]} />
           <p className="mt-6 text-[15px] font-bold text-primary">Guide des prix</p>
-          <h1 className="mt-2 max-w-[20ch] text-[36px] font-black leading-[1.05] tracking-[-0.03em] text-brand-ink sm:text-[52px]">
+          <h1 className="mt-2 max-w-[20ch] text-[31px] font-black leading-[1.05] tracking-[-0.03em] text-brand-ink sm:text-[45px]">
             Combien coûte un débarras ? Prix au m³ et exemples concrets
           </h1>
-          <p className="mt-6 max-w-[40em] text-lg leading-relaxed text-[#34433A]">
+          <p className="mt-6 max-w-[40em] text-[17px] leading-relaxed text-[#34433A]">
             Le prix d'un débarras dépend surtout du volume à évacuer (en m³), de l'accès (étage,
             ascenseur, portage) et de la valeur de revente des objets. Voici comment le calculer,
             puis obtenez votre propre fourchette en photographiant simplement vos pièces.
@@ -137,7 +137,7 @@ function PriceGuide() {
 
         <article className="max-w-[70ch]">
           <section id="criteres" className="scroll-mt-24">
-            <h2 className="text-[28px] font-extrabold tracking-[-0.02em] text-brand-ink sm:text-[34px]">
+            <h2 className="text-[25px] font-extrabold tracking-[-0.02em] text-brand-ink sm:text-[29px]">
               Ce qui fait le prix
             </h2>
             <dl className="mt-6 flex flex-col gap-6">
@@ -151,7 +151,7 @@ function PriceGuide() {
           </section>
 
           <section id="calcul" className="mt-16 scroll-mt-24">
-            <h2 className="text-[28px] font-extrabold tracking-[-0.02em] text-brand-ink sm:text-[34px]">
+            <h2 className="text-[25px] font-extrabold tracking-[-0.02em] text-brand-ink sm:text-[29px]">
               Comment on le calcule
             </h2>
             <p className="mt-4 text-[17px] leading-relaxed text-[#34433A]">
@@ -191,7 +191,7 @@ function PriceGuide() {
           </section>
 
           <section id="exemples" className="mt-16 scroll-mt-24">
-            <h2 className="text-[28px] font-extrabold tracking-[-0.02em] text-brand-ink sm:text-[34px]">
+            <h2 className="text-[25px] font-extrabold tracking-[-0.02em] text-brand-ink sm:text-[29px]">
               Exemples de prix d'un débarras
             </h2>
             <p className="mt-4 text-[17px] leading-relaxed text-[#34433A]">
@@ -211,7 +211,7 @@ function PriceGuide() {
           </section>
 
           <section id="conseils" className="mt-16 scroll-mt-24">
-            <h2 className="text-[28px] font-extrabold tracking-[-0.02em] text-brand-ink sm:text-[34px]">
+            <h2 className="text-[25px] font-extrabold tracking-[-0.02em] text-brand-ink sm:text-[29px]">
               Payer le juste prix
             </h2>
             <ul className="mt-6 flex flex-col gap-4">
@@ -231,7 +231,7 @@ function PriceGuide() {
           </section>
 
           <section id="faq" className="mt-16 scroll-mt-24">
-            <h2 className="text-[28px] font-extrabold tracking-[-0.02em] text-brand-ink sm:text-[34px]">
+            <h2 className="text-[25px] font-extrabold tracking-[-0.02em] text-brand-ink sm:text-[29px]">
               Questions fréquentes sur le prix
             </h2>
             <FaqList items={FAQ} twoColumns={false} />

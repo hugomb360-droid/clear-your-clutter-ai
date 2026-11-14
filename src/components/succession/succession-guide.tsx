@@ -18,7 +18,7 @@ export function SuccessionGuide() {
             <h2 id="succession-preparation" className={`${h2Class} text-brand-ink`}>
               Vider une maison après un décès : par où commencer ?
             </h2>
-            <p className="mt-4 text-lg leading-relaxed text-muted-foreground">
+            <p className="mt-4 text-[17px] leading-relaxed text-muted-foreground">
               Le débarras d'une succession ne consiste pas seulement à évacuer des meubles. Il faut
               distinguer les biens à conserver, ceux dont la destination doit être décidée avec les
               héritiers et ce qui peut être donné, revendu ou recyclé. Débarras France vous permet

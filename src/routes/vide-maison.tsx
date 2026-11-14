@@ -98,15 +98,15 @@ function VideMaison() {
   return (
     <main>
       {/* En-tête centré, sans photo : le rétroplanning est l'image de la page */}
-      <section className="bg-[#F2FAF4] pb-16 pt-8 sm:pb-20">
+      <section className="bg-[#F2FAF4] pb-12 pt-6 sm:pb-16">
         <div className={`${wrap} text-center`}>
           <div className="flex justify-center">
             <Breadcrumb items={[{ label: "Vide-maison" }]} />
           </div>
-          <h1 className="mx-auto mt-6 max-w-[20ch] text-[36px] font-black leading-[1.05] tracking-[-0.03em] text-brand-ink sm:text-[52px]">
+          <h1 className="mx-auto mt-6 max-w-[20ch] text-[31px] font-black leading-[1.05] tracking-[-0.03em] text-brand-ink sm:text-[45px]">
             Vide-maison : vendez ce qui a de la valeur, faites débarrasser le reste
           </h1>
-          <p className="mx-auto mt-6 max-w-[42em] text-lg leading-relaxed text-[#34433A]">
+          <p className="mx-auto mt-6 max-w-[42em] text-[17px] leading-relaxed text-[#34433A]">
             Un vide-maison permet d'écouler une partie du mobilier, mais il reste presque toujours
             10 à 40 m³ d'invendus à évacuer. Photographiez ce qui reste : notre IA calcule le volume
             et vous donne une fourchette de prix immédiate, puis des débarrasseurs vérifiés de votre

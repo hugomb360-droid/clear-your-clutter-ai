@@ -144,14 +144,14 @@ function HouseClearance() {
   return (
     <main>
       {/* En-tête sur fond vert pâle, titre et plan côte à côte */}
-      <section className="bg-[#F2FAF4] pb-16 pt-8 sm:pb-20">
+      <section className="bg-[#F2FAF4] pb-12 pt-6 sm:pb-16">
         <div className={`${wrap} grid items-center gap-10 lg:grid-cols-[1fr_1.1fr] lg:gap-16`}>
           <div>
             <Breadcrumb items={[{ label: "Débarras de maison" }]} />
-            <h1 className="mt-6 text-[36px] font-black leading-[1.05] tracking-[-0.03em] text-brand-ink sm:text-[50px]">
+            <h1 className="mt-6 text-[31px] font-black leading-[1.05] tracking-[-0.03em] text-brand-ink sm:text-[43px]">
               Débarras de maison : le prix estimé en 2 minutes, en photos
             </h1>
-            <p className="mt-5 text-lg leading-relaxed text-[#34433A]">
+            <p className="mt-5 text-[17px] leading-relaxed text-[#34433A]">
               En maison, le volume à évacuer dépasse presque toujours celui d'un appartement :
               combles, cave, garage et dépendances s'ajoutent aux pièces de vie. Débarras France
               analyse vos photos, calcule le volume en m³, applique un tarif dégressif sur les gros

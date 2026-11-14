@@ -82,16 +82,16 @@ function HowItWorks() {
           <Breadcrumb items={[{ label: "Comment ça marche" }]} />
           <div className="mt-10 grid items-end gap-8 lg:grid-cols-[auto_1fr]">
             <p
-              className="text-[120px] font-black leading-[0.85] tracking-[-0.05em] text-primary sm:text-[180px]"
+              className="text-[96px] font-black leading-[0.85] tracking-[-0.05em] text-primary sm:text-[144px]"
               aria-hidden="true"
             >
-              2<span className="text-[40px] tracking-normal sm:text-[56px]"> min</span>
+              2<span className="text-[34px] tracking-normal sm:text-[48px]"> min</span>
             </p>
             <div className="max-w-[34em]">
-              <h1 className="text-[34px] font-black leading-[1.05] tracking-[-0.03em] text-brand-ink sm:text-[44px]">
+              <h1 className="text-[29px] font-black leading-[1.05] tracking-[-0.03em] text-brand-ink sm:text-[38px]">
                 Comment ça marche
               </h1>
-              <p className="mt-4 text-lg leading-relaxed text-[#34433A]">
+              <p className="mt-4 text-[17px] leading-relaxed text-[#34433A]">
                 Débarras France remplace les visites d'estimation et les appels sans réponse par un
                 parcours de deux minutes.
               </p>
@@ -111,7 +111,7 @@ function HowItWorks() {
       </section>
 
       {/* Frise verticale */}
-      <section className="border-t border-border py-16 sm:py-24">
+      <section className="border-t border-border py-12 sm:py-20">
         <div className={wrap}>
           <ol className="relative mx-auto max-w-[920px]">
             <span

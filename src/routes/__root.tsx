@@ -19,23 +19,23 @@ function NotFoundComponent() {
   return (
     <div className="flex min-h-[70vh] items-center justify-center bg-[#F2FAF4] px-4 py-20">
       <div className="max-w-lg text-center">
-        <p className="text-7xl font-black tracking-tight text-primary">404</p>
-        <h1 className="mt-4 text-[30px] font-black leading-tight tracking-[-0.02em] text-brand-ink sm:text-[38px]">
+        <p className="text-6xl font-black tracking-tight text-primary">404</p>
+        <h1 className="mt-4 text-[26px] font-black leading-tight tracking-[-0.02em] text-brand-ink sm:text-[33px]">
           Cette page est introuvable
         </h1>
-        <p className="mt-3 text-lg leading-relaxed text-muted-foreground">
+        <p className="mt-3 text-[17px] leading-relaxed text-muted-foreground">
           Elle a peut-être été déplacée ou n'existe plus.
         </p>
         <div className="mt-8 flex flex-col justify-center gap-3 sm:flex-row">
           <Link
             to="/"
-            className="inline-flex min-h-[52px] items-center justify-center rounded-full bg-primary px-[26px] font-bold text-primary-foreground hover:bg-primary/90"
+            className="inline-flex min-h-12 items-center justify-center rounded-full bg-primary px-[22px] text-[15px] font-bold text-primary-foreground hover:bg-primary/90"
           >
             Retour à l'accueil
           </Link>
           <Link
             to="/estimation"
-            className="inline-flex min-h-[52px] items-center justify-center rounded-full border-2 border-brand-ink px-[26px] font-bold text-brand-ink hover:bg-brand-ink hover:text-white"
+            className="inline-flex min-h-12 items-center justify-center rounded-full border-2 border-brand-ink px-[22px] text-[15px] font-bold text-brand-ink hover:bg-brand-ink hover:text-white"
           >
             Estimer mon débarras
           </Link>

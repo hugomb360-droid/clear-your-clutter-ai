@@ -8,7 +8,7 @@ const linkClass = "text-[15px] text-[#BFD8C8] hover:text-white hover:underline";
 export function SiteFooter() {
   return (
     <footer className="bg-brand-ink text-white">
-      <div className="mx-auto max-w-[1240px] px-4 pb-7 pt-16 sm:px-6 lg:px-10">
+      <div className="mx-auto max-w-[1160px] px-4 pb-7 pt-16 sm:px-6 lg:px-10">
         <div className="grid gap-10 sm:grid-cols-2 lg:grid-cols-[1.5fr_repeat(4,minmax(0,1fr))]">
           <div>
             <Link to="/" className="inline-flex items-center gap-2">
