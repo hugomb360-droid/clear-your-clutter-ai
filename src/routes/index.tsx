@@ -17,6 +17,8 @@ import galleryAvant from "@/assets/gallery-avant.jpg";
 import galleryApres from "@/assets/gallery-apres.jpg";
 import galleryCamion from "@/assets/gallery-camion.jpg";
 import galleryCave from "@/assets/gallery-cave.jpg";
+import serviceVideMaison from "@/assets/service-vide-maison.jpg";
+import serviceDiogene from "@/assets/service-diogene.jpg";
 import { CITIES } from "@/lib/cities";
 import { PRICING, computePrice, euro } from "@/lib/pricing";
 
@@ -89,13 +91,13 @@ const services = [
     to: "/vide-maison",
     title: "Vide-maison",
     text: "Vendez ce qui peut l'être, puis faites évacuer et nettoyer le reste.",
-    icon: Tag,
+    image: serviceVideMaison,
   },
   {
     to: "/debarras-diogene",
     title: "Syndrome de Diogène",
     text: "Débarras intégral, nettoyage et désinfection, en toute discrétion.",
-    icon: EyeOff,
+    image: serviceDiogene,
     dark: true,
   },
 ] as const;
