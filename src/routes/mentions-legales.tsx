@@ -52,16 +52,22 @@ function Legal() {
           id: "hebergeur",
           title: "Hébergement",
           body: (
-            <p>
-              Le site est hébergé par <strong>Lovable</strong>, éditeur de la plateforme
-              lovable.dev, dont les coordonnées sont publiées sur{" "}
-              <a href="https://lovable.dev" target="_blank" rel="noopener noreferrer">
-                lovable.dev
-              </a>
-              . Les données sont stockées sur une infrastructure cloud opérée pour le compte de
-              l'hébergeur ; le prestataire de paiement est Stripe (voir la{" "}
-              <Link to="/confidentialite">politique de confidentialité</Link>).
-            </p>
+            <>
+              <p>
+                L'hébergement du site est assuré par <strong>Lovable (Lovable, Inc.)</strong>, dont
+                la plateforme est accessible à l'adresse{" "}
+                <a href="https://lovable.app" target="_blank" rel="noopener noreferrer">
+                  https://lovable.app
+                </a>
+                .
+              </p>
+              <p>
+                L'infrastructure de déploiement et la distribution du site sont assurées par les
+                services cloud de Lovable, hébergés au sein de l'Union européenne et des États-Unis
+                selon les régions de point de présence. Le prestataire de paiement est Stripe (voir
+                la <Link to="/confidentialite">politique de confidentialité</Link>).
+              </p>
+            </>
           ),
         },
         {
