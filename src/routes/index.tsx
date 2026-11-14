@@ -3,20 +3,20 @@ import {
   Camera,
   Check,
   Clock,
-  EyeOff,
   Hammer,
   Lock,
   MapPin,
   Minus,
   Plus,
   ShieldCheck,
-  Tag,
 } from "lucide-react";
 import galleryEquipe from "@/assets/gallery-equipe.jpg";
 import galleryAvant from "@/assets/gallery-avant.jpg";
 import galleryApres from "@/assets/gallery-apres.jpg";
 import galleryCamion from "@/assets/gallery-camion.jpg";
 import galleryCave from "@/assets/gallery-cave.jpg";
+import serviceVideMaison from "@/assets/service-vide-maison.jpg";
+import serviceDiogene from "@/assets/service-diogene.jpg";
 import { CITIES } from "@/lib/cities";
 import { PRICING, computePrice, euro } from "@/lib/pricing";
 
@@ -89,13 +89,13 @@ const services = [
     to: "/vide-maison",
     title: "Vide-maison",
     text: "Vendez ce qui peut l'être, puis faites évacuer et nettoyer le reste.",
-    icon: Tag,
+    image: serviceVideMaison,
   },
   {
     to: "/debarras-diogene",
     title: "Syndrome de Diogène",
     text: "Débarras intégral, nettoyage et désinfection, en toute discrétion.",
-    icon: EyeOff,
+    image: serviceDiogene,
     dark: true,
   },
 ] as const;
@@ -360,26 +360,12 @@ function Home() {
                       : "border-border bg-card text-brand-ink hover:border-primary"
                   }`}
                 >
-                  {"image" in service ? (
-                    <img
-                      src={service.image}
-                      alt=""
-                      loading="lazy"
-                      className="aspect-[16/10] w-full object-cover"
-                    />
-                  ) : (
-                    <div
-                      className={`flex aspect-[16/10] w-full items-center justify-center ${
-                        dark ? "bg-[#134A2B]" : "bg-brand-soft"
-                      }`}
-                    >
-                      <service.icon
-                        className={`size-16 ${dark ? "text-[#6EDC97]" : "text-primary"}`}
-                        strokeWidth={1.4}
-                        aria-hidden="true"
-                      />
-                    </div>
-                  )}
+                  <img
+                    src={service.image}
+                    alt=""
+                    loading="lazy"
+                    className="aspect-[16/10] w-full object-cover"
+                  />
                   <div className="px-6 pb-6 pt-5">
                     <h3 className="text-[19px] font-extrabold">{service.title}</h3>
                     <p
