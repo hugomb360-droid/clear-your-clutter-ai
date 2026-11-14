@@ -1101,23 +1101,6 @@ function ModeChoice({ onChoose }: { onChoose: (mode: Mode) => void }) {
           </section>
 
           <aside className="flex flex-col gap-4">
-            <div className="rounded-3xl bg-brand-ink p-7 text-white">
-              <h2 className="text-xl font-extrabold">Vous êtes protégé</h2>
-              <ul className="mt-4 flex flex-col gap-3 text-[15px] leading-snug text-[#CFE5D7]">
-                <li className="flex gap-2.5">
-                  <Lock className="size-5 shrink-0 text-[#6EDC97]" aria-hidden="true" />
-                  Paiement sous séquestre via Stripe Connect, bloqué jusqu'à votre validation
-                </li>
-                <li className="flex gap-2.5">
-                  <ShieldCheck className="size-5 shrink-0 text-[#6EDC97]" aria-hidden="true" />
-                  Pros avec SIRET et assurance vérifiés
-                </li>
-                <li className="flex gap-2.5">
-                  <Check className="size-5 shrink-0 text-[#6EDC97]" aria-hidden="true" />
-                  Aucun engagement avant d'accepter une offre
-                </li>
-              </ul>
-            </div>
             <div className="rounded-3xl bg-white p-7">
               <h2 className="text-xl font-extrabold text-brand-ink">
                 Une situation particulière ?

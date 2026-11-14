@@ -1,20 +1,35 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { Button } from "@/components/ui/button";
-import { Card } from "@/components/ui/card";
-import { MapPin } from "lucide-react";
+import { Camera } from "lucide-react";
+import { lazy, Suspense } from "react";
+import {
+  Breadcrumb,
+  CtaBand,
+  btnOutline,
+  btnPrimary,
+  btnSoft,
+  btnWhite,
+  wrap,
+} from "@/components/site/page-kit";
 import { CITIES } from "@/lib/cities";
 
+const CitiesMap = lazy(() => import("@/components/site/cities-map"));
+
 const CANONICAL = "https://debarrasfrance.fr/debarras";
-const DESCRIPTION =
-  "Débarras dans 40 villes de France : Paris, Marseille, Lyon, Toulouse, Bordeaux, Lille, Rennes, Nantes… Prix estimé en photo en 2 minutes et débarrasseurs vérifiés près de chez vous.";
 
 export const Route = createFileRoute("/debarras/")({
   head: () => ({
     meta: [
       { title: "Débarras par ville : prix et débarrasseurs près de chez vous | Débarras France" },
-      { name: "description", content: DESCRIPTION },
+      {
+        name: "description",
+        content:
+          "Trouvez un débarrasseur vérifié dans votre ville : prix au m³, estimation en photo en 2 minutes et propositions de professionnels locaux partout en France.",
+      },
       { property: "og:title", content: "Débarras par ville — Débarras France" },
-      { property: "og:description", content: DESCRIPTION },
+      {
+        property: "og:description",
+        content: "Estimation en photo et débarrasseurs vérifiés dans les grandes villes de France.",
+      },
       { property: "og:type", content: "website" },
       { property: "og:url", content: CANONICAL },
       { name: "twitter:card", content: "summary_large_image" },
@@ -40,54 +55,97 @@ export const Route = createFileRoute("/debarras/")({
   component: CitiesHub,
 });
 
+const REGIONS = [...new Set(CITIES.map((city) => city.region))].sort((a, b) =>
+  a.localeCompare(b, "fr"),
+);
+
 function CitiesHub() {
   return (
-    <main className="mx-auto max-w-5xl px-4 py-12 sm:py-16">
-      <section className="text-center">
-        <span className="inline-flex items-center gap-2 rounded-full bg-primary/10 px-4 py-1.5 text-xs font-semibold uppercase tracking-wide text-primary">
-          <MapPin className="h-4 w-4" /> Partout en France
-        </span>
-        <h1 className="mt-5 text-3xl font-extrabold sm:text-4xl tracking-tight sm:text-5xl">
-          Débarras par ville : trouvez un pro près de chez vous
-        </h1>
-        <p className="mx-auto mt-5 max-w-2xl text-muted-foreground">
-          Photographiez ce que vous voulez débarrasser, obtenez le volume en m³ et une fourchette de
-          prix, puis comparez les propositions des débarrasseurs vérifiés de votre secteur.
-        </p>
-        <div className="mt-8">
-          <Button asChild size="lg">
-            <Link to="/estimation">Estimer mon débarras</Link>
-          </Button>
-        </div>
-      </section>
-
-      <section className="mt-14 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-        {CITIES.map((city) => (
-          <Card key={city.slug} className="p-6">
-            <h2 className="font-semibold">Débarras {city.name}</h2>
-            <p className="mt-1 text-xs text-muted-foreground">{city.department}</p>
-            <p className="mt-3 line-clamp-3 text-sm text-muted-foreground">{city.intro}</p>
-            <Button asChild variant="link" className="mt-2 px-0">
-              <Link to="/debarras/$ville" params={{ ville: city.slug }}>
-                Voir les prix {city.preposition}
+    <main>
+      {/* Carte en pleine largeur, liste des régions en dessous */}
+      <section className="pb-8 pt-8">
+        <div className={wrap}>
+          <Breadcrumb items={[{ label: "Débarras par ville" }]} />
+          <div className="mt-6 flex flex-wrap items-end justify-between gap-6">
+            <div>
+              <h1 className="text-[36px] font-black leading-[1.05] tracking-[-0.03em] text-brand-ink sm:text-[50px]">
+                Débarras par ville
+              </h1>
+              <p className="mt-4 max-w-[36em] text-lg leading-relaxed text-[#34433A]">
+                {CITIES.length} villes ont leur page, avec les contraintes locales : stationnement,
+                étages, quartiers. Partout ailleurs, votre demande part aux pros qui couvrent votre
+                code postal.
+              </p>
+            </div>
+            <div className="flex flex-wrap gap-3">
+              <Link to="/estimation" search={{ type: "photo" }} className={btnPrimary}>
+                <Camera className="size-5" aria-hidden="true" />
+                Estimer mon débarras
               </Link>
-            </Button>
-          </Card>
-        ))}
-      </section>
-
-      <section className="mt-14 rounded-2xl bg-muted/40 p-8 text-center">
-        <h2 className="text-2xl font-bold tracking-tight">Votre ville n'est pas listée ?</h2>
-        <p className="mx-auto mt-3 max-w-xl text-sm text-muted-foreground">
-          Nos partenaires interviennent dans toute la France. Lancez votre estimation : la demande
-          est diffusée aux débarrasseurs couvrant votre code postal.
-        </p>
-        <div className="mt-6">
-          <Button asChild size="lg">
-            <Link to="/estimation">Démarrer mon estimation</Link>
-          </Button>
+              <Link to="/professionnels" className={btnOutline}>
+                Les pros par région
+              </Link>
+            </div>
+          </div>
+          <div className="mt-8">
+            <Suspense
+              fallback={
+                <div
+                  className="h-[520px] w-full animate-pulse rounded-[24px] bg-secondary"
+                  aria-hidden="true"
+                />
+              }
+            >
+              <CitiesMap />
+            </Suspense>
+            <p className="mt-2 text-sm text-muted-foreground">
+              Cliquez sur un repère pour ouvrir la page de la ville.
+            </p>
+          </div>
         </div>
       </section>
+
+      <section className="py-12 sm:py-16">
+        <div className={`${wrap} grid gap-x-10 gap-y-10 sm:grid-cols-2 lg:grid-cols-3`}>
+          {REGIONS.map((region) => {
+            const cities = CITIES.filter((city) => city.region === region);
+            return (
+              <div key={region}>
+                <h2 className="border-b-2 border-brand-ink pb-2 text-xl font-extrabold text-brand-ink">
+                  {region}
+                </h2>
+                <ul className="mt-3 flex flex-col">
+                  {cities.map((city) => (
+                    <li key={city.slug}>
+                      <Link
+                        to="/debarras/$ville"
+                        params={{ ville: city.slug }}
+                        className="flex items-baseline justify-between gap-3 py-2 text-base text-brand-ink hover:text-primary"
+                      >
+                        <span className="font-semibold">Débarras {city.name}</span>
+                        <span className="text-sm text-muted-foreground">{city.department}</span>
+                      </Link>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            );
+          })}
+        </div>
+      </section>
+
+      <CtaBand
+        title="Votre ville n'est pas listée ?"
+        text="Nos partenaires interviennent dans toute la France. Lancez votre estimation : la demande est diffusée aux débarrasseurs couvrant votre code postal."
+      >
+        <Link to="/estimation" search={{ type: "photo" }} className={btnSoft}>
+          <Camera className="size-5" aria-hidden="true" />
+          Démarrer mon estimation
+        </Link>
+        <Link to="/contact" className={btnWhite}>
+          Nous contacter
+        </Link>
+      </CtaBand>
     </main>
   );
 }
