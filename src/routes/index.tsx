@@ -21,16 +21,16 @@ import { CITIES } from "@/lib/cities";
 import { PRICING, computePrice, euro } from "@/lib/pricing";
 
 const DESCRIPTION =
-  "Devis rapide par IA à partir de vos photos, propositions de débarrasseurs vérifiés près de chez vous et paiement bloqué jusqu'à la fin du chantier.";
+  "Débarrasseurs vérifiés partout en France : devis rapide par IA à partir de vos photos, propositions de pros près de chez vous et paiement bloqué jusqu'à la fin du chantier.";
 
 export const Route = createFileRoute("/")({
   head: () => ({
     meta: [
-      { title: "Débarras France – Devis rapide par IA et débarrasseurs vérifiés" },
+      { title: "Débarras France – Débarrasseurs partout en France, devis par IA" },
       { name: "description", content: DESCRIPTION },
       {
         property: "og:title",
-        content: "Débarras France – Devis rapide par IA et débarrasseurs vérifiés",
+        content: "Débarras France – Débarrasseurs partout en France, devis par IA",
       },
       { property: "og:description", content: DESCRIPTION },
       { property: "og:type", content: "website" },
