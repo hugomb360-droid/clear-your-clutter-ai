@@ -27,11 +27,11 @@ const DESCRIPTION =
 export const Route = createFileRoute("/")({
   head: () => ({
     meta: [
-      { title: "Débarras France – Débarrasseur vérifié dans toute la France, devis rapide par IA" },
+      { title: "Débarras dans toute la France, devis rapide par IA" },
       { name: "description", content: DESCRIPTION },
       {
         property: "og:title",
-        content: "Débarras France – Débarrasseur vérifié dans toute la France, devis rapide par IA",
+        content: "Débarras dans toute la France, devis rapide par IA",
       },
       { property: "og:description", content: DESCRIPTION },
       { property: "og:type", content: "website" },
