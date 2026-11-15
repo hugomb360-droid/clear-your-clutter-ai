@@ -282,7 +282,7 @@ function Home() {
           <div className="relative h-[380px] sm:h-[480px]">
             <img
               src={heroDebarrasseurs}
-              alt="Débarrasseurs professionnels descendant une armoire dans un escalier et chargeant un camion"
+              alt="Deux débarrasseurs professionnels portant des cartons dans un appartement en cours de débarras"
               width={1280}
               height={960}
               className="absolute right-0 top-0 h-[78%] w-full rounded-[24px] object-cover sm:w-[88%]"
