@@ -30,7 +30,7 @@ function Logo({ onClick }: { onClick?: () => void }) {
       <img src={clearoLogo} alt="" className="size-8 object-contain" />
       <span className="flex flex-col leading-none">
         <span className="text-lg font-black tracking-tight">Débarras</span>
-        <span className="mt-0.5 text-[11px] font-bold tracking-[0.08em] text-primary">FRANCE</span>
+        <span className="-mt-1 text-[11px] font-bold tracking-[0.08em] text-primary">FRANCE</span>
       </span>
       <span className="sr-only">Débarras France, accueil</span>
     </Link>

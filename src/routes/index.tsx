@@ -10,6 +10,7 @@ import {
   Plus,
   ShieldCheck,
 } from "lucide-react";
+import heroDebarrasseurs from "@/assets/hero-debarrasseurs-action.jpg";
 import galleryEquipe from "@/assets/gallery-equipe.jpg";
 import galleryAvant from "@/assets/gallery-avant.jpg";
 import galleryApres from "@/assets/gallery-apres.jpg";
@@ -280,8 +281,8 @@ function Home() {
 
           <div className="relative h-[380px] sm:h-[480px]">
             <img
-              src={galleryAvant}
-              alt="Appartement encombré photographié avant le débarras"
+              src={heroDebarrasseurs}
+              alt="Débarrasseurs professionnels descendant une armoire dans un escalier et chargeant un camion"
               width={1280}
               height={960}
               className="absolute right-0 top-0 h-[78%] w-full rounded-[24px] object-cover sm:w-[88%]"
