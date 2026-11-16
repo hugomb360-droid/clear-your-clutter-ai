@@ -25,7 +25,13 @@ async function loadPhotos(quoteId: string) {
     .filter((photo) => photo.url.length > 0);
 }
 
-export function QuotePhotos({ quoteId }: { quoteId: string }) {
+export function QuotePhotos({
+  quoteId,
+  label = "Photos du client",
+}: {
+  quoteId: string;
+  label?: string;
+}) {
   const { data, isLoading } = useQuery({
     queryKey: ["quote-photos", quoteId],
     queryFn: () => loadPhotos(quoteId),
@@ -48,7 +54,7 @@ export function QuotePhotos({ quoteId }: { quoteId: string }) {
   return (
     <div className="mt-4">
       <p className="flex items-center gap-1.5 text-xs font-medium text-muted-foreground">
-        <ImageIcon className="size-3.5" /> Photos du client ({photos.length})
+        <ImageIcon className="size-3.5" aria-hidden="true" /> {label} ({photos.length})
       </p>
       <div className="mt-2 flex flex-wrap gap-2">
         {photos.map((photo) => (

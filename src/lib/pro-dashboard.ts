@@ -14,7 +14,8 @@ export const FOUNDING_FREE_MISSIONS = 5;
 
 export const commissionOf = (price: number, freeMission = false) =>
   freeMission ? 0 : Math.round(price * CLEARO_COMMISSION_RATE);
-export const netOf = (price: number, freeMission = false) => price - commissionOf(price, freeMission);
+export const netOf = (price: number, freeMission = false) =>
+  price - commissionOf(price, freeMission);
 
 /** Normalise une saisie libre de codes postaux : « 75, 92100 » -> ["75", "92100"]. */
 export function parsePostalCodes(input: string) {
@@ -64,9 +65,19 @@ export const isUpcoming = (value?: string | null) => {
   return new Date(value).getTime() >= today.getTime();
 };
 
+/** « Rez-de-chaussée » ou « Étage 2 sans ascenseur ». */
+export const accessLabel = (
+  floor: number | null | undefined,
+  hasElevator: boolean | null | undefined,
+) =>
+  !floor || floor <= 0
+    ? "Rez-de-chaussée"
+    : `Étage ${floor} ${hasElevator ? "avec" : "sans"} ascenseur`;
+
 export const quoteTitle = (quote: Quote | null) => {
   if (!quote) return "Mission";
-  const type = quote.property_type && quote.property_type !== "Non précisé" ? quote.property_type : "Débarras";
+  const type =
+    quote.property_type && quote.property_type !== "Non précisé" ? quote.property_type : "Débarras";
   return quote.volume_m3 ? `${type} · ${quote.volume_m3} m³` : type;
 };
 

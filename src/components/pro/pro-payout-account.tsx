@@ -43,10 +43,13 @@ export function ProPayoutAccount() {
   const ready = Boolean(status?.payoutsEnabled);
 
   return (
-    <section className="rounded-3xl border border-border bg-card p-6">
+    <section
+      id="versements"
+      className="scroll-mt-24 rounded-3xl border border-border bg-card p-5 sm:p-6"
+    >
       <div className="flex flex-wrap items-center justify-between gap-3">
-        <h2 className="flex items-center gap-2 text-lg font-bold">
-          <Banknote className="size-4 text-primary" /> Recevoir mes paiements
+        <h2 className="flex items-center gap-2 text-[19px] font-extrabold text-brand-ink">
+          <Banknote className="size-5 text-primary" aria-hidden="true" /> Recevoir mes paiements
         </h2>
         {ready && (
           <Badge className="gap-1">
@@ -56,18 +59,17 @@ export function ProPayoutAccount() {
       </div>
 
       <p className="mt-3 text-sm leading-relaxed text-muted-foreground">
-        Renseignez une seule fois votre IBAN sur la page bancaire sécurisée Débarras France. Dès que le
-        client valide la fin de chantier, votre montant net (commission déjà déduite) est viré
-        automatiquement sur ce compte.
+        Renseignez une seule fois votre IBAN. Dès que le client valide la fin de chantier, votre
+        montant net (commission déduite) est viré sur ce compte.
       </p>
 
       {!configured ? (
-        <p className="mt-4 rounded-2xl border border-border bg-secondary/40 p-4 text-sm text-muted-foreground">
+        <p className="mt-4 rounded-2xl bg-brand-soft/60 p-4 text-sm text-brand-ink">
           Les paiements ne sont pas encore activés sur cette version du site.
         </p>
       ) : (
         <>
-          <div className="mt-5 rounded-2xl border border-border bg-secondary/30 p-4 text-sm">
+          <div className="mt-5 rounded-2xl bg-brand-soft/60 p-4 text-sm">
             {statusQuery.isLoading ? (
               <span className="text-muted-foreground">Chargement du statut…</span>
             ) : statusQuery.isError ? (
@@ -93,7 +95,7 @@ export function ProPayoutAccount() {
           </div>
 
           <Button
-            className="mt-4"
+            className="mt-4 min-h-11 rounded-full px-5 font-bold"
             onClick={() => onboarding.mutate()}
             disabled={onboarding.isPending}
           >
@@ -116,7 +118,7 @@ export function ProPayoutAccount() {
           )}
 
           <p className="mt-4 flex items-start gap-2 text-xs text-muted-foreground">
-            <ShieldCheck className="mt-0.5 size-3.5 shrink-0 text-proposal-emerald" />
+            <ShieldCheck className="mt-0.5 size-3.5 shrink-0 text-primary" />
             Vos coordonnées bancaires sont saisies et stockées par notre prestataire de paiement
             certifié : Débarras France ne voit jamais votre IBAN complet.
           </p>

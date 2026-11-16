@@ -75,12 +75,12 @@ export function EscrowCheckoutDialog({ open, onOpenChange, bidId, price, company
   return (
     <Dialog open={open} onOpenChange={handleOpenChange}>
       <DialogContent className="max-h-[90vh] max-w-2xl overflow-y-auto p-0">
-        <div className="bg-proposal-emerald px-6 py-6 text-proposal-cream">
+        <div className="bg-brand-ink px-6 py-6 text-white">
           <DialogHeader className="space-y-2 text-left">
-            <DialogTitle className="font-display text-xl font-bold text-proposal-cream">
-              Paiement sécurisé — {euro(price)}
+            <DialogTitle className="text-xl font-extrabold text-white">
+              Accepter et payer {euro(price)}
             </DialogTitle>
-            <DialogDescription className="text-proposal-cream/70">
+            <DialogDescription className="text-white/85">
               Mission confiée à {companyName}. Votre argent est bloqué par Débarras France jusqu'à
               la fin du chantier.
             </DialogDescription>
@@ -95,11 +95,11 @@ export function EscrowCheckoutDialog({ open, onOpenChange, bidId, price, company
               <ul className="space-y-4">
                 {GUARANTEES.map((g) => (
                   <li key={g.title} className="flex gap-3">
-                    <div className="mt-0.5 flex size-9 shrink-0 items-center justify-center rounded-full bg-proposal-emerald/10">
-                      <g.icon className="size-4 text-proposal-emerald" />
+                    <div className="mt-0.5 flex size-9 shrink-0 items-center justify-center rounded-full bg-brand-soft">
+                      <g.icon className="size-4 text-primary" aria-hidden="true" />
                     </div>
                     <div>
-                      <p className="font-semibold text-proposal-emerald">{g.title}</p>
+                      <p className="font-bold text-brand-ink">{g.title}</p>
                       <p className="mt-0.5 text-sm leading-relaxed text-muted-foreground">
                         {g.text}
                       </p>
@@ -108,12 +108,10 @@ export function EscrowCheckoutDialog({ open, onOpenChange, bidId, price, company
                 ))}
               </ul>
 
-              <div className="mt-6 rounded-2xl border border-border bg-muted/30 p-4 text-sm">
+              <div className="mt-6 rounded-2xl bg-brand-soft/60 p-4 text-sm">
                 <div className="flex items-center justify-between">
                   <span className="text-muted-foreground">Montant de la mission (TTC)</span>
-                  <span className="font-display text-lg font-extrabold text-proposal-emerald">
-                    {euro(price)}
-                  </span>
+                  <span className="text-lg font-extrabold text-brand-ink">{euro(price)}</span>
                 </div>
                 <p className="mt-2 text-xs text-muted-foreground">
                   Frais de service Débarras France inclus. Aucun supplément le jour du chantier : le
@@ -122,7 +120,7 @@ export function EscrowCheckoutDialog({ open, onOpenChange, bidId, price, company
               </div>
 
               {!PAYMENTS_ENABLED ? (
-                <p className="mt-6 rounded-xl bg-proposal-gold/15 p-4 text-sm font-medium text-proposal-emerald">
+                <p className="mt-6 rounded-2xl border border-amber-300 bg-amber-50 p-4 text-sm font-semibold text-amber-950">
                   {PAYMENTS_PAUSED_MESSAGE}
                 </p>
               ) : paymentsConfigured() ? (
@@ -164,7 +162,7 @@ export function EscrowCheckoutDialog({ open, onOpenChange, bidId, price, company
                     </label>
                   </div>
                   <Button
-                    className="mt-4 w-full bg-proposal-gold text-proposal-emerald hover:bg-proposal-gold/90"
+                    className="mt-4 min-h-11 w-full rounded-full font-bold"
                     onClick={() => setStarted(true)}
                     disabled={!agreed || !waiver}
                   >

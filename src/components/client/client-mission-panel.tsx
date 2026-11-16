@@ -68,7 +68,11 @@ export function ClientMissionPanel({ bidId, quoteId, clientId, proId, status }: 
   const disputeQuery = useQuery({
     queryKey: ["mission-dispute", bidId],
     queryFn: async () => {
-      const { data } = await supabase.from("disputes").select("*").eq("bid_id", bidId).maybeSingle();
+      const { data } = await supabase
+        .from("disputes")
+        .select("*")
+        .eq("bid_id", bidId)
+        .maybeSingle();
       return data;
     },
   });
@@ -152,12 +156,13 @@ export function ClientMissionPanel({ bidId, quoteId, clientId, proId, status }: 
   const dispute = disputeQuery.data;
 
   return (
-    <div className="mt-4 rounded-2xl border border-border p-4">
+    <div className="mt-5 border-t border-border pt-5">
       <SuccessionDetails quoteId={quoteId} />
       <MissionReportDownload bidId={bidId} quoteId={quoteId} status={status} />
       {status === "accepted" && (
-        <p className="text-sm text-muted-foreground">
-          Mission planifiée. Le pro confirmera la fin de chantier avec des photos.
+        <p className="text-sm leading-relaxed text-muted-foreground">
+          Mission planifiée. Après son passage, le pro enverra ici ses photos de fin de chantier
+          pour que vous puissiez valider.
         </p>
       )}
 
@@ -167,10 +172,17 @@ export function ClientMissionPanel({ bidId, quoteId, clientId, proId, status }: 
 
       {status === "awaiting_confirmation" && (
         <div className="mt-4 flex flex-wrap gap-2">
-          <Button className="gap-2" onClick={() => setReviewOpen(true)}>
+          <Button
+            className="gap-2 min-h-11 rounded-full px-5 font-bold"
+            onClick={() => setReviewOpen(true)}
+          >
             <CheckCircle2 className="size-4" /> Confirmer et noter le pro
           </Button>
-          <Button variant="outline" className="gap-2" onClick={() => setDisputeOpen(true)}>
+          <Button
+            variant="outline"
+            className="gap-2 min-h-11 rounded-full px-5 font-bold"
+            onClick={() => setDisputeOpen(true)}
+          >
             <AlertTriangle className="size-4" /> Déclarer un litige
           </Button>
         </div>
@@ -178,7 +190,7 @@ export function ClientMissionPanel({ bidId, quoteId, clientId, proId, status }: 
 
       {status === "completed" && review && (
         <div className="mt-4 flex items-center gap-2 text-sm">
-          <Badge>Chantier validé</Badge>
+          <Badge className="rounded-full">Chantier validé</Badge>
           <span className="flex items-center gap-1 font-semibold">
             <Star className="size-4 fill-primary text-primary" /> {review.rating}/5
           </span>
@@ -187,13 +199,15 @@ export function ClientMissionPanel({ bidId, quoteId, clientId, proId, status }: 
       )}
 
       {dispute && (
-        <div className="mt-4 rounded-2xl bg-destructive/10 p-4 text-sm">
+        <div className="mt-4 rounded-2xl border border-destructive/30 bg-destructive/5 p-4 text-sm">
           <p className="font-semibold text-destructive">
             Litige · {DISPUTE_STATUS_LABELS[dispute.status] ?? dispute.status}
           </p>
-          <p className="mt-1 text-muted-foreground">{dispute.reason}</p>
+          <p className="mt-1 text-foreground">{dispute.reason}</p>
           {dispute.admin_note && (
-            <p className="mt-2 text-muted-foreground">Réponse Débarras France : {dispute.admin_note}</p>
+            <p className="mt-2 text-muted-foreground">
+              Réponse Débarras France : {dispute.admin_note}
+            </p>
           )}
           <MissionPhotoGallery bidId={bidId} kind="dispute" label="Photos du litige" />
         </div>
@@ -219,8 +233,16 @@ export function ClientMissionPanel({ bidId, quoteId, clientId, proId, status }: 
                 placeholder="Ponctualité, soin, propreté..."
               />
             </div>
-            <Button className="w-full gap-2" onClick={confirmMission} disabled={saving}>
-              {saving ? <Loader2 className="size-4 animate-spin" /> : <CheckCircle2 className="size-4" />}
+            <Button
+              className="w-full gap-2 min-h-11 rounded-full px-5 font-bold"
+              onClick={confirmMission}
+              disabled={saving}
+            >
+              {saving ? (
+                <Loader2 className="size-4 animate-spin" />
+              ) : (
+                <CheckCircle2 className="size-4" />
+              )}
               Valider le chantier
             </Button>
           </div>
@@ -263,12 +285,16 @@ export function ClientMissionPanel({ bidId, quoteId, clientId, proId, status }: 
               )}
             </div>
             <Button
-              className="w-full gap-2"
+              className="w-full gap-2 min-h-11 rounded-full px-5 font-bold"
               variant="destructive"
               onClick={openDispute}
               disabled={saving}
             >
-              {saving ? <Loader2 className="size-4 animate-spin" /> : <AlertTriangle className="size-4" />}
+              {saving ? (
+                <Loader2 className="size-4 animate-spin" />
+              ) : (
+                <AlertTriangle className="size-4" />
+              )}
               Envoyer le litige
             </Button>
           </div>

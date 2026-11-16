@@ -86,14 +86,19 @@ export function ProProfileForm({
   const allServices = [...SERVICES, "Diogène", "Caves / garages"];
 
   return (
-    <section className="overflow-hidden rounded-3xl border border-border bg-card">
-      <header className="flex flex-col gap-3 border-b border-border bg-secondary/40 px-6 py-5 sm:flex-row sm:items-center sm:justify-between">
+    <section
+      id="fiche"
+      className="scroll-mt-24 overflow-hidden rounded-3xl border border-border bg-card"
+    >
+      <header className="flex flex-col gap-3 border-b border-border px-5 py-5 sm:flex-row sm:items-center sm:justify-between sm:px-6">
         <div className="flex min-w-0 items-center gap-3">
-          <div className="grid size-11 shrink-0 place-items-center rounded-2xl bg-primary text-primary-foreground">
+          <div className="grid size-11 shrink-0 place-items-center rounded-2xl bg-brand-soft text-primary">
             <Building2 className="size-5" />
           </div>
           <div className="min-w-0">
-            <h2 className="truncate text-lg font-bold">Ma fiche entreprise</h2>
+            <h2 className="truncate text-[19px] font-extrabold text-brand-ink">
+              Ma fiche entreprise
+            </h2>
             <p className="text-sm text-muted-foreground">Ce que les clients voient de vous.</p>
           </div>
         </div>
@@ -105,37 +110,71 @@ export function ProProfileForm({
       </header>
 
       <div className="divide-y divide-border">
-        <FormBlock icon={<Building2 className="size-4" />} step="1" title="Identité" hint="Informations légales et contact.">
+        <FormBlock
+          icon={<Building2 className="size-4" />}
+          step="1"
+          title="Identité"
+          hint="Informations légales et contact."
+        >
           <div className="grid gap-4 sm:grid-cols-3">
             <div className="grid gap-2">
               <Label htmlFor="company">Nom de la société *</Label>
-              <Input id="company" value={companyName} onChange={(e) => setCompanyName(e.target.value)} />
+              <Input
+                id="company"
+                value={companyName}
+                onChange={(e) => setCompanyName(e.target.value)}
+              />
             </div>
             <div className="grid gap-2">
               <Label htmlFor="siret">SIRET</Label>
-              <Input id="siret" inputMode="numeric" value={siret} onChange={(e) => setSiret(e.target.value)} />
+              <Input
+                id="siret"
+                inputMode="numeric"
+                value={siret}
+                onChange={(e) => setSiret(e.target.value)}
+              />
             </div>
             <div className="grid gap-2">
               <Label htmlFor="pro-phone">Téléphone</Label>
-              <Input id="pro-phone" type="tel" value={phone} onChange={(e) => setPhone(e.target.value)} />
+              <Input
+                id="pro-phone"
+                type="tel"
+                value={phone}
+                onChange={(e) => setPhone(e.target.value)}
+              />
             </div>
           </div>
         </FormBlock>
 
-        <FormBlock icon={<MapPin className="size-4" />} step="2" title="Zones d'intervention" hint="« 75 » couvre tout Paris, « 92100 » une seule commune.">
+        <FormBlock
+          icon={<MapPin className="size-4" />}
+          step="2"
+          title="Zones d'intervention"
+          hint="« 75 » couvre tout Paris, « 92100 » une seule commune."
+        >
           <div className="grid gap-2">
             <Label htmlFor="zones">Codes postaux ou départements</Label>
-            <Input id="zones" placeholder="75, 92100, 93" value={zones} onChange={(e) => setZones(e.target.value)} />
+            <Input
+              id="zones"
+              placeholder="75, 92100, 93"
+              value={zones}
+              onChange={(e) => setZones(e.target.value)}
+            />
             {postalCodes.length > 0 ? (
               <div className="flex flex-wrap gap-1.5 pt-1">
                 {postalCodes.map((code) => (
-                  <span key={code} className="rounded-full bg-secondary px-2.5 py-0.5 text-xs font-medium text-secondary-foreground">
+                  <span
+                    key={code}
+                    className="rounded-full bg-secondary px-2.5 py-0.5 text-xs font-medium text-secondary-foreground"
+                  >
                     {code}
                   </span>
                 ))}
               </div>
             ) : (
-              <p className="text-xs text-destructive">Renseignez au moins un code postal pour recevoir des demandes.</p>
+              <p className="text-xs text-destructive">
+                Renseignez au moins un code postal pour recevoir des demandes.
+              </p>
             )}
           </div>
           <div className="mt-4">
@@ -143,7 +182,12 @@ export function ProProfileForm({
           </div>
         </FormBlock>
 
-        <FormBlock icon={<Wrench className="size-4" />} step="3" title="Prestations proposées" hint={`${services.length} sélectionnée${services.length > 1 ? "s" : ""}`}>
+        <FormBlock
+          icon={<Wrench className="size-4" />}
+          step="3"
+          title="Prestations proposées"
+          hint={`${services.length} sélectionnée${services.length > 1 ? "s" : ""}`}
+        >
           <div className="flex flex-wrap gap-2">
             {allServices.map((service) => {
               const active = services.includes(service);
@@ -164,15 +208,33 @@ export function ProProfileForm({
           </div>
         </FormBlock>
 
-        <FormBlock icon={<FileText className="size-4" />} step="4" title="Présentation" hint="Quelques phrases sur votre équipe et votre savoir-faire.">
-          <Textarea id="desc" rows={4} value={description} onChange={(e) => setDescription(e.target.value)} />
-          <p className="mt-1 text-right text-xs text-muted-foreground">{description.length} caractères</p>
+        <FormBlock
+          icon={<FileText className="size-4" />}
+          step="4"
+          title="Présentation"
+          hint="Quelques phrases sur votre équipe et votre savoir-faire."
+        >
+          <Textarea
+            id="desc"
+            rows={4}
+            value={description}
+            onChange={(e) => setDescription(e.target.value)}
+          />
+          <p className="mt-1 text-right text-xs text-muted-foreground">
+            {description.length} caractères
+          </p>
         </FormBlock>
       </div>
 
-      <footer className="flex flex-col gap-3 border-t border-border bg-secondary/40 px-6 py-4 sm:flex-row sm:items-center sm:justify-between">
-        <p className="text-xs text-muted-foreground">Vos modifications sont visibles par les clients après enregistrement.</p>
-        <Button onClick={save} disabled={saving || !companyName} className="sm:w-auto">
+      <footer className="flex flex-col gap-3 border-t border-border bg-brand-soft/50 px-5 py-4 sm:flex-row sm:items-center sm:justify-between sm:px-6">
+        <p className="text-xs text-muted-foreground">
+          Vos modifications sont visibles par les clients après enregistrement.
+        </p>
+        <Button
+          onClick={save}
+          disabled={saving || !companyName}
+          className="min-h-11 rounded-full px-6 font-bold sm:w-auto"
+        >
           {saving ? "Enregistrement..." : "Enregistrer ma fiche"}
         </Button>
       </footer>
@@ -194,12 +256,14 @@ function FormBlock({
   children: ReactNode;
 }) {
   return (
-    <div className="grid gap-4 px-6 py-6 lg:grid-cols-[220px_minmax(0,1fr)] lg:gap-8">
+    <div className="grid gap-4 px-5 py-6 sm:px-6 xl:grid-cols-[200px_minmax(0,1fr)] xl:gap-8">
       <div className="flex items-start gap-3">
-        <div className="grid size-8 shrink-0 place-items-center rounded-full bg-primary/10 text-primary">{icon}</div>
+        <div className="grid size-8 shrink-0 place-items-center rounded-full bg-primary/10 text-primary">
+          {icon}
+        </div>
         <div className="min-w-0">
-          <p className="text-xs font-semibold uppercase tracking-wide text-muted-foreground">Étape {step}</p>
-          <h3 className="font-semibold">{title}</h3>
+          <p className="text-xs font-bold text-primary">Étape {step}</p>
+          <h3 className="font-extrabold text-brand-ink">{title}</h3>
           {hint && <p className="mt-0.5 text-xs text-muted-foreground">{hint}</p>}
         </div>
       </div>

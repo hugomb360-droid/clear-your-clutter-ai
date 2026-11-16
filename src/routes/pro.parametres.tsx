@@ -1,13 +1,13 @@
 import { useQuery } from "@tanstack/react-query";
-import { createFileRoute, Link, useNavigate } from "@tanstack/react-router";
-import { ArrowLeft } from "lucide-react";
+import { createFileRoute, useNavigate } from "@tanstack/react-router";
 import { useEffect } from "react";
 import { ProPayoutAccount } from "@/components/pro/pro-payout-account";
 import { ProProfileForm } from "@/components/pro/pro-profile-form";
 import { ProNotificationSettings } from "@/components/pro/pro-notifications";
 import { ProPublicProfileEditor } from "@/components/pro/pro-public-profile-editor";
-
+import { ProShell } from "@/components/pro/pro-shell";
 import { RoleGuard } from "@/components/role-guard";
+import { SpaceLoading } from "@/components/space/space-kit";
 import { useAuth } from "@/hooks/useAuth";
 import { supabase } from "@/integrations/supabase/client";
 
@@ -27,10 +27,18 @@ export const Route = createFileRoute("/pro/parametres")({
       },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
+      { name: "robots", content: "noindex, nofollow" },
     ],
   }),
   component: ProSettingsPage,
 });
+
+const SECTIONS = [
+  { id: "fiche", label: "Fiche entreprise" },
+  { id: "versements", label: "Versements" },
+  { id: "profil-public", label: "Profil public" },
+  { id: "alertes", label: "Alertes" },
+];
 
 function ProSettings() {
   const { user, loading, roles } = useAuth();
@@ -55,37 +63,41 @@ function ProSettings() {
     },
   });
 
-  if (loading || !user) {
-    return <div className="mx-auto max-w-4xl px-4 py-20 text-muted-foreground">Chargement...</div>;
-  }
+  if (loading || !user) return <SpaceLoading />;
+
+  const profile = profileQuery.data ?? null;
 
   return (
-    <div className="mx-auto max-w-4xl px-4 py-12">
-      <Link
-        to="/pro/dashboard"
-        className="inline-flex items-center gap-2 text-sm font-semibold text-muted-foreground hover:text-foreground"
-      >
-        <ArrowLeft className="size-4" /> Retour à mes missions
-      </Link>
-      <header className="mt-4">
-        <h1 className="text-2xl font-extrabold sm:text-3xl tracking-tight">Paramètres</h1>
+    <ProShell active="parametres" publicSlug={profile?.public_enabled ? profile.public_slug : null}>
+      <header>
+        <h1 className="text-[26px] font-black leading-[1.05] tracking-[-0.03em] text-brand-ink sm:text-[32px]">
+          Paramètres
+        </h1>
         <p className="mt-2 text-sm text-muted-foreground">
-          Fiche entreprise, SIRET, prestations et zones d'intervention.
+          Votre fiche, vos zones, vos versements et vos alertes.
         </p>
+        <nav aria-label="Sections des paramètres" className="mt-4 flex flex-wrap gap-2">
+          {SECTIONS.filter((section) => section.id !== "profil-public" || profile).map(
+            (section) => (
+              <a
+                key={section.id}
+                href={`#${section.id}`}
+                className="inline-flex min-h-10 items-center rounded-full bg-brand-soft px-4 text-sm font-bold text-brand-ink transition-colors hover:bg-primary hover:text-primary-foreground focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-brand-bright"
+              >
+                {section.label}
+              </a>
+            ),
+          )}
+        </nav>
       </header>
 
-      <div className="mt-8 space-y-8">
-        <ProProfileForm
-          profile={profileQuery.data ?? null}
-          userId={user.id}
-          hasProRole={roles.includes("pro")}
-        />
+      <div className="mt-6 space-y-6">
+        <ProProfileForm profile={profile} userId={user.id} hasProRole={roles.includes("pro")} />
         <ProPayoutAccount />
-        {profileQuery.data && <ProPublicProfileEditor profile={profileQuery.data} />}
+        {profile && <ProPublicProfileEditor profile={profile} />}
         <ProNotificationSettings proId={user.id} />
       </div>
-
-    </div>
+    </ProShell>
   );
 }
 

@@ -1,19 +1,17 @@
 import { useQuery } from "@tanstack/react-query";
 import { Link } from "@tanstack/react-router";
-
-import { AlertTriangle, BadgeCheck, Gift, Lock, Wallet } from "lucide-react";
+import { AlertTriangle, BadgeCheck, Gift, Lock } from "lucide-react";
+import { Notice, SpaceCard, StatusPill, sBtnPrimary } from "@/components/space/space-kit";
 import { supabase } from "@/integrations/supabase/client";
 import { useFoundingStatus } from "@/hooks/useFoundingStatus";
 import { getPayoutStatus } from "@/lib/payouts.functions";
 import { getStripeEnvironment, paymentsConfigured } from "@/lib/stripe";
 import type { BidWithQuote } from "@/lib/pro-dashboard";
-
 import {
   CLEARO_COMMISSION_RATE,
   commissionOf,
   formatDate,
   monthlyRevenue,
-  netOf,
   quoteTitle,
 } from "@/lib/pro-dashboard";
 import { euro } from "@/lib/pricing";
@@ -24,6 +22,14 @@ const PAYMENT_LABELS: Record<string, string> = {
   released: "Versé",
   refunded: "Remboursé",
   failed: "Échec",
+};
+
+const PAYMENT_TONES: Record<string, "neutral" | "green" | "amber" | "red" | "dark"> = {
+  pending: "neutral",
+  held: "amber",
+  released: "green",
+  refunded: "red",
+  failed: "red",
 };
 
 export function ProWallet({ bids }: { bids: BidWithQuote[] }) {
@@ -68,177 +74,180 @@ export function ProWallet({ bids }: { bids: BidWithQuote[] }) {
   const months = monthlyRevenue(earning);
   const best = Math.max(1, ...months.map((m) => m.gross));
 
+  const tiles = [
+    { label: "Chiffre d'affaires", value: euro(gross), hint: `${earning.length} mission(s)` },
+    {
+      label: "Commission",
+      value: euro(commission),
+      hint: `${Math.round(CLEARO_COMMISSION_RATE * 100)} % par mission`,
+    },
+    { label: "Encaissé", value: euro(paid), hint: `${done.length} mission(s) terminée(s)` },
+    { label: "À venir", value: euro(upcoming), hint: `${pending.length} mission(s) à réaliser` },
+  ];
+
   return (
-    <div className="space-y-8">
-      {founding.isFounding && (
-        <div className="flex items-start gap-3 rounded-2xl border border-proposal-emerald/30 bg-proposal-emerald/5 p-4">
-          <Gift className="mt-0.5 size-4 shrink-0 text-proposal-emerald" />
-          <p className="text-sm leading-relaxed text-proposal-emerald">
-            <strong>Offre fondateur</strong> — vous faites partie des 20 premiers pros Débarras France :{" "}
+    <div className="space-y-6">
+      <div className="space-y-3">
+        {founding.isFounding && (
+          <Notice tone="success" icon={Gift}>
+            <strong>Offre fondateur.</strong>{" "}
             {founding.freeRemaining > 0 ? (
               <>
+                Il vous reste{" "}
                 <strong>
                   {founding.freeRemaining} chantier{founding.freeRemaining > 1 ? "s" : ""} sans
-                  aucune commission
+                  commission
                 </strong>{" "}
                 ({founding.paidMissions}/5 utilisés). Vous encaissez 100 % du montant.
               </>
             ) : (
-              <>vos 5 chantiers offerts ont été utilisés, commission standard de 12 % désormais.</>
+              <>Vos 5 chantiers offerts sont utilisés, la commission est maintenant de 12 %.</>
             )}
-          </p>
-        </div>
-      )}
+          </Notice>
+        )}
 
-      <div className="flex items-start gap-3 rounded-2xl border border-proposal-gold/40 bg-proposal-gold/10 p-4">
-        <Lock className="mt-0.5 size-4 shrink-0 text-proposal-emerald" />
-        <p className="text-sm leading-relaxed text-proposal-emerald">
-          <strong>{euro(secured)} sécurisés</strong> par Débarras France pour vos missions en cours. Le
-          client paie l'intégralité à l'acceptation du devis : les fonds sont bloqués en séquestre,
-          puis virés automatiquement sur votre compte bancaire (montant net, commission déduite) dès
-          que le client valide la fin de chantier.
-        </p>
-      </div>
+        {paymentsConfigured() &&
+          (payoutsReady ? (
+            <Notice tone="success" icon={BadgeCheck}>
+              Coordonnées bancaires validées
+              {payoutQuery.data?.bankLast4 ? ` (IBAN •••• ${payoutQuery.data.bankLast4})` : ""}. Vos
+              virements partent à chaque fin de chantier validée.
+            </Notice>
+          ) : (
+            <Notice
+              tone="danger"
+              icon={AlertTriangle}
+              action={
+                <Link to="/pro/parametres" hash="versements" className={sBtnPrimary}>
+                  Configurer mon IBAN
+                </Link>
+              }
+            >
+              <strong>Vous ne pouvez pas encore recevoir vos paiements.</strong> Renseignez votre
+              IBAN pour débloquer les virements.
+            </Notice>
+          ))}
 
-      {paymentsConfigured() &&
-        (payoutsReady ? (
-          <div className="flex items-start gap-3 rounded-2xl border border-proposal-emerald/30 bg-proposal-emerald/5 p-4">
-            <BadgeCheck className="mt-0.5 size-4 shrink-0 text-proposal-emerald" />
-            <p className="text-sm leading-relaxed text-proposal-emerald">
-              Vos coordonnées bancaires sont validées
-              {payoutQuery.data?.bankLast4 ? ` (IBAN •••• ${payoutQuery.data.bankLast4})` : ""} :
-              vos virements partent automatiquement à chaque fin de chantier validée.
-            </p>
-          </div>
-        ) : (
-          <div className="flex flex-col gap-3 rounded-2xl border border-destructive/30 bg-destructive/5 p-4 sm:flex-row sm:items-start">
-            <AlertTriangle className="mt-0.5 size-4 shrink-0 text-destructive" />
-            <p className="text-sm leading-relaxed">
-              <strong className="text-destructive">
-                Vous ne pouvez pas encore recevoir vos paiements.
-              </strong>{" "}
-              Renseignez votre IBAN sur la page bancaire sécurisée pour débloquer les virements.{" "}
-              <Link
-                to="/pro/parametres"
-                className="font-semibold underline underline-offset-2"
-              >
-                Configurer mon IBAN
-              </Link>
-            </p>
-          </div>
-        ))}
-
-      {transferIssue?.transfer_error && (
-        <div className="flex items-start gap-3 rounded-2xl border border-destructive/30 bg-destructive/5 p-4">
-          <AlertTriangle className="mt-0.5 size-4 shrink-0 text-destructive" />
-          <p className="text-sm leading-relaxed">
+        {transferIssue?.transfer_error && (
+          <Notice tone="danger" icon={AlertTriangle}>
             Un virement n'a pas pu être effectué : {transferIssue.transfer_error} Corrigez vos
             informations bancaires, le virement sera relancé automatiquement.
-          </p>
-        </div>
-      )}
+          </Notice>
+        )}
 
+        <Notice tone="info" icon={Lock}>
+          <strong>{euro(secured)} bloqués</strong> pour vos missions en cours. Le client paie à
+          l'acceptation ; le montant net vous est viré dès qu'il valide la fin du chantier.
+        </Notice>
+      </div>
 
-
-
-      <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
-        {[
-          { label: "Chiffre d'affaires", value: euro(gross), hint: `${earning.length} mission(s)` },
-          {
-            label: "Commission Débarras France",
-            value: euro(commission),
-            hint: `${Math.round(CLEARO_COMMISSION_RATE * 100)} % par mission`,
-          },
-          { label: "Encaissé", value: euro(paid), hint: `${done.length} mission(s) terminée(s)` },
-          { label: "À venir", value: euro(upcoming), hint: `${pending.length} mission(s) à réaliser` },
-        ].map((item) => (
-          <div key={item.label} className="rounded-2xl border border-border bg-card p-5">
-            <p className="text-sm font-medium text-muted-foreground">{item.label}</p>
-            <p className="mt-1 text-2xl font-extrabold tracking-tight">{item.value}</p>
-            <p className="mt-1 text-xs text-muted-foreground">{item.hint}</p>
+      <div className="grid grid-cols-2 gap-3 xl:grid-cols-4">
+        {tiles.map((item) => (
+          <div key={item.label} className="rounded-3xl border border-border bg-card p-5">
+            <p className="text-sm font-semibold text-muted-foreground">{item.label}</p>
+            <p className="mt-1.5 text-[26px] font-black leading-none tracking-[-0.02em] text-brand-ink tabular-nums">
+              {item.value}
+            </p>
+            <p className="mt-1.5 text-xs text-muted-foreground">{item.hint}</p>
           </div>
         ))}
       </div>
 
-      <section className="rounded-3xl border border-border bg-card p-6">
-        <h3 className="flex items-center gap-2 font-bold">
-          <Wallet className="size-4 text-primary" /> Revenus par mois
-        </h3>
+      <SpaceCard>
+        <h3 className="text-[17px] font-extrabold text-brand-ink">Revenus par mois</h3>
         {months.length === 0 ? (
-          <p className="mt-3 text-sm text-muted-foreground">
+          <p className="mt-2 text-sm text-muted-foreground">
             Aucun revenu pour l'instant. Vos missions acceptées apparaîtront ici.
           </p>
         ) : (
-          <div className="mt-5 space-y-4">
+          <ul className="mt-4 space-y-4">
             {months.map((month) => (
-              <div key={month.key}>
-                <div className="flex items-center justify-between text-sm">
-                  <span className="font-medium capitalize">{month.label}</span>
+              <li key={month.key}>
+                <div className="flex flex-wrap items-center justify-between gap-x-4 text-sm">
+                  <span className="font-bold capitalize text-brand-ink">{month.label}</span>
                   <span className="text-muted-foreground">
                     {month.count} mission(s) · {euro(month.gross)} brut ·{" "}
-                    <span className="font-semibold text-foreground">
+                    <span className="font-bold text-brand-ink">
                       {euro(month.gross - commissionOf(month.gross, freeMission))} net
                     </span>
                   </span>
                 </div>
-                <div className="mt-1.5 h-2 rounded-full bg-secondary">
+                <div className="mt-1.5 h-2.5 rounded-full bg-brand-soft">
                   <div
-                    className="h-2 rounded-full bg-primary"
+                    className="h-2.5 rounded-full bg-primary"
                     style={{ width: `${Math.round((month.gross / best) * 100)}%` }}
                   />
                 </div>
-              </div>
+              </li>
             ))}
-          </div>
+          </ul>
         )}
-      </section>
+      </SpaceCard>
 
-      <section className="rounded-3xl border border-border bg-card p-6">
-        <h3 className="font-bold">Détail des transactions</h3>
+      <SpaceCard>
+        <h3 className="text-[17px] font-extrabold text-brand-ink">Détail des transactions</h3>
         {earning.length === 0 ? (
-          <p className="mt-3 text-sm text-muted-foreground">Aucune transaction.</p>
+          <p className="mt-2 text-sm text-muted-foreground">Aucune transaction.</p>
         ) : (
-          <div className="mt-4 overflow-x-auto">
-            <table className="w-full min-w-[34rem] text-sm">
-              <thead className="text-left text-xs uppercase tracking-wide text-muted-foreground">
+          <div className="mt-3 overflow-x-auto">
+            <table className="w-full min-w-[38rem] text-sm">
+              <thead className="text-left text-xs font-bold text-muted-foreground">
                 <tr>
-                  <th className="pb-2">Mission</th>
-                  <th className="pb-2">Date</th>
-                  <th className="pb-2 text-right">Montant</th>
-                  <th className="pb-2 text-right">Commission</th>
-                  <th className="pb-2 text-right">Net</th>
-                  <th className="pb-2 text-right">Paiement</th>
+                  <th scope="col" className="pb-2 font-bold">
+                    Mission
+                  </th>
+                  <th scope="col" className="pb-2 font-bold">
+                    Date
+                  </th>
+                  <th scope="col" className="pb-2 text-right font-bold">
+                    Montant
+                  </th>
+                  <th scope="col" className="pb-2 text-right font-bold">
+                    Commission
+                  </th>
+                  <th scope="col" className="pb-2 text-right font-bold">
+                    Net
+                  </th>
+                  <th scope="col" className="pb-2 text-right font-bold">
+                    Paiement
+                  </th>
                 </tr>
               </thead>
               <tbody>
-                {earning.map((bid) => (
-                  <tr key={bid.id} className="border-t border-border">
-                    <td className="py-2.5 pr-3">{quoteTitle(bid.quotes)}</td>
-                    <td className="py-2.5 pr-3 text-muted-foreground">
-                      {formatDate(bid.available_date)}
-                    </td>
-                    <td className="py-2.5 text-right">{euro(bid.price)}</td>
-                    <td className="py-2.5 text-right text-muted-foreground">
-                      −{euro(rowCommission(bid.id, bid.price))}
-                    </td>
-                    <td className="py-2.5 text-right font-semibold">
-                      {euro(bid.price - rowCommission(bid.id, bid.price))}
-                    </td>
-                    <td className="py-2.5 text-right text-xs text-muted-foreground">
-                      {PAYMENT_LABELS[payments[bid.id]?.status ?? ""] ?? "—"}
-                    </td>
-                  </tr>
-                ))}
+                {earning.map((bid) => {
+                  const status = payments[bid.id]?.status ?? "";
+                  return (
+                    <tr key={bid.id} className="border-t border-border">
+                      <td className="py-3 pr-3 font-semibold text-brand-ink">
+                        {quoteTitle(bid.quotes)}
+                      </td>
+                      <td className="py-3 pr-3 text-muted-foreground">
+                        {formatDate(bid.available_date)}
+                      </td>
+                      <td className="py-3 text-right tabular-nums">{euro(bid.price)}</td>
+                      <td className="py-3 text-right tabular-nums text-muted-foreground">
+                        −{euro(rowCommission(bid.id, bid.price))}
+                      </td>
+                      <td className="py-3 text-right font-bold tabular-nums text-brand-ink">
+                        {euro(bid.price - rowCommission(bid.id, bid.price))}
+                      </td>
+                      <td className="py-3 pl-3 text-right">
+                        {PAYMENT_LABELS[status] ? (
+                          <StatusPill tone={PAYMENT_TONES[status] ?? "neutral"}>
+                            {PAYMENT_LABELS[status]}
+                          </StatusPill>
+                        ) : (
+                          <span className="text-muted-foreground">—</span>
+                        )}
+                      </td>
+                    </tr>
+                  );
+                })}
               </tbody>
             </table>
           </div>
         )}
-        <p className="mt-4 text-xs text-muted-foreground">
-          Les clients règlent 100 % du montant à l'acceptation du devis via le paiement sécurisé
-          Débarras France. Les fonds sont bloqués puis libérés vers vous dès la validation du chantier,
-          commission Débarras France déjà déduite.
-        </p>
-      </section>
+      </SpaceCard>
     </div>
   );
 }

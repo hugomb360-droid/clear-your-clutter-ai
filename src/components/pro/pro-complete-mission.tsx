@@ -38,10 +38,18 @@ export function ProCompleteMission({
   const [volume, setVolume] = useState("");
   const [recycling, setRecycling] = useState("");
   const saveReport = useServerFn(saveMissionReport);
-  const successionQuery = useQuery({ queryKey: ["succession", quoteId], queryFn: async () => {
-    const { data, error } = await supabase.from("succession_details").select("*").eq("quote_id", quoteId).maybeSingle();
-    if (error) throw error; return data;
-  } });
+  const successionQuery = useQuery({
+    queryKey: ["succession", quoteId],
+    queryFn: async () => {
+      const { data, error } = await supabase
+        .from("succession_details")
+        .select("*")
+        .eq("quote_id", quoteId)
+        .maybeSingle();
+      if (error) throw error;
+      return data;
+    },
+  });
 
   const submit = async () => {
     if (files.length === 0) {
@@ -50,7 +58,8 @@ export function ProCompleteMission({
     }
     setSaving(true);
     try {
-      if (successionQuery.isPending || successionQuery.isError) throw new Error("Impossible de vérifier le dossier succession. Réessayez.");
+      if (successionQuery.isPending || successionQuery.isError)
+        throw new Error("Impossible de vérifier le dossier succession. Réessayez.");
       if (successionQuery.data) {
         const parsed = reportSchema.parse({ bidId, volumeM3: Number(volume), recycling });
         await saveReport({ data: parsed });
@@ -83,7 +92,7 @@ export function ProCompleteMission({
   return (
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>
-        <Button className="mt-4 gap-2" variant="outline">
+        <Button className="mt-4 gap-2 min-h-11 rounded-full px-5 font-bold">
           <Camera className="size-4" /> Confirmer la fin de chantier
         </Button>
       </DialogTrigger>
@@ -123,12 +132,46 @@ export function ProCompleteMission({
               className="mt-2"
             />
           </div>
-          {successionQuery.data && <>
-            <div className="grid gap-2"><Label htmlFor="report-volume">Volume réellement évacué (m³)</Label><Input id="report-volume" type="number" min="0.1" max="2000" step="0.1" value={volume} onChange={e => setVolume(e.target.value)} /></div>
-            <div className="grid gap-2"><Label htmlFor="report-recycling">Filières de recyclage et destinations</Label><Textarea id="report-recycling" maxLength={3000} value={recycling} onChange={e => setRecycling(e.target.value)} placeholder="Bois : centre de tri et commune ; mobilier donné : association ; métaux, DEEE : filières et lieux…" /><p className="text-xs text-muted-foreground">Indiquez uniquement les dépôts, dons et reventes réellement effectués. Ces données figureront dans le rapport pour le notaire.</p></div>
-          </>}
-          <Button className="w-full gap-2" onClick={submit} disabled={saving}>
-            {saving ? <Loader2 className="size-4 animate-spin" /> : <CheckCircle2 className="size-4" />}
+          {successionQuery.data && (
+            <>
+              <div className="grid gap-2">
+                <Label htmlFor="report-volume">Volume réellement évacué (m³)</Label>
+                <Input
+                  id="report-volume"
+                  type="number"
+                  min="0.1"
+                  max="2000"
+                  step="0.1"
+                  value={volume}
+                  onChange={(e) => setVolume(e.target.value)}
+                />
+              </div>
+              <div className="grid gap-2">
+                <Label htmlFor="report-recycling">Filières de recyclage et destinations</Label>
+                <Textarea
+                  id="report-recycling"
+                  maxLength={3000}
+                  value={recycling}
+                  onChange={(e) => setRecycling(e.target.value)}
+                  placeholder="Bois : centre de tri et commune ; mobilier donné : association ; métaux, DEEE : filières et lieux…"
+                />
+                <p className="text-xs text-muted-foreground">
+                  Indiquez uniquement les dépôts, dons et reventes réellement effectués. Ces données
+                  figureront dans le rapport pour le notaire.
+                </p>
+              </div>
+            </>
+          )}
+          <Button
+            className="w-full gap-2 min-h-11 rounded-full px-5 font-bold"
+            onClick={submit}
+            disabled={saving}
+          >
+            {saving ? (
+              <Loader2 className="size-4 animate-spin" />
+            ) : (
+              <CheckCircle2 className="size-4" />
+            )}
             Envoyer au client
           </Button>
         </div>

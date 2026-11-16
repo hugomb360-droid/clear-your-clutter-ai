@@ -1,19 +1,31 @@
 import { useQueryClient } from "@tanstack/react-query";
-import { CalendarDays, Clock, MapPin } from "lucide-react";
+import { CalendarDays, MapPin, Send } from "lucide-react";
 import { useState } from "react";
 import { toast } from "sonner";
-import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
 import { QuotePhotos } from "@/components/pro/quote-photos";
+import {
+  EmptyState,
+  StatusPill,
+  fieldClass,
+  sBtnGhost,
+  sBtnOutline,
+  sBtnPrimary,
+} from "@/components/space/space-kit";
+import { bidTone } from "@/components/space/tones";
 import { supabase } from "@/integrations/supabase/client";
 import type { BidWithQuote } from "@/lib/pro-dashboard";
 import { BID_STATUS_LABELS, formatDate, netOf, quoteTitle } from "@/lib/pro-dashboard";
 import { euro } from "@/lib/pricing";
+import { useFoundingStatus } from "@/hooks/useFoundingStatus";
 
 export function ProBids({ bids }: { bids: BidWithQuote[] }) {
   const queryClient = useQueryClient();
   const [editing, setEditing] = useState<string | null>(null);
   const [priceDraft, setPriceDraft] = useState("");
+  const [busy, setBusy] = useState<string | null>(null);
+  const freeMission = useFoundingStatus().freeRemaining > 0;
 
   const refresh = () => {
     void queryClient.invalidateQueries({ queryKey: ["pro-bids"] });
@@ -26,7 +38,9 @@ export function ProBids({ bids }: { bids: BidWithQuote[] }) {
       toast.error("Prix invalide");
       return;
     }
+    setBusy(bidId);
     const { error } = await supabase.from("bids").update({ price }).eq("id", bidId);
+    setBusy(null);
     if (error) {
       toast.error("Modification impossible", { description: error.message });
       return;
@@ -37,7 +51,9 @@ export function ProBids({ bids }: { bids: BidWithQuote[] }) {
   };
 
   const withdraw = async (bidId: string) => {
+    setBusy(bidId);
     const { error } = await supabase.from("bids").update({ status: "withdrawn" }).eq("id", bidId);
+    setBusy(null);
     if (error) {
       toast.error("Retrait impossible", { description: error.message });
       return;
@@ -48,51 +64,44 @@ export function ProBids({ bids }: { bids: BidWithQuote[] }) {
 
   if (bids.length === 0) {
     return (
-      <div className="rounded-[2rem] border border-dashed border-proposal-emerald/20 bg-proposal-cream/30 p-6 sm:p-10 text-center">
-        <Clock className="mx-auto size-6 text-proposal-gold" />
-        <p className="mt-3 font-body text-sm text-muted-foreground">
-          Vous n'avez pas encore envoyé de proposition. Chiffrez une demande ci-dessus.
-        </p>
-      </div>
+      <EmptyState
+        icon={Send}
+        title="Aucune proposition envoyée"
+        text="Chiffrez une demande : votre proposition apparaîtra ici en attendant la réponse du client."
+      />
     );
   }
 
   return (
-    <div className="grid gap-5 lg:grid-cols-2">
+    <ul className="grid gap-4 xl:grid-cols-2">
       {bids.map((bid) => (
-        <article
+        <li
           key={bid.id}
-          className="rounded-[1.75rem] bg-white p-6 shadow-[var(--shadow-proposal)] ring-1 ring-proposal-emerald/10"
+          className="flex flex-col rounded-3xl border border-border bg-card p-5 sm:p-6"
         >
           <div className="flex flex-wrap items-start justify-between gap-3">
             <div className="min-w-0">
-              <h3 className="font-display text-lg font-bold text-proposal-emerald">
+              <h3 className="text-[18px] font-extrabold leading-tight text-brand-ink">
                 {quoteTitle(bid.quotes)}
               </h3>
-              <p className="mt-1.5 flex flex-wrap items-center gap-3 font-body text-xs text-muted-foreground">
+              <p className="mt-2 flex flex-wrap gap-x-4 gap-y-1 text-sm text-muted-foreground">
                 <span className="flex items-center gap-1.5">
-                  <MapPin className="size-3.5 text-proposal-gold" />{" "}
+                  <MapPin className="size-4 text-primary" aria-hidden="true" />
                   {bid.quotes?.postal_code ?? "—"} {bid.quotes?.city ?? ""}
                 </span>
                 <span className="flex items-center gap-1.5">
-                  <CalendarDays className="size-3.5 text-proposal-gold" />{" "}
+                  <CalendarDays className="size-4 text-primary" aria-hidden="true" />
                   {formatDate(bid.available_date)}
                 </span>
               </p>
             </div>
-            <span
-              className={`rounded-full px-3 py-1 text-[10px] font-semibold uppercase tracking-wider ${
-                bid.status === "pending"
-                  ? "bg-proposal-gold/15 text-proposal-emerald"
-                  : "bg-muted text-muted-foreground"
-              }`}
-            >
+            <StatusPill tone={bidTone(bid.status)}>
               {BID_STATUS_LABELS[bid.status] ?? bid.status}
-            </span>
+            </StatusPill>
           </div>
 
           {bid.message && (
-            <p className="mt-3 rounded-xl bg-proposal-cream/40 p-3 font-body text-sm italic text-muted-foreground">
+            <p className="mt-3 rounded-2xl bg-brand-soft/60 px-4 py-3 text-sm leading-relaxed text-brand-ink">
               « {bid.message} »
             </p>
           )}
@@ -101,52 +110,66 @@ export function ProBids({ bids }: { bids: BidWithQuote[] }) {
 
           <div className="mt-5 flex flex-wrap items-end justify-between gap-3 border-t border-border pt-4">
             {editing === bid.id ? (
-              <div className="flex items-center gap-2">
-                <Input
-                  className="w-28 rounded-xl"
-                  inputMode="numeric"
-                  value={priceDraft}
-                  onChange={(e) => setPriceDraft(e.target.value)}
-                />
-                <Button size="sm" className="rounded-xl" onClick={() => updatePrice(bid.id)}>
+              <form
+                className="flex flex-wrap items-end gap-2"
+                onSubmit={(event) => {
+                  event.preventDefault();
+                  void updatePrice(bid.id);
+                }}
+              >
+                <div className="grid gap-1.5">
+                  <Label htmlFor={`edit-price-${bid.id}`}>Nouveau prix TTC (€)</Label>
+                  <Input
+                    id={`edit-price-${bid.id}`}
+                    className={`${fieldClass} w-32`}
+                    inputMode="numeric"
+                    value={priceDraft}
+                    onChange={(e) => setPriceDraft(e.target.value)}
+                  />
+                </div>
+                <button type="submit" className={sBtnPrimary} disabled={busy === bid.id}>
                   Valider
-                </Button>
-                <Button size="sm" variant="ghost" onClick={() => setEditing(null)}>
+                </button>
+                <button type="button" className={sBtnGhost} onClick={() => setEditing(null)}>
                   Annuler
-                </Button>
-              </div>
+                </button>
+              </form>
             ) : (
               <div>
-                <p className="font-display text-2xl font-extrabold text-proposal-emerald">
+                <p className="text-[26px] font-black leading-none tracking-[-0.02em] text-brand-ink tabular-nums">
                   {euro(bid.price)}
                 </p>
-                <p className="text-[11px] text-muted-foreground">
-                  Net pour vous : {euro(netOf(bid.price))}
+                <p className="mt-1 text-xs text-muted-foreground">
+                  Net pour vous : {euro(netOf(bid.price, freeMission))}
                 </p>
               </div>
             )}
 
             {bid.status === "pending" && editing !== bid.id && (
-              <div className="flex gap-2">
-                <Button
-                  size="sm"
-                  variant="outline"
-                  className="rounded-xl"
+              <div className="flex flex-wrap gap-2">
+                <button
+                  type="button"
+                  className={sBtnOutline}
                   onClick={() => {
                     setEditing(bid.id);
                     setPriceDraft(String(bid.price));
                   }}
                 >
                   Modifier le prix
-                </Button>
-                <Button size="sm" variant="ghost" onClick={() => withdraw(bid.id)}>
+                </button>
+                <button
+                  type="button"
+                  className={sBtnGhost}
+                  disabled={busy === bid.id}
+                  onClick={() => void withdraw(bid.id)}
+                >
                   Retirer
-                </Button>
+                </button>
               </div>
             )}
           </div>
-        </article>
+        </li>
       ))}
-    </div>
+    </ul>
   );
 }

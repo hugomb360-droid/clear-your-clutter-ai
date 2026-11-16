@@ -1,4 +1,4 @@
-const clientToken = import.meta.env['VITE_PAYMENTS_CLIENT_TOKEN'] as string | undefined;
+const clientToken = import.meta.env["VITE_PAYMENTS_CLIENT_TOKEN"] as string | undefined;
 
 export function PaymentTestModeBanner() {
   if (!clientToken) {
@@ -10,7 +10,7 @@ export function PaymentTestModeBanner() {
   }
   if (clientToken.startsWith("pk_test_")) {
     return (
-      <div className="w-full border-b border-proposal-gold/40 bg-proposal-gold/15 px-4 py-2 text-center text-xs font-medium text-proposal-emerald">
+      <div className="w-full border-b border-amber-300 bg-amber-50 px-4 py-2 text-center text-xs font-semibold text-amber-950">
         Mode test : aucun paiement réel n'est encaissé (carte de test 4242 4242 4242 4242).
       </div>
     );
